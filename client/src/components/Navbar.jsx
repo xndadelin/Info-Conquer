@@ -3,32 +3,16 @@ import { useState } from "react";
 import { Authenticate } from "./Authenticate";
 import { useMutation, useQuery, gql  } from "@apollo/client";
 import { Loading } from "./Loading";
-const getUser = gql`
-    query{
-        getUser {
-            username,
-            createdAt,
-            email,
-            admin
-        }
+const logoutMutationQuery = gql`
+mutation {
+    logout {
+    success
     }
-`
-export const NavigationBar = () => {
-    const {loading, error, data}  = useQuery(getUser)
-    const [isOpen, setIsOpen] = useState(false);
-    const logoutMutationQuery = gql`
-        mutation {
-            logout {
-            success
-            }
-        } 
-    `   
+} 
+`  
+export const NavigationBar = ({data}) => {
+    const [isOpen, setIsOpen] = useState(false); 
     const [logoutMutation] = useMutation(logoutMutationQuery)
-    if(loading){
-        return (
-            <Loading/>
-        )
-    }
     const handleLogout = async() => {
         await logoutMutation()
         window.location.reload()
@@ -56,7 +40,7 @@ export const NavigationBar = () => {
                     <Link>Solutions</Link>
                 </NavbarItem>
             </NavbarContent>
-            {!data.getUser ? (
+            {!data || !data.getUser ? (
                 <NavbarContent justify="end">
                     <NavbarItem>
                         <Authenticate/>

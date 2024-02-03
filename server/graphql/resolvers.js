@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken')
 const {ApolloError} = require('apollo-server-express')
 const cookie = require('cookie')
 const generateToken = (user) => {
-    return jwt.sign({ username: user.username, admin: user.admin }, process.env.SECRET, { expiresIn: '10s' });
+    return jwt.sign({ username: user.username, admin: user.admin }, process.env.SECRET, { expiresIn: '1h' });
 };
   
 const generateRefreshToken = (user) => {
