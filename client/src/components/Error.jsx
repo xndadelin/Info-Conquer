@@ -3,7 +3,9 @@ export const Error = ({error}) => {
     return (
         <Card className="w-full">
             <CardBody className="flex justify-between text-red-500">
-                {error}
+                <pre style={{whiteSpace: 'break-spaces'}}>
+                    {error}
+                </pre>
             </CardBody>
         </Card>
     )

@@ -60,8 +60,8 @@ int main()
             <svg className='z-1 absolute top-0' viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
                 <path fill="#121212" d="M44.8,-49.4C57.9,-42.3,68.3,-28.1,73.2,-11.3C78,5.5,77.3,24.8,67.4,36C57.5,47.2,38.4,50.2,21,55.7C3.6,61.1,-12.2,69,-23.7,64.9C-35.2,60.8,-42.5,44.8,-49,30C-55.6,15.2,-61.4,1.7,-63.6,-15.6C-65.8,-32.9,-64.3,-53.9,-53.1,-61.3C-41.9,-68.7,-21,-62.5,-2.6,-59.4C15.8,-56.4,31.6,-56.5,44.8,-49.4Z" transform="translate(100 100)" />
             </svg>
-            <div className="flex relative flex-wrap md:mt-[200px] h-[100%] z-2">
-                <div className="flex p-4 flex-col gap-5 w-full md:w-[50%] max-md:mt-[100px]">
+            <div className="grid grid-cols-2 max-md:grid-cols-1 z-2 relative flex-wrap md:mt-[200px] z-2">
+                <div className="flex p-4 flex-col gap-5 max-md:mt-[100px]">
                     <div className="text-5xl text-white font-extrabold">
                     🚀 Welcome to{' '}
                     <span className="from-[#ed3131] to-[#f9f7f5] cursor-pointer bg-clip-text text-transparent bg-gradient-to-b">
@@ -78,8 +78,8 @@ int main()
                     <span className='from-[#ed3131] to-[#f9f7f5] cursor-pointer bg-clip-text text-transparent bg-gradient-to-b'>InfoConquer</span> is dedicated to everyone who wants to learn programming by solving problems, reading articles, and participating in a forum-style community that encourages collaboration, knowledge-sharing, and skill development. Start conquering today!
                     </div>
                 </div>
-                <div className="p-3 w-full md:w-[50%]">
-                    <div className="text-5xl flex flex-col p-0 h-full">
+                <div className="p-3">
+                    <div className="text-5xl flex flex-col p-0 h-[100%]">
                         <div className="flex h-[25px] p-0 justify-start bg-neutral-800">
                             <div className="h-[13px] ml-2 mr-1 my-1 self-center w-[13px] rounded-full bg-red-500"></div>
                             <div className="h-[13px] mx-1 self-center w-[13px] rounded-full bg-yellow-400"></div>

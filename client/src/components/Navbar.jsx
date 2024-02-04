@@ -1,4 +1,5 @@
-import {Navbar, NavbarBrand, DropdownItem, DropdownTrigger, DropdownMenu, Avatar,  NavbarContent, NavbarItem,  NavbarMenuToggle,NavbarMenu,NavbarMenuItem, Link, Button, Dropdown} from "@nextui-org/react";
+import {Navbar, NavbarBrand, DropdownItem, DropdownTrigger, DropdownMenu, Avatar,  NavbarContent, NavbarItem,  NavbarMenuToggle,NavbarMenu,NavbarMenuItem, Button, Dropdown} from "@nextui-org/react";
+import { Link } from "react-router-dom";
 import { useState } from "react";
 import { Authenticate } from "./Authenticate";
 import { useMutation, useQuery, gql  } from "@apollo/client";
@@ -6,7 +7,7 @@ import { Loading } from "./Loading";
 const logoutMutationQuery = gql`
 mutation {
     logout {
-    success
+        success
     }
 } 
 `  
@@ -22,7 +23,9 @@ export const NavigationBar = ({data}) => {
             <NavbarContent>
                 <NavbarMenuToggle className="sm:hidden"/>
                 <NavbarBrand className="text-2xl">
-                    &lt;InfoConquer/&gt;
+                    <Link to={'/'}>
+                        &lt;InfoConquer/&gt;
+                    </Link>
                 </NavbarBrand>
             </NavbarContent>
 
@@ -34,7 +37,7 @@ export const NavigationBar = ({data}) => {
                     <Link>About</Link>
                 </NavbarItem>
                 <NavbarItem>
-                    <Link>Problems</Link>
+                    <Link to={'/problems'}>Problems</Link>
                 </NavbarItem>
                 <NavbarItem>
                     <Link>Solutions</Link>
@@ -63,11 +66,16 @@ export const NavigationBar = ({data}) => {
                                </div>
                             </DropdownItem>
                             <DropdownItem>
-                                    See your profile
+                                See your profile
                             </DropdownItem>
                             <DropdownItem>
-                                    My settings
+                                My settings
                             </DropdownItem>
+                            {data.getUser.admin && (
+                                <DropdownItem>
+                                    <Link to={'/problems/publish'}>Publish a problem</Link>
+                                </DropdownItem>
+                            )}
                             <DropdownItem>
                                 <Link onClick={handleLogout} color="danger">Logout</Link>
                             </DropdownItem>
@@ -77,10 +85,10 @@ export const NavigationBar = ({data}) => {
             }
             <NavbarMenu>
                 <NavbarMenuItem>
-                    <Link size="lg" className="w-full">About</Link>
+                    <Link>About</Link>
                 </NavbarMenuItem>
                 <NavbarMenuItem>
-                    <Link size="lg">Report a problem</Link>
+                    <Link>Report a problem</Link>
                 </NavbarMenuItem>
             </NavbarMenu>
         </Navbar>

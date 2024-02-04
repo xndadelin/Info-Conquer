@@ -5,13 +5,16 @@ import App from './App';
 import { NextUIProvider } from "@nextui-org/react";
 import client from './apolloclient'
 import { ApolloProvider } from '@apollo/client';
+import { BrowserRouter } from 'react-router-dom';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <ApolloProvider client={client}>
+  <BrowserRouter>
+    <ApolloProvider client={client}>
       <React.StrictMode>
         <NextUIProvider>
             <App />
         </NextUIProvider>
-    </React.StrictMode>
-  </ApolloProvider>
+      </React.StrictMode>
+    </ApolloProvider>
+  </BrowserRouter>
 );
