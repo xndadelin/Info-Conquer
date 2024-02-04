@@ -7,7 +7,10 @@ import {Select, SelectItem} from "@nextui-org/react";
 import {Chip} from "@nextui-org/react";
 import { useMutation, useQuery, gql  } from "@apollo/client";
 import { Error } from "../components/Error";
-export const PublishProblem = ({data}) => {
+import { useContext } from "react";
+import { UserContext } from "../context/UserContext";
+export const PublishProblem = () => {
+    const {user} = useContext(UserContext)
     const {isOpen, onOpen, onClose} = useDisclosure()
     const types=[{value:'Console'},{value:'Files'}],difficulties=[{value:'Easy'},{value:'Medium'},{value:'Hard'},{value:'Challenging'},{value:'Expert'}];
     const languagesDef = [
@@ -40,13 +43,24 @@ export const PublishProblem = ({data}) => {
     //! TO DO useForm
     const navigate = useNavigate()
     useEffect(() => {
-        if (!data.getUser) {
+        if (!user.getUser) {
           navigate(-1);
           return () => {}
         }
       }, []);   
     //! TO DO ADD MORE (algoritms, instructions, oop etc...) 
-    const problemMutation = gql`mutation CreateProblem($title:String!,$requirements:String!,$description:String,$type:String!,$tags:[String],$difficulty:String!,$category:String!,$subcategories:[String], $limitMemory: String, $indications: String, $languages: [String], $timeExecution: String, $tests: [TestInput]){createProblem(problemInput:{title:$title,requirements:$requirements,description:$description,type:$type,tags:$tags,difficulty:$difficulty,category:$category,subcategories:$subcategories, limitMemory:$limitMemory, indications: $indications, languages: $languages, timeExecution: $timeExecution, tests: $tests}){success,error{message,code}}}`;
+    const problemMutation = gql`
+        mutation CreateProblem($title: String, $description: String, $requirements: String, $type: String, $tags: [String], $difficulty: String, $category: String, $subcategories: [String], $input: String, $output: String, $tests: [TestInput], $timeExecution: String, $limitMemory: String, $examples: [ExampleInput], $indications: String, $languages: [String], $inputFile: String, $outputFile: String) {
+            createProblem(problemInput: {title: $title, description: $description, requirements: $requirements, type: $type, tags: $tags, difficulty: $difficulty, category: $category, subcategories: $subcategories, input: $input, output: $output, tests: $tests, timeExecution: $timeExecution, limitMemory: $limitMemory, examples: $examples, indications: $indications, languages: $languages, inputFile: $inputFile, outputFile: $outputFile}) {
+            success
+            error {
+                message
+                code
+            }
+            }
+        }
+    `
+
     const [createProblem] = useMutation(problemMutation, {
         onError: (error) => {
             setError(error)
@@ -355,7 +369,7 @@ export const PublishProblem = ({data}) => {
                     </div>
                     <Textarea isRequired type="text" label="Input" onChange={(e) => handleInputExample(index, e.target.value)}/>
                     <Textarea isRequired type="text" label="Output" onChange={(e) => handleOutputExample(index, e.target.value)}/>
-                    <Textarea isRequired type="text" label="Explanation" onChange={(e) => handleExampleExplanation(index, e.target.value)}/>
+                    <Textarea type="text" label="Explanation" onChange={(e) => handleExampleExplanation(index, e.target.value)}/>
                 </div>
             ))}
             <Divider/>

@@ -7,38 +7,30 @@ import { Footer } from "./components/Footer";
 import { Problems } from "./pages/Problems";
 import {Routes, Route} from 'react-router-dom'
 import { PublishProblem } from "./pages/PublishProblem";
-const getUser = gql`
-    query{
-        getUser {
-            username,
-            createdAt,
-            email,
-            admin
-        }
-    }
-`
+import { Problem } from "./components/Problem";
+import { useContext } from "react";
+import { UserContext } from "./context/UserContext";
 function App() {
-  const {loading, error, data}  = useQuery(getUser)
-  if(loading){
-    return (
-      <Loading/>
-    )
-  }
+  const {user} = useContext(UserContext)
   return (
     <div>
-      <NavigationBar data={data}/>
+      <NavigationBar/>
         <Routes>
           <Route
             path="/"
-            element={!data.getUser ? <Landing/>: <LandingAuth data={data}/>}
+            element={user && !user.getUser ? <Landing/>: <LandingAuth/>}
           />
           <Route
             path="/problems/publish"
-            element={<PublishProblem data={data}/>} 
+            element={<PublishProblem user={user}/>} 
           />
           <Route
             path="/problems"
             element={<Problems/>}
+          />
+          <Route
+            path="/problem/:id"
+            element={<Problem user={user}/>}
           />
         </Routes>
       <Footer/>

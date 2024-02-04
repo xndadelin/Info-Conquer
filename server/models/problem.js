@@ -57,7 +57,7 @@ const problemSchema = new mongoose.Schema({
         required: true
     },
     examples: {
-        type: String
+        type: Array
     },
     indications: {
         type: String
@@ -71,6 +71,10 @@ const problemSchema = new mongoose.Schema({
             },
             message: 'You need at least one language.'
         }
+    },
+    difficulty: {
+        type: String,
+        required: true
     }
 });
 

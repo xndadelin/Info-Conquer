@@ -4,6 +4,8 @@ import { useState } from "react";
 import { Authenticate } from "./Authenticate";
 import { useMutation, useQuery, gql  } from "@apollo/client";
 import { Loading } from "./Loading";
+import { useContext } from "react";
+import { UserContext } from "../context/UserContext";
 const logoutMutationQuery = gql`
 mutation {
     logout {
@@ -11,7 +13,9 @@ mutation {
     }
 } 
 `  
-export const NavigationBar = ({data}) => {
+export const NavigationBar = () => {
+    const {user} = useContext(UserContext)
+    console.log(user)
     const [isOpen, setIsOpen] = useState(false); 
     const [logoutMutation] = useMutation(logoutMutationQuery)
     const handleLogout = async() => {
@@ -43,7 +47,7 @@ export const NavigationBar = ({data}) => {
                     <Link>Solutions</Link>
                 </NavbarItem>
             </NavbarContent>
-            {!data || !data.getUser ? (
+            {!user || !user.getUser ? (
                 <NavbarContent justify="end">
                     <NavbarItem>
                         <Authenticate/>
@@ -62,7 +66,7 @@ export const NavigationBar = ({data}) => {
                         <DropdownMenu variant="flat">
                             <DropdownItem>
                                <div className="font-bold">
-                                Signed in as: {data.getUser && data.getUser.username}
+                                Signed in as: {user.getUser && user.getUser.username}
                                </div>
                             </DropdownItem>
                             <DropdownItem>
@@ -71,7 +75,7 @@ export const NavigationBar = ({data}) => {
                             <DropdownItem>
                                 My settings
                             </DropdownItem>
-                            {data.getUser.admin && (
+                            {user.getUser.admin && (
                                 <DropdownItem>
                                     <Link to={'/problems/publish'}>Publish a problem</Link>
                                 </DropdownItem>
