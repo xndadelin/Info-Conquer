@@ -15,7 +15,6 @@ mutation {
 `  
 export const NavigationBar = () => {
     const {user} = useContext(UserContext)
-    console.log(user)
     const [isOpen, setIsOpen] = useState(false); 
     const [logoutMutation] = useMutation(logoutMutationQuery)
     const handleLogout = async() => {
@@ -70,7 +69,7 @@ export const NavigationBar = () => {
                                </div>
                             </DropdownItem>
                             <DropdownItem>
-                                See your profile
+                                <Link to={`/profile/${user.getUser.username}`}>See your profile</Link>
                             </DropdownItem>
                             <DropdownItem>
                                 My settings

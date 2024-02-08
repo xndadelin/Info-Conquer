@@ -2,12 +2,17 @@ import {useParams} from 'react-router-dom'
 import { useQuery, gql } from '@apollo/client'
 import { Loading } from './Loading'
 import { Error } from './Error'
-import { TableCell, Table, TableHeader, TableRow, TableColumn, TableBody, Snippet, Button, Select, SelectItem } from '@nextui-org/react'
+import { TableCell, Table, TableHeader, TableRow, TableColumn, TableBody, Snippet, Button, Select, SelectItem, useDisclosure, Modal } from '@nextui-org/react'
 import {Editor} from '@monaco-editor/react'
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { UserContext } from "../context/UserContext";
+import {useMutation} from '@apollo/client'
+import { TestingSolution } from './TestingSolution'
 export const Problem = () => {
     const {user} = useContext(UserContext)
+    const {isOpen, onOpenChange} = useDisclosure()
+    const [code, setCode] = useState('')
+    const [tests, setTests] = useState('')
     const {id} = useParams()
     const queryProblem = gql`
         query GetProblem($title: String!) {
@@ -35,12 +40,50 @@ export const Problem = () => {
             }
         }
     `
+    const solutionMutation = gql`
+        mutation ($solutionInput: SolutionInput) {
+            submitSolution(solutionInput: $solutionInput) {
+                username
+                code
+                language
+                problem
+                io
+                score
+                tests {
+                    success
+                    status
+                    memoryUsed
+                    executionTime
+                    score
+                    input
+                    output
+                }
+                date
+                fileMemory
+                compilationError
+                success
+                id_solution
+            }
+        }
+    `
     const {data:problem, loading, error} = useQuery(queryProblem, {
         variables: {
-            title: id
+            title: id,
+            code: code
         },
         onError: (error) => {
             console.log(error)
+        }
+    })
+    const [submitSolution, {error: errorSolution, loading: loadingTests}] = useMutation(solutionMutation, {
+        variables: {
+            solutionInput: {
+                code: code,
+                problem: problem && problem.getProblem.title
+            }
+        },
+        onCompleted: (data) => {
+            setTests(data.submitSolution)
         }
     })
     if(loading){
@@ -56,6 +99,9 @@ export const Problem = () => {
     if(!problem.getProblem){
         return null
     }
+    const onHandleSubmitSolution = () => {
+        submitSolution()
+    } 
     return (
         <div className='container flex flex-col mx-auto gap-2 my-5 px-4'>
                 <p className='font-bold text-6xl'>
@@ -116,11 +162,15 @@ export const Problem = () => {
                                 <p className='font-bold text-3xl'>Example {index + 1}</p>
                                 <p className='font-bold text-xl'>Input</p>
                                 <Snippet symbol="">
-                                    {example.input}
+                                    <pre>
+                                        {example.input}
+                                    </pre>
                                 </Snippet>
                                 <p className='font-bold text-xl'>Output</p>
                                 <Snippet symbol="">
-                                    {example.output}
+                                    <pre>
+                                        {example.output}
+                                    </pre>
                                 </Snippet>
                                 {example.explanation && (
                                     <>
@@ -132,7 +182,7 @@ export const Problem = () => {
                         ))}
                     </div>
                 )}
-                {user.getUser && (
+                {user && user.getUser && (
                     <div className='flex flex-col'>
                         <div className='w-[100%] h-[100%] bg-[#1e1e1e] rounded flex justify-between align-center'>
                             <Select label="Select language" size='sm' className='w-[200px] mt-1 ml-1'>
@@ -140,13 +190,14 @@ export const Problem = () => {
                                     <SelectItem key={language}>{language}</SelectItem>
                                 ))}
                             </Select>
-                            <Button className='mt-2 mb-2 mr-2' color='success' variant='flat'>Submit solution</Button>
+                            <Button className='mt-2 mb-2 mr-2' color='success' variant='flat' onClick={() => {onHandleSubmitSolution(); onOpenChange(); setTests('')}}>Submit solution</Button>
                         </div>
                         <div>
-                            <Editor theme='vs-dark' language='cpp' height={'80vh'} />
+                            <Editor onChange={(val, e) => setCode(val)} theme='vs-dark' language='cpp' height={'80vh'} />
                         </div>
+                        <TestingSolution isOpen={isOpen} onClose={onOpenChange} loading={loadingTests} tests={tests}/>
                     </div>
                 )}
-        </div>
+            </div>
     )
 }

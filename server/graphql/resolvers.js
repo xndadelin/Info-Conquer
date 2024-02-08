@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken')
 const {ApolloError} = require('apollo-server-express')
 const cookie = require('cookie');
 const Problem = require('../models/problem');
+const {graderCPP} = require('../utils/graders/graderCPP')
 const generateToken = (user) => {
     return jwt.sign({ username: user.username, admin: user.admin }, process.env.SECRET, { expiresIn: '1h' });
 };
@@ -26,7 +27,6 @@ const getUser = async(context) => {
             const user = await User.findOne({username})
             return user;
         }else{
-
                 const refreshVerified = jwt.verify(refreshtoken, process.env.SECRET_REFRESH);
                     if(refreshVerified){
                     const newToken = generateToken(refreshVerified)
@@ -182,6 +182,24 @@ module.exports = {
                         success: true
                     }
                 }
+            }catch(error){
+                throw new ApolloError(error)
+            }
+        },
+        async submitSolution(_, {solutionInput: {problem, code}}, context){
+            try{
+                const problema = await Problem.findOne({title: problem}).select('tests title type')
+                if(!problem){
+                    throw new ApolloError('This problem does not exist.')
+                }
+                const user = await getUser(context)
+                if(!user){
+                    throw new ApolloError('You have to be logged in order to submit a solution');
+                }
+                const testResults = graderCPP(problema.tests, code, problema.title, user.username, problema.type);
+                user.solutions.push(testResults)
+                await user.save();
+                return testResults
             }catch(error){
                 throw new ApolloError(error)
             }

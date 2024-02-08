@@ -1,6 +1,4 @@
 import { NavigationBar } from "./components/Navbar";
-import { useMutation, useQuery, gql  } from "@apollo/client";
-import {Loading} from './components/Loading'
 import {Landing} from './pages/LandingUnauth'
 import { LandingAuth } from "./pages/LandingAuth";
 import { Footer } from "./components/Footer";
@@ -10,19 +8,21 @@ import { PublishProblem } from "./pages/PublishProblem";
 import { Problem } from "./components/Problem";
 import { useContext } from "react";
 import { UserContext } from "./context/UserContext";
+import {Profile} from './components/Profile'
 function App() {
   const {user} = useContext(UserContext)
+  console.log(user)
   return (
     <div>
       <NavigationBar/>
         <Routes>
           <Route
             path="/"
-            element={user && !user.getUser ? <Landing/>: <LandingAuth/>}
+            element={!user || !user.getUser ? <Landing/>: <LandingAuth/>}
           />
           <Route
             path="/problems/publish"
-            element={<PublishProblem user={user}/>} 
+            element={<PublishProblem/>} 
           />
           <Route
             path="/problems"
@@ -30,7 +30,11 @@ function App() {
           />
           <Route
             path="/problem/:id"
-            element={<Problem user={user}/>}
+            element={<Problem/>}
+          />
+          <Route
+            path="/profile/:username"
+            element={<Profile/>}
           />
         </Routes>
       <Footer/>
