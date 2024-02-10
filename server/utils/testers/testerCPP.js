@@ -10,6 +10,7 @@ const testerCPP = (input, output, punctaj, username) => {
             encoding: 'utf-8'
         });
     }catch(error){
+        console.log(error)
         return {
             status: error.status,
             success: false,

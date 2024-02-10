@@ -115,10 +115,10 @@ export const Profile = () => {
                                 {user.getProfile.solutions.slice((page - 1)*20, page*20).map((solution) => (
                                     <TableRow>
                                         <TableCell>
-                                            <Link to={`/solution/${solution.id_solution}`}>See solution</Link>
+                                            <Link to={`/solution/${username}/${solution.id_solution}`}>See solution</Link>
                                         </TableCell>
                                         <TableCell>
-                                            <Link to={`/problems/${solution.problem}`}>{solution.problem}</Link>
+                                            <Link to={`/problems/${username}/${solution.problem}`}>{solution.problem}</Link>
                                         </TableCell>
                                         <TableCell>{solution.date}</TableCell>
                                         <TableCell>{'cpp'}</TableCell>

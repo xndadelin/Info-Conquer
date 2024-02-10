@@ -6,7 +6,7 @@ const compilerCPP = (code, username) => {
     fs.writeFileSync(`${username}/test.cpp`, code);
     const fileMemory = fs.statSync(`${username}/test.cpp`).size;
     try {
-        const compilationResult = execSync(`g++ ${username}/test.cpp -o ./${username}/test 2>&1`, {
+        const compilationResult = execSync(`/usr/bin/g++ ${username}/test.cpp -o ./${username}/test 2>&1`, {
             encoding: 'utf-8'
         });
         return {

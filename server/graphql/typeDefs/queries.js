@@ -6,5 +6,6 @@ module.exports = gql`
         getUser : User
         getProblem(title: String!): Problem
         getProfile(username: String): ProfileUser
+        getSolution(id: String): Solution
     }
 `;

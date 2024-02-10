@@ -1,6 +1,7 @@
 const {compilerCPP} = require('../compilers/compilerCPP');
 const {testerCPP} = require('../testers/testerCPP');
 const fs = require('fs');
+global.crypto = require('crypto')
 const graderCPP = (testCases, code, problem, username, io) => {
     const compilationResult = compilerCPP(code, username);
     let data = new Date().toString().split(' ');
@@ -29,7 +30,7 @@ const graderCPP = (testCases, code, problem, username, io) => {
         });
         const success = testResults.every(test => test.success);
         const score = testResults.reduce((acc, test) => acc + parseInt(test.score), 0);
-        fs.rmdirSync(username, {recursive: true});
+        fs.rmdirSync(username, {recursive: true})
         return {
             username,
             code,

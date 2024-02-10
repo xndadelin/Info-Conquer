@@ -14,6 +14,7 @@ module.exports = gql`
         compilationError: String,
         success: String,
         id_solution: String,
+        accessToPage: Boolean
     }
     input SolutionInput {
         code: String,

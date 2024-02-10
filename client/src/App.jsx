@@ -9,9 +9,10 @@ import { Problem } from "./components/Problem";
 import { useContext } from "react";
 import { UserContext } from "./context/UserContext";
 import {Profile} from './components/Profile'
+import {Solution} from "./components/Solution";
+
 function App() {
   const {user} = useContext(UserContext)
-  console.log(user)
   return (
     <div>
       <NavigationBar/>
@@ -35,6 +36,10 @@ function App() {
           <Route
             path="/profile/:username"
             element={<Profile/>}
+          />
+          <Route
+            path="/solution/:username/:id"
+            element={<Solution/>}
           />
         </Routes>
       <Footer/>

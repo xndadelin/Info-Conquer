@@ -113,6 +113,10 @@ module.exports = {
             }catch(error){
                 throw new ApolloError(error)
             }
+        },
+        async getSolution(_, {id}, context) {
+            const solution = await User.findOne({"solutions.id_solution": id}, {"solutions.$": 1});
+            return solution.solutions[0]
         }
     },
     Mutation: {
