@@ -29,7 +29,7 @@ function App() {
             element={<Problems/>}
           />
           <Route
-            path="/problem/:id"
+            path="/problems/:id"
             element={<Problem/>}
           />
           <Route

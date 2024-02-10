@@ -16,4 +16,18 @@ module.exports = gql`
         query: String,
         password: String,
     }
+    type SolutionProfile {
+        problem: String, 
+        score: String, 
+        date: String, 
+        id_solution: String,
+        compilationError: String
+    }
+    type ProfileUser {
+        username: String,
+        createdAt: String, 
+        admin: String,
+        solutions: [SolutionProfile],
+        solvedProblems: [String]
+    }
 `;

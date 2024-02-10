@@ -93,6 +93,26 @@ module.exports = {
             }catch(error){
                 throw new ApolloError(error)
             }
+        },
+        async getProfile(_, {username}){
+            try{
+                const user = await User.findOne({username})
+                const solvedProblems = new Set();
+                if(!user) {
+                    throw new ApolloError('User does not exist');
+                }else{
+                    user.solutions.forEach((solution) => {
+                        if(solution.score === 100)
+                            solvedProblems.add(solution.problem)
+                    })
+                    return {
+                        ...user._doc,
+                        solvedProblems
+                    };
+                }
+            }catch(error){
+                throw new ApolloError(error)
+            }
         }
     },
     Mutation: {
