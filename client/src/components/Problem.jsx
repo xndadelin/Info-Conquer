@@ -103,7 +103,8 @@ export const Problem = () => {
         submitSolution()
     } 
     return (
-        <div className='container flex flex-col mx-auto gap-2 my-5 px-4'>
+        <div className='container grid grid-cols-2 max-lg:grid-cols-1 mx-auto gap-3 my-5 px-4'>
+            <div className="flex flex-col gap-2">
                 <p className='font-bold text-6xl'>
                     #{problem.getProblem.title}
                 </p>
@@ -119,15 +120,15 @@ export const Problem = () => {
                             <TableColumn>Rating</TableColumn>
                         </TableHeader>
                         <TableBody>
-                        <TableRow>
-                            <TableCell>{problem.getProblem.creator}</TableCell>
-                            <TableCell>{problem.getProblem.type}</TableCell>
-                            <TableCell>{problem.getProblem.difficulty}</TableCell>
-                            <TableCell>{problem.getProblem.category}</TableCell>
-                            <TableCell>{problem.getProblem.subcategories}</TableCell>
-                            <TableCell>69 users</TableCell>
-                            <TableCell>69%</TableCell>
-                        </TableRow>
+                            <TableRow>
+                                <TableCell>{problem.getProblem.creator}</TableCell>
+                                <TableCell>{problem.getProblem.type}</TableCell>
+                                <TableCell>{problem.getProblem.difficulty}</TableCell>
+                                <TableCell>{problem.getProblem.category}</TableCell>
+                                <TableCell>{problem.getProblem.subcategories}</TableCell>
+                                <TableCell>69 users</TableCell>
+                                <TableCell>69%</TableCell>
+                            </TableRow>
                         </TableBody>
                     </Table>
                 </div>
@@ -178,10 +179,12 @@ export const Problem = () => {
                                         <Snippet dangerouslySetInnerHTML={{__html: example.output}} symbol=""></Snippet>
                                     </>
                                 )}
-                            </div>  
+                            </div>
                         ))}
                     </div>
                 )}
+            </div>
+            <div className="mt-[85px] max-lg:mt-5]">
                 {user && user.getUser && (
                     <div className='flex flex-col'>
                         <div className='w-[100%] h-[100%] bg-[#1e1e1e] rounded flex justify-between align-center'>
@@ -198,6 +201,7 @@ export const Problem = () => {
                         <TestingSolution isOpen={isOpen} onClose={onOpenChange} loading={loadingTests} tests={tests}/>
                     </div>
                 )}
+            </div>
             </div>
     )
 }

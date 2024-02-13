@@ -1,7 +1,7 @@
 import { CardBody, CardHeader, Card, Divider } from "@nextui-org/react"
 import { Listbox, ListboxItem, ListboxSection } from "@nextui-org/react"
 import { Link } from "react-router-dom"
-export const Problems = () => {
+export const ProblemsSelection = () => {
     const problems = [
         {
             category: 'Array',
@@ -9,17 +9,17 @@ export const Problems = () => {
                 'Static Arrays',
                 'Dynamic Arrays',
                 'Bidimensional Arrays',
-                'Subarray Problems',
-                'Matrix Problems',
+                'Subarray ProblemsSelection',
+                'Matrix ProblemsSelection',
                 'Rotation of Arrays',
-                'Sliding Window Problems',
+                'Sliding Window ProblemsSelection',
                 'Two Pointers Technique',
-                'Prefix Sum Problems',
-                'Histogram Problems',
+                'Prefix Sum ProblemsSelection',
+                'Histogram ProblemsSelection',
                 'Array Partitioning',
-                'Maximum Subarray Problems',
-                'Minimum Subarray Problems',
-                'Sum Pair Problems',
+                'Maximum Subarray ProblemsSelection',
+                'Minimum Subarray ProblemsSelection',
+                'Sum Pair ProblemsSelection',
                 'Search in Arrays',
                 'Sorting in Arrays',
                 'Sparse Arrays',
@@ -66,8 +66,8 @@ export const Problems = () => {
                 'Priority Queues',
                 'Double-ended Queues',
                 'Queue Applications',
-                'BFS (Breadth-First Search) Problems',
-                'Sliding Window Problems using Queues',
+                'BFS (Breadth-First Search) ProblemsSelection',
+                'Sliding Window ProblemsSelection using Queues',
                 'Advanced Queue Techniques',
             ]
         },
@@ -85,7 +85,7 @@ export const Problems = () => {
                 'Tree Traversal',
                 'Level Order Traversal',
                 'Tree Operations and Manipulation',
-                'Tree Problems with Recursion',
+                'Tree ProblemsSelection with Recursion',
                 'Advanced Tree Techniques',
             ]
         },
@@ -104,7 +104,7 @@ export const Problems = () => {
                 'Flows and Matching',
                 'Network Flow Algorithms',
                 'Cycles and Cycle Detection',
-                'Graph Problems with Recursion',
+                'Graph ProblemsSelection with Recursion',
                 'Advanced Graph Techniques',
             ]
         },

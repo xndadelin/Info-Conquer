@@ -68,66 +68,78 @@ export const Solution = () => {
         console.log(error)
     }
     return (
-        <div className="container mx-auto flex flex-col my-10 p-3 gap-5">
-           <p className="text-5xl">Solution for problem: <Link className="text-default-500" to={`/problems/${solution.getSolution.problem}`}>{solution.getSolution.problem}</Link></p>
-            <Table>
-                <TableHeader>
-                    <TableColumn>Status</TableColumn>
-                    <TableColumn>Username</TableColumn>
-                    <TableColumn>Date</TableColumn>
-                    <TableColumn>File memory</TableColumn>
-                    <TableColumn>IO</TableColumn>
-                    <TableColumn>Solved</TableColumn>
-                    <TableColumn>Score</TableColumn>
-                </TableHeader>
-                <TableBody>
-                    <TableRow>
-                        <TableCell>{solution.getSolution.compilationError ? 'Rejected' : 'Accepted'}</TableCell>
-                        <TableCell>{solution.getSolution.username}</TableCell>
-                        <TableCell>{solution.getSolution.date}</TableCell>
-                        <TableCell>{solution.getSolution.fileMemory + ' bytes'}</TableCell>
-                        <TableCell>{solution.getSolution.io}</TableCell>
-                        <TableCell>{solution.getSolution.score === "100" ? 'Yes': 'No'}</TableCell>
-                        <TableCell>{solution.getSolution.score}</TableCell>
-                    </TableRow>
-                </TableBody>
-            </Table>
-           {!solution.getSolution.compilationError ? (
-               <>
-                   <p className="text-4xl">Tests summary</p>
-                   <Table>
-                       <TableHeader>
-                           <TableColumn>Test</TableColumn>
-                           <TableColumn>Execution time</TableColumn>
-                           <TableColumn>Memory used</TableColumn>
-                           <TableColumn>Score</TableColumn>
-                           <TableColumn>Status</TableColumn>
-                           {solution.getSolution.score === "100" && <TableColumn>Test case</TableColumn>}
-                       </TableHeader>
-                       <TableBody>
-                           {solution.getSolution.tests.map((test, index) => (
-                               <TableRow>
-                                   <TableCell>{index + 1}</TableCell>
-                                   <TableCell>{test.executionTime + ' ms'}</TableCell>
-                                   <TableCell>{test.memoryUsed + ' MB'}</TableCell>
-                                   <TableCell>{test.score}</TableCell>
-                                   <TableCell>{test.status}</TableCell>
-                                   {solution.getSolution.score === "100" && <TableCell>
-                                       <Button onClick={() => setSelectedTestCase(test)} variant="flat">See test
-                                           case</Button>
-                                   </TableCell>}
-                               </TableRow>
-                           ))}
-                       </TableBody>
-                     </Table>
-               </>
-           ): (
-               <Snippet color="danger" symbol="">
+        <div className="container mx-auto grid grid-cols-2 max-lg:grid-cols-1 my-10 p-3 gap-5">
+            <div>
+                <p className="text-5xl mb-5">Solution for problem: <Link className="text-default-500" to={`/problems/${solution.getSolution.problem}`}>{solution.getSolution.problem}</Link></p>
+                <Table>
+                    <TableHeader>
+                        <TableColumn hidden></TableColumn>
+                        <TableColumn hidden></TableColumn>
+                    </TableHeader>
+                    <TableBody>
+                        <TableRow>
+                            <TableCell>Status</TableCell>
+                            <TableCell>{solution.getSolution.compilationError ? 'Rejected' : 'Accepted'}</TableCell>
+                        </TableRow>
+                        <TableRow>
+                            <TableCell>Username</TableCell>
+                            <TableCell>{solution.getSolution.username}</TableCell>
+                        </TableRow>
+                        <TableRow>
+                            <TableCell>Date</TableCell>
+                            <TableCell>{solution.getSolution.date}</TableCell>
+                        </TableRow>
+                        <TableRow>
+                            <TableCell>File memory</TableCell>
+                            <TableCell>{solution.getSolution.fileMemory + ' bytes'}</TableCell>
+                        </TableRow>
+                        <TableRow>
+                            <TableCell>IO</TableCell>
+                            <TableCell>{solution.getSolution.io}</TableCell>
+                        </TableRow>
+                        <TableRow>
+                            <TableCell>Score</TableCell>
+                            <TableCell>{solution.getSolution.score === "100" ? 'Yes' : 'No'}</TableCell>
+                        </TableRow>
+                    </TableBody>
+                </Table>
+                {!solution.getSolution.compilationError ? (
+                    <div>
+                        <p className="text-4xl mt-4 mb-4">Tests summary</p>
+                        <Table>
+                            <TableHeader>
+                                <TableColumn>Test</TableColumn>
+                                <TableColumn>Execution time</TableColumn>
+                                <TableColumn>Memory used</TableColumn>
+                                <TableColumn>Score</TableColumn>
+                                <TableColumn>Status</TableColumn>
+                                {solution.getSolution.score === "100" && <TableColumn>Test case</TableColumn>}
+                            </TableHeader>
+                            <TableBody>
+                                {solution.getSolution.tests.map((test, index) => (
+                                    <TableRow>
+                                        <TableCell>{index + 1}</TableCell>
+                                        <TableCell>{test.executionTime + ' ms'}</TableCell>
+                                        <TableCell>{test.memoryUsed + ' MB'}</TableCell>
+                                        <TableCell>{test.score}</TableCell>
+                                        <TableCell>{test.status}</TableCell>
+                                        {solution.getSolution.score === "100" && <TableCell>
+                                            <Button onClick={() => setSelectedTestCase(test)} variant="flat">See test
+                                                case</Button>
+                                        </TableCell>}
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </div>
+                ): (
+                    <Snippet color="danger" symbol="">
                    <pre style={{whiteSpace: 'pre-wrap'}}>
                        {solution.getSolution.compilationError}
                    </pre>
-               </Snippet>
-           )}
+                    </Snippet>
+                )}
+            </div>
             <Modal onClose={() => setSelectedTestCase(null)} isOpen={selectedTestCase !== null}>
                 <ModalContent>
                     {(onClose) => (

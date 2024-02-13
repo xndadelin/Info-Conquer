@@ -117,6 +117,18 @@ module.exports = {
         async getSolution(_, {id}, context) {
             const solution = await User.findOne({"solutions.id_solution": id}, {"solutions.$": 1});
             return solution.solutions[0]
+        },
+        async getProblems(_, {category, subcategory}) {
+            const query = {};
+            if (category) {
+                query.category = category;
+            }
+            if (subcategory) {
+                query.subcategories = { $in: [subcategory] };
+            }
+            const problems = await Problem.find(query)
+            console.log(problems)
+            return problems;
         }
     },
     Mutation: {
