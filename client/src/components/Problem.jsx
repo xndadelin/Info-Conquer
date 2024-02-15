@@ -184,7 +184,7 @@ export const Problem = () => {
                     </div>
                 )}
             </div>
-            <div className="mt-[85px] max-lg:mt-5]">
+            <div className="mt-[85px] max-lg:mt-0">
                 {user && user.getUser && (
                     <div className='flex flex-col'>
                         <div className='w-[100%] h-[100%] bg-[#1e1e1e] rounded flex justify-between align-center'>

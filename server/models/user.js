@@ -21,6 +21,9 @@ const userSchema = new mongoose.Schema({
     },
     solutions: {
         type: Array,
+    },
+    solvedProblems:{
+        type: Array
     }
 }, {timestamps: true})
 

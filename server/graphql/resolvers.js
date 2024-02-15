@@ -97,17 +97,11 @@ module.exports = {
         async getProfile(_, {username}){
             try{
                 const user = await User.findOne({username})
-                const solvedProblems = new Set();
                 if(!user) {
                     throw new ApolloError('User does not exist');
                 }else{
-                    user.solutions.forEach((solution) => {
-                        if(solution.score === 100)
-                            solvedProblems.add(solution.problem)
-                    })
                     return {
                         ...user._doc,
-                        solvedProblems
                     };
                 }
             }catch(error){
@@ -234,6 +228,9 @@ module.exports = {
                 }
                 const testResults = graderCPP(problema.tests, code, problema.title, user.username, problema.type);
                 user.solutions.push(testResults)
+                if(testResults.score === 100)
+                    if(!user.solvedProblems.includes(problema.title))
+                        user.solvedProblems.push(problema.title);
                 await user.save();
                 return testResults
             }catch(error){
