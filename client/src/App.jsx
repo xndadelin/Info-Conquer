@@ -1,6 +1,6 @@
 import { NavigationBar } from "./components/Navbar";
 import {Landing} from './pages/LandingUnauth'
-import { LandingAuth } from "./pages/LandingAuth";
+import {Homepage} from "./components/Homepage";
 import { Footer } from "./components/Footer";
 import { ProblemsSelection } from "./pages/ProblemsSelection";
 import {Routes, Route} from 'react-router-dom'
@@ -11,15 +11,19 @@ import { UserContext } from "./context/UserContext";
 import {Profile} from './components/Profile'
 import {Solution} from "./components/Solution";
 import {Problems} from "./components/Problems"
+import {Loading} from "./components/Loading";
+import {Forum} from "./pages/Forum";
 function App() {
   const {user} = useContext(UserContext)
+  if(!user)
+    return <Loading/>
   return (
     <div>
       <NavigationBar/>
         <Routes>
           <Route
             path="/"
-            element={!user || !user.getUser ? <Landing/>: <LandingAuth/>}
+            element={!user || !user.getUser ? <Landing/>: <Homepage/>}
           />
           <Route
             path="/problems/publish"
@@ -44,6 +48,10 @@ function App() {
           <Route
             path="/problems/:category/:subcategory"
             element={<Problems/>}
+          />
+          <Route
+            path="/forum"
+            element={<Forum/>}
           />
         </Routes>
       <Footer/>

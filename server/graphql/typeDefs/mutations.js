@@ -7,5 +7,6 @@ module.exports = gql`
         logout: Response
         createProblem(problemInput: CreateProblemInput) : Response
         submitSolution(solutionInput: SolutionInput): Solution
+        forumPost(content: String, category: String, title: String): Response
     }
 `;

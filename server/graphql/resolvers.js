@@ -5,6 +5,7 @@ const {ApolloError} = require('apollo-server-express')
 const cookie = require('cookie');
 const Problem = require('../models/problem');
 const {graderCPP} = require('../utils/graders/graderCPP')
+const Forum = require("../models/forumpost")
 const generateToken = (user) => {
     return jwt.sign({ username: user.username, admin: user.admin }, process.env.SECRET, { expiresIn: '1h' });
 };
@@ -123,6 +124,14 @@ module.exports = {
             const problems = await Problem.find(query)
             console.log(problems)
             return problems;
+        },
+        async getForumPosts(_, {}, context){
+            try{
+                const forumPosts = await Forum.find({});
+                return forumPosts;
+            }catch (error){
+                throw ApolloError(error)
+            }
         }
     },
     Mutation: {
@@ -206,13 +215,14 @@ module.exports = {
                 if(problemsExists){
                     throw new ApolloError('Problem exists')
                 }else{
-                    const problem = new Problem({creator: creator.username, title, description, requirements, type, tags, difficulty, category, subcategories, input, output, tests, timeExecution, limitMemory, examples, indications, languages})
+                    const problem =  new Problem({creator: creator.username, title, description, requirements, type, tags, difficulty, category, subcategories, input, output, tests, timeExecution, limitMemory, examples, indications, languages})
                     await problem.save()
                     return {
                         success: true
                     }
                 }
             }catch(error){
+                console.log(error)
                 throw new ApolloError(error)
             }
         },
@@ -235,6 +245,28 @@ module.exports = {
                 return testResults
             }catch(error){
                 throw new ApolloError(error)
+            }
+        },
+        async forumPost(_, {category, content, title}, context){
+            const user = await getUser(context);
+            if(!user){
+                throw new ApolloError('You have to be logged in order to post!');
+            }
+            try{
+                if(!category || !title || !content)
+                    return {
+                        error: {
+                            message: 'You have to fill all the fields!'
+                        }
+                    }
+                const forumPost = new Forum({creator: user.username, content, category, replies: [], title})
+                await forumPost.save()
+            }catch (e){
+                return {
+                    error: {
+                        message: 'You have to fill all the fields!'
+                    }
+                }
             }
         }
     }

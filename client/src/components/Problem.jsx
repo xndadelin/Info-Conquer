@@ -8,6 +8,7 @@ import { useContext, useState } from "react";
 import { UserContext } from "../context/UserContext";
 import {useMutation} from '@apollo/client'
 import { TestingSolution } from './TestingSolution'
+import {NotFound} from "../pages/NotFound";
 export const Problem = () => {
     const {user} = useContext(UserContext)
     const {isOpen, onOpenChange} = useDisclosure()
@@ -79,7 +80,7 @@ export const Problem = () => {
         variables: {
             solutionInput: {
                 code: code,
-                problem: problem && problem.getProblem.title
+                problem: problem && problem.getProblem && problem.getProblem.title
             }
         },
         onCompleted: (data) => {
@@ -96,8 +97,8 @@ export const Problem = () => {
             <Error error={error.message} />
         )
     }
-    if(!problem.getProblem){
-        return null
+    if(!problem.getProblem || !problem){
+        return <NotFound/>
     }
     const onHandleSubmitSolution = () => {
         submitSolution()
