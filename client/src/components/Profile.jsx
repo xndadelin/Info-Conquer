@@ -31,7 +31,8 @@ export const Profile = () => {
                     score,
                     date,
                     compilationError,
-                    id_solution
+                    id_solution,
+                    language
                 },
                 solvedProblems
             }
@@ -53,7 +54,6 @@ export const Profile = () => {
     if(loading || !user){
         return  <Loading/>
     }
-    console.log(user)
     return (
         <Tabs className="container mx-auto flex flex-col my-5 px-5">
             <Tab key="general" title="General informations" className="mx-auto container p-5">
@@ -92,7 +92,7 @@ export const Profile = () => {
                         <p className="text-3xl">Solved problems</p>
                         <div className="flex flex-wrap">
                             {user.getProfile.solvedProblems.map((problem) => (
-                                <Chip>
+                                <Chip className="m-2">
                                     <Link to={`/problems/${problem}`}>{problem}</Link>
                                 </Chip>
                             ))}
@@ -121,7 +121,7 @@ export const Profile = () => {
                                             <Link to={`/problems/${username}/${solution.problem}`}>{solution.problem}</Link>
                                         </TableCell>
                                         <TableCell>{solution.date}</TableCell>
-                                        <TableCell>{'cpp'}</TableCell>
+                                        <TableCell>{solution.language}</TableCell>
                                         <TableCell>{solution.score}</TableCell>
                                         <TableCell>{solution.compilationError ? 'Rejected' : 'Accepted'}</TableCell>
                                     </TableRow>

@@ -85,8 +85,8 @@ int main()
                             <div className="h-[13px] mx-1 self-center w-[13px] rounded-full bg-yellow-400"></div>
                             <div className="h-[13px] mx-1 self-center w-[13px] rounded-full bg-green-600"></div>
                         </div>
-                        <div className='h-[100%] flex-1'>
-                            <Editor theme="vs-dark" language="cpp" defaultValue={code}/>
+                        <div className='h-[500px] flex-1'>
+                            <Editor theme="vs-dark" height="500px" language="cpp" defaultValue={code}/>
                         </div>
                     </div>
                 </div>

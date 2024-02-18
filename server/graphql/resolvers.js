@@ -234,7 +234,7 @@ module.exports = {
                 throw new ApolloError(error)
             }
         },
-        async submitSolution(_, {solutionInput: {problem, code}}, context){
+        async submitSolution(_, {solutionInput: {problem, code, language}}, context){
             try{
                 const problema = await Problem.findOne({title: problem}).select('tests title type')
                 if(!problem){
@@ -244,7 +244,7 @@ module.exports = {
                 if(!user){
                     throw new ApolloError('You have to be logged in order to submit a solution');
                 }
-                const testResults = graderCPP(problema.tests, code, problema.title, user.username, problema.type);
+                const testResults = graderCPP(problema.tests, code, problema.title, user.username, problema.type, language);
                 user.solutions.push(testResults)
                 if(testResults.score === 100)
                     if(!user.solvedProblems.includes(problema.title))

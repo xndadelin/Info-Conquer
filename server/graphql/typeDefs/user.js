@@ -22,6 +22,7 @@ module.exports = gql`
         date: String, 
         id_solution: String,
         compilationError: String
+        language: String
     }
     type ProfileUser {
         username: String,

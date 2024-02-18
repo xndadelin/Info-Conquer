@@ -37,7 +37,7 @@ export const Posts = () => {
                         </p>
                         <p className="text-default-500">Posted by {post.creator} on  {new Date(post.createdAt).toLocaleDateString()}</p>
                     </CardHeader>
-                    <CardBody className="max-h-[400px] overflow-hidden" style={{textOverflow: 'ellipsis'}}>
+                    <CardBody className="max-h-[400px] overflow-hidden text">
                         <div dangerouslySetInnerHTML={{__html: post.content}}></div>
                     </CardBody>
                     <CardFooter>

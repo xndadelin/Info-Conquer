@@ -13,6 +13,7 @@ export const Problem = () => {
     const {user} = useContext(UserContext)
     const {isOpen, onOpenChange} = useDisclosure()
     const [code, setCode] = useState('')
+    const [language, setLanguage] = useState('')
     const [tests, setTests] = useState('')
     const {id} = useParams()
     const queryProblem = gql`
@@ -70,7 +71,7 @@ export const Problem = () => {
     const {data:problem, loading, error} = useQuery(queryProblem, {
         variables: {
             title: id,
-            code: code
+            code: code,
         },
         onError: (error) => {
             console.log(error)
@@ -80,7 +81,8 @@ export const Problem = () => {
         variables: {
             solutionInput: {
                 code: code,
-                problem: problem && problem.getProblem && problem.getProblem.title
+                problem: problem && problem.getProblem && problem.getProblem.title,
+                language
             }
         },
         onCompleted: (data) => {
@@ -102,7 +104,7 @@ export const Problem = () => {
     }
     const onHandleSubmitSolution = () => {
         submitSolution()
-    } 
+    }
     return (
         <div className='container grid grid-cols-2 max-lg:grid-cols-1 mx-auto gap-3 my-5 px-4'>
             <div className="flex flex-col gap-2">
@@ -189,7 +191,7 @@ export const Problem = () => {
                 {user && user.getUser && (
                     <div className='flex flex-col'>
                         <div className='w-[100%] h-[100%] bg-[#1e1e1e] rounded flex justify-between align-center'>
-                            <Select label="Select language" size='sm' className='w-[200px] mt-1 ml-1'>
+                            <Select onChange={(e) => setLanguage(e.target.value)} label="Select language" size='sm' className='w-[200px] mt-1 ml-1'>
                                 {problem.getProblem.languages.map((language) => (
                                     <SelectItem key={language}>{language}</SelectItem>
                                 ))}

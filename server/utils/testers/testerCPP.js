@@ -1,16 +1,15 @@
 const fs = require('fs');
 const {execSync} = require('child_process');
 
-const testerCPP = (input, output, punctaj, username) => {
+const testerCPP = (input, output, punctaj, idSolution) => {
     let executionTime = 0;
     let memoryUsed = 0;
     try{
-        execSync(`/usr/bin/time -v ./${username}/test > ${username}/output.txt 2> ${username}/metrics.txt`, {
+        execSync(`/usr/bin/time -v ./${idSolution}/test > ${idSolution}/output.txt 2> ${idSolution}/metrics.txt`, {
             input: input,
             encoding: 'utf-8'
         });
     }catch(error){
-        console.log(error)
         return {
             status: error.status,
             success: false,
@@ -21,10 +20,10 @@ const testerCPP = (input, output, punctaj, username) => {
             output
         }
     }
-    const outputTest = fs.readFileSync(`${username}/output.txt`, 'utf-8');
+    const outputTest = fs.readFileSync(`${idSolution}/output.txt`, 'utf-8');
     const success = outputTest.trim() === output.trim();
     const score = success ? punctaj : 0;
-    const metrics = fs.readFileSync(`${username}/metrics.txt`, 'utf-8');
+    const metrics = fs.readFileSync(`${idSolution}/metrics.txt`, 'utf-8');
     const elapsedTimeLine = metrics.match(/Elapsed \(wall clock\) time \(h:mm:ss or m:ss\): ([\d\.:]+)/)[0];
     const elapsedTime = elapsedTimeLine.split(': ').pop();
     const elapsedTimeParts = elapsedTime.split(':').reverse();

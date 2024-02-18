@@ -1,12 +1,25 @@
 const fs = require('fs');
 const { execSync } = require('child_process');
 
-const compilerCPP = (code, username) => {
-    fs.mkdirSync(username)
-    fs.writeFileSync(`${username}/test.cpp`, code);
-    const fileMemory = fs.statSync(`${username}/test.cpp`).size;
+const compilerCPP = (code, idSolution, language) => {
+    fs.mkdirSync(idSolution)
+    let languageType = {
+        extension: null,
+        command: null,
+    };
+    switch(language){
+        case 'C++':
+            languageType.extension = 'cpp'
+            language.command = '/usr/bin/g++'
+            break;
+        case 'C':
+            languageType.extension = 'c'
+            languageType.command = '/usr/bin/gcc'
+    }
+    fs.writeFileSync(`${idSolution}/test.${languageType.extension}`, code);
+    const fileMemory = fs.statSync(`${idSolution}/test.${languageType.extension}`).size;
     try {
-        const compilationResult = execSync(`/usr/bin/g++ ${username}/test.cpp -o ./${username}/test 2>&1`, {
+        const compilationResult = execSync(`${languageType.command} ${idSolution}/test.${languageType.extension} -o ./${idSolution}/test 2>&1`, {
             encoding: 'utf-8'
         });
         return {
