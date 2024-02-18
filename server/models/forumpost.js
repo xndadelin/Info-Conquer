@@ -21,5 +21,5 @@ const forumSchema = new mongoose.Schema({
         type: String,
         required: true
     }
-})
+}, {timestamps: true})
 module.exports = mongoose.model('forum', forumSchema);

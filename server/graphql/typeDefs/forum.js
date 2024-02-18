@@ -2,12 +2,11 @@ const {gql} = require('apollo-server-express')
 
 module.exports = gql`
       type Reply {
-        _id: String,
         creator: String,
         content: String,
-        replies: [Reply],
         likes: Int,
         dislikes: Int,
+        createdAt: String
       }
       type ForumPost {
         _id: String
@@ -18,5 +17,6 @@ module.exports = gql`
         likes: Int, 
         dislikes: Int,
         title: String
+        createdAt: String
       }
 `

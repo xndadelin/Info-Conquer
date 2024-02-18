@@ -132,6 +132,14 @@ module.exports = {
             }catch (error){
                 throw ApolloError(error)
             }
+        },
+        async getForumPost(_, {id}, context){
+            try{
+                const forumPost = await Forum.findOne({_id: id});
+                return forumPost
+            }catch (e){
+                throw new ApolloError(e)
+            }
         }
     },
     Mutation: {
@@ -267,6 +275,28 @@ module.exports = {
                         message: 'You have to fill all the fields!'
                     }
                 }
+            }
+        },
+        async postForumReply(_, {content, id}, context){
+            try{
+                if(!content || !id){
+                    throw new ApolloError('You have to fill all the fields or the forum post does not exist anymore.')
+                }else{
+                    const forumPost = await Forum.findOne({_id: id});
+                    if(!forumPost){
+                        throw new ApolloError('This forum post does not exist')
+                    }else{
+                        const user = await getUser(context);
+                        if(!user){
+                            throw new ApolloError('You have to be looged in order to reply to a forum post');
+                        }else {
+                            forumPost.replies.push({creator: user.username, content, likes: 0, dislikes: 0, createdAt: new Date() })
+                            await forumPost.save();
+                        }
+                    }
+                }
+            }catch(error){
+                throw new ApolloError(error)
             }
         }
     }

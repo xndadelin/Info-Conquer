@@ -13,6 +13,7 @@ import {Solution} from "./components/Solution";
 import {Problems} from "./components/Problems"
 import {Loading} from "./components/Loading";
 import {Forum} from "./pages/Forum";
+import {ForumPost} from "./components/ForumPost";
 function App() {
   const {user} = useContext(UserContext)
   if(!user)
@@ -52,6 +53,10 @@ function App() {
           <Route
             path="/forum"
             element={<Forum/>}
+          />
+          <Route
+            path="/forum/posts/:id"
+            element={<ForumPost/>                                                                                                                                      }
           />
         </Routes>
       <Footer/>
