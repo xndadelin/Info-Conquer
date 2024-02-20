@@ -4,16 +4,20 @@ import { Loading } from './Loading'
 import { Error } from './Error'
 import { TableCell, Table, TableHeader, TableRow, TableColumn, TableBody, Snippet, Button, Select, SelectItem, useDisclosure, Modal } from '@nextui-org/react'
 import {Editor} from '@monaco-editor/react'
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../context/UserContext";
 import {useMutation} from '@apollo/client'
 import { TestingSolution } from './TestingSolution'
 import {NotFound} from "../pages/NotFound";
+import { getTemplate } from '../utils/getLanguageTemplate'
 export const Problem = () => {
     const {user} = useContext(UserContext)
     const {isOpen, onOpenChange} = useDisclosure()
-    const [code, setCode] = useState('')
     const [language, setLanguage] = useState('')
+    const [code, setCode] = useState()
+    useEffect(() => {
+        setCode(getTemplate(language, problem))
+    }, [language])
     const [tests, setTests] = useState('')
     const {id} = useParams()
     const queryProblem = gql`
@@ -199,7 +203,7 @@ export const Problem = () => {
                             <Button className='mt-2 mb-2 mr-2' color='success' variant='flat' onClick={() => {onHandleSubmitSolution(); onOpenChange(); setTests('')}}>Submit solution</Button>
                         </div>
                         <div>
-                            <Editor onChange={(val, e) => setCode(val)} theme='vs-dark' language='cpp' height={'80vh'} />
+                            <Editor onChange={(val, e) => setCode(val)} value={code} theme='vs-dark' language='cpp' height={'80vh'} />
                         </div>
                         <TestingSolution isOpen={isOpen} onClose={onOpenChange} loading={loadingTests} tests={tests}/>
                     </div>

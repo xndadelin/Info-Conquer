@@ -1,25 +1,36 @@
 const fs = require('fs');
 const { execSync } = require('child_process');
 
-const compilerCPP = (code, idSolution, language) => {
+const compilerCPP = (code, idSolution, language, problem) => {
     fs.mkdirSync(idSolution)
-    let languageType = {
-        extension: null,
-        command: null,
-    };
+    let query = {}
     switch(language){
         case 'C++':
-            languageType.extension = 'cpp'
-            language.command = '/usr/bin/g++'
+            query.extension = 'cpp'
+            query.cmd = `g++ ${idSolution}/test.cpp -o ./${idSolution}/test 2>&1`
             break;
         case 'C':
-            languageType.extension = 'c'
-            languageType.command = '/usr/bin/gcc'
+           query.extension = 'c'
+           query.cmd = `gcc ${idSolution}/test.c -o ./${idSolution}/test 2>&1`
+        case 'C#':
+            query.extension = 'cs'
+            query.cmd = `mcs -out:${idSolution}/test.exe ${idSolution}/test.cs`
+        case 'Java':
+            query.extension = 'java'
+            query.cmd = `javac ./${idSolution}/${problem}.java`    
     }
-    fs.writeFileSync(`${idSolution}/test.${languageType.extension}`, code);
-    const fileMemory = fs.statSync(`${idSolution}/test.${languageType.extension}`).size;
+    let file
+    switch(language){
+        case 'Java':
+            file = `${idSolution}/${problem}.${query.extension}`
+            break;
+        default:
+            file = `${idSolution}/test.${query.extension}`
+    }
+    fs.writeFileSync(file, code);
+    const fileMemory = fs.statSync(file).size;
     try {
-        const compilationResult = execSync(`${languageType.command} ${idSolution}/test.${languageType.extension} -o ./${idSolution}/test 2>&1`, {
+        const compilationResult = execSync(query.cmd, {
             encoding: 'utf-8'
         });
         return {
