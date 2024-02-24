@@ -158,6 +158,33 @@ module.exports = {
             }catch (e){
                 throw new ApolloError(e)
             }
+        },
+        async getSubmissions(_, {title}, context){
+            try{
+                if(!title){
+                    throw new ApolloError('The title is null')
+                }
+                //optimize this
+                const users = await User.find({})
+                const solutions = []
+                users.forEach(user => {
+                    user.solutions.forEach(solution => {
+                        if(solution.problem === title){
+                            solutions.push({
+                                username: user.username,
+                                problem: solution.problem,
+                                language: solution.language,
+                                score: solution.score,
+                                date: solution.date,
+                                compilationError: solution.compilationError
+                            })
+                        }
+                    })
+                })
+                return solutions
+            }catch(e){
+                throw new ApolloError(e)
+            }
         }
     },
     Mutation: {

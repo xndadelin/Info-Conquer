@@ -10,5 +10,6 @@ module.exports = gql`
         getProblems(category: String, subcategory: String): [Problem]
         getForumPosts: [ForumPost]
         getForumPost(id: String): ForumPost
+        getSubmissions(title: String): [Submission]
     }
 `;

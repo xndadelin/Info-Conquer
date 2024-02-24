@@ -30,4 +30,12 @@ module.exports = gql`
         input: String,
         output: String,
     }
+    type Submission {
+        username: String,
+        problem: String,
+        language: String,
+        score: String,
+        date: String,
+        compilationError: String,
+    }
 `;
