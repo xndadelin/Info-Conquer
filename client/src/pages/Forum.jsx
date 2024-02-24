@@ -75,9 +75,11 @@ export const Forum = () => {
                             apiKey={process.env.REACT_APP_TINY_API}
                             initialValue=""
                             init={{
-                                height: 500,
+                                height: 250,
                                 menubar: false,
-                                plugins: ['']
+                                plugins: ['code'],
+                                skin: 'oxide-dark',
+                                content_css: 'tinymce-5-dark'
                             }}
                         />
                     </ModalBody>

@@ -9,5 +9,7 @@ module.exports = gql`
         submitSolution(solutionInput: SolutionInput): Solution
         forumPost(content: String, category: String, title: String): Response
         postForumReply(content: String, id: String) : Response
+        likeForumPost(id: String): Response
+        dislikeForumPost(id: String): Response
     }
 `;

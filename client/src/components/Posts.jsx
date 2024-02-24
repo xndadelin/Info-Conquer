@@ -24,6 +24,7 @@ export const Posts = () => {
     const handleUpVote = (id) => {
         console.log(id)
     }
+    console.log(data)
     //solution for nested replies?????????, or just throw it
     return (
         <div className="mt-5 grid gap-4">

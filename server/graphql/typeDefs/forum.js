@@ -14,9 +14,11 @@ module.exports = gql`
         content: String,
         category: String,
         replies: [Reply],
-        likes: Int, 
-        dislikes: Int,
+        likes: [String], 
+        dislikes: [String],
         title: String
         createdAt: String
+        hasLiked: Boolean
+        hasDisliked: Boolean
       }
 `

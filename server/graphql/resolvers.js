@@ -5,7 +5,8 @@ const {ApolloError} = require('apollo-server-express')
 const cookie = require('cookie');
 const Problem = require('../models/problem');
 const {graderCPP} = require('../utils/graders/graderCPP')
-const Forum = require("../models/forumpost")
+const Forum = require("../models/forumpost");
+const forum = require('./typeDefs/forum');
 const generateToken = (user) => {
     return jwt.sign({ username: user.username, admin: user.admin }, process.env.SECRET, { expiresIn: '1h' });
 };
@@ -122,7 +123,6 @@ module.exports = {
                 query.subcategories = { $in: [subcategory] };
             }
             const problems = await Problem.find(query)
-            console.log(problems)
             return problems;
         },
         async getForumPosts(_, {}, context){
@@ -136,6 +136,24 @@ module.exports = {
         async getForumPost(_, {id}, context){
             try{
                 const forumPost = await Forum.findOne({_id: id});
+                if(!forumPost){
+                    throw new ApolloError('This forum post does not exist')
+                }
+                const user = await getUser(context);
+                if(user){
+                    if(forumPost.likes.includes(user.username)){
+                        forumPost.hasLiked = true
+                    }else{
+                        forumPost.hasLiked = false
+                    }
+                }
+                if(user){
+                    if(forumPost.dislikes.includes(user.username)){
+                        forumPost.hasDisliked = true
+                    }else{
+                        forumPost.hasDisliked = false
+                    }
+                }
                 return forumPost
             }catch (e){
                 throw new ApolloError(e)
@@ -267,7 +285,7 @@ module.exports = {
                             message: 'You have to fill all the fields!'
                         }
                     }
-                const forumPost = new Forum({creator: user.username, content, category, replies: [], title})
+                const forumPost = new Forum({creator: user.username, content, category, replies: [], title, likes: [], dislikes: []})
                 await forumPost.save()
             }catch (e){
                 return {
@@ -297,6 +315,60 @@ module.exports = {
                 }
             }catch(error){
                 throw new ApolloError(error)
+            }
+        },
+        async likeForumPost(_, {id}, context){
+            try{
+                if(!id) throw new ApolloError('The id is required')
+                const user = await getUser(context);
+                if(!user){
+                    throw new ApolloError('You have to be logged in order to like a forum post')
+                }
+                const forumPost = await Forum.findOne({_id: id});
+                if(!forumPost){
+                    throw new ApolloError('This forum post does not exist')
+                }
+                if(forumPost.likes && forumPost.likes.includes(user.username)){
+                    return {
+                        success: false
+                    }
+                }else{
+                    forumPost.dislikes = forumPost.dislikes.filter(like => like !== user.username)
+                    forumPost.likes.push(user.username)
+                    await forumPost.save()
+                    return {
+                        success: true
+                    }
+                }
+            }catch(e){
+                throw new ApolloError(e)
+            }
+        },
+        async dislikeForumPost(_, {id}, context){
+            try{
+                if(!id) throw new ApolloError('The id is required')
+                const user = await getUser(context);
+                if(!user){
+                    throw new ApolloError('You have to be logged in order to dislike a forum post')
+                }
+                const forumPost = await Forum.findOne({_id: id});
+                if(!forumPost){
+                    throw new ApolloError('This forum post does not exist')
+                }
+                if(forumPost.dislikes && forumPost.dislikes.includes(user.username)){
+                    return {
+                        success: false
+                    }
+                }else{
+                    forumPost.likes = forumPost.likes.filter(like => like !== user.username)
+                    forumPost.dislikes.push(user.username)
+                    await forumPost.save()
+                    return {
+                        success: true
+                    }
+                }
+            }catch(e){
+                throw new ApolloError(e)
             }
         }
     }
