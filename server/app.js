@@ -13,7 +13,7 @@ async function startServer(){
     })
     await apolloServer.start()
     app.use((req, res, next) => {
-        res.header("Access-Control-Allow-Origin", "http://localhost:3001", process.env.DROPLET_IP);
+        res.header("Access-Control-Allow-Origin", "http://localhost:3000", process.env.DROPLET_IP);
         res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
         res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
         res.header("Access-Control-Allow-Credentials", "true");
@@ -26,6 +26,9 @@ async function startServer(){
     }))
     app.get('/', (req, res) => {
         res.send('Hello World!')
+    })
+    app.post('/', (req, res) => {
+        res.send('Hello world')
     })
     apolloServer.applyMiddleware({
         app,
