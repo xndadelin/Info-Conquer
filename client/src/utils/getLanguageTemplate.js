@@ -5,13 +5,13 @@ export const getTemplate = (language, problem) => {
 
 int main(){
     std::cout << "Hello world!";
-     return 0;
+    return 0;
 }`
         case 'C':
             return `#include <stdio.h>
 int main() {
     printf("Hello world!");
-        return 0;
+    return 0;
 }`
         case 'C#':
             return `namespace ${problem.getProblem.title}

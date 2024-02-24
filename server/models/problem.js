@@ -75,6 +75,9 @@ const problemSchema = new mongoose.Schema({
     difficulty: {
         type: String,
         required: true
+    },
+    restriction: {
+        type: String,
     }
 });
 

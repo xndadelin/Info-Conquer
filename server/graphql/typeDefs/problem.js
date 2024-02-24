@@ -18,7 +18,8 @@ module.exports = gql`
         limitMemory: String,
         examples: [Example],
         indications: String,
-        languages: [String]
+        languages: [String],
+        restriction: String  
     }
     input CreateProblemInput {
         creator: String, 
@@ -39,7 +40,8 @@ module.exports = gql`
         indications: String,
         languages: [String],
         inputFile: String,
-        outputFile: String  
+        outputFile: String,
+        restriction: String  
     }
     type Test {
         score: String, 

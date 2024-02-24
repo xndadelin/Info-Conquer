@@ -50,8 +50,8 @@ export const PublishProblem = () => {
       }, []);   
     //! TO DO ADD MORE (algoritms, instructions, oop etc...) 
     const problemMutation = gql`
-        mutation CreateProblem($title: String, $description: String, $requirements: String, $type: String, $tags: [String], $difficulty: String, $category: String, $subcategories: [String], $input: String, $output: String, $tests: [TestInput], $timeExecution: String, $limitMemory: String, $examples: [ExampleInput], $indications: String, $languages: [String], $inputFile: String, $outputFile: String) {
-            createProblem(problemInput: {title: $title, description: $description, requirements: $requirements, type: $type, tags: $tags, difficulty: $difficulty, category: $category, subcategories: $subcategories, input: $input, output: $output, tests: $tests, timeExecution: $timeExecution, limitMemory: $limitMemory, examples: $examples, indications: $indications, languages: $languages, inputFile: $inputFile, outputFile: $outputFile}) {
+        mutation CreateProblem($title: String, $description: String, $requirements: String, $type: String, $tags: [String], $difficulty: String, $category: String, $subcategories: [String], $input: String, $output: String, $tests: [TestInput], $timeExecution: String, $limitMemory: String, $examples: [ExampleInput], $indications: String, $languages: [String], $inputFile: String, $outputFile: String, $restriction: String) {
+            createProblem(problemInput: {title: $title, description: $description, requirements: $requirements, type: $type, tags: $tags, difficulty: $difficulty, category: $category, subcategories: $subcategories, input: $input, output: $output, tests: $tests, timeExecution: $timeExecution, limitMemory: $limitMemory, examples: $examples, indications: $indications, languages: $languages, inputFile: $inputFile, outputFile: $outputFile, restriction: $restriction}) {
             success
             error {
                 message

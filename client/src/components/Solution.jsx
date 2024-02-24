@@ -134,10 +134,10 @@ export const Solution = () => {
                         </Table>
                     </div>
                 ): (
-                    <Snippet color="danger" symbol="">
-                   <pre style={{whiteSpace: 'pre-wrap'}}>
-                       {solution.getSolution.compilationError}
-                   </pre>
+                    <Snippet color="danger" symbol="" className="mt-5">
+                        <pre style={{whiteSpace: 'pre-wrap'}}>
+                            {solution.getSolution.compilationError}
+                        </pre>
                     </Snippet>
                 )}
             </div>

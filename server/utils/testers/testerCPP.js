@@ -1,6 +1,6 @@
 const fs = require('fs');
 const {execSync} = require('child_process');
-//to do: metrics wrong, document more about child processes and /usr/bin/time
+//to do:git  metrics wrong, document more about child processes and /usr/bin/time
 const testerCPP = (input, output, punctaj, idSolution, language, problem) => {
     let executionTime = 0;
     let memoryUsed = 0;
@@ -8,10 +8,21 @@ const testerCPP = (input, output, punctaj, idSolution, language, problem) => {
     switch(language){
         case 'C#':
             cmd = `/usr/bin/time -v ./${idSolution}/test.exe > ${idSolution}/output.txt 2> ${idSolution}/metrics.txt`
+            break;
         case 'Java':
             cmd = `/usr/bin/time -v java -classpath ./${idSolution} ${problem} > ${idSolution}/output.txt 2> ${idSolution}/metrics.txt `
+            break;
+        case 'C++':
+            cmd = `/usr/bin/time -v ./${idSolution}/test > ${idSolution}/output.txt 2> ${idSolution}/metrics.txt`    
+            break;
+        case 'C':
+            cmd = `/usr/bin/time -v ./${idSolution}/test > ${idSolution}/output.txt 2> ${idSolution}/metrics.txt` 
+            break;
+        case 'Python':
+            cmd = `/usr/bin/time -v python3 ./${idSolution}/test.py > ${idSolution}/output.txt 2> ${idSolution}/metrics.txt`
     }
     try{
+        console.log(cmd)
         execSync(cmd, {
             input: input,
             encoding: 'utf-8'

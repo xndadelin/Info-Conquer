@@ -43,6 +43,7 @@ export const Problem = () => {
                 }
                 indications
                 languages
+                restriction
             }
         }
     `
@@ -109,6 +110,7 @@ export const Problem = () => {
     const onHandleSubmitSolution = () => {
         submitSolution()
     }
+    console.log(problem)
     return (
         <div className='container grid grid-cols-2 max-lg:grid-cols-1 mx-auto gap-3 my-5 px-4'>
             <div className="flex flex-col gap-2">
@@ -188,6 +190,12 @@ export const Problem = () => {
                                 )}
                             </div>
                         ))}
+                    </div>
+                )}
+                {problem.getProblem.restriction && (
+                     <div>
+                        <p className='font-bold text-3xl mb-2'>Restrictions</p>
+                        <p className='text-1xl' dangerouslySetInnerHTML={{__html: problem.getProblem.restriction}}></p>
                     </div>
                 )}
             </div>

@@ -216,14 +216,14 @@ module.exports = {
                 success: true
             }
         },
-        async createProblem(_, {problemInput: {title, description, requirements, type, tags, difficulty, category, subcategories, input, output, tests, timeExecution, limitMemory, examples, indications, languages}}, context){
+        async createProblem(_, {problemInput: {title, description, requirements, type, tags, difficulty, category, subcategories, input, output, tests, timeExecution, limitMemory, examples, indications, languages, restriction}}, context){
             try{
                 const problemsExists = await Problem.findOne({title});
                 const creator = await getUser(context)
                 if(problemsExists){
                     throw new ApolloError('Problem exists')
                 }else{
-                    const problem =  new Problem({creator: creator.username, title, description, requirements, type, tags, difficulty, category, subcategories, input, output, tests, timeExecution, limitMemory, examples, indications, languages})
+                    const problem =  new Problem({creator: creator.username, title, description, requirements, type, tags, difficulty, category, subcategories, input, output, tests, timeExecution, limitMemory, examples, indications, languages, restriction})
                     await problem.save()
                     return {
                         success: true
