@@ -15,6 +15,8 @@ import {Loading} from "./components/Loading";
 import {Forum} from "./pages/Forum";
 import {ForumPost} from "./components/ForumPost";
 import {PublishArticle} from "./pages/PublishArticle";
+import { Articles } from "./pages/Articles";
+import { Article } from "./components/Article";
 function App() {
   const {user} = useContext(UserContext)
   if(!user)
@@ -62,6 +64,14 @@ function App() {
           <Route
             path="/articles/publish"
             element={<PublishArticle/>}
+          />
+          <Route
+            path="/articles"
+            element={<Articles/>}
+          />
+          <Route
+            path="/articles/:id"
+            element={<Article/>}
           />
         </Routes>
       <Footer/>

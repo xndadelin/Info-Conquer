@@ -185,6 +185,28 @@ module.exports = {
             }catch(e){
                 throw new ApolloError(e)
             }
+        },
+        async getArticles(_, {}, context){
+            try{
+                const articles = await Article.find({})
+                return articles
+            }catch(e){
+                throw new ApolloError(e)
+            }
+        },
+        async getArticle(_, {id}, context){
+            try{
+                const user = await getUser(context);
+                const article = await Article.findOne({_id: id})
+                if(user){
+                    article.hasLiked = article.likes.includes(user.username)
+                    article.hasDisliked = article.dislikes.includes(user.username)
+                }
+                return article
+            }
+            catch(e){
+                throw new ApolloError(e)
+            }
         }
     },
     Mutation: {
@@ -418,6 +440,52 @@ module.exports = {
                 await newArticle.save()
             }catch(e){
                 throw new ApolloError(e)
+            }
+        },
+        async likeArticle(_, {id}, context){
+            if(!id) throw new ApolloError('This article does not exist')
+            const user = await getUser(context);
+            if(!user){
+                throw new ApolloError('You have to be logged in order to like an article')
+            }
+            const article = await Article.findOne({_id: id})
+            if(!article){
+                throw new ApolloError('This article does not exist')
+            }
+            if(article.likes.includes(user.username)){
+                return {
+                    success: false
+                }
+            }else{
+                article.dislikes = article.dislikes.filter(dislike => dislike !== user.username)
+                article.likes.push(user.username)
+                await article.save()
+                return {
+                    success: true
+                }
+            }
+        },
+        async dislikeArticle(_, {id}, context){
+            if(!id) throw new ApolloError('This article does not exist')
+            const user = await getUser(context);
+            if(!user){
+                throw new ApolloError('You have to be logged in order to dislike an article')
+            }
+            const article = await Article.findOne({_id: id})
+            if(!article){
+                throw new ApolloError('This article does not exist')
+            }
+            if(article.dislikes.includes(user.username)){
+                return {
+                    success: false
+                }
+            }else{
+                article.likes = article.likes.filter(like => like !== user.username)
+                article.dislikes.push(user.username)
+                await article.save()
+                return {
+                    success: true
+                }
             }
         }
     }

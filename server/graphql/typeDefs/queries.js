@@ -11,5 +11,7 @@ module.exports = gql`
         getForumPosts: [ForumPost]
         getForumPost(id: String): ForumPost
         getSubmissions(title: String): [Submission]
+        getArticles: [Article]
+        getArticle(id: String): Article
     }
-`;
+`;  

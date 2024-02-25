@@ -12,5 +12,7 @@ module.exports = gql`
         likeForumPost(id: String): Response
         dislikeForumPost(id: String): Response
         publishArticle(title: String, content: String, tags: [String]): Response
+        likeArticle(id: String): Response
+        dislikeArticle(id: String): Response
     }
 `;
