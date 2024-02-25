@@ -1,4 +1,4 @@
-import { CardBody, CardHeader, Card, Divider } from "@nextui-org/react"
+import { CardBody, CardHeader, Card, Divider, Chip } from "@nextui-org/react"
 import { Listbox, ListboxItem, ListboxSection } from "@nextui-org/react"
 import { Link } from "react-router-dom"
 export const ProblemsSelection = () => {
@@ -124,27 +124,25 @@ export const ProblemsSelection = () => {
         
     ]
     return (
-        <div className="container mx-auto my-4">
-            <h1 className="font-bold text-5xl mb-4 max-sm:p-4">Data Structures</h1>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-sm:p-4">
+        <div className="container mx-auto my-4 px-4">
+            <h1 className="font-bold text-5xl mb-4">Data Structures</h1>
+            <div className="flex flex-col gap-10">
                 {problems.map((problem) => (
-                <Card key={problem.category}>
-                    <CardHeader>
-                    <Link to={`/problems/${problem.category}`}>{problem.category}</Link>
-                    </CardHeader>
-                    <Divider />
-                    <CardBody>
-                    <Listbox>
-                        {problem.subcategories.map((subcategory) => (
-                        <ListboxItem key={subcategory}>
-                            <Link to={`/problems/${problem.category}/${subcategory}`}>
-                            {subcategory}
-                            </Link>
-                        </ListboxItem>
-                        ))}
-                    </Listbox>
-                    </CardBody>
-                </Card>
+                    <>
+                        <div className="flex gap-4">
+                            <h2 className="font-bold text-4xl">{problem.category}</h2>
+                            <div className="flex">
+                                <div className="flex gap-3 flex-wrap">
+                                    {problem.subcategories.map((subcategory) => (
+                                        <Link to={`/problems/${problem.category}/${subcategory}`}>
+                                            <Chip size="lg">{subcategory}</Chip>
+                                        </Link>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                        <Divider/>
+                    </>
                 ))}
             </div>
         </div>

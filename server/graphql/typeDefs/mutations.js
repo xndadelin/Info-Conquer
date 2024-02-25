@@ -11,5 +11,6 @@ module.exports = gql`
         postForumReply(content: String, id: String) : Response
         likeForumPost(id: String): Response
         dislikeForumPost(id: String): Response
+        publishArticle(title: String, content: String, tags: [String]): Response
     }
 `;
