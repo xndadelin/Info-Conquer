@@ -32,6 +32,8 @@ const graderCPP = (testCases, code, problem, username, io, language) => {
         });
         const success = testResults.every(test => test.success);
         const score = testResults.reduce((acc, test) => acc + parseInt(test.score), 0);
+        const maxMemory = testResults.reduce((acc, test) => Math.max(acc, test.memoryUsed), 0);
+        const maxExecutionTime = testResults.reduce((acc, test) => Math.max(acc, test.executionTime), 0);
         fs.rmdirSync(idSolution, {recursive: true})
         return {
             username,
@@ -46,6 +48,8 @@ const graderCPP = (testCases, code, problem, username, io, language) => {
             compilationError: null,
             success,
             id_solution: idSolution,
+            maxMemory,
+            maxExecutionTime
         }
     }
 }

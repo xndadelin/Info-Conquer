@@ -63,4 +63,12 @@ module.exports = gql`
         output: String,
         explanation: String
     }
+    type top10Submissions {
+        username: String,
+        date: String,
+        id_solution: String,
+        language: String,
+        maxExecutionTime: String,
+        maxMemory: String,
+    }
 `;

@@ -172,7 +172,7 @@ export const Solution = () => {
             </Modal>
             <div className="h-[100%]">
                 <div className="text-4xl mb-3">Submited code</div>
-                <Editor theme="vs-dark" options={{readOnly: true, mouseWheelZoom: true}} language={"cpp"} value={solution.getSolution.code} height="900px" />
+                <Snippet className="w-full" symbol=""> <pre>{solution.getSolution.code}</pre> </Snippet>
             </div>
         </div>
     )

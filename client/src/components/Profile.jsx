@@ -102,7 +102,7 @@ export const Profile = () => {
                     </div>
                     <div className='flex flex-col gap-2'>
                         <p className="text-3xl">Submited solutions</p>
-                        <Table>
+                        <Table isStriped>
                             <TableHeader>
                                 <TableColumn>Index</TableColumn>
                                 <TableColumn>Problem</TableColumn>

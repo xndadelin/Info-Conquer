@@ -207,6 +207,39 @@ module.exports = {
             catch(e){
                 throw new ApolloError(e)
             }
+        },
+        async getTop10Submissions(_, {id}, context){
+            try{
+                const problem = await Problem.findOne({title: id})
+                if(!problem){
+                    throw new ApolloError('This problem does not exist')
+                }
+                const solutions = await User.aggregate([
+                    {
+                      $unwind: "$solutions"
+                    },
+                    {
+                      $match: {
+                        "solutions.problem": id,
+                      }
+                    },
+                    {
+                      $project: {
+                        username: "$username",
+                        date: "$solutions.date",
+                        id_solution: "$solutions.id_solution",
+                        language: "$solutions.language",
+                        score: "$solutions.score",
+                        maxMemory: "$solutions.maxMemory",
+                        maxExecutionTime: "$solutions.maxExecutionTime"
+                      }
+                    }
+                ]);                  
+                solutions.sort((a, b) => (a.maxExecutionTime < b.maxMemory) ? 1 : -1)
+                return solutions.slice(0, 20)
+            }catch(e){
+                throw new ApolloError(e)
+            }
         }
     },
     Mutation: {

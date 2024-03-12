@@ -11,6 +11,7 @@ import { TestingSolution } from './TestingSolution'
 import {NotFound} from "../pages/NotFound";
 import { getTemplate } from '../utils/getLanguageTemplate'
 import {Pagination} from '@nextui-org/react'
+import { Top10Submissions } from './Top10Submissions'
 export const Problem = () => {
     const {user} = useContext(UserContext)
     const [selected, setSelected] = useState('problem')
@@ -84,12 +85,12 @@ export const Problem = () => {
     const submissiongql = gql`
         query GetSubmissions($title: String) {
             getSubmissions(title: $title) {
-            compilationError
-            date
-            language
-            problem
-            score
-            username
+                compilationError
+                date
+                language
+                problem
+                score
+                username
             }
         }
     `
@@ -231,7 +232,6 @@ export const Problem = () => {
                             )}
                         </div>
                         <div className="mt-[85px] max-lg:mt-0">
-                            {user && user.getUser && (
                                 <div className='flex flex-col'>
                                     <div className='w-[100%] h-[100%] bg-[#1e1e1e] rounded flex justify-between align-center'>
                                         <Select onChange={(e) => setLanguage(e.target.value)} label="Select language" size='sm' className='w-[200px] mt-1 ml-1'>
@@ -239,14 +239,13 @@ export const Problem = () => {
                                                 <SelectItem key={language}>{language}</SelectItem>
                                             ))}
                                         </Select>
-                                        <Button className='mt-2 mb-2 mr-2' color='success' variant='flat' onClick={() => {onHandleSubmitSolution(); onOpenChange(); setTests('')}}>Submit solution</Button>
+                                        <Button className='mt-2 mb-2 mr-2' color='success' disabled={!language || !code || !user || !user.getUser} variant='flat' onClick={() => {onHandleSubmitSolution(); onOpenChange(); setTests('')}}>Submit solution</Button>
                                     </div>
                                     <div>
                                         <Editor onChange={(val, e) => setCode(val)} value={code} theme='vs-dark' language='cpp' height={'80vh'} />
                                     </div>
                                     <TestingSolution isOpen={isOpen} onClose={onOpenChange} loading={loadingTests} tests={tests}/>
                                 </div>
-                            )}
                         </div>
                     </div>
                 </Tab>
@@ -272,7 +271,7 @@ export const Problem = () => {
                                             <TableCell>{submission.language}</TableCell>
                                             <TableCell>{submission.score}</TableCell>
                                             <TableCell>{submission.date}</TableCell>
-                                            <TableCell>{submission.success ? 'Accepted': 'Rejected'}</TableCell>
+                                            <TableCell>{!submission.compilationError ? 'Accepted': 'Rejected'}</TableCell>
                                         </TableRow>
                                     ))}
                                 </TableBody>
@@ -282,7 +281,7 @@ export const Problem = () => {
                     )}
                 </Tab>
                 <Tab key="leaderboard" title="Leaderboard">
-                    
+                    <Top10Submissions/>
                 </Tab>
             </Tabs>
             </div>

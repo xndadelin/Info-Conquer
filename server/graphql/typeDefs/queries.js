@@ -13,5 +13,6 @@ module.exports = gql`
         getSubmissions(title: String): [Submission]
         getArticles: [Article]
         getArticle(id: String): Article
+        getTop10Submissions(id: String): [top10Submissions]
     }
 `;  
