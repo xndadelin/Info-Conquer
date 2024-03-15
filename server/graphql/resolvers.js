@@ -7,6 +7,7 @@ const Problem = require('../models/problem');
 const {graderCPP} = require('../utils/graders/graderCPP')
 const Forum = require("../models/forumpost");
 const Article = require('../models/article');
+const moment = require('moment');
 const generateToken = (user) => {
     return jwt.sign({ username: user.username, admin: user.admin }, process.env.SECRET, { expiresIn: '1h' });
 };
@@ -208,35 +209,122 @@ module.exports = {
                 throw new ApolloError(e)
             }
         },
-        async getTop10Submissions(_, {id}, context){
+        async getProblemStats(_, {id}, context){
             try{
                 const problem = await Problem.findOne({title: id})
                 if(!problem){
                     throw new ApolloError('This problem does not exist')
                 }
-                const solutions = await User.aggregate([
+                const firstsolves = await User.aggregate([
                     {
                       $unwind: "$solutions"
                     },
                     {
                       $match: {
                         "solutions.problem": id,
+                        "solutions.score": 100
                       }
                     },
                     {
                       $project: {
                         username: "$username",
                         date: "$solutions.date",
-                        id_solution: "$solutions.id_solution",
                         language: "$solutions.language",
-                        score: "$solutions.score",
-                        maxMemory: "$solutions.maxMemory",
-                        maxExecutionTime: "$solutions.maxExecutionTime"
                       }
-                    }
-                ]);                  
-                solutions.sort((a, b) => (a.maxExecutionTime < b.maxMemory) ? 1 : -1)
-                return solutions.slice(0, 20)
+                    },
+                    {
+                      $sort: {
+                        date: 1
+                      }
+                    },
+                    {
+                        $limit: 3
+                    } 
+                ]);   
+                const bestTimeExecutions = await User.aggregate([
+                    {
+                        $unwind: "$solutions"
+                    },
+                    {
+                        $match: {
+                            'solutions.problem': id,
+                            'solutions.score': 100
+                        },
+                    },
+                    {
+                        $project: {
+                            username: "$username",
+                            date: "$solutions.date",
+                            language: "$solutions.language",
+                            timeExecutions: {
+                                $map: {
+                                    input: "$solutions.tests",
+                                    as: "test",
+                                    in: "$$test.executionTime"
+                                }
+                            }
+                        }
+                    }, 
+                    {
+                        $limit: 10
+                    },
+                ])
+                bestTimeExecutions.forEach(solution => {
+                    solution.timeExecutions = solution.timeExecutions.reduce((a, b) => a + b, 0) / solution.timeExecutions.length
+                })
+                bestTimeExecutions.sort((a, b) => a.timeExecutions - b.timeExecutions)
+                const bestMemory = await User.aggregate([
+                    {
+                        $unwind: "$solutions"
+                    },
+                    {
+                        $match: {
+                            'solutions.problem': id,
+                            'solutions.score': 100
+                        },
+                    },
+                    {
+                        $project: {
+                            username: "$username",
+                            date: "$solutions.date",
+                            language: "$solutions.language",
+                            memory: {
+                                $map: {
+                                    input: "$solutions.tests",
+                                    as: "test",
+                                    in: "$$test.memoryUsed"
+                                }
+                            }
+                        }
+                    }, 
+                    {
+                        $limit: 10
+                    },
+                ])
+                bestMemory.forEach(solution => {
+                    solution.memory = solution.memory.reduce((a, b) => a + b, 0) / solution.memory.length
+                })
+                bestMemory.sort((a, b) => a.memory - b.memory)
+                const dates = [];
+                const today = new Date()
+                for (let i = 0; i <= 7; i++) {
+                    dates.push(new Date().setDate(today.getDate() - i));
+                }
+                const solvesPerDay = await Promise.all(dates.map(async (date, index) => {
+                    const solves = await User.aggregate([
+                        { $unwind: "$solutions" },
+                        { $match: { 'solutions.problem': id, 'solutions.score': 100, 'solutions.date': { $lte: new Date(date)} } },
+                        { $group: { _id: null, count: { $sum: 1 } } }
+                    ]);
+                
+                    return { date: date, count: solves.length > 0 ? solves[0].count : 0 };
+                }));
+                return {
+                    firstSubmissions: firstsolves,
+                    timeExecution: bestTimeExecutions,
+                    bestMemory: bestMemory,
+                    solves: solvesPerDay
+                }
             }catch(e){
                 throw new ApolloError(e)
             }

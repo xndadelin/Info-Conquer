@@ -6,8 +6,6 @@ global.crypto = require('crypto')
 const graderCPP = (testCases, code, problem, username, io, language) => {
     const idSolution = crypto.randomUUID()
     const compilationResult = compilerCPP(code, idSolution, language, problem);
-    let data = new Date().toString().split(' ');
-    data = data[0] + ' ' +  data[1] + ' ' + ' ' +  data[2] + ' ' + ' ' + data[3] + ' ' + data[4];
     if (compilationResult.error) {
         fs.rmdirSync(idSolution, {recursive: true})
         return {
@@ -22,7 +20,7 @@ const graderCPP = (testCases, code, problem, username, io, language) => {
             compilationError: compilationResult.error,
             success: false,
             id_solution: idSolution,
-            date:data,
+            date: new Date(),
         }
     }else{
         const testResults = [];
@@ -32,8 +30,6 @@ const graderCPP = (testCases, code, problem, username, io, language) => {
         });
         const success = testResults.every(test => test.success);
         const score = testResults.reduce((acc, test) => acc + parseInt(test.score), 0);
-        const maxMemory = testResults.reduce((acc, test) => Math.max(acc, test.memoryUsed), 0);
-        const maxExecutionTime = testResults.reduce((acc, test) => Math.max(acc, test.executionTime), 0);
         fs.rmdirSync(idSolution, {recursive: true})
         return {
             username,
@@ -44,12 +40,10 @@ const graderCPP = (testCases, code, problem, username, io, language) => {
             score,
             tests: testResults,
             fileMemory: compilationResult.memorieFisier,
-            date: data,
+            date: new Date(),
             compilationError: null,
             success,
             id_solution: idSolution,
-            maxMemory,
-            maxExecutionTime
         }
     }
 }

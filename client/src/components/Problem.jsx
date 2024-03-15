@@ -11,7 +11,7 @@ import { TestingSolution } from './TestingSolution'
 import {NotFound} from "../pages/NotFound";
 import { getTemplate } from '../utils/getLanguageTemplate'
 import {Pagination} from '@nextui-org/react'
-import { Top10Submissions } from './Top10Submissions'
+import { ProblemStats } from './ProblemStats'
 export const Problem = () => {
     const {user} = useContext(UserContext)
     const [selected, setSelected] = useState('problem')
@@ -281,7 +281,7 @@ export const Problem = () => {
                     )}
                 </Tab>
                 <Tab key="leaderboard" title="Leaderboard">
-                    <Top10Submissions/>
+                    <ProblemStats/>
                 </Tab>
             </Tabs>
             </div>
