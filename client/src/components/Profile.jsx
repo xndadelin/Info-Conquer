@@ -120,7 +120,7 @@ export const Profile = () => {
                                         <TableCell>
                                             <Link to={`/problems/${username}/${solution.problem}`}>{solution.problem}</Link>
                                         </TableCell>
-                                        <TableCell>{solution.date}</TableCell>
+                                        <TableCell>{new Date(+solution.date).toLocaleString()}</TableCell>
                                         <TableCell>{solution.language}</TableCell>
                                         <TableCell>{solution.score}</TableCell>
                                         <TableCell>{solution.compilationError ? 'Rejected' : 'Accepted'}</TableCell>

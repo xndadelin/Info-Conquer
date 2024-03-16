@@ -306,14 +306,20 @@ module.exports = {
                 })
                 bestMemory.sort((a, b) => a.memory - b.memory)
                 const dates = [];
-                const today = new Date()
-                for (let i = 0; i <= 7; i++) {
-                    dates.push(new Date().setDate(today.getDate() - i));
+                const today = new Date();
+                dates.push(new Date(today));
+                
+                for (let i = 0; i <= 6; i++) {
+                    const newDate = new Date(today);
+                    newDate.setDate(today.getDate() - i);
+                    newDate.setHours(0, 0, 0, 0);
+                    dates.push(newDate);
                 }
+                console.log(dates)
                 const solvesPerDay = await Promise.all(dates.map(async (date, index) => {
                     const solves = await User.aggregate([
-                        { $unwind: "$solutions" },
-                        { $match: { 'solutions.problem': id, 'solutions.score': 100, 'solutions.date': { $lte: new Date(date)} } },
+                        { $unwind: "$solvedProblems" },
+                        { $match: { 'solvedProblems.problem': id, 'solvedProblems.date': { $lt: new Date(date)} } },
                         { $group: { _id: null, count: { $sum: 1 } } }
                     ]);
                 
@@ -435,8 +441,8 @@ module.exports = {
                 const testResults = graderCPP(problema.tests, code, problema.title, user.username, problema.type, language);
                 user.solutions.push(testResults)
                 if(testResults.score === 100)
-                    if(!user.solvedProblems.includes(problema.title))
-                        user.solvedProblems.push(problema.title);
+                    if(!user.solvedProblems.find(solved => solved.problem === problema.title))
+                        user.solvedProblems.push({problem: problema.title, date: new Date()});
                 await user.save();
                 return testResults
             }catch(error){

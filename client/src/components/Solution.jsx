@@ -87,7 +87,7 @@ export const Solution = () => {
                         </TableRow>
                         <TableRow>
                             <TableCell>Date</TableCell>
-                            <TableCell>{solution.getSolution.date}</TableCell>
+                            <TableCell>{new Date(+solution.getSolution.date).toLocaleString()}</TableCell>
                         </TableRow>
                         <TableRow>
                             <TableCell>File memory</TableCell>
