@@ -8,8 +8,6 @@ module.exports = gql`
         getProfile(username: String): ProfileUser
         getSolution(id: String): Solution
         getProblems(category: String, subcategory: String): [Problem]
-        getForumPosts: [ForumPost]
-        getForumPost(id: String): ForumPost
         getSubmissions(title: String): [Submission]
         getArticles: [Article]
         getArticle(id: String): Article

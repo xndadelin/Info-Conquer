@@ -11,5 +11,7 @@ module.exports = gql`
         dislikes: [String]
         hasLiked: Boolean
         hasDisliked: Boolean
+        tags: [String]
+        updatedAt: String
     }
 `

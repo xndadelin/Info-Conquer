@@ -6,7 +6,6 @@ const problem = require('./typeDefs/problem')
 const response = require('./typeDefs/response')
 const mutations = require('./typeDefs/mutations')
 const queries = require('./typeDefs/queries')
-const forum = require('./typeDefs/forum')
 const article = require('./typeDefs/article')
 
-module.exports = mergeTypeDefs([user, article, solutions, problem, response, mutations, queries, forum])
+module.exports = mergeTypeDefs([user, article, solutions, problem, response, mutations, queries])

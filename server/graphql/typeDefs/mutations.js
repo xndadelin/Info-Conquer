@@ -7,12 +7,9 @@ module.exports = gql`
         logout: Response
         createProblem(problemInput: CreateProblemInput) : Response
         submitSolution(solutionInput: SolutionInput): Solution
-        forumPost(content: String, category: String, title: String): Response
-        postForumReply(content: String, id: String) : Response
-        likeForumPost(id: String): Response
-        dislikeForumPost(id: String): Response
         publishArticle(title: String, content: String, tags: [String]): Response
         likeArticle(id: String): Response
         dislikeArticle(id: String): Response
+        editArticle(id: String, content: String, tags: [String], title: String): Response
     }
 `;

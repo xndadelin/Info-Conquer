@@ -12,11 +12,10 @@ import {Profile} from './components/Profile'
 import {Solution} from "./components/Solution";
 import {Problems} from "./components/Problems"
 import {Loading} from "./components/Loading";
-import {Forum} from "./pages/Forum";
-import {ForumPost} from "./components/ForumPost";
 import {PublishArticle} from "./pages/PublishArticle";
 import { Articles } from "./pages/Articles";
 import { Article } from "./components/Article";
+import { NotFound } from "./pages/NotFound";
 function App() {
   const {user} = useContext(UserContext)
   if(!user)
@@ -54,14 +53,6 @@ function App() {
             element={<Problems/>}
           />
           <Route
-            path="/forum"
-            element={<Forum/>}
-          />
-          <Route
-            path="/forum/posts/:id"
-            element={<ForumPost/>                                                                                                                                      }
-          />
-          <Route
             path="/articles/publish"
             element={<PublishArticle/>}
           />
@@ -72,6 +63,10 @@ function App() {
           <Route
             path="/articles/:id"
             element={<Article/>}
+          />
+          <Route
+            path="*"
+            element={<NotFound/>}
           />
         </Routes>
       <Footer/>

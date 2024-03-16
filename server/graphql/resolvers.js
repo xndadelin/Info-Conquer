@@ -126,46 +126,12 @@ module.exports = {
             const problems = await Problem.find(query)
             return problems;
         },
-        async getForumPosts(_, {}, context){
-            try{
-                const forumPosts = await Forum.find({});
-                return forumPosts;
-            }catch (error){
-                throw ApolloError(error)
-            }
-        },
-        async getForumPost(_, {id}, context){
-            try{
-                const forumPost = await Forum.findOne({_id: id});
-                if(!forumPost){
-                    throw new ApolloError('This forum post does not exist')
-                }
-                const user = await getUser(context);
-                if(user){
-                    if(forumPost.likes.includes(user.username)){
-                        forumPost.hasLiked = true
-                    }else{
-                        forumPost.hasLiked = false
-                    }
-                }
-                if(user){
-                    if(forumPost.dislikes.includes(user.username)){
-                        forumPost.hasDisliked = true
-                    }else{
-                        forumPost.hasDisliked = false
-                    }
-                }
-                return forumPost
-            }catch (e){
-                throw new ApolloError(e)
-            }
-        },
         async getSubmissions(_, {title}, context){
             try{
                 if(!title){
                     throw new ApolloError('The title is null')
                 }
-                //optimize this
+                //mongo db aggregation later better
                 const users = await User.find({})
                 const solutions = []
                 users.forEach(user => {
@@ -248,7 +214,6 @@ module.exports = {
                         $limit: 3
                     } 
                 ]);   
-                console.log(firstsolves)
                 const bestTimeExecutions = await User.aggregate([
                     {
                         $unwind: "$solutions"
@@ -456,104 +421,6 @@ module.exports = {
                 throw new ApolloError(error)
             }
         },
-        async forumPost(_, {category, content, title}, context){
-            const user = await getUser(context);
-            if(!user){
-                throw new ApolloError('You have to be logged in order to post!');
-            }
-            try{
-                if(!category || !title || !content)
-                    return {
-                        error: {
-                            message: 'You have to fill all the fields!'
-                        }
-                    }
-                const forumPost = new Forum({creator: user.username, content, category, replies: [], title, likes: [], dislikes: []})
-                await forumPost.save()
-            }catch (e){
-                return {
-                    error: {
-                        message: 'You have to fill all the fields!'
-                    }
-                }
-            }
-        },
-        async postForumReply(_, {content, id}, context){
-            try{
-                if(!content || !id){
-                    throw new ApolloError('You have to fill all the fields or the forum post does not exist anymore.')
-                }else{
-                    const forumPost = await Forum.findOne({_id: id});
-                    if(!forumPost){
-                        throw new ApolloError('This forum post does not exist')
-                    }else{
-                        const user = await getUser(context);
-                        if(!user){
-                            throw new ApolloError('You have to be looged in order to reply to a forum post');
-                        }else {
-                            forumPost.replies.push({creator: user.username, content, likes: 0, dislikes: 0, createdAt: new Date() })
-                            await forumPost.save();
-                        }
-                    }
-                }
-            }catch(error){
-                throw new ApolloError(error)
-            }
-        },
-        async likeForumPost(_, {id}, context){
-            try{
-                if(!id) throw new ApolloError('The id is required')
-                const user = await getUser(context);
-                if(!user){
-                    throw new ApolloError('You have to be logged in order to like a forum post')
-                }
-                const forumPost = await Forum.findOne({_id: id});
-                if(!forumPost){
-                    throw new ApolloError('This forum post does not exist')
-                }
-                if(forumPost.likes && forumPost.likes.includes(user.username)){
-                    return {
-                        success: false
-                    }
-                }else{
-                    forumPost.dislikes = forumPost.dislikes.filter(like => like !== user.username)
-                    forumPost.likes.push(user.username)
-                    await forumPost.save()
-                    return {
-                        success: true
-                    }
-                }
-            }catch(e){
-                throw new ApolloError(e)
-            }
-        },
-        async dislikeForumPost(_, {id}, context){
-            try{
-                if(!id) throw new ApolloError('The id is required')
-                const user = await getUser(context);
-                if(!user){
-                    throw new ApolloError('You have to be logged in order to dislike a forum post')
-                }
-                const forumPost = await Forum.findOne({_id: id});
-                if(!forumPost){
-                    throw new ApolloError('This forum post does not exist')
-                }
-                if(forumPost.dislikes && forumPost.dislikes.includes(user.username)){
-                    return {
-                        success: false
-                    }
-                }else{
-                    forumPost.likes = forumPost.likes.filter(like => like !== user.username)
-                    forumPost.dislikes.push(user.username)
-                    await forumPost.save()
-                    return {
-                        success: true
-                    }
-                }
-            }catch(e){
-                throw new ApolloError(e)
-            }
-        },
         async publishArticle(_, {title, content, tags}, context){
             const user = await getUser(context);
             if(!user){
@@ -620,6 +487,27 @@ module.exports = {
                 return {
                     success: true
                 }
+            }
+        },
+        async editArticle(_, {id, title, content, tags}, context){
+            const user = await getUser(context);
+            if(!user){
+                throw new ApolloError('You have to be logged in order to edit an article')
+            }
+            if(!user.admin){
+                throw new ApolloError('You have to be an admin in order to edit an article')
+            }
+            if(!id) throw new ApolloError('This article does not exist')
+            const article = await Article.findOne({_id: id})
+            if(!article){
+                throw new ApolloError('This article does not exist')
+            }
+            if(title) article.title = title
+            if(content) article.content = content
+            if(tags) article.tags = tags
+            await article.save()
+            return {
+                success: true
             }
         }
     }

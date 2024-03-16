@@ -26,7 +26,7 @@ export const Articles = () => {
                         <CardHeader className='flex flex-col items-start'>
                             <Link to={`/articles/${article._id}`}><p className="text-3xl font-extrabold">{article.title}</p></Link>
                             <Link to={`/profile/${article.creator}`}><p className="text-lg">By {article.creator}</p></Link>
-                            <p className="text-lg">On {new Date(article.createdAt).toDateString()}</p>
+                            <p className="text-lg">On {new Date(+article.createdAt).toLocaleString()}</p>
                         </CardHeader>
                    </Card>
                 ))}
