@@ -67,6 +67,7 @@ module.exports = gql`
         username: String,
         date: String,
         language: String,
+        _id: String
     }
     type timeExecution {
         username: String,

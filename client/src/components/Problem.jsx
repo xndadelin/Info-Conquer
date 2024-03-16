@@ -281,7 +281,7 @@ export const Problem = () => {
                         </>
                     )}
                 </Tab>
-                <Tab key="leaderboard" title="Leaderboard">
+                <Tab key="insights" title="Insights">
                     <ProblemStats/>
                 </Tab>
             </Tabs>

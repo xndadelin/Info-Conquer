@@ -233,6 +233,13 @@ module.exports = {
                       }
                     },
                     {
+                        $group: {
+                            _id: "$username", 
+                            date: { $first: "$date" }, 
+                            language: { $first: "$language" }
+                        }
+                    },
+                    {
                       $sort: {
                         date: 1
                       }
@@ -241,6 +248,7 @@ module.exports = {
                         $limit: 3
                     } 
                 ]);   
+                console.log(firstsolves)
                 const bestTimeExecutions = await User.aggregate([
                     {
                         $unwind: "$solutions"
@@ -309,7 +317,7 @@ module.exports = {
                 const today = new Date();
                 dates.push(new Date(today));
                 
-                for (let i = 0; i <= 6; i++) {
+                for (let i = 1; i <= 6; i++) {
                     const newDate = new Date(today);
                     newDate.setDate(today.getDate() - i);
                     newDate.setHours(0, 0, 0, 0);
