@@ -24,11 +24,15 @@ module.exports = gql`
         compilationError: String
         language: String
     }
+    type solvedProblems {
+        problem: String,
+        date: String
+    }
     type ProfileUser {
         username: String,
         createdAt: String, 
         admin: String,
         solutions: [SolutionProfile],
-        solvedProblems: [String]
+        solvedProblems: [solvedProblems]
     }
 `;

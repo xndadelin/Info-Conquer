@@ -34,7 +34,9 @@ export const Profile = () => {
                     id_solution,
                     language
                 },
-                solvedProblems
+                solvedProblems {
+                    problem
+                }
             }
         }
     `
@@ -93,7 +95,7 @@ export const Profile = () => {
                         <div className="flex flex-wrap">
                             {user.getProfile.solvedProblems.map((problem) => (
                                 <Chip className="m-2">
-                                    <Link to={`/problems/${problem}`}>{problem}</Link>
+                                    <Link to={`/problems/${problem.problem}`}>{problem.problem}</Link>
                                 </Chip>
                             ))}
                             {user.getProfile.solvedProblems.length === 0 &&

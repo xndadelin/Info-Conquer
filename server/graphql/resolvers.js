@@ -315,7 +315,6 @@ module.exports = {
                     newDate.setHours(0, 0, 0, 0);
                     dates.push(newDate);
                 }
-                console.log(dates)
                 const solvesPerDay = await Promise.all(dates.map(async (date, index) => {
                     const solves = await User.aggregate([
                         { $unwind: "$solvedProblems" },
