@@ -16,6 +16,7 @@ import {PublishArticle} from "./pages/PublishArticle";
 import { Articles } from "./pages/Articles";
 import { Article } from "./components/Article";
 import { NotFound } from "./pages/NotFound";
+import { EditArticle } from "./components/EditArticle";
 function App() {
   const {user} = useContext(UserContext)
   if(!user)
@@ -63,6 +64,10 @@ function App() {
           <Route
             path="/articles/:id"
             element={<Article/>}
+          />
+          <Route
+            path="/articles/edit/:id"
+            element={<EditArticle/>}
           />
           <Route
             path="*"

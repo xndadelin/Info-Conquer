@@ -62,8 +62,8 @@ export const PublishArticle = () => {
                     init={{
                         height: 500,
                         menubar: false,
-                        plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount linkchecker',
-                        toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
+                        plugins: 'anchor autolink charmap codesample emoticons codesample image link lists media searchreplace table visualblocks wordcount linkchecker',
+                        toolbar: 'undo redo | blocks fontfamily fontsize codesample | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
                         skin: 'oxide-dark',
                         content_css: 'tinymce-5-dark',
                     }}
