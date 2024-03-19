@@ -25,10 +25,7 @@ async function startServer(){
         credentials: 'include'
     }))
     app.get('/', (req, res) => {
-        res.send('Hello World!')
-    })
-    app.post('/', (req, res) => {
-        res.send('Hello world')
+        res.send('Hello this is infoconquer server!!!')
     })
     apolloServer.applyMiddleware({
         app,

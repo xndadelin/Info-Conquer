@@ -12,5 +12,6 @@ module.exports = gql`
         getArticles: [Article]
         getArticle(id: String): Article
         getProblemStats(id: String): Stats
+        getAnnouncement(title: String): Announcement
     }
 `;  

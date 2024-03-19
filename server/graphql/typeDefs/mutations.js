@@ -11,5 +11,6 @@ module.exports = gql`
         likeArticle(id: String): Response
         dislikeArticle(id: String): Response
         editArticle(id: String, content: String, tags: [String], title: String): Response
+        postAnnouncement(title: String, content: String): Response
     }
 `;

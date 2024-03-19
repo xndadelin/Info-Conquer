@@ -5,9 +5,8 @@ const {ApolloError} = require('apollo-server-express')
 const cookie = require('cookie');
 const Problem = require('../models/problem');
 const {graderCPP} = require('../utils/graders/graderCPP')
-const Forum = require("../models/forumpost");
 const Article = require('../models/article');
-const moment = require('moment');
+const Announcement = require('../models/announcements');
 const generateToken = (user) => {
     return jwt.sign({ username: user.username, admin: user.admin }, process.env.SECRET, { expiresIn: '1h' });
 };
@@ -306,6 +305,15 @@ module.exports = {
             }catch(e){
                 throw new ApolloError(e)
             }
+        },
+        async getAnnouncement(_, {title}){
+            try{
+                const announcement = await Announcement.findOne({title})
+                if(!announcement) throw new ApolloError('This announcement does not exist')
+                return announcement
+            }catch(e){
+                throw new ApolloError(e)
+            }
         }
     },
     Mutation: {
@@ -508,6 +516,32 @@ module.exports = {
             await article.save()
             return {
                 success: true
+            }
+        },
+        async postAnnouncement(_, {title, content}, context){
+            const user = await getUser(context);
+            if(!user){
+                throw new ApolloError('You have to be logged in order to post an announcement')
+            }
+            if(!user.admin){
+                throw new ApolloError('You have to be an admin in order to post an announcement')
+            }
+            if(!title || !content){
+                throw new ApolloError('You have to fill all the fields')
+            }
+            try{
+                const exists = await Announcement.findOne({title})
+                if(exists){
+                    throw new ApolloError('An announcement with this title already exists')
+                }else{
+                    const newAnnouncement = new Announcement({title, content})
+                    await newAnnouncement.save()
+                }
+                return {
+                    success: true
+                }
+            }catch(e){
+                throw new ApolloError(e)
             }
         }
     }
