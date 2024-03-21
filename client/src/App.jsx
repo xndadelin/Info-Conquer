@@ -1,6 +1,6 @@
 import { NavigationBar } from "./components/Navbar";
 import {Landing} from './pages/LandingUnauth'
-import {Homepage} from "./components/Homepage";
+import {Homepage} from "./pages/Homepage";
 import { Footer } from "./components/Footer";
 import { ProblemsSelection } from "./pages/ProblemsSelection";
 import {Routes, Route} from 'react-router-dom'

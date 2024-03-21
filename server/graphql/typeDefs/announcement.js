@@ -7,5 +7,6 @@ module.exports = gql`
         content: String
         createdAt: String
         updatedAt: String
+        createdBy: String
     }
 `

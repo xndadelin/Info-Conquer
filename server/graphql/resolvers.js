@@ -314,6 +314,14 @@ module.exports = {
             }catch(e){
                 throw new ApolloError(e)
             }
+        },
+        async getAnnouncements(_, {}){
+            try{
+                const announcements = (await Announcement.find({}).sort({createdAt: -1})).slice(0, 5)
+                return announcements
+            }catch(e){
+                throw new ApolloError(e)
+            }
         }
     },
     Mutation: {
@@ -534,7 +542,7 @@ module.exports = {
                 if(exists){
                     throw new ApolloError('An announcement with this title already exists')
                 }else{
-                    const newAnnouncement = new Announcement({title, content})
+                    const newAnnouncement = new Announcement({title, content, createdBy: user.username})
                     await newAnnouncement.save()
                 }
                 return {
