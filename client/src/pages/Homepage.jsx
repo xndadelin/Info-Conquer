@@ -61,7 +61,7 @@ export const Homepage = () => {
             </div>
         </div>
         <p className="text-3xl font-bold">Newest annoncements</p>
-        <div className="flex flex-col gap-5 w-[50%] mb-5">
+        <div className="flex flex-col gap-5 w-[50%] max-md:w-[100%] mb-5">
             {getAnnouncements.data.getAnnouncements.map((announcement, index) => (
                 <Card key={index}>
                     <CardBody>

@@ -39,4 +39,5 @@ async function startServer(){
         })
     })
 }
+// lol this is a test
 startServer()

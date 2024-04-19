@@ -22,7 +22,6 @@ const testerCPP = (input, output, punctaj, idSolution, language, problem) => {
             cmd = `/usr/bin/time -v python3 ./${idSolution}/test.py > ${idSolution}/output.txt 2> ${idSolution}/metrics.txt`
     }
     try{
-        console.log(cmd)
         execSync(cmd, {
             input: input,
             encoding: 'utf-8'
