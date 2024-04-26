@@ -75,6 +75,7 @@ export const EditArticle = () => {
     }
     if(loading) return <Loading/>
     if(error) return <NotFound/>
+    if(!content || !title) return <NotFound/>
     return (
         <div className='container mx-auto py-5'>
             <p className='text-2xl font-bold'>Edit Article</p>
@@ -92,10 +93,13 @@ export const EditArticle = () => {
                 init={{
                     height: 1000,
                     menubar: false,
-                    plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount linkchecker code ',
+                    plugins: 'anchor advlist autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount linkchecker code ',
                     toolbar: 'undo redo | blocks fontfamily fontsize | codesample | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat | code',
                     skin: 'oxide-dark',
                     content_css: 'tinymce-5-dark',
+                    force_br_newlines : true,
+                    force_p_newlines : false,
+                    forced_root_block : '',              
                 }}
             />
             <div className='flex justify-end gap-5 mt-5'>

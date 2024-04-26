@@ -58,6 +58,7 @@ export const Solution = () => {
             id
         },
         onCompleted: (data) => {
+            console.log(data)
             setSolution(data)
         }
     })
@@ -123,11 +124,9 @@ export const Solution = () => {
                                         <TableCell>{test.memoryUsed + ' MB'}</TableCell>
                                         <TableCell>{test.score}</TableCell>
                                         <TableCell>{test.status}</TableCell>
-                                        {solution.getSolution.score === "100" ?
-                                            <TableCell>
-                                                <Button onClick={() => setSelectedTestCase(test)} variant="flat">See test case</Button>
-                                            </TableCell>
-                                        : <TableCell><p>You do not have 100 points!</p></TableCell>}
+                                        <TableCell>
+                                            <Button onClick={() => setSelectedTestCase(test)} variant="flat">See test case</Button>
+                                        </TableCell>
                                     </TableRow>
                                 ))}
                             </TableBody>

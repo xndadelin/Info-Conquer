@@ -53,7 +53,7 @@ const testerCPP = (input, output, punctaj, idSolution, language, problem) => {
         memoryUsed,
         score,
         input,
-        output
+        output: outputTest
     }
 
 }
