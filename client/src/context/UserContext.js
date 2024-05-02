@@ -15,10 +15,7 @@ const getUserQuery = gql`
     }
 `
 const userReducer = (state, action) => {
-    if (action.type === 'SET_USER') {
-      return { ...state, user: action.payload };
-    }
-    return state;
+    return { ...state, user: action.payload };
 };
 
 export const UserProvider = ({children}) => {

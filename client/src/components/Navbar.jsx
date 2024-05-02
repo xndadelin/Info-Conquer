@@ -89,6 +89,11 @@ export const NavigationBar = () => {
                                     <Link to={'/post-announcement'}>Post announcement</Link>
                                 </DropdownItem>
                             )}
+                            {user.getUser.admin && (
+                                <DropdownItem>
+                                    <Link to={'/contests/create'}>Create a contest</Link>
+                                </DropdownItem>
+                            )}
                             <DropdownItem>
                                 <Link onClick={handleLogout} color="danger">Logout</Link>
                             </DropdownItem>

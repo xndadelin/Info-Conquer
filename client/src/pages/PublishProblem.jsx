@@ -317,15 +317,6 @@ export const PublishProblem = () => {
             <Input isRequired label="Title" value={title} onChange={(e) => setTitle(e.target.value)}/>
             <Textarea label="Description" value={description} onChange={(e) => setDescription(e.target.value)}/>
             <Textarea isRequired label="Requirements" value={requirement} onChange={(e) => setRequirements(e.target.value)}/>
-            <Select isRequired items={types} onChange={(e) => setType(e.target.value)} label="Type">
-                {(type) => <SelectItem key={type.value}>{type.value}</SelectItem>}
-            </Select>
-            {type === 'Files' && (
-                <>
-                    <Input label="Input file" onChange={(e) => setInputFile(e.target.value)} value={inputFile} isRequired/>
-                    <Input label="Output file" onChange={(e) => setOutputFile(e.target.value)} value={outputFile} isRequired />
-                </>
-            )}
             <Input endContent={
                 <Button disabled={tag === ''} onClick={onAddTag} variant="bordered">Add tag</Button>
             } value={tag} onChange={(e) => setTag(e.target.value)} label="Tags" />

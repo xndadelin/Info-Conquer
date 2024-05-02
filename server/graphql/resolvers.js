@@ -142,7 +142,7 @@ module.exports = {
                                 language: solution.language,
                                 score: solution.score,
                                 date: solution.date,
-                                compilationError: solution.compilationError
+                                compilationError: JSON.stringify(solution.compilationError),
                             })
                         }
                     })

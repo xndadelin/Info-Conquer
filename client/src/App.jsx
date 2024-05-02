@@ -19,6 +19,7 @@ import { NotFound } from "./pages/NotFound";
 import { EditArticle } from "./components/EditArticle";
 import { PostAnnouncement } from "./pages/PostAnnouncement";
 import { Announcement } from "./components/Announcement";
+import { CreateConstest } from "./pages/CreateContest";
 function App() {
   const {user} = useContext(UserContext)
   if(!user)
@@ -78,6 +79,10 @@ function App() {
           <Route 
             path="/announcement/:title"
             element={<Announcement/>}
+          />
+          <Route
+            path="/contests/create"
+            element={<CreateConstest/>}
           />
           <Route
             path="*"

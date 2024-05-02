@@ -22,11 +22,6 @@ export const Problem = () => {
     useEffect(() => {
         setCode(getTemplate(language, problem))
     }, [language])
-    useEffect(() => {
-        if(selected === 'solutions'){
-            console.log('submissions')
-        }
-    }) 
     const [tests, setTests] = useState('')
     const {id} = useParams()
     const queryProblem = gql`
@@ -99,7 +94,7 @@ export const Problem = () => {
             title: id
         },
         onError: (error) => {
-            console.log(error)
+            console.log(JSON.stringify(error))
         },
         skip: selected !== 'solutions'
     })
@@ -140,6 +135,7 @@ export const Problem = () => {
     const onHandleSubmitSolution = () => {
         submitSolution()
     }
+    console.log(submissions)
     return (
         <div className="container mx-auto px-5 py-5">
             <Tabs selectedKey={selected} onSelectionChange={setSelected} className="flex flex-col">
@@ -271,13 +267,16 @@ export const Problem = () => {
                                             <TableCell>{submission.language}</TableCell>
                                             <TableCell>{submission.score}</TableCell>
                                             <TableCell>{new Date(+submission.date).toLocaleString()}</TableCell>
-                                            <TableCell>{!submission.compilationError ? 'Accepted': 'Rejected'}</TableCell>
+                                            <TableCell>{submission.score === "100" ? 'Accepted': 'Rejected'}</TableCell>
                                         </TableRow>
                                     ))}
                                 </TableBody>
                             </Table>
                             <Pagination className="mt-2" onChange={(page) => setPage(page)} loop showControls total={Math.ceil(submissions.getSubmissions.length/20)} initialPage={1}></Pagination>
                         </>
+                    )}
+                    {loadingSubmissions && (
+                        <Loading/>
                     )}
                 </Tab>
                 <Tab key="insights" title="Insights">
