@@ -4,7 +4,33 @@ const fs = require('fs');
 global.crypto = require('crypto')    
 const graderCPP = (testCases, code, problem, username, io, language) => {
     const idSolution = crypto.randomUUID()
-    const compilationResult = compilerCPP(code, idSolution, language, problem);
+    /////////////////////////////////////////////////////////////////////////////
+    let codeNameFile = ''
+    let extension = ''
+    switch(language){
+        case 'C++':
+            codeNameFile = 'test.cpp'
+            extension = 'cpp'
+            break;
+        case 'C':
+            codeNameFile = 'test.c'
+            extension = 'c'
+            break;
+        case 'C#':
+            codeNameFile = 'test.cs'
+            extension = 'cs'
+            break;
+        case 'Java':
+            codeNameFile = 'test.java'
+            extension = 'java'
+            break;
+        case 'Python':
+            codeNameFile = 'test.py'
+            extension = 'py'
+            break;
+    }
+    /////////////////////////////////////////////////////////////////////////////
+    const compilationResult = compilerCPP(code, idSolution, language, problem, codeNameFile, extension);
     if (compilationResult.error) {
         fs.rmdirSync(idSolution, {recursive: true})
         return {
@@ -29,7 +55,7 @@ const graderCPP = (testCases, code, problem, username, io, language) => {
                 fs.writeFileSync(`${idSolution}/expected_output.txt`, test.output);
 
                 try{
-                    execSync("docker run -i cpp-image time -v ./program < input.txt > output.txt 2> metrics.txt", { cwd: idSolution });
+                    execSync(`docker run -i ${extension}-image time -v ./program${language == 'C#' ? '.exe' : ''} < input.txt > output.txt 2> metrics.txt`, { cwd: idSolution });
                 }catch(error){
                     //catch a signal
                     const metrics = fs.readFileSync(`${idSolution}/metrics.txt`, 'utf-8');
@@ -83,6 +109,7 @@ const graderCPP = (testCases, code, problem, username, io, language) => {
             });
             const success = testResults.every(test => test.success);
             const score = testResults.reduce((acc, test) => acc + parseInt(test.score), 0);
+            console.log(testResults)
             fs.rmdirSync(idSolution, {recursive: true})
             return {
                 username,
