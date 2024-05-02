@@ -140,7 +140,6 @@ export const Problem = () => {
     const onHandleSubmitSolution = () => {
         submitSolution()
     }
-    console.log(submissions)
     return (
         <div className="container mx-auto px-5 py-5">
             <Tabs selectedKey={selected} onSelectionChange={setSelected} className="flex flex-col">

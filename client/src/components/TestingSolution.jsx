@@ -1,5 +1,6 @@
 import { Modal, ModalBody, ModalContent, ModalHeader, Spinner, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, Snippet } from "@nextui-org/react"
 export const TestingSolution = ({onClose, isOpen, loading, tests}) => {
+    if(!loading && !tests) return null
     const testsTable = () => {
         return (
             <div>

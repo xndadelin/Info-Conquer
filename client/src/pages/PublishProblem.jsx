@@ -355,7 +355,7 @@ export const PublishProblem = () => {
             <Textarea label="Input" onChange={(e) => setInput(e.target.value)} value={input} />
             <Textarea label="Output" onChange={(e) => setOutput(e.target.value)} value={output} />
             <Textarea label="Restrictions" onChange={(e) => setRestriction(e.target.value)} value={restriction}/>
-            <Input type="number" required label="Time limit (in ms)" onChange={(e) => setTimeExecution(e.target.value)}/>
+            <Input type="number" required label="Time limit (in s)" onChange={(e) => setTimeExecution(e.target.value)}/>
             <Input type="number" required label="Memory limit (in MB)" onChange={(e) => setLimitMemory(e.target.value)}/>
             <div className="flex justify-between font-bold text-3xl">
                 <p>Examples</p>
