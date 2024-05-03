@@ -7,6 +7,7 @@ const Problem = require('../models/problem');
 const {graderCPP} = require('../utils/graders/graderCPP')
 const Article = require('../models/article');
 const Announcement = require('../models/announcements');
+const Contest = require('../models/contest');
 const generateToken = (user) => {
     return jwt.sign({ username: user.username, admin: user.admin }, process.env.SECRET, { expiresIn: '1h' });
 };
@@ -545,6 +546,27 @@ module.exports = {
                     const newAnnouncement = new Announcement({title, content, createdBy: user.username})
                     await newAnnouncement.save()
                 }
+                return {
+                    success: true
+                }
+            }catch(e){
+                throw new ApolloError(e)
+            }
+        },
+        async createContest(_, {name, description, startDate, endDate, problems, languages}, context){
+            const user = await getUser(context);
+            if(!user){
+                throw new ApolloError('You have to be logged in order to create a contest')
+            }
+            if(!user.admin){
+                throw new ApolloError('You have to be an admin in order to create a contest')
+            }
+            if(!name || !description || !startDate || !endDate || !problems){
+                throw new ApolloError('You have to fill all the fields')
+            }
+            try{
+                const newContest = new Contest({name, description, startDate, endDate, problems, languages, createdBy: user.username})
+                await newContest.save()
                 return {
                     success: true
                 }

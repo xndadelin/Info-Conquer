@@ -12,7 +12,7 @@ import { UserContext } from "../context/UserContext";
 export const PublishProblem = () => {
     const {user} = useContext(UserContext)
     const {isOpen, onOpen, onClose} = useDisclosure()
-    const types=[{value:'Console'},{value:'Files'}],difficulties=[{value:'Easy'},{value:'Medium'},{value:'Hard'},{value:'Challenging'},{value:'Expert'}];
+    const difficulties=[{value:'Easy'},{value:'Medium'},{value:'Hard'},{value:'Challenging'},{value:'Expert'}];
     const languagesDef = [
         {value:'JavaScript'},{value:'Python'},{value:'Java'},{value:'C#'},
         {value:'C++'},{value:'TypeScript'},{value:'Rust'},{value:'PHP'},{value: 'C'}
@@ -20,9 +20,6 @@ export const PublishProblem = () => {
     const [title, setTitle] = useState('')
     const [requirement, setRequirements] = useState('')
     const [description, setDescription] = useState('')
-    const [type, setType] = useState('console')
-    const [inputFile, setInputFile] = useState('');
-    const [outputFile, setOutputFile] = useState('');
     const [tags, setTags] = useState([])
     const [tag, setTag] = useState('')
     const [difficulty, setDifficulty] = useState('')
@@ -76,9 +73,6 @@ export const PublishProblem = () => {
                 title,
                 requirements: requirement,
                 description,
-                type,
-                inputFile,
-                outputFile,
                 tags,
                 difficulty,
                 input, 

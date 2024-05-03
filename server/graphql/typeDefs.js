@@ -8,5 +8,5 @@ const mutations = require('./typeDefs/mutations')
 const queries = require('./typeDefs/queries')
 const article = require('./typeDefs/article')
 const announcement = require('./typeDefs/announcement')
-
-module.exports = mergeTypeDefs([user, article, solutions, problem, response, mutations, queries, announcement])
+const contest = require('./typeDefs/contest')
+module.exports = mergeTypeDefs([user, article, solutions, problem, response, mutations, queries, announcement, contest])
