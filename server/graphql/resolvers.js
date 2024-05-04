@@ -103,6 +103,7 @@ module.exports = {
                 if(!user) {
                     throw new ApolloError('User does not exist');
                 }else{
+                    console.log(user)
                     return {
                         ...user._doc,
                     };
@@ -320,6 +321,18 @@ module.exports = {
             try{
                 const announcements = (await Announcement.find({}).sort({createdAt: -1})).slice(0, 5)
                 return announcements
+            }catch(e){
+                throw new ApolloError(e)
+            }
+        },
+        async getContests(_, {}, context){
+            try{
+                const user = await getUser(context);
+                if(!user){
+                    throw new ApolloError('You are not logged in')
+                }
+                const contests = await Contest.find({}).select("-problems")
+                return contests
             }catch(e){
                 throw new ApolloError(e)
             }
@@ -554,6 +567,7 @@ module.exports = {
             }
         },
         async createContest(_, {name, description, startDate, endDate, problems, languages}, context){
+            console.log(name, description, startDate, endDate, problems, languages)
             const user = await getUser(context);
             if(!user){
                 throw new ApolloError('You have to be logged in order to create a contest')
@@ -571,6 +585,7 @@ module.exports = {
                     success: true
                 }
             }catch(e){
+                console.log(e)
                 throw new ApolloError(e)
             }
         }

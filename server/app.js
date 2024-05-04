@@ -13,7 +13,7 @@ async function startServer(){
     })
     await apolloServer.start()
     app.use((req, res, next) => {
-        res.header("Access-Control-Allow-Origin", "http://localhost:3001", "http://localhost:46481");
+        res.header("Access-Control-Allow-Origin", "http://localhost:3001", "http://localhost:46481", "http://192.168.1.15:3001/");
         res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
         res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
         res.header("Access-Control-Allow-Credentials", "true");
@@ -21,7 +21,7 @@ async function startServer(){
     });
   
     app.use(cors({
-        origin: ["https://studio.apollographql.com", "http://localhost:3001", "http://localhost:46481"],
+        origin: ["https://studio.apollographql.com", "http://localhost:3001", "http://localhost:46481", "http://192.168.1.15:3001/"],
         credentials: 'include'
     }))
     app.get('/', (req, res) => {

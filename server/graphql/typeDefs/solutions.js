@@ -13,8 +13,7 @@ module.exports = gql`
         date: String,
         compilationError: String,
         success: String,
-        id_solution: String,
-        accessToPage: Boolean
+        id_solution: String
     }
     input SolutionInput {
         code: String,
@@ -29,6 +28,7 @@ module.exports = gql`
         score: String,
         input: String,
         output: String,
+        expectedOutput: String,
     }
     type Submission {
         username: String,

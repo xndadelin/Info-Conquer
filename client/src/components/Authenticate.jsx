@@ -115,7 +115,7 @@ export const Authenticate = () => {
                                     </Button>
                                 </div>
                                 <Divider className="mt-2 mb-2"/>
-                                <div className="flex w-full gap-1">
+                                <div className="flex w-full gap-1 justify-center">
                                     Do not have an account? <Link href="#" onClick={() => {registerDisclosure.onOpen(); onClose()}}>Register!</Link>
                                 </div>
                                 {error && (

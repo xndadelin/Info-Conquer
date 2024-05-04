@@ -1,6 +1,6 @@
-import { CardBody, CardHeader, Card, Divider, Chip } from "@nextui-org/react"
-import { Listbox, ListboxItem, ListboxSection } from "@nextui-org/react"
+import { Listbox, ListboxItem } from "@nextui-org/react"
 import { Link } from "react-router-dom"
+
 export const ProblemsSelection = () => {
     const problems = [
         {
@@ -9,17 +9,17 @@ export const ProblemsSelection = () => {
                 'Static Arrays',
                 'Dynamic Arrays',
                 'Bidimensional Arrays',
-                'Subarray ProblemsSelection',
-                'Matrix ProblemsSelection',
+                'Subarray',
+                'Matrix',
                 'Rotation of Arrays',
-                'Sliding Window ProblemsSelection',
+                'Sliding Window',
                 'Two Pointers Technique',
-                'Prefix Sum ProblemsSelection',
-                'Histogram ProblemsSelection',
+                'Prefix Sum',
+                'Histogram',
                 'Array Partitioning',
-                'Maximum Subarray ProblemsSelection',
-                'Minimum Subarray ProblemsSelection',
-                'Sum Pair ProblemsSelection',
+                'Maximum Subarray',
+                'Minimum Subarray',
+                'Sum Pair',
                 'Search in Arrays',
                 'Sorting in Arrays',
                 'Sparse Arrays',
@@ -66,8 +66,8 @@ export const ProblemsSelection = () => {
                 'Priority Queues',
                 'Double-ended Queues',
                 'Queue Applications',
-                'BFS (Breadth-First Search) ProblemsSelection',
-                'Sliding Window ProblemsSelection using Queues',
+                'BFS (Breadth-First Search)',
+                'Sliding Window using Queues',
                 'Advanced Queue Techniques',
             ]
         },
@@ -85,7 +85,7 @@ export const ProblemsSelection = () => {
                 'Tree Traversal',
                 'Level Order Traversal',
                 'Tree Operations and Manipulation',
-                'Tree ProblemsSelection with Recursion',
+                'Tree with Recursion',
                 'Advanced Tree Techniques',
             ]
         },
@@ -104,7 +104,7 @@ export const ProblemsSelection = () => {
                 'Flows and Matching',
                 'Network Flow Algorithms',
                 'Cycles and Cycle Detection',
-                'Graph ProblemsSelection with Recursion',
+                'Graph with Recursion',
                 'Advanced Graph Techniques',
             ]
         },
@@ -126,23 +126,20 @@ export const ProblemsSelection = () => {
     return (
         <div className="container mx-auto my-4 px-4">
             <h1 className="font-bold text-5xl mb-4">Data Structures</h1>
-            <div className="flex flex-col gap-10">
-                {problems.map((problem) => (
-                    <>
-                        <div className="flex gap-4">
-                            <h2 className="font-bold text-4xl">{problem.category}</h2>
-                            <div className="flex">
-                                <div className="flex gap-3 flex-wrap">
-                                    {problem.subcategories.map((subcategory) => (
-                                        <Link to={`/problems/${problem.category}/${subcategory}`}>
-                                            <Chip size="lg">{subcategory}</Chip>
-                                        </Link>
-                                    ))}
-                                </div>
-                            </div>
-                        </div>
-                        <Divider/>
-                    </>
+            <div className="flex gap-10 flex-wrap">
+                {problems.map((problem, index) => (
+                        <Listbox className="flex-1" key={index}>
+                            <ListboxItem>
+                                <p className="text-3xl">{problem.category}</p>
+                            </ListboxItem> 
+                            {problem.subcategories.map((subcategory, subIndex) => (
+                                <ListboxItem key={subIndex}>
+                                    <Link to={`/problems/${problem.category}/${subcategory}`}>
+                                        {subcategory}
+                                    </Link>
+                                </ListboxItem>
+                            ))}
+                        </Listbox>
                 ))}
             </div>
         </div>

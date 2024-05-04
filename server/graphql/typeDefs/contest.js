@@ -8,16 +8,15 @@ module.exports = gql`
         startDate: ContestDate
         endDate: ContestDate
         problems: [String]
-        languages: [String]
+        languages: [String],
+        createdBy: String
     }
-
     type ContestDate {
         year: Int
         month: Int
         day: Int
         hour: Int
         minute: Int
-        second: Int
     }
     input ContestDateInput {
         year: Int
@@ -25,6 +24,5 @@ module.exports = gql`
         day: Int
         hour: Int
         minute: Int
-        second: Int
     }
 `;

@@ -23,6 +23,14 @@ const contestSchema = new mongoose.Schema({
     languages: {
         type: Array,
         required: true
-    }
+    },
+    createdBy: {
+        type: String,
+        required: true
+    },
+    participants: {
+        type: Array,
+        required: true
+    },
 }, {timestamps: true})
 module.exports = new mongoose.model('contest', contestSchema)

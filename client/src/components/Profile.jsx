@@ -52,7 +52,6 @@ export const Profile = () => {
         }
 
     })
-    // to do: fix
     if(loading || !user){
         return  <Loading/>
     }
@@ -120,7 +119,7 @@ export const Profile = () => {
                                             <Link to={`/solution/${username}/${solution.id_solution}`}>See solution</Link>
                                         </TableCell>
                                         <TableCell>
-                                            <Link to={`/problems/${username}/${solution.problem}`}>{solution.problem}</Link>
+                                            <Link to={`/problems/${solution.problem}`}>{solution.problem}</Link>
                                         </TableCell>
                                         <TableCell>{new Date(+solution.date).toLocaleString()}</TableCell>
                                         <TableCell>{solution.language}</TableCell>

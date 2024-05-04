@@ -40,7 +40,8 @@ export const CreateConstest = () => {
         },
         onError: (error) => {
             setError(error.message)
-        }, variables: {
+        }, 
+        variables: {
             name,
             description,
             startDate : {
@@ -49,7 +50,6 @@ export const CreateConstest = () => {
                 day: startDate && startDate.day,
                 hour: startDate && startDate.hour,
                 minute: startDate && startDate.minute,
-                second: startDate && startDate.second
             },
             endDate : {
                 year: endDate && endDate.year,
@@ -57,7 +57,6 @@ export const CreateConstest = () => {
                 day: endDate && endDate.day,
                 hour: endDate && endDate.hour,
                 minute: endDate && endDate.minute,
-                second: endDate && endDate.second
             },
             problems,
             languages

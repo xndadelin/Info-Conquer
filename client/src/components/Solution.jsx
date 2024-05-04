@@ -15,7 +15,6 @@ import {
     TableHeader,
     TableRow
 } from "@nextui-org/react";
-import Editor from "@monaco-editor/react";
 export const Solution = () => {
     const {id, username} = useParams()
     const [selectedTestCase, setSelectedTestCase] = useState(null);
@@ -48,6 +47,7 @@ export const Solution = () => {
                   output
                   status
                   success
+                  expectedOutput
                 }
                 username
             }
@@ -161,6 +161,14 @@ export const Solution = () => {
                                             <pre>
                                                 {selectedTestCase.output}
                                             </pre>
+                                        </Snippet>
+                                    </div>
+                                    <div className="flex flex-col mb-5">
+                                        <p className="text-3xl mb-2">Expected output</p>
+                                            <Snippet symbol="">
+                                                <pre>
+                                                    {selectedTestCase.expectedOutput}
+                                                </pre>
                                         </Snippet>
                                     </div>
                                 </div>

@@ -1,7 +1,12 @@
 import { Modal, ModalBody, ModalContent, ModalHeader, Spinner, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, Snippet } from "@nextui-org/react"
+import { useContext } from "react"
+import {UserContext} from '../context/UserContext'
+import { Loading } from "./Loading"
 export const TestingSolution = ({onClose, isOpen, loading, tests}) => {
+    const user = useContext(UserContext)
     if(!loading && !tests) return null
-    const testsTable = () => {
+    if(!user) return <Loading/>
+    const testsTable = (user) => {
         return (
             <div>
                 <Table>
@@ -24,7 +29,11 @@ export const TestingSolution = ({onClose, isOpen, loading, tests}) => {
                         ))}
                     </TableBody>
                 </Table>
-                <p className="text-3xl p-3">Score: {tests.score}</p>
+                <div className="mt-4 mb-4 flex justify-center">
+                    {tests.score === "100" ? <Snippet className="w-[100%]" hideCopyButton symbol='' color="success">All tests passed! Congrats!</Snippet> : (
+                        <Snippet className="w-[100%]" hideCopyButton symbol='' color="warning">Some tests failed. You can check the tests!</Snippet>
+                    )}
+                </div>
             </div>
         )
     }
@@ -47,7 +56,7 @@ export const TestingSolution = ({onClose, isOpen, loading, tests}) => {
                 <ModalBody>
                     {loading &&  <div className="min-h-[200px] flex justify-center self-center"><Spinner color="default"/></div>}
                     {tests.compilationError && compilationError()}
-                    {tests.tests && testsTable()}
+                    {tests.tests && testsTable(user)}
                 </ModalBody>
             </ModalContent>
         </Modal>

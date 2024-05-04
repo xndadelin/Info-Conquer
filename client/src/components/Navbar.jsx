@@ -34,7 +34,7 @@ export const NavigationBar = () => {
 
             <NavbarContent className="hidden sm:flex gap-4" justify="center">
                 <NavbarItem>
-                    <Link to="/articles">Articles</Link>
+                    <Link to="/contests">Contests</Link>
                 </NavbarItem>
                 <NavbarItem>
                     <Link>About</Link>

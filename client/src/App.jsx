@@ -20,6 +20,7 @@ import { EditArticle } from "./components/EditArticle";
 import { PostAnnouncement } from "./pages/PostAnnouncement";
 import { Announcement } from "./components/Announcement";
 import { CreateConstest } from "./pages/CreateContest";
+import { Contests } from "./pages/Contests";
 function App() {
   const {user} = useContext(UserContext)
   if(!user)
@@ -83,6 +84,10 @@ function App() {
           <Route
             path="/contests/create"
             element={<CreateConstest/>}
+          />
+          <Route
+            path="/contests"
+            element={<Contests/>}
           />
           <Route
             path="*"
