@@ -16,5 +16,6 @@ module.exports = gql`
         getAnnouncements: [Announcement]
         getSolutions: [Solution]
         getContests: [Contest]
+        getContest(id: String): Contest
     } 
 `;  

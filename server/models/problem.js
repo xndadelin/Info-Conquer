@@ -78,6 +78,10 @@ const problemSchema = new mongoose.Schema({
     },
     restriction: {
         type: String,
+    },
+    itsForContest: {
+        type: Boolean,
+        required: true
     }
 });
 

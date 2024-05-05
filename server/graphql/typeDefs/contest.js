@@ -7,9 +7,12 @@ module.exports = gql`
         description: String
         startDate: ContestDate
         endDate: ContestDate
-        problems: [String]
+        problems: [Problem]
         languages: [String],
-        createdBy: String
+        createdBy: String,
+        hasEnded: Boolean,
+        hasStarted: Boolean,
+        participants: [Participant],
     }
     type ContestDate {
         year: Int
@@ -18,11 +21,23 @@ module.exports = gql`
         hour: Int
         minute: Int
     }
+    type Problem{
+        id: String
+        score: String
+    }
     input ContestDateInput {
         year: Int
         month: Int
         day: Int
         hour: Int
         minute: Int
+    }
+    input ProblemInput {
+        id: String
+        score: String
+    }
+    type Participant {
+        username: String
+        score: Int
     }
 `;

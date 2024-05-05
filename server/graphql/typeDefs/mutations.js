@@ -12,6 +12,7 @@ module.exports = gql`
         dislikeArticle(id: String): Response
         editArticle(id: String, content: String, tags: [String], title: String): Response
         postAnnouncement(title: String, content: String): Response
-        createContest(name: String, description: String, startDate: ContestDateInput, endDate: ContestDateInput, problems: [String], languages: [String]): Response
+        createContest(name: String, description: String, startDate: ContestDateInput, endDate: ContestDateInput, problems: [ProblemInput], languages: [String]): Response
+        joinContest(id: String): Response
     }
 `;

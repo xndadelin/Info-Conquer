@@ -32,5 +32,9 @@ const contestSchema = new mongoose.Schema({
         type: Array,
         required: true
     },
+    submissions: {
+        type: Array,
+        required: true
+    },
 }, {timestamps: true})
 module.exports = new mongoose.model('contest', contestSchema)

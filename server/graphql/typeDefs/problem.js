@@ -19,7 +19,8 @@ module.exports = gql`
         examples: [Example],
         indications: String,
         languages: [String],
-        restriction: String  
+        restriction: String,
+        itsForContest: Boolean,
     }
     input CreateProblemInput {
         creator: String, 
@@ -41,7 +42,8 @@ module.exports = gql`
         languages: [String],
         inputFile: String,
         outputFile: String,
-        restriction: String  
+        restriction: String,
+        itsForContest: Boolean,
     }
     type Test {
         score: String, 

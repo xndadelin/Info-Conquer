@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom"
 import { useEffect } from "react";
 import { useState } from "react";
-import {Button, Divider, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure} from "@nextui-org/react";
+import {Button, Checkbox, Divider, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure} from "@nextui-org/react";
 import {Textarea} from "@nextui-org/react";
 import {Select, SelectItem} from "@nextui-org/react";
 import {Chip} from "@nextui-org/react";
@@ -37,7 +37,7 @@ export const PublishProblem = () => {
     const [indications, setIndications] = useState('')
     const [error, setError] = useState('')
     const [languages, setLanguages] = useState([])
-    //! TO DO useForm
+    const [itsForContest, setItsForContest] = useState(false)
     const navigate = useNavigate()
     useEffect(() => {
         if (!user.getUser) {
@@ -45,10 +45,9 @@ export const PublishProblem = () => {
           return () => {}
         }
       }, []);   
-    //! TO DO ADD MORE (algoritms, instructions, oop etc...) 
     const problemMutation = gql`
-        mutation CreateProblem($title: String, $description: String, $requirements: String, $type: String, $tags: [String], $difficulty: String, $category: String, $subcategories: [String], $input: String, $output: String, $tests: [TestInput], $timeExecution: String, $limitMemory: String, $examples: [ExampleInput], $indications: String, $languages: [String], $inputFile: String, $outputFile: String, $restriction: String) {
-            createProblem(problemInput: {title: $title, description: $description, requirements: $requirements, type: $type, tags: $tags, difficulty: $difficulty, category: $category, subcategories: $subcategories, input: $input, output: $output, tests: $tests, timeExecution: $timeExecution, limitMemory: $limitMemory, examples: $examples, indications: $indications, languages: $languages, inputFile: $inputFile, outputFile: $outputFile, restriction: $restriction}) {
+        mutation CreateProblem($title: String, $description: String, $requirements: String, $type: String, $tags: [String], $difficulty: String, $category: String, $subcategories: [String], $input: String, $output: String, $tests: [TestInput], $timeExecution: String, $limitMemory: String, $examples: [ExampleInput], $indications: String, $languages: [String], $inputFile: String, $outputFile: String, $restriction: String, $itsForContest: Boolean) {
+            createProblem(problemInput: {title: $title, description: $description, requirements: $requirements, type: $type, tags: $tags, difficulty: $difficulty, category: $category, subcategories: $subcategories, input: $input, output: $output, tests: $tests, timeExecution: $timeExecution, limitMemory: $limitMemory, examples: $examples, indications: $indications, languages: $languages, inputFile: $inputFile, outputFile: $outputFile, restriction: $restriction, itsForContest: $itsForContest}) {
             success
             error {
                 message
@@ -85,7 +84,8 @@ export const PublishProblem = () => {
                 category,
                 subcategories,
                 indications,
-                languages
+                languages,
+                itsForContest
             }
         })
     }
@@ -342,6 +342,9 @@ export const PublishProblem = () => {
             <Textarea label="Restrictions" onChange={(e) => setRestriction(e.target.value)} value={restriction}/>
             <Input type="number" required label="Time limit (in s)" onChange={(e) => setTimeExecution(e.target.value)}/>
             <Input type="number" required label="Memory limit (in MB)" onChange={(e) => setLimitMemory(e.target.value)}/>
+            <Checkbox onChange={(e) => setItsForContest(e.target.checked)}>
+                This problem is for a contest
+            </Checkbox>
             <div className="flex justify-between font-bold text-3xl">
                 <p>Examples</p>
                 <Button variant="bordered" onClick={addExample}>Add example</Button>
@@ -380,7 +383,7 @@ export const PublishProblem = () => {
                         Are you sure you want to publish this problem?
                     </ModalHeader>
                     <ModalBody>
-                        Make sure you double check the problem details, have the right test cases and coerency. These problems will be publish as soon the super admin accepts it. 🚀
+                        Make sure you double check the problem details, have the right test cases and coerency. 🚀
                     </ModalBody>
                     <ModalFooter>
                         <Button variant="flat" color="success" onClick={handleCreateProblem}>Publish</Button>

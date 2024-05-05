@@ -91,7 +91,24 @@ module.exports = {
         },
         async getProblem(_, {title}, context){
             try{
+                const user = await getUser(context);
                 const problem = await Problem.findOne({title})
+                if(problem.itsForContest){
+                    const contest = await Contest.findOne({ "problems.id": problem.title });
+                    if(!contest){
+                        return problem
+                    }
+                    const now = new Date();
+                    const startDate = new Date(contest.startDate.year, contest.startDate.month, contest.startDate.day, contest.startDate.hour, contest.startDate.minute)
+                    const endDate = new Date(contest.endDate.year, contest.endDate.month, contest.endDate.day, contest.endDate.hour, contest.endDate.minute)
+                    if(contest){
+                        if(!contest.participants.includes(user.username)){
+                            return null
+                        }
+                        if(now > startDate && now < endDate) return null
+                        if(startDate < now) return null
+                    }
+                }
                 return problem
             }catch(error){
                 throw new ApolloError(error)
@@ -336,6 +353,35 @@ module.exports = {
             }catch(e){
                 throw new ApolloError(e)
             }
+        },
+        async getContest(_, {id}, context){
+            try{
+                const user = await getUser(context);
+                if(!user){
+                    throw new ApolloError('You are not logged in')
+                }   
+                const contest = await Contest.findOne({_id: id})
+                if(!contest){
+                    throw new ApolloError('This contest does not exist')
+                }
+                const now = new Date();
+                const startDate = new Date(contest.startDate.year, contest.startDate.month, contest.startDate.day, contest.startDate.hour, contest.startDate.minute)
+                const endDate = new Date(contest.endDate.year, contest.endDate.month, contest.endDate.day, contest.endDate.hour, contest.endDate.minute)
+                if(now > startDate && now < endDate){
+                    contest.hasStarted = true
+                    return contest
+                }else if(now < startDate){
+                    contest.hasStarted = false
+                    contest.problems = []
+                    return contest
+                }else if(now > endDate){
+                    contest.hasStarted = false
+                    contest.hasEnded = true    
+                    return contest               
+                }
+            }catch(e){
+                throw new ApolloError(e)
+            }
         }
     },
     Mutation: {
@@ -426,13 +472,13 @@ module.exports = {
                     }
                 }
             }catch(error){
-                console.log(error)
                 throw new ApolloError(error)
             }
         },
         async submitSolution(_, {solutionInput: {problem, code, language}}, context){
             try{
                 const problema = await Problem.findOne({title: problem}).select('tests title type')
+                const contest = await Contest.findOne({ "problems.id": problema.title });
                 if(!problem){
                     throw new ApolloError('This problem does not exist.')
                 }
@@ -440,11 +486,28 @@ module.exports = {
                 if(!user){
                     throw new ApolloError('You have to be logged in order to submit a solution');
                 }
+                if(contest){
+                    if(!contest.participants.includes(user.username)){
+                        throw new ApolloError('You are not a participant in this contest')
+                    }
+                    const now = new Date();
+                    const startDate = new Date(contest.startDate.year, contest.startDate.month, contest.startDate.day, contest.startDate.hour, contest.startDate.minute)
+                    const endDate = new Date(contest.endDate.year, contest.endDate.month, contest.endDate.day, contest.endDate.hour, contest.endDate.minute)
+                    if(now > endDate){
+                        throw new ApolloError('This contest has ended')
+                    }
+                    if(now < startDate){
+                        throw new ApolloError('This contest has not started yet')
+                    }
+                }
                 const testResults = graderCPP(problema.tests, code, problema.title, user.username, problema.type, language);
                 user.solutions.push(testResults)
                 if(testResults.score === 100)
                     if(!user.solvedProblems.find(solved => solved.problem === problema.title))
                         user.solvedProblems.push({problem: problema.title, date: new Date()});
+                if(contest)
+                    contest.submissions.push({username: user.username, problem: problema.title, score: testResults.score, date: new Date()})
+                await contest.save()
                 await user.save();
                 return testResults
             }catch(error){
@@ -567,7 +630,6 @@ module.exports = {
             }
         },
         async createContest(_, {name, description, startDate, endDate, problems, languages}, context){
-            console.log(name, description, startDate, endDate, problems, languages)
             const user = await getUser(context);
             if(!user){
                 throw new ApolloError('You have to be logged in order to create a contest')
@@ -585,8 +647,31 @@ module.exports = {
                     success: true
                 }
             }catch(e){
-                console.log(e)
                 throw new ApolloError(e)
+            }
+        },
+        async joinContest(_, {id}, context){
+            const user = await getUser(context);
+            if(!user){
+                throw new ApolloError('You have to be logged in order to join a contest')
+            }
+            const contest = await Contest.findOne({_id: id})
+            if(!contest){
+                throw new ApolloError('This contest does not exist')
+            }
+/*             const now = new Date();
+            const startDate = new Date(contest.startDate.year, contest.startDate.month, contest.startDate.day, contest.startDate.hour, contest.startDate.minute)
+            const endDate = new Date(contest.endDate.year, contest.endDate.month, contest.endDate.day, contest.endDate.hour, contest.endDate.minute) */
+            if(contest.participants.includes(user.username)){
+                return {
+                    success: false
+                }
+            }else{
+                contest.participants.push({username: user.username, score: 0})
+                await contest.save()
+                return {
+                    success: true
+                }
             }
         }
     }

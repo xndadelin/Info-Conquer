@@ -7,6 +7,7 @@ import { Select, SelectItem } from "@nextui-org/react"
 export const CreateConstest = () => {
     const [problems, setProblems] = useState([])
     const [currentProblem, setCurrentProblem] = useState('')
+    const [currentScore, setCurrentScore] = useState(0)
     const [name, setName] = useState('')
     const [description, setDescription] = useState('')
     const [startDate, setStartDate] = useState("")
@@ -18,15 +19,18 @@ export const CreateConstest = () => {
         {value:'C++'},{value:'TypeScript'},{value:'Rust'},{value:'PHP'},{value: 'C'}
     ];
     const navigate = useNavigate()
-    const onAddProblem = (id) => {
-        setProblems([...problems, id])
-        setCurrentProblem('')
+    const onAddProblem = (id, score) => {
+        if(score !== 0 && id){
+            setProblems([...problems, {id, score: currentScore}])
+            setCurrentProblem('')
+            setCurrentScore(0)
+        }
     }
     const onRemoveProblem = (id) => {
-        setProblems(problems.filter(problem => problem !== id))
+        setProblems(problems.filter(problem => problem.id !== id))
     }
     const createContestMutation = gql`
-        mutation CreateContest($name: String, $description: String, $startDate: ContestDateInput, $endDate: ContestDateInput, $problems: [String], $languages: [String]) {
+        mutation CreateContest($name: String, $description: String, $startDate: ContestDateInput, $endDate: ContestDateInput, $problems: [ProblemInput], $languages: [String]) {
             createContest(name: $name, description: $description, startDate: $startDate, endDate: $endDate, problems: $problems, languages: $languages) {
                 success
             }
@@ -81,9 +85,11 @@ export const CreateConstest = () => {
                     <DateInput granularity="second" onChange={setStartDate} label="Start Date"/>
                     <DateInput granularity="second" onChange={setEndDate} label="End Date"/>
                 </div>
-                <Input value={currentProblem} onChange={(e) => setCurrentProblem(e.target.value)} endContent={
-                    <Button disabled={currentProblem == ''} variant="flat" color="success" onClick={() => onAddProblem(currentProblem)}>Add problem</Button>
-                } label="Problems"/>
+                <div className="flex gap-5">
+                    <Input value={currentProblem} onChange={(e) => setCurrentProblem(e.target.value)} label="Problem"/>
+                    <Input type="number" value={currentScore} onChange={(e) => setCurrentScore(e.target.value)} label="Score"/>
+                    <Button variant="flat" color="success" onClick={() => onAddProblem(currentProblem, currentScore)}>Add</Button>
+                </div>
                 <Select onChange={(e) => handleLanguagesChange(e)} items={languagesDef} label="Languages" isRequired isMultiline selectionMode="multiple" renderValue={(languages) => {
                     return (
                         <div className="flex flex-wrap gap-3">
@@ -97,7 +103,7 @@ export const CreateConstest = () => {
                 </Select>
                 <div className="flex gap-5">
                     {problems.map((problem, index) => (
-                        <Chip key={index} className="cursor-pointer" onClick={() => onRemoveProblem(problem)}>{problem}</Chip>
+                        <Chip key={index} className="cursor-pointer" onClick={() => onRemoveProblem(problem.id)}>{problem.id} : {problem.score + ' pts'}</Chip>
                     ))}
                 </div>
                 <Button variant="flat" isLoading={loading} color="success" onClick={() => createContest()} >Create contest</Button>
