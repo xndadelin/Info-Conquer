@@ -1,12 +1,22 @@
-import {Card, CardBody} from "@nextui-org/react";
+import { useState, useEffect } from "react";
+
 export const Error = ({error}) => {
+    const [showToast, setShowToast] = useState(false);
+    useEffect(() => {
+        if (error) {
+          setShowToast(true);
+          const timer = setTimeout(() => {
+            setShowToast(false);
+          }, 5000); 
+          return () => setShowToast(false);
+        }
+      }, [error]);
     return (
-        <Card className="w-full">
-            <CardBody className="flex justify-between text-red-500">
-                <pre style={{whiteSpace: 'break-spaces'}}>
-                    {error}
-                </pre>
-            </CardBody>
-        </Card>
+        <div className={`flex absolute bottom-0 left-0 bg-red-800 items-center ${showToast ? 'visible' : 'hidden'} p-4 text-white rounded-lg`} role="alert">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="red" class="w-10 h-10    ">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
+            </svg>
+            <span className="ml-2">{error}</span>
+        </div>
     )
 }

@@ -1,6 +1,6 @@
 import {Modal, Divider,  ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure, Checkbox, Input, Link} from "@nextui-org/react";
 import { useState } from "react";
-import { useMutation, useQuery, gql  } from "@apollo/client";
+import { useMutation, gql  } from "@apollo/client";
 import { Error } from "./Error";
 export const Authenticate = () => {
     const loginDisclosue = useDisclosure();
@@ -109,7 +109,7 @@ export const Authenticate = () => {
                         <ModalFooter>
                             <div className="flex w-full flex-col justify-end gap-1">
                                 <div className="flex w-full justify-end gap-1">
-                                    <Button disabled={!query || !password} onClick={(e) => handleLogin(e)} variant="flat" color="success">Login</Button>
+                                    <Button onClick={(e) => handleLogin(e)} variant="flat" color="success">Login</Button>
                                     <Button color="danger" variant="flat" onClick={() => {onClose(); setError('')}}>
                                         Close
                                     </Button>
@@ -118,9 +118,6 @@ export const Authenticate = () => {
                                 <div className="flex w-full gap-1 justify-center">
                                     Do not have an account? <Link href="#" onClick={() => {registerDisclosure.onOpen(); onClose()}}>Register!</Link>
                                 </div>
-                                {error && (
-                                    <Error error={error}/>
-                                )}
                             </div>
                         </ModalFooter>
                     </>
@@ -158,6 +155,9 @@ export const Authenticate = () => {
                     )}
                 </ModalContent>
             </Modal>
+            {error && (
+                <Error error={error}/>
+            )}
         </>
     )
 }
