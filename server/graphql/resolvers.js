@@ -99,14 +99,14 @@ module.exports = {
                         return problem
                     }
                     const now = new Date();
-                    const startDate = new Date(contest.startDate.year, contest.startDate.month, contest.startDate.day, contest.startDate.hour, contest.startDate.minute)
-                    const endDate = new Date(contest.endDate.year, contest.endDate.month, contest.endDate.day, contest.endDate.hour, contest.endDate.minute)
+                    const startDate = new Date(contest.startDate.year, contest.startDate.month - 1, contest.startDate.day, contest.startDate.hour, contest.startDate.minute)
+                    const endDate = new Date(contest.endDate.year, contest.endDate.month - 1, contest.endDate.day, contest.endDate.hour, contest.endDate.minute)
                     if(contest){
-                        if(!contest.participants.includes(user.username)){
+                        const participantExists = contest.participants.some(participant => participant.username === user.username);
+                        if(!participantExists){
                             return null
                         }
-                        if(now > startDate && now < endDate) return null
-                        if(startDate < now) return null
+                        if(startDate >  now) return null
                     }
                 }
                 return problem
@@ -365,8 +365,8 @@ module.exports = {
                     throw new ApolloError('This contest does not exist')
                 }
                 const now = new Date();
-                const startDate = new Date(contest.startDate.year, contest.startDate.month, contest.startDate.day, contest.startDate.hour, contest.startDate.minute)
-                const endDate = new Date(contest.endDate.year, contest.endDate.month, contest.endDate.day, contest.endDate.hour, contest.endDate.minute)
+                const startDate = new Date(contest.startDate.year, contest.startDate.month - 1, contest.startDate.day, contest.startDate.hour, contest.startDate.minute)
+                const endDate = new Date(contest.endDate.year, contest.endDate.month - 1, contest.endDate.day, contest.endDate.hour, contest.endDate.minute)
                 if(now > startDate && now < endDate){
                     contest.hasStarted = true
                     return contest
@@ -487,12 +487,13 @@ module.exports = {
                     throw new ApolloError('You have to be logged in order to submit a solution');
                 }
                 if(contest){
-                    if(!contest.participants.includes(user.username)){
-                        throw new ApolloError('You are not a participant in this contest')
+                    const participantExists = contest.participants.some(participant => participant.username === user.username);
+                    if(!participantExists){
+                        throw new ApolloError('You have to join the contest in order to submit a solution')
                     }
                     const now = new Date();
-                    const startDate = new Date(contest.startDate.year, contest.startDate.month, contest.startDate.day, contest.startDate.hour, contest.startDate.minute)
-                    const endDate = new Date(contest.endDate.year, contest.endDate.month, contest.endDate.day, contest.endDate.hour, contest.endDate.minute)
+                    const startDate = new Date(contest.startDate.year, contest.startDate.month - 1, contest.startDate.day, contest.startDate.hour, contest.startDate.minute)
+                    const endDate = new Date(contest.endDate.year, contest.endDate.month - 1, contest.endDate.day, contest.endDate.hour, contest.endDate.minute)
                     if(now > endDate){
                         throw new ApolloError('This contest has ended')
                     }
@@ -503,11 +504,26 @@ module.exports = {
                 const testResults = graderCPP(problema.tests, code, problema.title, user.username, problema.type, language);
                 user.solutions.push(testResults)
                 if(testResults.score === 100)
-                    if(!user.solvedProblems.find(solved => solved.problem === problema.title))
+                    if(!user.solvedProblems.find(solved => solved.problem === problema.title)){
                         user.solvedProblems.push({problem: problema.title, date: new Date()});
-                if(contest)
-                    contest.submissions.push({username: user.username, problem: problema.title, score: testResults.score, date: new Date()})
-                await contest.save()
+                        await user.save();
+                    }
+                if(contest){
+                    //update score
+                    const Participant = contest.participants.find(participant => participant.username === user.username);
+                    const problemIndex = Participant.problems.findIndex(problem => problem.id === problema.title);
+                    if(problemIndex === -1){
+                        Participant.problems.push({id: problema.title, score: testResults.score})
+                    }
+                    else{
+                        if(testResults.score > Participant.problems[problemIndex].score){
+                            Participant.problems[problemIndex].score = testResults.score
+                        }
+                    }
+                    Participant.score = Participant.problems.reduce((acc, problem) => acc + problem.score, 0)
+                    contest.participants = contest.participants.map(participant => participant.username === user.username ? Participant : participant)
+                    await contest.save();
+                }
                 await user.save();
                 return testResults
             }catch(error){
@@ -662,12 +678,13 @@ module.exports = {
 /*             const now = new Date();
             const startDate = new Date(contest.startDate.year, contest.startDate.month, contest.startDate.day, contest.startDate.hour, contest.startDate.minute)
             const endDate = new Date(contest.endDate.year, contest.endDate.month, contest.endDate.day, contest.endDate.hour, contest.endDate.minute) */
-            if(contest.participants.includes(user.username)){
+            const participantExists = contest.participants.some(participant => participant.username === user.username);
+            if(participantExists){
                 return {
                     success: false
                 }
             }else{
-                contest.participants.push({username: user.username, score: 0})
+                contest.participants.push({username: user.username, score: 0, problems: []})
                 await contest.save()
                 return {
                     success: true

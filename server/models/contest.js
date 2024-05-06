@@ -27,11 +27,14 @@ const contestSchema = new mongoose.Schema({
     createdBy: {
         type: String,
         required: true
-    },
-    participants: {
-        type: Array,
-        required: true
-    },
+    },participants: [{
+        username: String,
+        score: Number,
+        problems: [{
+            id: String,
+            score: Number
+        }]
+    }],
     submissions: {
         type: Array,
         required: true

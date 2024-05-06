@@ -44,7 +44,7 @@ export const Contests = () => {
     const [joinContestMutation, {data:joinData, error:errorData, loading:loadingData}] = useMutation(joinContest, {
         onCompleted: (data) => {
             if(data.joinContest.success){
-                window.location.href = `/contest/view/${id}`
+                window.location.href = `/contests/view/${id}`
             }
         }
     })

@@ -28,7 +28,7 @@ const getContest = gql`
             createdBy,
             problems {
                 id
-                score
+                difficulty
             },
             participants {
                 username
@@ -92,18 +92,18 @@ export const Contest = () => {
                 <TableHeader>
                     <TableColumn>Index</TableColumn>
                     <TableColumn>Title</TableColumn> 
-                    <TableColumn>Score</TableColumn>
+                    <TableColumn>Difficulty</TableColumn>
                 </TableHeader>
                 <TableBody>
                     {data.getContest.problems.slice((page - 1)*20, page*20).map((problem, index) => (
                         <TableRow key={index}>
                             <TableCell>{index + 1}</TableCell>
                             <TableCell>
-                                <Link to={`/problems/${problem.id}?contest=${id}`}>
+                                <Link to={`/problems/${problem.id}`}>
                                     {problem.id}
                                 </Link>
                             </TableCell>
-                            <TableCell>{problem.score}</TableCell>
+                            <TableCell>{problem.difficulty}</TableCell>
                         </TableRow>
                     ))}
                 </TableBody>

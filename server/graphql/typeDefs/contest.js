@@ -34,7 +34,7 @@ module.exports = gql`
     }
     input ProblemInput {
         id: String
-        score: String
+        difficulty: String
     }
     type Participant {
         username: String

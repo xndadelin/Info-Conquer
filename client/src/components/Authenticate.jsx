@@ -99,7 +99,7 @@ export const Authenticate = () => {
                             Welcome to <strong>&nbsp;InfoConquer</strong>
                         </ModalHeader>
                         <ModalBody>
-                            <Input onChange={(e) => setQuery(e.target.value)} value={query} label="Email or username" variant="flat"/>
+                            <Input onChange={(e) => setQuery(e.target.value)} value={query || username} label="Email or username" variant="flat"/>
                             <Input type="password" onChange={(e) => setPassword(e.target.value)} value={password} label="Password" variant="flat"/>
                             <div className="flex justify-between">
                                 <Checkbox isSelected={remember} onValueChange={() => setRemember(true)}>Remember me</Checkbox>
