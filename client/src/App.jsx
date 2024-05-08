@@ -24,6 +24,7 @@ import { Contests } from "./pages/Contests";
 import { Contest } from "./components/Contest";
 import { Login } from "./pages/Login";
 import { Register } from "./pages/Register";
+import { About } from "./pages/About";
 function App() {
   const {user} = useContext(UserContext)
   if(!user)
@@ -103,6 +104,10 @@ function App() {
           <Route
             path="/contests/view/:id"
             element={<Contest/>}
+          />
+          <Route
+            path="/about"
+            element={<About/>}
           />
           <Route
             path="*"
