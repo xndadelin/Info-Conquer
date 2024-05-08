@@ -385,12 +385,26 @@ module.exports = {
         }
     },
     Mutation: {
-        async register(_, { registerInput: { username, email, password}}, context){
+        async register(_, { registerInput: { username, email, password, confirmPassword}}, context){
             try{
                 const user = await User.findOne({ $or : [{ username }, { email }]})
                 if(user){
                     throw new ApolloError('An account is already linked with these credentials. Please change the credentials to continue registering.');
                 }else{
+                    if(username.length < 4){
+                        throw new ApolloError('Username must be at least 4 characters long');
+                    }
+                    const email_okey = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g
+                    if(password !== confirmPassword){
+                        throw new ApolloError('Passwords do not match. Please submit again with matching passwords.');
+                    }
+                    if(!email_okey.test(email)){
+                        throw new ApolloError('Invalid email. Please submit again with a valid email.');
+                    }
+                    const strongPassword = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/g
+                    if(!strongPassword.test(password)){
+                        throw new ApolloError('Password must contain at least one number, one lowercase and one uppercase letter, and at least 6 characters long.');
+                    }
                     const salt = await bcrypt.genSalt(10);
                     const hashedPassword = await bcrypt.hash(password, salt);
                     const newUser = new User({

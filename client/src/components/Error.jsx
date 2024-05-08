@@ -8,9 +8,13 @@ export const Error = ({error}) => {
           const timer = setTimeout(() => {
             setShowToast(false);
           }, 5000); 
-          return () => setShowToast(false);
+          return () => {
+            clearTimeout(timer);
+            setShowToast(false);
+          };
         }
       }, [error]);
+    if (!error) return null;
     return (
         <div className={`flex absolute bottom-0 left-0 bg-red-800 items-center ${showToast ? 'visible' : 'hidden'} p-4 text-white rounded-lg`} role="alert">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="red" class="w-10 h-10    ">

@@ -12,6 +12,79 @@ import {NotFound} from "../pages/NotFound";
 import { getTemplate } from '../utils/getLanguageTemplate'
 import {Pagination} from '@nextui-org/react'
 import { ProblemStats } from './ProblemStats'
+const placeholder = `#include <iostream>
+#include <cstring>
+#include <string>
+#include <fstream>
+#include <cmath>
+using namespace std;
+
+ifstream in("caesar.in");
+ofstream out("dbftbs.out");
+
+char alfabet[] = "abcdefghijklmnopqrstuvwxyz";
+
+int cautachar(char c) {
+    char cp = tolower(c);
+    for (int i = 0; i < strlen(alfabet); ++i) {
+        if (alfabet[i] == cp) {
+            return i;
+        }
+    }
+    return 0;
+}
+
+void encrypt(char text[], int cheie) {
+    char cipher[257] = "";
+    int cnt = 0;
+    for (int i = 0; i < strlen(text); ++i) {
+        if (isalpha(text[i])) {
+            if (islower(text[i])) {
+                cipher[cnt++] = alfabet[(cautachar(text[i]) + cheie) % 26];
+            } else {
+                cipher[cnt++] = (alfabet[(cautachar(text[i]) + cheie) % 26] - 32);
+            }
+        } else {
+            cipher[cnt++] = text[i];
+        }
+    }
+    out << cipher;
+}
+
+void decrypt(char text[], int cheie) {
+    char plain[257] = "";
+    int cnt = 0;
+    for (int i = 0; i < strlen(text); ++i) {
+        if (isalpha(text[i])) {
+            if (islower(text[i])) {
+                plain[cnt++] = alfabet[(cautachar(text[i]) - cheie + 26) % 26];
+            } else {
+                plain[cnt++] = toupper(alfabet[(cautachar(text[i]) - cheie + 26) % 26]);
+            }
+        } else {
+            plain[cnt++] = text[i];
+        }
+    }
+    out << plain;
+}
+
+
+int main() {
+    char text[257];
+    in.getline(text, 257);
+    int cheie;
+    in >> cheie;
+    in.ignore();
+    char operatie[20];
+    in.getline(operatie, 20);
+    if (strcmp(operatie, "encrypt") == 0) {
+        encrypt(text, cheie);
+    } else {
+        decrypt(text, cheie);
+    }
+    return 0;
+}
+`
 export const Problem = () => {
     const {user} = useContext(UserContext)
     const [selected, setSelected] = useState('problem')
@@ -227,7 +300,8 @@ export const Problem = () => {
                                 </div>
                             )}
                         </div>
-                        <div className="mt-[85px] max-lg:mt-0">
+                        {user && user.getUser ? (
+                            <div className="mt-[85px] max-lg:mt-0">
                                 <div className='flex flex-col'>
                                     <div className='w-[100%] h-[100%] bg-[#1e1e1e] rounded flex justify-between align-center'>
                                         <Select onChange={(e) => setLanguage(e.target.value)} label="Select language" size='sm' className='w-[200px] mt-1 ml-1'>
@@ -242,7 +316,22 @@ export const Problem = () => {
                                     </div>
                                     <TestingSolution isOpen={isOpen} onClose={onOpenChange} loading={loadingTests} tests={tests}/>
                                 </div>
-                        </div>
+                            </div>
+                        ): (
+                            <div className="h-[100%] blur-md flex">
+                                <Editor options={{
+                                    readOnly: true,
+                                    minimap: {
+                                        enabled: false
+                                    },
+                                    scrollbar: {
+                                        vertical: 'hidden',
+                                        horizontal: 'hidden'
+                                    }
+                                }} height={'100vh'} value={placeholder} theme='vs-dark' language='cpp'  />
+                                
+                            </div>
+                        )}
                     </div>
                 </Tab>
                 <Tab key="solutions" title="Submissions">

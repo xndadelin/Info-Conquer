@@ -1,9 +1,7 @@
 import {Navbar, NavbarBrand, DropdownItem, DropdownTrigger, DropdownMenu, Avatar,  NavbarContent, NavbarItem,  NavbarMenuToggle,NavbarMenu,NavbarMenuItem, Button, Dropdown} from "@nextui-org/react";
-import { Link } from "react-router-dom";
+import { Link } from "@nextui-org/react";
 import { useState } from "react";
-import { Authenticate } from "./Authenticate";
-import { useMutation, useQuery, gql  } from "@apollo/client";
-import { Loading } from "./Loading";
+import { useMutation, gql  } from "@apollo/client";
 import { useContext } from "react";
 import { UserContext } from "../context/UserContext";
 const logoutMutationQuery = gql`
@@ -22,11 +20,11 @@ export const NavigationBar = () => {
         window.location.reload()
     } 
     return (
-        <Navbar isBlurred isBordered isMenuOpen={isOpen} onMenuOpenChange={setIsOpen}>
+        <Navbar shouldHideOnScroll isBlurred isBordered isMenuOpen={isOpen} onMenuOpenChange={setIsOpen}>
             <NavbarContent>
                 <NavbarMenuToggle className="sm:hidden"/>
-                <NavbarBrand className="text-2xl">
-                    <Link to={'/'}>
+                <NavbarBrand>
+                    <Link href="/" color="foreground" size="lg">
                         &lt;InfoConquer/&gt;
                     </Link>
                 </NavbarBrand>
@@ -34,22 +32,22 @@ export const NavigationBar = () => {
 
             <NavbarContent className="hidden sm:flex gap-4" justify="center">
                 <NavbarItem>
-                    <Link to="/contests">Contests</Link>
+                    <Link isBlock color="foreground" href="/contests">Contests</Link>
                 </NavbarItem>
                 <NavbarItem>
-                    <Link>About</Link>
+                    <Link color="danger" isBlock href="/about" >About</Link>
                 </NavbarItem>
                 <NavbarItem>
-                    <Link to={'/problems'}>Problems</Link>
+                    <Link isBlock color="foreground" href="/problems" >Problems</Link>
                 </NavbarItem>
                 <NavbarItem>
-                    <Link>Solutions</Link>
+                    <Link isBlock color="danger" href="/solutions">Solutions</Link>
                 </NavbarItem>
             </NavbarContent>
             {!user || !user.getUser ? (
                 <NavbarContent justify="end">
                     <NavbarItem>
-                        <Authenticate/>
+                        <Button type="button" as={Link} href="/login" variant="flat" color="danger">Login</Button>
                     </NavbarItem>
                 </NavbarContent>
             ): 
@@ -65,33 +63,30 @@ export const NavigationBar = () => {
                         <DropdownMenu variant="flat">
                             <DropdownItem>
                                <div className="font-bold">
-                                Signed in as: {user.getUser && user.getUser.username}
+                                    Signed in as: {user.getUser && user.getUser.username}
                                </div>
                             </DropdownItem>
                             <DropdownItem>
-                                <Link to={`/profile/${user.getUser.username}`}>See your profile</Link>
-                            </DropdownItem>
-                            <DropdownItem>
-                                My settings
+                                <Link color="foreground" href={`/profile/${user.getUser.username}`}>See your profile</Link>
                             </DropdownItem>
                             {user.getUser.admin && (
                                 <DropdownItem>
-                                    <Link to={'/problems/publish'}>Publish a problem</Link>
+                                    <Link color="foreground" href={'/problems/publish'}>Publish a problem</Link>
                                 </DropdownItem>
                             )}
                              {user.getUser.admin && (
                                 <DropdownItem>
-                                   <Link to={'/articles/publish'}>Publish an article</Link>
+                                   <Link color="foreground" href={'/articles/publish'}>Publish an article</Link>
                                 </DropdownItem>
                             )}
                             {user.getUser.admin && (
                                 <DropdownItem>
-                                    <Link to={'/post-announcement'}>Post announcement</Link>
+                                    <Link color="foreground" href={'/post-announcement'}>Post announcement</Link>
                                 </DropdownItem>
                             )}
                             {user.getUser.admin && (
                                 <DropdownItem>
-                                    <Link to={'/contests/create'}>Create a contest</Link>
+                                    <Link color="foreground" href={'/contests/create'}>Create a contest</Link>
                                 </DropdownItem>
                             )}
                             <DropdownItem>
@@ -102,12 +97,11 @@ export const NavigationBar = () => {
                 </NavbarContent>
             }
             <NavbarMenu>
-                <NavbarMenuItem>
-                    <Link>About</Link>
-                </NavbarMenuItem>
-                <NavbarMenuItem>
-                    <Link>Report a problem</Link>
-                </NavbarMenuItem>
+                {[{name: "Contests", href: "/contests"}, {name: "About", href: "/about"}, {name: "Problems", href: "/problems"}, {name: "Solutions", href: "/solutions"}].map((item, index) => (
+                    <NavbarMenuItem key={index}>
+                        <Link href={item.href} color="foreground" isBlock>{item.name}</Link>
+                    </NavbarMenuItem>
+                ))}
             </NavbarMenu>
         </Navbar>
     )

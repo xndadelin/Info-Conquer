@@ -22,6 +22,8 @@ import { Announcement } from "./components/Announcement";
 import { CreateConstest } from "./pages/CreateContest";
 import { Contests } from "./pages/Contests";
 import { Contest } from "./components/Contest";
+import { Login } from "./pages/Login";
+import { Register } from "./pages/Register";
 function App() {
   const {user} = useContext(UserContext)
   if(!user)
@@ -33,6 +35,14 @@ function App() {
           <Route
             path="/"
             element={!user || !user.getUser ? <Landing/>: <Homepage/>}
+          />
+          <Route
+            path="/login"
+            element={<Login/>}
+          />
+          <Route
+            path="/register"
+            element={<Register/>}
           />
           <Route
             path="/problems/publish"

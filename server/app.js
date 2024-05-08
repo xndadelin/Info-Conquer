@@ -3,6 +3,7 @@ const app = express()
 const mongoose = require('mongoose')
 const { ApolloServer } = require('apollo-server-express') 
 const cors = require('cors')
+const crypto = require('crypto')
 require('dotenv').config()
 async function startServer(){
     const apolloServer = new ApolloServer({
@@ -17,6 +18,7 @@ async function startServer(){
         res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
         res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
         res.header("Access-Control-Allow-Credentials", "true");
+        req.crsfToken = crypto.randomBytes(64).toString('hex');
         next();
     });
   

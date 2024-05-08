@@ -1,7 +1,6 @@
 import { Button, Divider } from '@nextui-org/react';
 import Editor from '@monaco-editor/react';
-import {Card, CardHeader, CardBody, CardFooter} from "@nextui-org/react";
-// !TO DO, add more informations
+import {Card, CardHeader, CardBody} from "@nextui-org/react";
 export const Landing = () => {
   const code = `#include <iostream>
 
@@ -86,7 +85,12 @@ int main()
                             <div className="h-[13px] mx-1 self-center w-[13px] rounded-full bg-green-600"></div>
                         </div>
                         <div className='h-[500px] flex-1'>
-                            <Editor theme="vs-dark" height="500px" language="cpp" defaultValue={code}/>
+                            <Editor options={{
+                                minimap: {enabled: false},
+                                fontSize: 12,
+                                scrollbar: {vertical: 'hidden', horizontal: 'hidden'},
+                                readOnly: true,
+                            }} theme="vs-dark" height="500px" language="cpp" defaultValue={code}/>
                         </div>
                     </div>
                 </div>
@@ -102,26 +106,30 @@ int main()
                         <CardHeader>
                             <svg height={25} className='mr-2' xmlns="http://www.w3.org/2000/svg" fill='white' viewBox="0 0 640 512"><path d="M320 0c17.7 0 32 14.3 32 32V96H472c39.8 0 72 32.2 72 72V440c0 39.8-32.2 72-72 72H168c-39.8 0-72-32.2-72-72V168c0-39.8 32.2-72 72-72H288V32c0-17.7 14.3-32 32-32zM208 384c-8.8 0-16 7.2-16 16s7.2 16 16 16h32c8.8 0 16-7.2 16-16s-7.2-16-16-16H208zm96 0c-8.8 0-16 7.2-16 16s7.2 16 16 16h32c8.8 0 16-7.2 16-16s-7.2-16-16-16H304zm96 0c-8.8 0-16 7.2-16 16s7.2 16 16 16h32c8.8 0 16-7.2 16-16s-7.2-16-16-16H400zM264 256a40 40 0 1 0 -80 0 40 40 0 1 0 80 0zm152 40a40 40 0 1 0 0-80 40 40 0 1 0 0 80zM48 224H64V416H48c-26.5 0-48-21.5-48-48V272c0-26.5 21.5-48 48-48zm544 0c26.5 0 48 21.5 48 48v96c0 26.5-21.5 48-48 48H576V224h16z"/></svg>
                             <div className='flex flex-col'>
-                                <p className='text-md'>OpenAI Chatbot integrated</p>
+                                <p className='text-md'>
+                                    Integrated OpenAI feedback
+                                </p>
                                 <a className='text-sm text-default-500' href='https://openai.com/' target='_blank'>See OpenAI</a>
                             </div>
                         </CardHeader>
                         <Divider/>
                         <CardBody>
-                           <p>Enjoy the benefits of our integrated OpenAI chatbot. Get quick and helpful responses to your prompts once you are authenticated.</p>
+                           <p>Enjoy the benefits of our integrated OpenAI ChatGPT feedback. At request, you can get a feedback on your code from ChatGPT as soon as you submit it.</p>
                         </CardBody>
                     </Card>
                     <Card>
                         <CardHeader>
                         <svg fill='white' height={25} className='mr-2' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path d="M392.8 1.2c-17-4.9-34.7 5-39.6 22l-128 448c-4.9 17 5 34.7 22 39.6s34.7-5 39.6-22l128-448c4.9-17-5-34.7-22-39.6zm80.6 120.1c-12.5 12.5-12.5 32.8 0 45.3L562.7 256l-89.4 89.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l112-112c12.5-12.5 12.5-32.8 0-45.3l-112-112c-12.5-12.5-32.8-12.5-45.3 0zm-306.7 0c-12.5-12.5-32.8-12.5-45.3 0l-112 112c-12.5 12.5-12.5 32.8 0 45.3l112 112c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256l89.4-89.4c12.5-12.5 12.5-32.8 0-45.3z"/></svg>
                             <div className='flex flex-col'>
-                                <p className='text-md'>Monaco Editor integrated</p>
-                                <a className='text-sm text-default-500' href='https://www.npmjs.com/package/@monaco-editor/react' target='_blank'>See Monaco Editor</a>
+                                <p className='text-md'>
+                                    Code judger integrated
+                                </p>
+                                <a className='text-sm text-default-500' href='//put here the docs' target='_blank'>See how I have done it</a>
                             </div>
                         </CardHeader>
                         <Divider/>
                         <CardBody>
-                           <p>The Monaco Editor aims to make coding faster and smoother by offering features like syntax highlighting and auto-completion. You can start write code as soon as you are authenticated.</p>
+                           <p>Our integrated code judger will help you test your code against a variety of test cases. You can also see the time and memory consumption of your code, as well as the output and the expected output to point out your mistakes.</p>
                         </CardBody>
                     </Card>
                     <Card> 
@@ -141,13 +149,17 @@ int main()
                         <CardHeader>
                         <svg className='mr-2' fill='white' height={25} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M512 240c0 114.9-114.6 208-256 208c-37.1 0-72.3-6.4-104.1-17.9c-11.9 8.7-31.3 20.6-54.3 30.6C73.6 471.1 44.7 480 16 480c-6.5 0-12.3-3.9-14.8-9.9c-2.5-6-1.1-12.8 3.4-17.4l0 0 0 0 0 0 0 0 .3-.3c.3-.3 .7-.7 1.3-1.4c1.1-1.2 2.8-3.1 4.9-5.7c4.1-5 9.6-12.4 15.2-21.6c10-16.6 19.5-38.4 21.4-62.9C17.7 326.8 0 285.1 0 240C0 125.1 114.6 32 256 32s256 93.1 256 208z"/></svg>
                             <div className='flex flex-col'>
-                                <p className='text-md'>Integrated forum</p>
-                                <a className='text-sm text-default-500' href='http://localhost:3001/forum' target='_blank'>See forum</a>
+                                <p className='text-md'>
+                                    Article publishing
+                                </p>
+                                <a className='text-sm text-default-500' href='http://localhost:3001/articles' target='_blank'>See forum</a>
                             </div>
                         </CardHeader>
                         <Divider/>
                         <CardBody>
-                           <p>Start discussing about your ideas, issues and many more with other people. You have to be authenticated in order to access the forum.</p>
+                           <p>
+                              Share your knowledge with the world by publishing articles on InfoConquer. Our forum is the perfect place to discuss ideas, ask questions, and share your insights.
+                           </p>
                         </CardBody>
                     </Card>
                 </div>
