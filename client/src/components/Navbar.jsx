@@ -67,7 +67,7 @@ export const NavigationBar = () => {
                                </div>
                             </DropdownItem>
                             <DropdownItem>
-                                <Link color="foreground" href={`/profile/${user.getUser.username}`}>See your profile</Link>
+                                <Link color="foreground" href={`/profile/${user.getUser.username}`}>See your profile & settings</Link>
                             </DropdownItem>
                             {user.getUser.admin && (
                                 <DropdownItem>
@@ -102,6 +102,11 @@ export const NavigationBar = () => {
                         <Link href={item.href} color="foreground" isBlock>{item.name}</Link>
                     </NavbarMenuItem>
                 ))}
+                {user && user.getUser && (
+                    <NavbarMenuItem>
+                        <Link href={`/profile/${user.getUser.username}`} color="foreground" isBlock>Profile</Link>
+                    </NavbarMenuItem>
+                )}
             </NavbarMenu>
         </Navbar>
     )

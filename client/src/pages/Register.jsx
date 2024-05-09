@@ -17,9 +17,9 @@ mutation Register($username: String!, $email: String!, $password: String!, $conf
 }
 `
 export const Register = () => {
-    const [username, setUsername] = useState(localStorage.getItem('username') || "")
+    const [username, setUsername] = useState("")
     const [emailSent, setEmailSent] = useState(false)
-    const [email, setEmail] = useState(localStorage.getItem('email') || "")
+    const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [confirmPassword, setConfirmPassword] = useState("")
     const [error, setError] = useState("")
@@ -56,10 +56,6 @@ export const Register = () => {
             }
         })
     }
-    useEffect(() => {
-        localStorage.setItem('username', username)
-        localStorage.setItem('email', email)
-    }, [email, username])
     if(user.getUser) window.location.href = '/'
     return (
         <div className="container mx-auto flex items-center h-[100vh] justify-center">

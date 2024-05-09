@@ -173,7 +173,7 @@ export const ProblemsSelection = () => {
             <div className="flex gap-10 flex-wrap">
                 {problems.map((problem, index) => (
                     <div className="flex flex-col">
-                        <Link href={`/problems/${problem.category}`} key={index} color="danger" isBlock className="text-2xl font-bold">{problem.category}</Link>
+                        <Link href={`/problems/${problem.category}/none`} key={index} color="danger" isBlock className="text-2xl font-bold">{problem.category}</Link>
                         <div className="flex flex-col">
                             {problem.subcategories.map((subcategory, index) => (
                                 <Link href={`/problems/${problem.category}/${subcategory}`} key={index} color="foreground" isBlock>{subcategory}</Link>

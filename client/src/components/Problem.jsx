@@ -1,7 +1,6 @@
 import {Link, useParams} from 'react-router-dom'
 import { useQuery, gql } from '@apollo/client'
 import { Loading } from './Loading'
-import { Error } from './Error'
 import { TableCell, Table, TableHeader, TableRow, TableColumn, TableBody, Snippet, Button, Select, SelectItem, useDisclosure, Tabs, Tab } from '@nextui-org/react'
 import {Editor} from '@monaco-editor/react'
 import { useContext, useEffect, useState } from "react";
