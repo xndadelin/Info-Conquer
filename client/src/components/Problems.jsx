@@ -47,7 +47,7 @@ export const Problems = () => {
                     <TableColumn>Difficulty</TableColumn>
                 </TableHeader>
                 <TableBody>
-                    {problems.getProblems.map((problem) => (
+                    {problems.getProblems.slice((page - 1)*20, page*20).map((problem) => (
                         <TableRow>
                             <TableCell>
                                 <Link to={`/problems/${problem.title}`}>{problem.title}</Link>
@@ -61,7 +61,7 @@ export const Problems = () => {
                     ))}
                 </TableBody>
             </Table>
-            <Pagination color="danger" className="pt-5" total={Math.ceil(problems.getProblems.length/25)} initialPage={1} showControls />
+            <Pagination color="danger" className="pt-5" onChange={(page) => setPage(page)} loop total={Math.ceil(problems.getProblems.length/25)}  initialPage={1} showControls />
         </div>
     )
 }

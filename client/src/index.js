@@ -7,7 +7,6 @@ import client from './apolloclient';
 import { ApolloProvider } from '@apollo/client';
 import { BrowserRouter } from 'react-router-dom';
 import { UserProvider } from './context/UserContext';
-import { Error } from './components/Error';
 const app = ReactDOM.createRoot(document.getElementById('root'));
 app.render(
   <BrowserRouter>

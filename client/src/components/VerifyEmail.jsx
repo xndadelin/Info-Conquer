@@ -17,7 +17,7 @@ export const VerifyEmail = () => {
     const [error, setError] = useState(null)
     useEffect(() => {
         verifyEmail()
-    }, [])
+    }, )
     const [verifyEmail, {loading}] = useMutation(verifyToken, {
         variables: {
             token

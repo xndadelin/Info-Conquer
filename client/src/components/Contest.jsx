@@ -2,7 +2,7 @@ import { Link, useParams } from "react-router-dom"
 import { gql, useQuery } from "@apollo/client"
 import { Loading } from "../components/Loading"
 import { useState } from "react"
-import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, Pagination, Tab } from "@nextui-org/react"
+import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, Pagination } from "@nextui-org/react"
 import { NotFound } from "../pages/NotFound"
 const getContest = gql`
     query GetContest($id: String) {
@@ -43,7 +43,7 @@ const getContest = gql`
 export const Contest = () => {
     const {id} = useParams()
     const [page, setPage] = useState(1)
-    const {data, error, loading} = useQuery(getContest, {
+    const {data, loading} = useQuery(getContest, {
         variables: {
             id
         },

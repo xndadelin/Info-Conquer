@@ -1,4 +1,3 @@
-import { Card, CardBody, CardHeader } from '@nextui-org/react';
 import { Link } from 'react-router-dom';
 export const About = () => {
     return (

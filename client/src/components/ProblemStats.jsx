@@ -2,7 +2,7 @@ import {gql, useQuery} from "@apollo/client";
 import { Link, useParams } from "react-router-dom";
 import { Loading } from "./Loading";
 import {Chart} from 'react-google-charts'
-import { Card, CardHeader, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@nextui-org/react";
+import { Card, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@nextui-org/react";
 const getStats = gql`
     query GetProblemStats($id: String) {
         getProblemStats(id: $id) {
@@ -32,7 +32,7 @@ const getStats = gql`
 `
 export const ProblemStats = () => {
     const {id} = useParams();
-    const {loading, error, data} = useQuery(getStats, {
+    const {loading, data} = useQuery(getStats, {
         variables: {
             id
         },

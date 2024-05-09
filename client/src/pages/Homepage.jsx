@@ -1,8 +1,8 @@
 import {useQuery, gql} from "@apollo/client";
-import {Avatar, Card, CardBody, TableRow, TableCell, Button, Listbox, ListboxItem, Table, TableColumn, TableHeader, TableBody, Chip} from "@nextui-org/react";
+import {Card, CardBody, Button} from "@nextui-org/react";
 import {Link} from "react-router-dom";
 import { Loading } from "../components/Loading";
-//get top problems amd most based users from the database
+/* //get top problems amd most based users from the database
 const topProblems = [
     {
         name: "Two Sum",
@@ -22,7 +22,7 @@ const topProblems = [
         tags: ["String", "Sliding Window"],
         rateSuccess: "60%",
     }
-]
+] */
 const newAnnouncements = gql`
     query getAnnouncements {
         getAnnouncements {
@@ -67,7 +67,7 @@ export const Homepage = () => {
                     <CardBody>
                         <p className="text-2xl font-bold">{announcement.title}</p>
                         <p className="text-slate">Announcement by <Link to={`/profile/${announcement.createdBy}`} className="text-default-500">{announcement.createdBy}</Link></p>
-                        <div dangerouslySetInnerHTML={{__html: announcement.content.slice(0, 500) + '...' + `<a target='_blank' style='color: rgb(51,102,204);' href='/announcement/${announcement.title}'>Vezi mai multe</a>`}}></div>
+                        <div dangerouslySetInnerHTML={{__html: announcement.content.slice(0, 500) + `... <a target='_blank' style='color: rgb(51,102,204);' href='/announcement/${announcement.title}'>Vezi mai multe</a>`}}></div>
                     </CardBody>
                 </Card>
             ))}

@@ -59,9 +59,6 @@ export const Profile = () => {
         },
         onError: (error) => {
             setError(error)
-        },
-        onCompleted: (data) => {
-            setUser(data)
         }
     })
 

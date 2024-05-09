@@ -17,7 +17,7 @@ export const PostAnnouncement = () => {
     const [content, setContent] = useState('')
     const [title, setTitle] = useState('')
     const [isError, setIsError] = useState(false)
-    const [postAnnouncement, {data, error: error, loading}] = useMutation(postAnnouncementQ, {
+    const [postAnnouncement, {error}] = useMutation(postAnnouncementQ, {
         onCompleted: (data) => {
             if(data.postAnnouncement.success){
                 window.location.href = `/announcement/${title}`

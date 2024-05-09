@@ -4,27 +4,18 @@ import {useContext, useEffect, useState} from "react";
 import {Loading} from "./Loading";
 import {useNavigate, Link} from "react-router-dom";
 import {UserContext} from "../context/UserContext";
-import {
-    Button,
-    Modal, ModalBody, ModalContent,
-    ModalHeader, Snippet, Tab,
-    Table,
-    TableBody,
-    TableCell,
-    TableColumn,
-    TableHeader,
-    TableRow
-} from "@nextui-org/react";
+import {Modal, ModalBody, ModalContent, ModalHeader, Table, TableCell, TableRow, TableColumn, TableHeader, Snippet, Button, TableBody} from "@nextui-org/react";
+import { NotFound } from "../pages/NotFound";
 export const Solution = () => {
     const {id, username} = useParams()
     const [selectedTestCase, setSelectedTestCase] = useState(null);
     const {user} = useContext(UserContext)
     const navigate = useNavigate()
     useEffect(() => {
-        if(user && user.getUser.username != username && user.getUser.admin === false){
+        if(user && user.getUser.username !== username && user.getUser.admin === false){
             navigate(-1);
         }
-    }, [user])
+    }, [user, username])
     const [solution, setSolution] = useState('')
     const solutionQuery = gql`
         query GetSolution($id: String){
@@ -53,21 +44,18 @@ export const Solution = () => {
             }
         }
     `
-    const {data, error, loading} = useQuery(solutionQuery, {
+    const {error, loading} = useQuery(solutionQuery, {
         variables: {
             id
         },
         onCompleted: (data) => {
-            console.log(data)
             setSolution(data)
         }
     })
     if(loading || !solution) {
         return <Loading/>
     }
-    if(error){
-        console.log(error)
-    }
+    if(error) return <NotFound/>
     return (
         <div className="container mx-auto grid grid-cols-2 max-lg:grid-cols-1 my-10 p-3 gap-5">
             <div>

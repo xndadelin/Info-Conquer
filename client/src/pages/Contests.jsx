@@ -38,10 +38,10 @@ const joinContest = gql`
     }
 `
 export const Contests = () => {
-    const {data, error, loading} = useQuery(getContests)
+    const {data, loading} = useQuery(getContests)
     const [id, setId] = useState('')
     const {user} = useContext(UserContext)
-    const [joinContestMutation, {data:joinData, error:errorData, loading:loadingData}] = useMutation(joinContest, {
+    const [joinContestMutation] = useMutation(joinContest, {
         onCompleted: (data) => {
             if(data.joinContest.success){
                 window.location.href = `/contests/view/${id}`
@@ -49,7 +49,7 @@ export const Contests = () => {
         }
     })
     if(loading) return <Loading/>
-    if(!data) return <NotFound/>
+    if(!data || !user.getUser) return <NotFound/>
     return (
         <div className="container p-4 grid grid-cols-3 my-5 gap-5 max-md:grid-cols-2 max-sm:grid-cols-1">
             {data.getContests.map((contest) => (
@@ -62,7 +62,7 @@ export const Contests = () => {
                     </CardHeader>
                     <CardBody>
                         <p className="text-xl font-bold">Description</p>
-                        <p className="text-xl" dangerouslySetInnerHTML={{__html: contest.description.slice(0, 100) + '...' + `<a target='_blank' style='color: rgb(51,102,204);' href='/contests/view/${contest._id}'>Vezi mai multe</a>`}}></p>
+                        <p className="text-xl" dangerouslySetInnerHTML={{__html: contest.description.slice(0, 100) + `... <a target='_blank' style='color: rgb(51,102,204);' href='/contests/view/${contest._id}'>Vezi mai multe</a>`}}></p>
                         <p className="text-xl font-bold">Start date:</p>
                             {contest.startDate.year + '.' + contest.startDate.month + '.' + contest.startDate.day + ' at ' + contest.startDate.hour + ":" + contest.startDate.minute}
                         <p className="text-xl font-bold">End date:</p>

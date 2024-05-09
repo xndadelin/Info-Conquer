@@ -25,7 +25,7 @@ export const PublishArticle = () => {
             }
         }
     `
-    const [publishArticle, {data, loading}] = useMutation(publishGql, {
+    const [publishArticle, {loading}] = useMutation(publishGql, {
         variables: {
             title,
             content,

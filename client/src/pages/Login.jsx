@@ -1,6 +1,6 @@
 import { Button, Card, CardBody, CardFooter, CardHeader, Checkbox, Chip, Divider, Input } from "@nextui-org/react";
 import { Link } from "@nextui-org/react";
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import { gql, useMutation } from "@apollo/client";
 import { UserContext } from "../context/UserContext";
 import { useContext } from "react";

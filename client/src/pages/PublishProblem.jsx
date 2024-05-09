@@ -1,14 +1,13 @@
-import { useNavigate } from "react-router-dom"
-import { useEffect } from "react";
 import { useState } from "react";
 import {Button, Checkbox, Divider, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure} from "@nextui-org/react";
 import {Textarea} from "@nextui-org/react";
 import {Select, SelectItem} from "@nextui-org/react";
 import {Chip} from "@nextui-org/react";
-import { useMutation, useQuery, gql  } from "@apollo/client";
+import { useMutation, gql  } from "@apollo/client";
 import { Error } from "../components/Error";
 import { useContext } from "react";
 import { UserContext } from "../context/UserContext";
+import { NotFound } from "./NotFound";
 export const PublishProblem = () => {
     const {user} = useContext(UserContext)
     const {isOpen, onOpen, onClose} = useDisclosure()
@@ -38,13 +37,6 @@ export const PublishProblem = () => {
     const [error, setError] = useState('')
     const [languages, setLanguages] = useState([])
     const [itsForContest, setItsForContest] = useState(false)
-    const navigate = useNavigate()
-    useEffect(() => {
-        if (!user.getUser) {
-          navigate(-1);
-          return () => {}
-        }
-      }, []);   
     const problemMutation = gql`
         mutation CreateProblem($title: String, $description: String, $requirements: String, $type: String, $tags: [String], $difficulty: String, $category: String, $subcategories: [String], $input: String, $output: String, $tests: [TestInput], $timeExecution: String, $limitMemory: String, $examples: [ExampleInput], $indications: String, $languages: [String], $inputFile: String, $outputFile: String, $restriction: String, $itsForContest: Boolean) {
             createProblem(problemInput: {title: $title, description: $description, requirements: $requirements, type: $type, tags: $tags, difficulty: $difficulty, category: $category, subcategories: $subcategories, input: $input, output: $output, tests: $tests, timeExecution: $timeExecution, limitMemory: $limitMemory, examples: $examples, indications: $indications, languages: $languages, inputFile: $inputFile, outputFile: $outputFile, restriction: $restriction, itsForContest: $itsForContest}) {
@@ -85,7 +77,7 @@ export const PublishProblem = () => {
                 subcategories,
                 indications,
                 languages,
-                itsForContest
+                itsForContest,
             }
         })
     }
@@ -330,7 +322,7 @@ export const PublishProblem = () => {
     }
     const Subcategories = (category) => {
         const index = problems.findIndex(problem => problem.category === category)
-        if(index != -1){
+        if(index !== -1){
             return (
                 <Select isRequired selectionMode="multiple" isMultiline label="Subcategory" renderValue={(subcategories) => {
                     return (
@@ -350,6 +342,8 @@ export const PublishProblem = () => {
             return null;
         }
     }
+    if(!user.getUser ||  !user.getUser.admin)
+        return <NotFound/>
     return (
         <div className="container mx-auto flex flex-col my-10 gap-3 p-4">
             <p className="font-bold text-5xl mb-4">Publish a problem</p>

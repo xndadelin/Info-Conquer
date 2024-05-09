@@ -2,7 +2,7 @@ import {gql, useQuery} from '@apollo/client'
 import { useParams } from 'react-router-dom'
 import { NotFound } from '../pages/NotFound'
 import { Loading } from './Loading'
-import { Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Spinner, useDisclosure } from '@nextui-org/react'
+import { Button,Spinner } from '@nextui-org/react'
 import { useState } from 'react'
 import { useContext } from 'react'
 import { UserContext } from '../context/UserContext'
@@ -46,17 +46,17 @@ export const EditArticle = () => {
     const onDeleteTag = (tag) => {
         setTags(tags.filter((i) => i !== tag))
     }
-    const {data, loading} = useQuery(getArticle, {
+    const {loading} = useQuery(getArticle, {
         variables: {
             id
         }, onCompleted: (data) => {
             setContent(data.getArticle.content)
             setTitle(data.getArticle.title)
-            setTags(data.getArticle.tags.length != 0 ? data.getArticle.tags : [])    
+            setTags(data.getArticle.tags.length !== 0 ? data.getArticle.tags : [])    
         }
     })
     const {user} = useContext(UserContext)
-    const [edit, {data: dataEdit, loading: loadingSave, error}] = useMutation(editArticle, {
+    const [edit, {loading: loadingSave, error}] = useMutation(editArticle, {
         variables: {
             id,
             content,

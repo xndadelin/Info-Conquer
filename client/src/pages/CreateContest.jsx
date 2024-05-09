@@ -36,7 +36,7 @@ export const CreateConstest = () => {
             }
         }
     `
-    const [createContest, {data, error: cerror , loading}] = useMutation(createContestMutation, {
+    const [createContest, {loading}] = useMutation(createContestMutation, {
         onCompleted: (data) => {
             if(data.createContest.success) {
                 navigate('/contests')
