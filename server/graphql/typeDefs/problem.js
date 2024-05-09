@@ -21,6 +21,7 @@ module.exports = gql`
         languages: [String],
         restriction: String,
         itsForContest: Boolean,
+        successRate: Float,
     }
     input CreateProblemInput {
         creator: String, 

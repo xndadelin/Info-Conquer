@@ -141,6 +141,17 @@ module.exports = {
             try{
                 const user = await getUser(context);
                 const problem = await Problem.findOne({title})
+                if(!problem){
+                    throw new ApolloError('This problem does not exist')
+                }
+                if(problem.acceptedSolutions + problem.rejectedSolutions === 0){
+                    problem.successRate = 0
+                    await problem.save()
+                }else{
+                    const successRate = problem.acceptedSolutions / (problem.acceptedSolutions + problem.rejectedSolutions) * 100
+                    problem.successRate = successRate
+                    await problem.save()    
+                }
                 if(problem.itsForContest){
                     if(!user){
                         return null
@@ -191,8 +202,7 @@ module.exports = {
             if (subcategory !== 'none') {
                 query.subcategories = { $in: [subcategory] };
             }
-            const problems = await Problem.find(query).select('title category subcategories difficulty tags type');
-            console.log(problems)
+            const problems = await Problem.find(query, {itsForContest: false}).select('title category subcategories difficulty tags type');
             return problems;
         },
         async getSubmissions(_, {title}, context){
@@ -439,7 +449,6 @@ module.exports = {
         async register(_, { registerInput: { username, email, password, confirmPassword, token}}, context){
             try{
                 const responseTurnstile = await validateTurnstile(token, context.req)
-                console.log(responseTurnstile)
                 if(!responseTurnstile.success){
                     throw new ApolloError('Invalid captcha. Please submit again with the correct captcha. If you have any problems with the captcha, please refresh the page and try again or contact us.')
                 }
@@ -506,7 +515,6 @@ module.exports = {
         async login(_, {loginInput: {query, password, token}}, context){
             try{
                 const responseTurnstile = await validateTurnstile(token, context.req)
-                console.log(responseTurnstile)
                 if(!responseTurnstile.success){
                     throw new ApolloError('Invalid captcha. Please submit again with the correct captcha. If you have any problems with the captcha, please refresh the page and try again or contact us.')
                 }
@@ -571,7 +579,7 @@ module.exports = {
         },
         async submitSolution(_, {solutionInput: {problem, code, language}}, context){
             try{
-                const problema = await Problem.findOne({title: problem}).select('tests title type')
+                const problema = await Problem.findOne({title: problem}).select('tests title type rejectedSolutions acceptedSolutions')
                 const contest = await Contest.findOne({ "problems.id": problema.title });
                 if(!problem){
                     throw new ApolloError('This problem does not exist.')
@@ -597,11 +605,17 @@ module.exports = {
                 }
                 const testResults = graderCPP(problema.tests, code, problema.title, user.username, problema.type, language);
                 user.solutions.push(testResults)
-                if(testResults.score === 100)
+                if(testResults.score === 100){
                     if(!user.solvedProblems.find(solved => solved.problem === problema.title)){
                         user.solvedProblems.push({problem: problema.title, date: new Date()});
                         await user.save();
                     }
+                    problema.acceptedSolutions += 1;
+                    await problema.save();
+                }else{
+                    problema.rejectedSolutions += 1;
+                    await problema.save();
+                }
                 if(contest){
                     //update score
                     const Participant = contest.participants.find(participant => participant.username === user.username);
@@ -821,6 +835,33 @@ module.exports = {
             }
             user.password = hashedPassword;
             await user.save()
+            return {
+                success: true
+            }
+        },
+        async changeUsername(_, {username, newUsername}, context){
+            const user = await getUser(context);
+            if(!user){
+                throw new ApolloError('You have to be logged in order to change the username')
+            }
+            if(username !== user.username){
+                throw new ApolloError('You have to be logged in with the same username in order to change the username. Please stop trying to hack the website!!!')
+            }
+            if(username === newUsername){
+                throw new ApolloError('The new username is the same as the old one. You have to choose a different username')
+            }
+            if(newUsername.length < 4){
+                throw new ApolloError('Username must be at least 4 characters long')
+            }
+            user.username = newUsername;
+            await user.save()
+            await User.updateMany({ "solutions.username": user.username }, { $set: { "solutions.$[elem].username": username } },{ arrayFilters: [{ "elem.username": user.username }] });
+            await Problem.updateMany({ creator: username }, { $set: { creator: newUsername } });
+            await Article.updateMany({ creator: username }, { $set: { creator: newUsername } });
+            await Announcement.updateMany({ createdBy: username }, { $set: { createdBy: newUsername } });
+            await Contest.updateMany({ createdBy: username }, { $set: { createdBy: newUsername } });
+            await Contest.updateMany({ "participants.username": user.username }, { $set: { "participants.$[elem].username": username } },{ arrayFilters: [{ "elem.username": user.username }] });
+
             return {
                 success: true
             }

@@ -4,7 +4,10 @@ import {useState} from "react";
 import {Loading} from "./Loading";
 import {Button, ButtonGroup, Divider, Textarea} from "@nextui-org/react";
 import {Input} from "@nextui-org/react";
+import {UserContext} from "../context/UserContext";
+import {useContext} from "react";
 import { Avatar, Tabs, Tab, Chip, Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Pagination, Card, CardHeader, CardBody} from "@nextui-org/react";
+import { NotFound } from "../pages/NotFound";
 const userQuery = gql`
 query GetProfile($username: String){
     getProfile(username: $username){
@@ -25,30 +28,61 @@ query GetProfile($username: String){
     }
 }
 `
+const updateUsername = gql`
+mutation changeUsername($username: String, $newUsername: String){
+    changeUsername(username: $username, newUsername: $newUsername){
+        success
+    }
+}`
+const logoutMutationQuery = gql`
+mutation {
+    logout {
+        success
+    }
+}`
 export const Profile = () => {
     const {username} = useParams();
+    const {user: currentUser} = useContext(UserContext)
     const [user, setUser] = useState();
     const [page, setPage] = useState(1)
     const [love, setLove] = useState(false)
+    const [error, setError] = useState('')
     const [newUsername, setNewUsername] = useState('')
     const [newEmail, setNewEmail] = useState('')
     const [email, setEmail] = useState('')
     const [bio, setBio] = useState('')
-    const {data, loading, error} = useQuery(userQuery, {
+    const [logoutMutation] = useMutation(logoutMutationQuery)
+    const [errorUsername, setErrorUsername] = useState('')
+    const {data, loading} = useQuery(userQuery, {
         variables: {
             username
         },
         onError: (error) => {
-            console.error(error)
+            setError(error)
         },
         onCompleted: (data) => {
             setUser(data)
         }
-
     })
-    if(loading || !user){
+
+    const [changeUsername, {loading: changeUsernameLoading}] = useMutation(updateUsername, {
+        variables: {
+            username,
+            newUsername
+        },
+        onCompleted: () => {
+            logoutMutation()
+            window.location.href = '/login'
+        },
+        onError: (error) => {
+            setErrorUsername(error.message)
+        }
+    })
+    if(loading){
         return  <Loading/>
     }
+    if(!data || error) return <NotFound/>
+    const seeSettings = currentUser && currentUser.getUser && currentUser.getUser.username === username
     return (
         <Tabs className="container mx-auto flex flex-col my-5 px-5">
             <Tab key="general" title="General informations" className="mx-auto container p-5">
@@ -58,8 +92,8 @@ export const Profile = () => {
                             <CardHeader className="text-2xl flex justify-center">InfoConquer enjoyer</CardHeader>
                             <CardBody>
                                 <Avatar className="self-center"></Avatar>
-                                <p className="text-3xl self-center">{user.getProfile.username}</p>
-                                <p className="mb-3 text-2xl self-center text-default-500">{user.getProfile.admin === "true" ? "Admin": 'User'}</p>
+                                <p className="text-3xl self-center">{data.getProfile.username}</p>
+                                <p className="mb-3 text-2xl self-center text-default-500">{data.getProfile.admin === "true" ? "Admin": 'User'}</p>
                                 <div className="self-center">
                                     <ButtonGroup>
                                         <Button onClick={() => setLove(!love)}>
@@ -86,12 +120,12 @@ export const Profile = () => {
                     <div className="flex flex-col gap-2">
                         <p className="text-3xl">Solved problems</p>
                         <div className="flex flex-wrap">
-                            {user.getProfile.solvedProblems.map((problem) => (
+                            {data.getProfile.solvedProblems.map((problem) => (
                                 <Chip className="m-2">
                                     <Link to={`/problems/${problem.problem}`}>{problem.problem}</Link>
                                 </Chip>
                             ))}
-                            {user.getProfile.solvedProblems.length === 0 &&
+                            {data.getProfile.solvedProblems.length === 0 &&
                                 <div>{'The user has not solved problems.'}</div>}
                         </div>
                     </div>
@@ -107,7 +141,7 @@ export const Profile = () => {
                                 <TableColumn>Status</TableColumn>
                             </TableHeader>
                             <TableBody>
-                                {user.getProfile.solutions.slice((page - 1)*20, page*20).map((solution) => (
+                                {data.getProfile.solutions.slice((page - 1)*20, page*20).map((solution) => (
                                     <TableRow>
                                         <TableCell>
                                             <Link to={`/solution/${username}/${solution.id_solution}`}>See solution</Link>
@@ -123,42 +157,47 @@ export const Profile = () => {
                                 ))}
                             </TableBody>
                         </Table>
-                        <Pagination onChange={(page) => setPage(page)} loop showControls total={Math.ceil(user.getProfile.solutions.length/20)} initialPage={1}></Pagination>
+                        <Pagination color="danger" onChange={(page) => setPage(page)} loop showControls total={Math.ceil(data.getProfile.solutions.length/20)} initialPage={1}></Pagination>
                     </div>
                 </div>
             </Tab>
-            <Tab key="settings" title="Settings" className="mx-auto container p-4">
-              <div className="grid grid-cols-1 gap-4">
-                <div className="flex flex-col gap-4 mt-4">
-                    <div className="flex flex-col gap-1">
-                        <p className="text-3xl">Change username</p>
-                        <Input label="Username" value={user.getProfile.username} disabled/> 
-                        <Input label="New username" onChange={(e) => setNewUsername(e.target.value)}/>
-                        <Button color="danger" variant="flat">Change username</Button>
-                    </div>
-                    <div className="flex flex-col gap-1">
-                        <p className="text-3xl">Change email</p>
-                        <Input label="Email" onChange={(e) => setEmail(e.target.value)} value={email}  disabled/>
-                        <Input label="New email" value={email} onChange={(e) => setNewEmail(e.target.value)}/>
-                        <Button color="danger" variant="flat">Change email</Button>
-                    </div>
-                    <div className="flex flex-col gap-1">
-                        <p className="text-3xl">Change password</p>
-                        <Input label="Current password" type="password"/>
-                        <Input label="New password" type="password"/>
-                        <Input label="Confirm new password" type="password"/>
-                        <Button color="danger" variant="flat">Change password</Button>
-                    </div>
-                </div>
-              </div>
-              <Divider className="mt-4"/>
-                <div className="flex flex-col gap-4 mt-4">
-                    <p className="text-3xl">Bio</p>
-                    <Textarea value={bio} onChange={(e) => setBio(e.target.value)} label="Write something about you..."/>
-                    <Button color="danger" variant="flat">Change bio</Button>
-                </div>
-              <Divider className="mt-4"/>  
-            </Tab>
+            {seeSettings && (
+                <Tab key="settings" title="Settings" className="mx-auto container p-4">
+                 <div className="grid grid-cols-1 gap-4">
+                   <div className="flex flex-col gap-4 mt-4">
+                       <div className="flex flex-col gap-1">
+                           <p className="text-3xl">Change username</p>
+                           <Input label="Username" value={data.getProfile.username} disabled/> 
+                           <Input label="New username" onChange={(e) => setNewUsername(e.target.value)}/>
+                           <Button onClick={changeUsername} isLoading={changeUsernameLoading} color="danger" variant="flat">Change username</Button>
+                          {errorUsername && (
+                            <Chip color="success" variant="flat">{errorUsername}</Chip>
+                          )}
+                       </div>
+                       <div className="flex flex-col gap-1">
+                           <p className="text-3xl">Change email</p>
+                           <Input label="Email" onChange={(e) => setEmail(e.target.value)} value={email}  disabled/>
+                           <Input label="New email" value={email} onChange={(e) => setNewEmail(e.target.value)}/>
+                           <Button color="danger" variant="flat">Change email</Button>
+                       </div>
+                       <div className="flex flex-col gap-1">
+                           <p className="text-3xl">Change password</p>
+                           <Input label="Current password" type="password"/>
+                           <Input label="New password" type="password"/>
+                           <Input label="Confirm new password" type="password"/>
+                           <Button color="danger" variant="flat">Change password</Button>
+                       </div>
+                   </div>
+                 </div>
+                 <Divider className="mt-4"/>
+                   <div className="flex flex-col gap-4 mt-4">
+                       <p className="text-3xl">Bio</p>
+                       <Textarea value={bio} onChange={(e) => setBio(e.target.value)} label="Write something about you..."/>
+                       <Button color="danger" variant="flat">Change bio</Button>
+                   </div>
+                 <Divider className="mt-4"/>  
+               </Tab>
+            )}
         </Tabs>
     )
 }

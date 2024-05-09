@@ -1,4 +1,4 @@
-import { Listbox, ListboxItem, Link } from "@nextui-org/react"
+import {  Link } from "@nextui-org/react"
 
 export const ProblemsSelection = () => {
     const problems = [

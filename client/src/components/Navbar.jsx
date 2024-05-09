@@ -16,7 +16,7 @@ export const NavigationBar = () => {
     const [isOpen, setIsOpen] = useState(false); 
     const [logoutMutation] = useMutation(logoutMutationQuery)
     const handleLogout = async() => {
-        await logoutMutation()
+        logoutMutation()
         window.location.reload()
     } 
     return (

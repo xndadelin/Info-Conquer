@@ -122,6 +122,7 @@ export const Problem = () => {
                 indications
                 languages
                 restriction
+                successRate
             }
         }
     `
@@ -221,7 +222,7 @@ export const Problem = () => {
                                         <TableColumn>Difficulty</TableColumn>
                                         <TableColumn>Category</TableColumn>
                                         <TableColumn>Subcategory</TableColumn>
-                                        <TableColumn>Solved by</TableColumn>
+                                        <TableColumn>Solve rate</TableColumn>
                                         <TableColumn>Rating</TableColumn>
                                     </TableHeader>
                                     <TableBody>
@@ -231,7 +232,7 @@ export const Problem = () => {
                                             <TableCell>{problem.getProblem.difficulty}</TableCell>
                                             <TableCell>{problem.getProblem.category}</TableCell>
                                             <TableCell>{problem.getProblem.subcategories}</TableCell>
-                                            <TableCell>69 users</TableCell>
+                                            <TableCell>{problem.getProblem.successRate + '%'}</TableCell>
                                             <TableCell>69%</TableCell>
                                         </TableRow>
                                     </TableBody>
