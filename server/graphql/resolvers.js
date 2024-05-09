@@ -47,6 +47,22 @@ const sendEmail = (email, codeForVerification) => {
         }
     })
 }
+const validateTurnstile = async(token, req) => {
+    const ip = req.ip.split(':').pop()
+    let formData = new FormData();
+    formData.append('secret', process.env.TURNSTILE_SECRET_KEY);
+    formData.append('response', token);
+    formData.append('remoteip', ip);
+
+	const url = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
+	const result = await fetch(url, {
+		body: formData,
+		method: 'POST',
+	});
+    const data = await result.json();
+    return data;
+
+}
 const getUser = async(context) => {
     try{
         const cookies =  cookie.parse(context.req.headers.cookie) || ''
@@ -419,8 +435,13 @@ module.exports = {
         }
     },
     Mutation: {
-        async register(_, { registerInput: { username, email, password, confirmPassword}}, context){
+        async register(_, { registerInput: { username, email, password, confirmPassword, token}}, context){
             try{
+                const responseTurnstile = await validateTurnstile(token, context.req)
+                console.log(responseTurnstile)
+                if(!responseTurnstile.success){
+                    throw new ApolloError('Invalid captcha. Please submit again with the correct captcha. If you have any problems with the captcha, please refresh the page and try again or contact us.')
+                }
                 const user = await User.findOne({ $or : [{ username }, { email }]})
                 if(user && user.lastEmailVerification && user.lastEmailVerification > new Date(new Date().getTime() - 2 * 60 * 1000) && !user.verified && user.codeForVerification){
                     throw new ApolloError('You have to wait 2 minutes before we sent you an email again. We have sent you an email with the verification link earlier. Check your email. If you did not receive the email, please check your spam folder. If you still did not receive the email, please contact us.')
@@ -481,9 +502,17 @@ module.exports = {
                 throw new ApolloError(err)
             }
         },
-        async login(_, {loginInput: {query, password}}, context){
+        async login(_, {loginInput: {query, password, token}}, context){
             try{
+                const responseTurnstile = await validateTurnstile(token, context.req)
+                console.log(responseTurnstile)
+                if(!responseTurnstile.success){
+                    throw new ApolloError('Invalid captcha. Please submit again with the correct captcha. If you have any problems with the captcha, please refresh the page and try again or contact us.')
+                }
                 const user = await User.findOne({ $or : [{ username: query }, { email: query }]})
+                if(!user){
+                    throw new ApolloError('Invalid credentials. Please submit again with the correct credentials.');
+                }
                 if(!user.verified){
                     throw new ApolloError('This account is not verified. Register again and verify your email address.')
                 }
@@ -767,6 +796,30 @@ module.exports = {
             user_.verified = true;
             user_.codeForVerification = '';
             await user_.save()
+            return {
+                success: true
+            }
+        },
+        async changePassword(_, {currentpass, password, confirmPassword}, context){
+            const user = await getUser(context);
+            if(!user){
+                throw new ApolloError('You have to be logged in order to change the password')
+            }
+            if(password !== confirmPassword){
+                throw new ApolloError('Passwords do not match')
+            }
+            const strongPassword = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/g
+            if(!strongPassword.test(password)){
+                throw new ApolloError('Password must contain at least one number, one lowercase and one uppercase letter, and at least 6 characters long.');
+            }
+            const salt = await bcrypt.genSalt(10);
+            const hashedPassword = await bcrypt.hash(password, salt);
+            const matchPassword = await bcrypt.compare(currentpass, user.password)
+            if(!matchPassword){
+                throw new ApolloError('Invalid password')
+            }
+            user.password = hashedPassword;
+            await user.save()
             return {
                 success: true
             }

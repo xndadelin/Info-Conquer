@@ -1,45 +1,39 @@
 import {Link, useParams} from "react-router-dom"
-import {useQuery, gql} from "@apollo/client";
+import {useQuery, gql, useMutation} from "@apollo/client";
 import {useState} from "react";
 import {Loading} from "./Loading";
-import {Button, ButtonGroup, Divider} from "@nextui-org/react";
-import {
-    Avatar,
-    Tabs,
-    Tab,
-    Chip,
-    Table,
-    TableHeader,
-    TableColumn,
-    TableBody,
-    TableRow,
-    TableCell, Pagination, Card, CardHeader, CardBody
-} from "@nextui-org/react";
+import {Button, ButtonGroup, Divider, Textarea} from "@nextui-org/react";
+import {Input} from "@nextui-org/react";
+import { Avatar, Tabs, Tab, Chip, Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Pagination, Card, CardHeader, CardBody} from "@nextui-org/react";
+const userQuery = gql`
+query GetProfile($username: String){
+    getProfile(username: $username){
+        username,
+        createdAt,
+        admin,
+        solutions {
+            problem,
+            score,
+            date,
+            compilationError,
+            id_solution,
+            language
+        },
+        solvedProblems {
+            problem
+        }
+    }
+}
+`
 export const Profile = () => {
     const {username} = useParams();
     const [user, setUser] = useState();
     const [page, setPage] = useState(1)
     const [love, setLove] = useState(false)
-    const userQuery = gql`
-        query GetProfile($username: String){
-            getProfile(username: $username){
-                username,
-                createdAt,
-                admin,
-                solutions {
-                    problem,
-                    score,
-                    date,
-                    compilationError,
-                    id_solution,
-                    language
-                },
-                solvedProblems {
-                    problem
-                }
-            }
-        }
-    `
+    const [newUsername, setNewUsername] = useState('')
+    const [newEmail, setNewEmail] = useState('')
+    const [email, setEmail] = useState('')
+    const [bio, setBio] = useState('')
     const {data, loading, error} = useQuery(userQuery, {
         variables: {
             username
@@ -133,8 +127,37 @@ export const Profile = () => {
                     </div>
                 </div>
             </Tab>
-            <Tab  key="settings" title="Settings" className="mx-auto container">
-
+            <Tab key="settings" title="Settings" className="mx-auto container p-4">
+              <div className="grid grid-cols-1 gap-4">
+                <div className="flex flex-col gap-4 mt-4">
+                    <div className="flex flex-col gap-1">
+                        <p className="text-3xl">Change username</p>
+                        <Input label="Username" value={user.getProfile.username} disabled/> 
+                        <Input label="New username" onChange={(e) => setNewUsername(e.target.value)}/>
+                        <Button color="danger" variant="flat">Change username</Button>
+                    </div>
+                    <div className="flex flex-col gap-1">
+                        <p className="text-3xl">Change email</p>
+                        <Input label="Email" onChange={(e) => setEmail(e.target.value)} value={email}  disabled/>
+                        <Input label="New email" value={email} onChange={(e) => setNewEmail(e.target.value)}/>
+                        <Button color="danger" variant="flat">Change email</Button>
+                    </div>
+                    <div className="flex flex-col gap-1">
+                        <p className="text-3xl">Change password</p>
+                        <Input label="Current password" type="password"/>
+                        <Input label="New password" type="password"/>
+                        <Input label="Confirm new password" type="password"/>
+                        <Button color="danger" variant="flat">Change password</Button>
+                    </div>
+                </div>
+              </div>
+              <Divider className="mt-4"/>
+                <div className="flex flex-col gap-4 mt-4">
+                    <p className="text-3xl">Bio</p>
+                    <Textarea value={bio} onChange={(e) => setBio(e.target.value)} label="Write something about you..."/>
+                    <Button color="danger" variant="flat">Change bio</Button>
+                </div>
+              <Divider className="mt-4"/>  
             </Tab>
         </Tabs>
     )

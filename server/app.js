@@ -21,7 +21,7 @@ async function startServer(){
         req.crsfToken = crypto.randomBytes(64).toString('hex');
         next();
     });
-  
+    app.set('trust proxy', true);
     app.use(cors({
         origin: ["https://studio.apollographql.com", "http://localhost:3001", "http://localhost:46481", "http://192.168.1.15:3001/"],
         credentials: 'include'

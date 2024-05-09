@@ -1,12 +1,14 @@
 import { Button, Card, CardBody, CardFooter, CardHeader, Checkbox, Chip, Divider, Input } from "@nextui-org/react";
 import { Link } from "@nextui-org/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { gql, useMutation } from "@apollo/client";
 import { UserContext } from "../context/UserContext";
 import { useContext } from "react";
+import { useTurnstile } from "../hooks/useTurnstile";
+import {useNavigate} from "react-router-dom"
 const LoginMutation = gql`
-mutation Login($query: String!, $password: String!) {
-    login(loginInput: { query: $query, password: $password }) {
+mutation Login($query: String!, $password: String!, $token: String!) {
+    login(loginInput: { query: $query, password: $password, token: $token}) {
     success
         error {
             code
@@ -20,18 +22,29 @@ export const Login = () => {
     const [password, setPassword] = useState("")
     const [error, setError] = useState("")
     const {user} = useContext(UserContext)
+    const navigate = useNavigate()
+    useTurnstile()
     const [loginMutation, {loading} ] = useMutation(LoginMutation, {
         onError: (error) => {
           setError(error.message)
         },
         onCompleted: () => {
-            window.location.reload()
-        },
-        variables: {
-            query,
-            password
+            navigate(-1)
         }
     });
+    const handleLogin = (e) => {
+        setError("")
+        e.preventDefault()
+        const formData = new FormData(e.target)
+        const token = formData.get('cf-turnstile-response')
+        loginMutation({
+            variables: {
+                query, 
+                password, 
+                token
+            }
+        })
+    }
     if(user.getUser) window.location.href = '/'
     return (
         <div className="container mx-auto flex items-center h-[100vh] justify-center">
@@ -43,7 +56,7 @@ export const Login = () => {
                     </div>
                 </CardHeader>
                 <CardBody>
-                    <form className="flex flex-col">
+                    <form onSubmit={(e) => handleLogin(e)} className="flex flex-col">
                         <div className="mb-4">
                            <Input label="Username or email" onChange={(e) => setQuery(e.target.value)}/>
                         </div>
@@ -54,17 +67,16 @@ export const Login = () => {
                             <Checkbox color="danger">Remember me</Checkbox>
                             <Link href="/forgot-password" color="danger" isBlock>Forgot password?</Link>
                         </div>
-                        <Button onClick={(e) => {
-                            e.preventDefault()
-                            loginMutation()
-                        }} isLoading={loading} disabled={!query || !password} className="w-full" type="submit" color="danger" variant="flat">Login</Button>
+                        <div className="mb-4 self-center cf-turnstile" data-sitekey={process.env.REACT_APP_SITE_KEY}>
+                        </div>
+                        <Button isLoading={loading} disabled={!query || !password} className="w-full" type="submit" color="danger" variant="flat">Login</Button>
                         <Divider className="mt-4 mx-auto w-[40px] p-0.5 rounded-lg"/>
                         <Link className="self-center mt-2" href="/register" color="foreground" isBlock>Don't have an account? Register!</Link>
                     </form>
                 </CardBody>
                 {error && (
                     <CardFooter>
-                        <Chip className="whitespace-pre-wrap h-full p-3" color="danger" variant="flat">{error}</Chip>
+                        <Chip className="whitespace-pre-wrap h-full p-3 rounded-lg" color="danger" variant="flat">{error}</Chip>
                     </CardFooter>
                 )}
             </Card>

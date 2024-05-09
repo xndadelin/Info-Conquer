@@ -15,5 +15,8 @@ module.exports = gql`
         createContest(name: String, description: String, startDate: ContestDateInput, endDate: ContestDateInput, problems: [ProblemInput], languages: [String]): Response
         joinContest(id: String): Response
         verifyEmail(token: String): Response
+        changePassword(password: String, confirmPassword: String): Response
+        changeUsername(username: String): Response
+        changeEmail(email: String): Response
     }
 `;

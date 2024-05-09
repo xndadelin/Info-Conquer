@@ -1,12 +1,13 @@
 import { Button, Card, CardBody, CardFooter, CardHeader, Checkbox, Chip, Divider, Input } from "@nextui-org/react";
 import { Link } from "@nextui-org/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { gql, useMutation } from "@apollo/client";
 import { UserContext } from "../context/UserContext";
 import { useContext } from "react";
+import { useTurnstile } from "../hooks/useTurnstile";
 const RegisterMutation = gql`
-mutation Register($username: String!, $email: String!, $password: String!, $confirmPassword: String!) {
-    register(registerInput: {username: $username, password: $password, email: $email, confirmPassword: $confirmPassword}){
+mutation Register($username: String!, $email: String!, $password: String!, $confirmPassword: String!, $token: String!) {
+    register(registerInput: {username: $username, password: $password, email: $email, confirmPassword: $confirmPassword, token: $token}) {
         success
             error {
                 code
@@ -16,9 +17,9 @@ mutation Register($username: String!, $email: String!, $password: String!, $conf
 }
 `
 export const Register = () => {
-    const [username, setUsername] = useState("")
+    const [username, setUsername] = useState(localStorage.getItem('username') || "")
     const [emailSent, setEmailSent] = useState(false)
-    const [email, setEmail] = useState("")
+    const [email, setEmail] = useState(localStorage.getItem('email') || "")
     const [password, setPassword] = useState("")
     const [confirmPassword, setConfirmPassword] = useState("")
     const [error, setError] = useState("")
@@ -38,6 +39,27 @@ export const Register = () => {
             confirmPassword
           }
     })
+    useTurnstile();
+    const handleRegister = (e) => {
+        e.preventDefault()
+        setError("")
+        setEmailSent(false)
+        const formData = new FormData(e.target)
+        const token = formData.get('cf-turnstile-response')
+        registerMutation({
+            variables: {
+                username,
+                email,
+                password,
+                confirmPassword,
+                token
+            }
+        })
+    }
+    useEffect(() => {
+        localStorage.setItem('username', username)
+        localStorage.setItem('email', email)
+    }, [email, username])
     if(user.getUser) window.location.href = '/'
     return (
         <div className="container mx-auto flex items-center h-[100vh] justify-center">
@@ -51,12 +73,12 @@ export const Register = () => {
                     </div>
                 </CardHeader>
                 <CardBody>
-                    <form className="flex flex-col">
+                    <form onSubmit={(e) => handleRegister(e)}  className="flex flex-col">
                         <div className="mb-4">
-                           <Input label="Username" onChange={(e) => setUsername(e.target.value)}/>
+                           <Input value={username} label="Username" onChange={(e) => setUsername(e.target.value)}/>
                         </div>
                         <div className="mb-4">
-                            <Input label="Email" onChange={(e) => setEmail(e.target.value)} />
+                            <Input value={email} label="Email" onChange={(e) => setEmail(e.target.value)} />
                         </div>
                         <div className="mb-4">
                             <Input label="Password" type="password" onChange={(e) => setPassword(e.target.value)} />
@@ -69,12 +91,8 @@ export const Register = () => {
                             <Checkbox color="danger">Remember me</Checkbox>
                             <Link href="/forgot-password" color="danger" isBlock>Forgot password?</Link>
                         </div>
-                        <Button onClick={(e) => {
-                            e.preventDefault()
-                            setError("")
-                            setEmailSent(false)
-                            registerMutation()
-                        }} isLoading={loading} disabled={!username || !confirmPassword || !email || !password} className="w-full" type="submit" color="danger" variant="flat">Register</Button>
+                        <div className="mb-4 self-center cf-turnstile" data-sitekey={process.env.REACT_APP_SITE_KEY}></div>
+                        <Button isLoading={loading} disabled={!username || !confirmPassword || !email || !password} className="w-full" type="submit" color="danger" variant="flat">Register</Button>
                         <Divider className="mt-4 mx-auto w-[40px] p-0.5 rounded-lg"/>
                         <Link className="self-center mt-2" href="/login" color="foreground" isBlock>
                             Already have an account? Login!

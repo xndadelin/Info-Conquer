@@ -12,10 +12,12 @@ module.exports = gql`
         email: String,
         password: String,
         confirmPassword: String,
+        token: String
     }
     input LoginInput {
         query: String,
         password: String,
+        token: String
     }
     type SolutionProfile {
         problem: String, 
