@@ -443,6 +443,38 @@ module.exports = {
             }catch(e){
                 throw new ApolloError(e)
             }
+        },
+        async getHomepageInfo(_, {}, context){
+            try{
+                const users = await User.aggregate([
+                    {
+                      $project: {
+                        username: 1,
+                        solvedProblems: { $size: "$solvedProblems" }
+                      }
+                    },
+                    {
+                      $sort: { solvedProblems: -1 }
+                    },
+                    {
+                      $limit: 5
+                    }
+                ])
+                const problems = (await Problem.find({}).sort({acceptedSolutions: -1}).limit(5))
+                return {
+                    topUsers: users,
+                    topProblems: problems.map(problem => {
+                        return {
+                            title: problem.title,
+                            difficulty: problem.difficulty,
+                            tags: problem.tags,
+                            successRate: problem.successRate
+                        }
+                    })
+                }
+            }catch(e){
+                throw new ApolloError(e)
+            }
         }
     },
     Mutation: {

@@ -200,7 +200,6 @@ export const Problem = () => {
         )
     }
     if(!problem || !problem.getProblem || error) return <NotFound/>
-    
     const onHandleSubmitSolution = () => {
         submitSolution()
     }

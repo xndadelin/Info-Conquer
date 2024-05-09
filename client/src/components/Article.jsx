@@ -54,7 +54,7 @@ export const Article = () => {
             }
         },
         onError: (error) => {
-            console.log(error)
+            //do nothing for now
         }
     })
     const [dislike] = useMutation(dislikeArticle, {
@@ -68,6 +68,9 @@ export const Article = () => {
                 setDisabledDislike(true)
                 setDisabledLike(false)
             }
+        },
+        onError: (error) => {
+            //do nothing for now
         }
     })
     const {user} = useContext(UserContext)

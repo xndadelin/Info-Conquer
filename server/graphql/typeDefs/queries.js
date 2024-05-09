@@ -17,5 +17,6 @@ module.exports = gql`
         getSolutions: [Solution]
         getContests: [Contest]
         getContest(id: String): Contest
+        getHomepageInfo: HomepageInfo
     } 
 `;  

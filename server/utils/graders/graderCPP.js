@@ -109,7 +109,6 @@ const graderCPP = (testCases, code, problem, username, io, language) => {
             });
             const success = testResults.every(test => test.success);
             const score = testResults.reduce((acc, test) => acc + parseInt(test.score), 0);
-            console.log(testResults)
             fs.rmdirSync(idSolution, {recursive: true})
             return {
                 username,

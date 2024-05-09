@@ -7,7 +7,7 @@ import { Select, SelectItem } from "@nextui-org/react"
 export const CreateConstest = () => {
     const [problems, setProblems] = useState([])
     const [currentProblem, setCurrentProblem] = useState('')
-    const [currentScore, setCurrentScore] = useState(0)
+    const [currentDifficulty, setCurrentDifficulty] = useState(0)
     const [name, setName] = useState('')
     const [description, setDescription] = useState('')
     const [startDate, setStartDate] = useState("")
@@ -21,9 +21,9 @@ export const CreateConstest = () => {
     const navigate = useNavigate()
     const onAddProblem = (id, score) => {
         if(score !== 0 && id){
-            setProblems([...problems, {id, score: currentScore}])
+            setProblems([...problems, {id, difficulty: currentDifficulty}])
             setCurrentProblem('')
-            setCurrentScore(0)
+            setCurrentDifficulty(0)
         }
     }
     const onRemoveProblem = (id) => {
@@ -74,9 +74,7 @@ export const CreateConstest = () => {
         <div className="container mx-auto my-5 mb-[400px]">
             <p className="text-4xl font-bold">Create contest </p>
             {error && (
-                <div className="mt-5">
-                     <Error error={error}/>
-                </div>
+                <Chip className='mt-5' color="danger" variant='flat'>{error}</Chip>
             )}
             <form className="mt-5 flex flex-col gap-4">
                 <Input value={name} onChange={(e) => setName(e.target.value)} label="Name"/>
@@ -87,8 +85,8 @@ export const CreateConstest = () => {
                 </div>
                 <div className="flex gap-5">
                     <Input value={currentProblem} onChange={(e) => setCurrentProblem(e.target.value)} label="Problem"/>
-                    <Input type="number" value={currentScore} onChange={(e) => setCurrentScore(e.target.value)} label="Score"/>
-                    <Button variant="flat" color="success" onClick={() => onAddProblem(currentProblem, currentScore)}>Add</Button>
+                    <Input value={currentDifficulty} onChange={(e) => setCurrentDifficulty(e.target.value)} label="Difficulty"/> 
+                    <Button variant="flat" color="danger" onClick={() => onAddProblem(currentProblem, currentDifficulty)}>Add</Button>
                 </div>
                 <Select onChange={(e) => handleLanguagesChange(e)} items={languagesDef} label="Languages" isRequired isMultiline selectionMode="multiple" renderValue={(languages) => {
                     return (
@@ -103,10 +101,10 @@ export const CreateConstest = () => {
                 </Select>
                 <div className="flex gap-5">
                     {problems.map((problem, index) => (
-                        <Chip key={index} className="cursor-pointer" onClick={() => onRemoveProblem(problem.id)}>{problem.id} : {problem.score + ' pts'}</Chip>
+                        <Chip key={index} className="cursor-pointer" onClick={() => onRemoveProblem(problem.id)}>{problem.id} : {problem.difficulty}</Chip>
                     ))}
                 </div>
-                <Button variant="flat" isLoading={loading} color="success" onClick={() => createContest()} >Create contest</Button>
+                <Button disabled={!name || !name || !startDate || !endDate || !problems || !languages} variant="flat" isLoading={loading} color="danger" onClick={() => createContest()} >Create contest</Button>
             </form>
         </div>
     )

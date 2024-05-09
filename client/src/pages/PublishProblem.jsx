@@ -1,5 +1,5 @@
 import { useState } from "react";
-import {Button, Checkbox, Divider, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure} from "@nextui-org/react";
+import {Button, Checkbox, Divider, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Snippet, useDisclosure} from "@nextui-org/react";
 import {Textarea} from "@nextui-org/react";
 import {Select, SelectItem} from "@nextui-org/react";
 import {Chip} from "@nextui-org/react";
@@ -351,7 +351,7 @@ export const PublishProblem = () => {
             <Textarea label="Description" value={description} onChange={(e) => setDescription(e.target.value)}/>
             <Textarea isRequired label="Requirements" value={requirement} onChange={(e) => setRequirements(e.target.value)}/>
             <Input endContent={
-                <Button disabled={tag === ''} onClick={onAddTag} variant="bordered">Add tag</Button>
+                <Button disabled={tag === ''} color="danger" onClick={onAddTag} variant="flat">Add tag</Button>
             } value={tag} onChange={(e) => setTag(e.target.value)} label="Tags" />
             <div className="flex flex-wrap gap-2 text-white">
                 {tags.map((tag) => (
@@ -392,7 +392,7 @@ export const PublishProblem = () => {
                 <div className="flex flex-col gap-2">
                     <div className="flex justify-between">
                         <label>Example {index + 1}</label>
-                        <Button onClick={() => deleteExample(index)} color="danger">Delete example</Button>
+                        <Button variant="flat" onClick={() => deleteExample(index)} color="danger">Delete example</Button>
                     </div>
                     <Textarea isRequired type="text" label="Input" onChange={(e) => handleInputExample(index, e.target.value)}/>
                     <Textarea isRequired type="text" label="Output" onChange={(e) => handleOutputExample(index, e.target.value)}/>
@@ -408,14 +408,14 @@ export const PublishProblem = () => {
                 <div className="flex flex-col gap-2">
                     <div className="flex justify-between">
                         <label>Test {index + 1}</label>
-                        <Button onClick={() => deleteTest(index)} color="danger">Delete test</Button>
+                        <Button variant="flat" onClick={() => deleteTest(index)} color="danger">Delete test</Button>
                     </div>
                     <Textarea isRequired type="text" label="Input" onChange={(e) => handleInputTest(index, e.target.value)}/>
                     <Textarea isRequired type="text" label="Output" onChange={(e) => handleOutputTest(index, e.target.value)}/>
                     <Textarea isRequired type="numar" label="Score" onChange={(e) => handleScoreTest(index, e.target.value)}/>
                 </div>
             ))}
-            <Button onClick={onOpen}>Publish problem</Button>
+            <Button variant="flat" color="danger" onClick={onOpen}>Publish problem</Button>
             <Modal isOpen={isOpen} onOpenChange={onOpen} onClose={onClose}>
                 <ModalContent>
                     <ModalHeader>
@@ -430,8 +430,10 @@ export const PublishProblem = () => {
                     </ModalFooter>
                     {error && (
                         <div className="p-4">
-                         <Error error={error.message} />
-                        </div>
+                            <Chip className="p-4 whitespace-pre-wrap h-full rounded-lg" variant="flat" color="danger">
+                                {error.message}
+                            </Chip>
+                        </div> 
                     )}
                 </ModalContent>
             </Modal>

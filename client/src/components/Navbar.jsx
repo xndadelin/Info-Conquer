@@ -41,7 +41,7 @@ export const NavigationBar = () => {
                     <Link isBlock color="foreground" href="/problems" >Problems</Link>
                 </NavbarItem>
                 <NavbarItem>
-                    <Link isBlock color="danger" href="/solutions">Solutions</Link>
+                    <Link isBlock color="danger" href="/leaderboard">Leaderboard</Link>
                 </NavbarItem>
             </NavbarContent>
             {!user || !user.getUser ? (

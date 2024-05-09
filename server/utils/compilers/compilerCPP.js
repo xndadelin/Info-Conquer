@@ -21,8 +21,6 @@ const compilerCPP = (code, idSolution, language, _, codeNameFile, extension) => 
                     memorieFisier: fileMemory,
                     status: 0
                 }
-            }else{
-                console.log('compilation successful')
             }
         }catch(error){
             return {

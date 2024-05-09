@@ -94,4 +94,18 @@ module.exports = gql`
         bestMemory: [bestMemory]
         solves: [solve]
     }
+    type TopProblem {
+        title: String,
+        difficulty: String,
+        tags: [String],
+        successRate: String,
+    }
+    type TopUser {
+        username: String,
+        solvedProblems: Int
+    }
+    type HomepageInfo {
+        topProblems: [TopProblem],
+        topUsers: [TopUser]
+    }
 `;

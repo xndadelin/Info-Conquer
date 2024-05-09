@@ -4,6 +4,7 @@ import { Loading } from "../components/Loading"
 import { useState } from "react"
 import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, Pagination } from "@nextui-org/react"
 import { NotFound } from "../pages/NotFound"
+import { Error } from "../components/Error"
 const getContest = gql`
     query GetContest($id: String) {
         getContest(id: $id) {
@@ -43,6 +44,7 @@ const getContest = gql`
 export const Contest = () => {
     const {id} = useParams()
     const [page, setPage] = useState(1)
+    const [error, setError] = useState('')
     const {data, loading} = useQuery(getContest, {
         variables: {
             id
@@ -51,11 +53,12 @@ export const Contest = () => {
             console.log(data)
         },
         onError: (error) => {
-            console.log(error)
+            setError(error.message)
         }
     })
     if(loading) return <Loading/>
     if(!data) return <NotFound/>
+    if(error) return <Error error={error}/>
     return (
         <div className="container mx-auto p-3 my-5">
             <p className="text-4xl font-bold">{data.getContest.name}</p>

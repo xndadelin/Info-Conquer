@@ -39,7 +39,7 @@ export const Problems = () => {
     return (
         <div className="container mx-auto my-10 p-4">
             <p className="text-6xl mb-5">Problems</p>
-            <Table>
+            <Table isCompact isStriped >
                 <TableHeader>
                     <TableColumn>#ID</TableColumn>
                     <TableColumn>Category</TableColumn>

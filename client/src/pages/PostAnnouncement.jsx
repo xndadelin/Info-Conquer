@@ -55,7 +55,7 @@ export const PostAnnouncement = () => {
                 }}
             />
             <div className='flex justify-end'>
-                <Button color='success' variant='flat' className='mt-5' onClick={() => {postAnnouncement({variables: {title, content}})}}>Post</Button>
+                <Button color='danger' variant='flat' className='mt-5' onClick={() => {postAnnouncement({variables: {title, content}})}}>Post</Button>
             </div>
         </div>  
     )
