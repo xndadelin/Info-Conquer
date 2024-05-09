@@ -36,16 +36,14 @@ export const Problems = () => {
     if(loading || !problems){
         return <Loading/>
     }
-    //to do pagination properly and filtering
     return (
-        <div className="container mx-auto my-10">
+        <div className="container mx-auto my-10 p-4">
             <p className="text-6xl mb-5">Problems</p>
             <Table>
                 <TableHeader>
                     <TableColumn>#ID</TableColumn>
                     <TableColumn>Category</TableColumn>
                     <TableColumn>Subcategories</TableColumn>
-                    <TableColumn>Type</TableColumn>
                     <TableColumn>Difficulty</TableColumn>
                 </TableHeader>
                 <TableBody>
@@ -58,13 +56,12 @@ export const Problems = () => {
                             <TableCell>{problem.subcategories.map((subcategory) => (
                                <Chip>{subcategory}</Chip>
                             ))}</TableCell>
-                            <TableCell>{problem.type}</TableCell>
                             <TableCell>{problem.difficulty}</TableCell>
                         </TableRow>
                     ))}
                 </TableBody>
             </Table>
-            <Pagination className="pt-5" total={Math.ceil(problems.getProblems.length/25)} initialPage={1} showControls />
+            <Pagination color="danger" className="pt-5" total={Math.ceil(problems.getProblems.length/25)} initialPage={1} showControls />
         </div>
     )
 }

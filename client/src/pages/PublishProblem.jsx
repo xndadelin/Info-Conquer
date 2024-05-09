@@ -195,6 +195,51 @@ export const PublishProblem = () => {
                 'Advanced Graph Techniques',
             ]
         },
+        {
+            category: 'String',
+            subcategories: [
+                'String Matching',
+                'String Processing',
+                'String Compression',
+                'String Manipulation',
+                'String Searching',
+                'String Sorting',
+                'String Parsing',
+                'String Algorithms',
+                'String with Recursion',
+                'Advanced String Techniques',
+            ]
+        },
+        {
+            category: 'Advanced Data Structures',
+            subcategories: [
+                'Suffix Array',
+                'Suffix Tree',
+                'Trie',
+                'Segment Tree',
+                'Binary Indexed Tree',
+                'Fenwick Tree',
+                'Disjoint Set',
+                'Sparse Table',
+                'Wavelet Tree',
+                'KD Tree',
+                'Quad Tree',
+                'Octree',
+                'Range Tree',
+                'B-Tree',
+                'R-Tree',
+                'Skip List',
+                'Splay Tree',
+                'Treap',
+                'Tango Tree',
+                'Link-Cut Tree',
+                'Dancing Links',
+                'Scapegoat Tree',
+                'Splay Tree',
+                'Red-Black Tree',
+                'AVL Tree',
+            ]
+        }
         
     ]
     const onAddTag = () => {

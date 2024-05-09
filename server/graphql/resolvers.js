@@ -188,10 +188,11 @@ module.exports = {
             if (category) {
                 query.category = category;
             }
-            if (subcategory) {
+            if (subcategory !== 'none') {
                 query.subcategories = { $in: [subcategory] };
             }
-            const problems = await Problem.find(query)
+            const problems = await Problem.find(query).select('title category subcategories difficulty tags type');
+            console.log(problems)
             return problems;
         },
         async getSubmissions(_, {title}, context){

@@ -92,6 +92,7 @@ export const Problem = () => {
     const {isOpen, onOpenChange} = useDisclosure()
     const [language, setLanguage] = useState('')
     const [code, setCode] = useState()
+    const [error, setError] = useState()
     useEffect(() => {
         setCode(getTemplate(language, problem))
     }, [language])
@@ -171,14 +172,15 @@ export const Problem = () => {
         },
         skip: selected !== 'solutions'
     })
-    const {data:problem, loading, error} = useQuery(queryProblem, {
+    const {data:problem, loading} = useQuery(queryProblem, {
         variables: {
             title: id,
             code: code,
         },
         onError: (error) => {
-            console.log(error)
+            setError(error)
         }
+
     })
     const [submitSolution, {error: errorSolution, loading: loadingTests}] = useMutation(solutionMutation, {
         variables: {
@@ -197,18 +199,11 @@ export const Problem = () => {
             <Loading/>
         )
     }
-    if(error){
-        return (
-            <Error error={error.message} />
-        )
-    }
-    if(!problem.getProblem || !problem){
-        return <NotFound/>
-    }
+    if(!problem || !problem.getProblem || error) return <NotFound/>
+    
     const onHandleSubmitSolution = () => {
         submitSolution()
     }
-    console.log(submissions)
     return (
         <div className="container mx-auto px-5 py-5">
             <Tabs selectedKey={selected} onSelectionChange={setSelected} className="flex flex-col">

@@ -1,5 +1,4 @@
-import { Listbox, ListboxItem } from "@nextui-org/react"
-import { Link } from "react-router-dom"
+import { Listbox, ListboxItem, Link } from "@nextui-org/react"
 
 export const ProblemsSelection = () => {
     const problems = [
@@ -120,6 +119,51 @@ export const ProblemsSelection = () => {
                 'Hashing in String Processing',
                 'Hashing Applications'
             ]
+        },
+        {
+            category: 'String',
+            subcategories: [
+                'String Matching',
+                'String Processing',
+                'String Compression',
+                'String Manipulation',
+                'String Searching',
+                'String Sorting',
+                'String Parsing',
+                'String Algorithms',
+                'String with Recursion',
+                'Advanced String Techniques',
+            ]
+        },
+        {
+            category: 'Advanced Data Structures',
+            subcategories: [
+                'Suffix Array',
+                'Suffix Tree',
+                'Trie',
+                'Segment Tree',
+                'Binary Indexed Tree',
+                'Fenwick Tree',
+                'Disjoint Set',
+                'Sparse Table',
+                'Wavelet Tree',
+                'KD Tree',
+                'Quad Tree',
+                'Octree',
+                'Range Tree',
+                'B-Tree',
+                'R-Tree',
+                'Skip List',
+                'Splay Tree',
+                'Treap',
+                'Tango Tree',
+                'Link-Cut Tree',
+                'Dancing Links',
+                'Scapegoat Tree',
+                'Splay Tree',
+                'Red-Black Tree',
+                'AVL Tree',
+            ]
         }
         
     ]
@@ -128,18 +172,14 @@ export const ProblemsSelection = () => {
             <h1 className="font-bold text-5xl mb-4">Data Structures</h1>
             <div className="flex gap-10 flex-wrap">
                 {problems.map((problem, index) => (
-                        <Listbox className="flex-1" key={index}>
-                            <ListboxItem>
-                                <p className="text-3xl">{problem.category}</p>
-                            </ListboxItem> 
-                            {problem.subcategories.map((subcategory, subIndex) => (
-                                <ListboxItem key={subIndex}>
-                                    <Link to={`/problems/${problem.category}/${subcategory}`}>
-                                        {subcategory}
-                                    </Link>
-                                </ListboxItem>
+                    <div className="flex flex-col">
+                        <Link href={`/problems/${problem.category}`} key={index} color="danger" isBlock className="text-2xl font-bold">{problem.category}</Link>
+                        <div className="flex flex-col">
+                            {problem.subcategories.map((subcategory, index) => (
+                                <Link href={`/problems/${problem.category}/${subcategory}`} key={index} color="foreground" isBlock>{subcategory}</Link>
                             ))}
-                        </Listbox>
+                        </div>
+                    </div>
                 ))}
             </div>
         </div>
