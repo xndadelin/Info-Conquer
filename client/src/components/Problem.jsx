@@ -309,7 +309,7 @@ export const Problem = () => {
                                                 <SelectItem key={language}>{language}</SelectItem>
                                             ))}
                                         </Select>
-                                        <Button className='mt-2 mb-2 mr-2' color='success' disabled={!language || !code || !user || !user.getUser} variant='flat' onClick={() => {onHandleSubmitSolution(); onOpenChange(); setTests('')}}>Submit solution</Button>
+                                        <Button className='mt-2 mb-2 mr-2' color='danger' disabled={!language || !code || !user || !user.getUser} variant='flat' onClick={() => {onHandleSubmitSolution(); onOpenChange(); setTests('')}}>Submit solution</Button>
                                     </div>
                                     <div>
                                         <Editor onChange={(val, e) => setCode(val)} value={code} theme='vs-dark' language='cpp' height={'80vh'} />

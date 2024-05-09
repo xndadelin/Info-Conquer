@@ -17,6 +17,7 @@ mutation Register($username: String!, $email: String!, $password: String!, $conf
 `
 export const Register = () => {
     const [username, setUsername] = useState("")
+    const [emailSent, setEmailSent] = useState(false)
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [confirmPassword, setConfirmPassword] = useState("")
@@ -26,8 +27,9 @@ export const Register = () => {
         onError: (error) => {
             setError(error.message)
           },
-          onCompleted: () => {
-              window.location.reload()
+          onCompleted: (data) => {
+              if(data.register.success)
+                setEmailSent(true)
           },
           variables: {
             username,
@@ -69,6 +71,8 @@ export const Register = () => {
                         </div>
                         <Button onClick={(e) => {
                             e.preventDefault()
+                            setError("")
+                            setEmailSent(false)
                             registerMutation()
                         }} isLoading={loading} disabled={!username || !confirmPassword || !email || !password} className="w-full" type="submit" color="danger" variant="flat">Register</Button>
                         <Divider className="mt-4 mx-auto w-[40px] p-0.5 rounded-lg"/>
@@ -80,6 +84,13 @@ export const Register = () => {
                 {error && (
                     <CardFooter>
                         <Chip className="whitespace-pre-wrap h-full p-3 rounded-md" color="danger" variant="flat">{error}</Chip>
+                    </CardFooter>
+                )}
+                {emailSent && (
+                    <CardFooter>
+                        <Chip className="whitespace-pre-wrap h-full p-3 rounded-md" color="success" variant="flat">
+                            An email has been sent to your email address. Please verify your email address to continue.
+                        </Chip>
                     </CardFooter>
                 )}
             </Card>

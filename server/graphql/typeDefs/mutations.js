@@ -14,5 +14,6 @@ module.exports = gql`
         postAnnouncement(title: String, content: String): Response
         createContest(name: String, description: String, startDate: ContestDateInput, endDate: ContestDateInput, problems: [ProblemInput], languages: [String]): Response
         joinContest(id: String): Response
+        verifyEmail(token: String): Response
     }
 `;

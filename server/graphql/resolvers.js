@@ -8,6 +8,8 @@ const {graderCPP} = require('../utils/graders/graderCPP')
 const Article = require('../models/article');
 const Announcement = require('../models/announcements');
 const Contest = require('../models/contest');
+const nodemailer = require('nodemailer');
+require('dotenv').config();
 const generateToken = (user) => {
     return jwt.sign({ username: user.username, admin: user.admin }, process.env.SECRET, { expiresIn: '1h' });
 };
@@ -15,6 +17,36 @@ const generateToken = (user) => {
 const generateRefreshToken = (user) => {
     return jwt.sign({ username: user.username, admin: user.admin }, process.env.SECRET_REFRESH, { expiresIn: '24h' });
 };
+const sendEmail = (email, codeForVerification) => {
+    const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        host: process.env.EMAIL_HOST,
+        port: process.env.EMAIL_PORT,
+        secure: false,
+        auth: {
+            user: process.env.EMAIL_USER,
+            pass: process.env.EMAIL_PASS
+        }
+    });
+    const mail = {
+        from: {
+            name: 'InfoConquer',
+            address: process.env.EMAIL_USER
+        },
+        to: email,
+        subject: 'Verify your email address for InfoConquer',
+        html: `<h1>Verify your email address</h1>
+            <p>Click <a href="${process.env.CLIENT_URL}/verify/${codeForVerification}">here</a> to verify your email address</p>
+            <p>If you did not register for InfoConquer, please ignore this email</p>
+            <p style="color: red;">This link will expire in 24 hours</p>
+        `
+    }
+    transporter.sendMail(mail, (err, info) => {
+        if(err){
+            throw new ApolloError(err)
+        }
+    })
+}
 const getUser = async(context) => {
     try{
         const cookies =  cookie.parse(context.req.headers.cookie) || ''
@@ -27,7 +59,7 @@ const getUser = async(context) => {
         const verified = jwt.verify(token, process.env.SECRET);
         if(verified.username){
             const username = verified.username
-            const user = await User.findOne({username})
+            const user = await User.findOne({username, verified: true})
             return user;
         }else{
                 const refreshVerified = jwt.verify(refreshtoken, process.env.SECRET_REFRESH);
@@ -42,7 +74,7 @@ const getUser = async(context) => {
                         httpOnly: true, 
                         secure: true
                     })
-                    const refreshedUser = await User.findOne({username: refreshVerified.username})
+                    const refreshedUser = await User.findOne({username: refreshVerified.username, verified: true})
                     return refreshedUser
                 }
         }
@@ -67,7 +99,7 @@ const getUser = async(context) => {
                             sameSite: 'strict',
                             secure: true,
                         });
-                        const refreshedUser = await User.findOne({username: refreshVerified.username})
+                        const refreshedUser = await User.findOne({username: refreshVerified.username, verified: true})
                         return refreshedUser
                    }catch(err){
                      return null;
@@ -94,6 +126,9 @@ module.exports = {
                 const user = await getUser(context);
                 const problem = await Problem.findOne({title})
                 if(problem.itsForContest){
+                    if(!user){
+                        return null
+                    }
                     const contest = await Contest.findOne({ "problems.id": problem.title });
                     if(!contest){
                         return problem
@@ -117,10 +152,9 @@ module.exports = {
         async getProfile(_, {username}){
             try{
                 const user = await User.findOne({username})
-                if(!user) {
+                if(!user || !user   .verified) {
                     throw new ApolloError('User does not exist');
                 }else{
-                    console.log(user)
                     return {
                         ...user._doc,
                     };
@@ -388,7 +422,26 @@ module.exports = {
         async register(_, { registerInput: { username, email, password, confirmPassword}}, context){
             try{
                 const user = await User.findOne({ $or : [{ username }, { email }]})
-                if(user){
+                if(user && user.lastEmailVerification && user.lastEmailVerification > new Date(new Date().getTime() - 2 * 60 * 1000) && !user.verified && user.codeForVerification){
+                    throw new ApolloError('You have to wait 2 minutes before we sent you an email again. We have sent you an email with the verification link earlier. Check your email. If you did not receive the email, please check your spam folder. If you still did not receive the email, please contact us.')
+                }
+                if(user && !user.verified && user.lastEmailVerification && user.lastEmailVerification >  new Date(new Date().getTime() - 24 * 60 * 60 * 1000)){
+                    const codeForVerification = crypto.randomUUID({length: 32})
+                    sendEmail(email, codeForVerification)
+                    user.lastEmailVerification = new Date();
+                    user.codeForVerification = codeForVerification;
+                    await user.save()
+                    throw new ApolloError('Your verification link has expired. We have sent you a new email with the verification link. Check your email for the verification link. If you did not receive the email, please check your spam folder. If you still did not receive the email, please contact us.')
+                }         
+                const codeForVerification = crypto.randomUUID({length: 32})
+                if(user && !user.verified){
+                    sendEmail(email, codeForVerification)
+                    user.lastEmailVerification = new Date();
+                    user.codeForVerification = codeForVerification;
+                    await user.save()
+                    throw new ApolloError('You have to verify your email address in order to register. Check your email for the verification link.')
+                }
+                if(user && user.verified){
                     throw new ApolloError('An account is already linked with these credentials. Please change the credentials to continue registering.');
                 }else{
                     if(username.length < 4){
@@ -411,24 +464,18 @@ module.exports = {
                         username,
                         email,
                         password: hashedPassword,
-                        admin: false
+                        admin: false,
+                        solutions: [],
+                        solvedProblems: [],
+                        verified: false,
+                        codeForVerification,
+                        lastEmailVerification: new Date()
                     })
-                    const user = await newUser.save()
-                    const token = generateToken(user)
-                        const refreshToken = generateRefreshToken(user);
-                        context.res.cookie('token', token, {
-                            httpOnly: true, 
-                            secure: true,
-                            sameSite: 'None'
-                        })
-                        context.res.cookie('refreshToken', refreshToken, {
-                            httpOnly: true, 
-                            secure: true,
-                            sameSite: 'None'
-                        })
-                        return {
-                            success: true, 
-                        }
+                    await newUser.save()
+                    sendEmail(email, codeForVerification)
+                    return {
+                        success: true
+                    }
                 }
             }catch(err){
                 throw new ApolloError(err)
@@ -437,6 +484,9 @@ module.exports = {
         async login(_, {loginInput: {query, password}}, context){
             try{
                 const user = await User.findOne({ $or : [{ username: query }, { email: query }]})
+                if(!user.verified){
+                    throw new ApolloError('This account is not verified. Register again and verify your email address.')
+                }
                 if(user){
                     const matchPassword = await bcrypt.compare(password, user.password)
                     if(!matchPassword){
@@ -703,6 +753,22 @@ module.exports = {
                 return {
                     success: true
                 }
+            }
+        },
+        async verifyEmail(_, {token}, context){
+            const user = await getUser(context);
+            if(user){
+                throw new ApolloError('You are already logged in')
+            }
+            const user_ = await User.findOne({codeForVerification: token})
+            if(!user_){
+                throw new ApolloError('This token is invalid')
+            }
+            user_.verified = true;
+            user_.codeForVerification = '';
+            await user_.save()
+            return {
+                success: true
             }
         }
     }

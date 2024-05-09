@@ -25,6 +25,7 @@ import { Contest } from "./components/Contest";
 import { Login } from "./pages/Login";
 import { Register } from "./pages/Register";
 import { About } from "./pages/About";
+import { VerifyEmail } from "./components/VerifyEmail";
 function App() {
   const {user} = useContext(UserContext)
   if(!user)
@@ -108,6 +109,10 @@ function App() {
           <Route
             path="/about"
             element={<About/>}
+          />
+          <Route
+            path="/verify/:token"
+            element={<VerifyEmail/>}
           />
           <Route
             path="*"

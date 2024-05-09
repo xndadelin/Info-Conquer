@@ -39,7 +39,7 @@ export const TestingSolution = ({onClose, isOpen, loading, tests}) => {
     }
     const compilationError = () => {
         return (
-                <Snippet color="danger">
+                <Snippet hideSymbol color="danger">
                     <pre style={{whiteSpace: 'pre-wrap'}}>
                         {tests.compilationError}
                     </pre>

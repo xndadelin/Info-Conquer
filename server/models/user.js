@@ -15,6 +15,10 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    verified: {
+        type: Boolean,
+        default: false,
+    },
     admin: {
         type: Boolean,
         required: true
@@ -24,6 +28,13 @@ const userSchema = new mongoose.Schema({
     },
     solvedProblems:{
         type: Array
+    },
+    codeForVerification: {
+        type: String,
+    },
+    lastEmailVerification: {
+        type: Date,
+        required: true
     }
 }, {timestamps: true})
 
