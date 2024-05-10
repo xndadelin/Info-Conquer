@@ -1,4 +1,4 @@
-import { Button, Divider } from '@nextui-org/react';
+import { Button, Divider, Link } from '@nextui-org/react';
 import Editor from '@monaco-editor/react';
 import {Card, CardHeader, CardBody} from "@nextui-org/react";
 export const Landing = () => {
@@ -109,7 +109,8 @@ int main()
                                 <p className='text-md'>
                                     Integrated OpenAI feedback
                                 </p>
-                                <a className='text-sm text-default-500' href='https://openai.com/' >See OpenAI</a>
+                                <Link isBlock showAnchorIcon href="https://openai.com">
+                                </Link>
                             </div>
                         </CardHeader>
                         <Divider/>
@@ -137,7 +138,7 @@ int main()
                         <svg height={25} className='mr-2' fill='white' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM64 256c0-17.7 14.3-32 32-32H480c17.7 0 32 14.3 32 32s-14.3 32-32 32H96c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg>
                             <div className='flex flex-col'>
                                 <p className='text-md'>Variety of problems</p>
-                                <a className='text-sm text-default-500' href='http://localhost:3001/problems'>See problems</a>
+                                <a className='text-sm text-default-500' href='https://159.89.12.247:3001/problems'>See problems</a>
                             </div>
                         </CardHeader>
                         <Divider/>
@@ -152,7 +153,7 @@ int main()
                                 <p className='text-md'>
                                     Article publishing
                                 </p>
-                                <a className='text-sm text-default-500' href='http://localhost:3001/articles' >See forum</a>
+                                <a className='text-sm text-default-500' href='https://159.89.12.247:3001/articles'>See articles</a>
                             </div>
                         </CardHeader>
                         <Divider/>

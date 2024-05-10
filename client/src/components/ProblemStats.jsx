@@ -39,7 +39,6 @@ export const ProblemStats = () => {
     })
     if(loading) return <Loading/>
     if(!data || !data.getProblemStats) return <Loading/>
-    console.log(data)
     return (
         <div className="container flex-col">
             <Chart

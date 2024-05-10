@@ -54,14 +54,13 @@ const validateTurnstile = async(token, req) => {
     formData.append('response', token);
     formData.append('remoteip', ip);
 
-	const url = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
-	const result = await fetch(url, {
-		body: formData,
-		method: 'POST',
-	});
+	  const url = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
+	  const result = await fetch(url, {
+		  body: formData,
+		  method: 'POST',
+	  });
     const data = await result.json();
     return data;
-
 }
 const getUser = async(context) => {
     try{
@@ -586,11 +585,12 @@ module.exports = {
             }
         },
         async logout(_, {}, context){
-            context.res.clearCookie('token', { httpOnly: true, secure: true });
-            context.res.clearCookie('refreshToken', { httpOnly: true, secure: true });
-            return {
-                success: true
-            }
+            try{
+              context.res.clearCookie('token', { httpOnly: true, secure: true });
+              context.res.clearCookie('refreshToken', { httpOnly: true, secure: true });
+            }catch(error){
+              console.log(error)
+            }                    
         },
         async createProblem(_, {problemInput: {title, description, requirements, type, tags, difficulty, category, subcategories, input, output, tests, timeExecution, limitMemory, examples, indications, languages, restriction}}, context){
             try{
@@ -606,7 +606,9 @@ module.exports = {
                     }
                 }
             }catch(error){
-                throw new ApolloError(error)
+                return {
+                  success: false
+                } 
             }
         },
         async submitSolution(_, {solutionInput: {problem, code, language}}, context){

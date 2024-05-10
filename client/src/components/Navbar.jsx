@@ -1,4 +1,4 @@
-import {Navbar, NavbarBrand, DropdownItem, DropdownTrigger, DropdownMenu, Avatar,  NavbarContent, NavbarItem,  NavbarMenuToggle,NavbarMenu,NavbarMenuItem, Button, Dropdown} from "@nextui-org/react";
+import {Navbar, useDisclosure, NavbarBrand, DropdownItem, DropdownTrigger, DropdownMenu, Avatar,  NavbarContent, NavbarItem,  NavbarMenuToggle,NavbarMenu,NavbarMenuItem, Button, Dropdown} from "@nextui-org/react";
 import { Link } from "@nextui-org/react";
 import { useState } from "react";
 import { useMutation, gql  } from "@apollo/client";
@@ -12,11 +12,11 @@ mutation {
 } 
 `  
 export const NavigationBar = () => {
-    const {user} = useContext(UserContext)
-    const [isOpen, setIsOpen] = useState(false); 
-    const [logoutMutation] = useMutation(logoutMutationQuery)
-    const handleLogout = async() => {
-        logoutMutation()
+    const {user} = useContext(UserContext);
+    const {isOpen, setIsOpen} = useDisclosure()  
+    const [logoutMutation] = useMutation(logoutMutationQuery);
+    const handleLogout = async(e) => {
+        await logoutMutation()
         window.location.reload()
     } 
     return (
@@ -90,7 +90,7 @@ export const NavigationBar = () => {
                                 </DropdownItem>
                             )}
                             <DropdownItem>
-                                <Link onClick={handleLogout} color="danger">Logout</Link>
+                                <Link onClick={(e) => handleLogout(e)} color="danger">Logout</Link>
                             </DropdownItem>
                         </DropdownMenu>
                     </Dropdown>

@@ -140,7 +140,7 @@ export const Solution = () => {
                                         <Snippet symbol="">
                                             <pre>
                                                 {selectedTestCase.input}
-                                            </pre>
+                                           </pre>
                                         </Snippet>
                                     </div>
                                     <div className="flex flex-col mb-5">

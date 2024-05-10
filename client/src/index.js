@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import {createRoot} from 'react-dom/client'
 import './index.css';
 import App from './App';
 import { NextUIProvider } from "@nextui-org/react";
@@ -7,7 +7,7 @@ import client from './apolloclient';
 import { ApolloProvider } from '@apollo/client';
 import { BrowserRouter } from 'react-router-dom';
 import { UserProvider } from './context/UserContext';
-const app = ReactDOM.createRoot(document.getElementById('root'));
+const app = createRoot(document.getElementById('root'));
 app.render(
   <BrowserRouter>
     <ApolloProvider client={client}>
