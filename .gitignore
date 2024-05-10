@@ -130,6 +130,6 @@ dist
 .pnp.*
 
 # certificates and keys
-.crt 
-.key 
-.pem
+*.crt 
+*.key 
+*.pem
