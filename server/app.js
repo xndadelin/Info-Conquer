@@ -4,6 +4,9 @@ const mongoose = require('mongoose')
 const { ApolloServer } = require('apollo-server-express') 
 const cors = require('cors')
 const crypto = require('crypto')
+const https = require('https')
+const fs = require('fs')
+const path = require('path')
 require('dotenv').config()
 async function startServer(){
     const apolloServer = new ApolloServer({
@@ -14,16 +17,25 @@ async function startServer(){
     })
     await apolloServer.start()
     app.use((req, res, next) => {
-        res.header("Access-Control-Allow-Origin", "http://localhost:3001", "http://localhost:46481", "http://192.168.1.15:3001/");
-        res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-        res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
-        res.header("Access-Control-Allow-Credentials", "true");
-        req.crsfToken = crypto.randomBytes(64).toString('hex');
-        next();
+      const allowedOrigins = [
+        "http://localhost:3001",
+        "https://159.89.12.247:3001",
+        "http://159.89.12.247:3001"
+      ];
+      const origin = req.headers.origin;
+      if (allowedOrigins.includes(origin)) {
+        res.setHeader("Access-Control-Allow-Origin", origin);
+      }
+      res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+      res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+      res.setHeader("Access-Control-Allow-Credentials", "true");
+      req.crsfToken = crypto.randomBytes(64).toString('hex');
+      next();
     });
+
     app.set('trust proxy', true);
     app.use(cors({
-        origin: ["https://studio.apollographql.com", "http://localhost:3001", "http://localhost:46481", "http://192.168.1.15:3001/"],
+        origin: ["https://studio.apollographql.com", "http://localhost:3001", "https://159.89.12.247:3001"],
         credentials: 'include'
     }))
     app.get('/', (req, res) => {
@@ -33,13 +45,17 @@ async function startServer(){
         app,
         cors: false
     });    
-    app.listen(3000, () => {
+    const httpsServer = https.createServer({
+	      key: fs.readFileSync(path.join(__dirname, 'cert', 'key.pem')),
+	      cert: fs.readFileSync(path.join(__dirname, 'cert', 'cert.pem'))
+    }, app)
+    
+    httpsServer.listen(3000, () => {
+	      console.log('HTTPS initialized')
         mongoose.connect(process.env.MONGO_DB_CONN).then(() => {
-            console.log('App connected and database connected')
-        }).then(() => {
-            console.log(`Server started`)
+          console.log('Database connected')
+          console.log('Server started! Have fun!')
         })
     })
 }
-// lol this is a test
 startServer()
