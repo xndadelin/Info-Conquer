@@ -29,7 +29,7 @@ query GetProfile($username: String){
 }
 `
 const updateUsername = gql`
-mutation changeUsername($username: String, $newUsername: String){
+mutation changeUsername($iusername: String, $newUsername: String){
     changeUsername(username: $username, newUsername: $newUsername){
         success
     }

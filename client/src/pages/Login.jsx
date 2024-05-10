@@ -6,6 +6,7 @@ import { UserContext } from "../context/UserContext";
 import { useContext } from "react";
 import { useTurnstile } from "../hooks/useTurnstile";
 import {useNavigate} from "react-router-dom"
+import {NotFound} from "./NotFound"
 const LoginMutation = gql`
 mutation Login($query: String!, $password: String!, $token: String!) {
     login(loginInput: { query: $query, password: $password, token: $token}) {
@@ -30,6 +31,7 @@ export const Login = () => {
         },
         onCompleted: () => {
             navigate(-1)
+            window.location.href = '/'
         }
     });
     const handleLogin = (e) => {
@@ -43,9 +45,9 @@ export const Login = () => {
                 password, 
                 token
             }
-        })
+        })   
     }
-    if(user.getUser) window.location.href = '/'
+    if(user && user.getUser) return <NotFound/>
     return (
         <div className="container mx-auto flex items-center h-[100vh] justify-center">
             <Card className="p-4 w-[450px] m-4 mb-[100px]">

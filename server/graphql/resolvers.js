@@ -134,6 +134,7 @@ module.exports = {
             }
         },
         async getUser(_, {}, context){
+            console.log('HELLO I AM ALIVE')
             return getUser(context)
         },
         async getProblem(_, {title}, context){
@@ -178,14 +179,13 @@ module.exports = {
         async getProfile(_, {username}){
             try{
                 const user = await User.findOne({username})
-                if(!user || !user   .verified) {
+                if(!user || !user.verified) {
                     throw new ApolloError('User does not exist');
                 }else{
-                    return {
-                        ...user._doc,
-                    };
+                    return user
                 }
             }catch(error){
+                console.log(error)
                 throw new ApolloError(error)
             }
         },

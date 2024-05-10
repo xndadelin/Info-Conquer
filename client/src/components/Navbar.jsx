@@ -13,7 +13,7 @@ mutation {
 `  
 export const NavigationBar = () => {
     const {user} = useContext(UserContext);
-    const {isOpen, setIsOpen} = useDisclosure()  
+    const [isOpen, setIsOpen] = useState()  
     const [logoutMutation] = useMutation(logoutMutationQuery);
     const handleLogout = async(e) => {
         await logoutMutation()
@@ -66,31 +66,31 @@ export const NavigationBar = () => {
                                     Signed in as: {user.getUser && user.getUser.username}
                                </div>
                             </DropdownItem>
-                            <DropdownItem>
-                                <Link color="foreground" href={`/profile/${user.getUser.username}`}>See your profile & settings</Link>
+                            <DropdownItem as={Link} href={`/profile/${user.getUser.username}`} color="danger" className="text-gray-500" size="lg">
+                              See your profile & settings
                             </DropdownItem>
                             {user.getUser.admin && (
-                                <DropdownItem>
-                                    <Link color="foreground" href={'/problems/publish'}>Publish a problem</Link>
+                                <DropdownItem as={Link} className="text-gray-500" href="/problems/publish" color="danger">
+                                    Publish a problem                                    
                                 </DropdownItem>
                             )}
                              {user.getUser.admin && (
-                                <DropdownItem>
-                                   <Link color="foreground" href={'/articles/publish'}>Publish an article</Link>
+                                <DropdownItem className="text-gray-500" as={Link} href="/articles/publish" color="danger" >
+                                    Publish an article
                                 </DropdownItem>
                             )}
                             {user.getUser.admin && (
-                                <DropdownItem>
-                                    <Link color="foreground" href={'/post-announcement'}>Post announcement</Link>
+                                <DropdownItem as={Link} className="text-gray-500" href="/post-announcement" color="danger">
+                                    Post announcement                                    
                                 </DropdownItem>
                             )}
                             {user.getUser.admin && (
-                                <DropdownItem>
-                                    <Link color="foreground" href={'/contests/create'}>Create a contest</Link>
+                                <DropdownItem as={Link} className="text-gray-500" href="/contests/create" color="danger">
+                                     Create a constest                             
                                 </DropdownItem>
                             )}
-                            <DropdownItem>
-                                <Link onClick={(e) => handleLogout(e)} color="danger">Logout</Link>
+                            <DropdownItem onPress={(e) => handleLogout(e)} color="danger">
+                                <p className="text-red-500">Logout</p>
                             </DropdownItem>
                         </DropdownMenu>
                     </Dropdown>
@@ -106,7 +106,7 @@ export const NavigationBar = () => {
                     <NavbarMenuItem>
                         <Link href={`/profile/${user.getUser.username}`} color="foreground" isBlock>Profile</Link>
                     </NavbarMenuItem>
-                )}
+                )}            
             </NavbarMenu>
         </Navbar>
     )

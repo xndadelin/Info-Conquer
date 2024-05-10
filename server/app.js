@@ -20,7 +20,6 @@ async function startServer(){
       const allowedOrigins = [
         "http://localhost:3001",
         "https://159.89.12.247:3001",
-        "http://159.89.12.247:3001"
       ];
       const origin = req.headers.origin;
       if (allowedOrigins.includes(origin)) {
