@@ -21,7 +21,7 @@ const graderCPP = (testCases, code, problem, username, io, language) => {
             extension = 'cs'
             break;
         case 'Java':
-            codeNameFile = 'test.java'
+            codeNameFile = `${problem}.java`
             extension = 'java'
             break;
         case 'Python':
@@ -30,7 +30,7 @@ const graderCPP = (testCases, code, problem, username, io, language) => {
             break;
     }
     /////////////////////////////////////////////////////////////////////////////
-    const compilationResult = compilerCPP(code, idSolution, language, problem, codeNameFile, extension);
+    const compilationResult = compilerCPP(code, idSolution, language, problem, codeNameFile, extension, problem);
     if (compilationResult.error) {
         fs.rmdirSync(idSolution, {recursive: true})
         return {
@@ -53,11 +53,26 @@ const graderCPP = (testCases, code, problem, username, io, language) => {
             testCases.forEach(test => {
                 fs.writeFileSync(`${idSolution}/input.txt`, test.input);
                 fs.writeFileSync(`${idSolution}/expected_output.txt`, test.output);
-
+                let command;
+                switch (language) {
+                    case 'C++':
+                        command = `docker run -i ${extension}-image time ./program < input.txt > output.txt 2> metrics.txt`;
+                        break;
+                    case 'C':
+                        command = `docker run -i ${extension}-image time ./program < input.txt > output.txt 2> metrics.txt`;
+                        break;
+                    case 'C#':
+                        command = `docker run -i ${extension}-image time ./program.exe < input.txt > output.txt 2> metrics.txt`;
+                        break;
+                    case 'Java':
+                        command = `docker run -i ${extension}-image time java -classpath ./${problem} < input.txt > output.txt 2> metrics.txt`;
+                        break;
+                }
                 try{
-                    execSync(`docker run -i ${extension}-image time -v ./program${language == 'C#' ? '.exe' : ''} < input.txt > output.txt 2> metrics.txt`, { cwd: idSolution });
+                    execSync(command, {cwd: idSolution})
                 }catch(error){
                     //catch a signal
+                    console.log(error)
                     const metrics = fs.readFileSync(`${idSolution}/metrics.txt`, 'utf-8');
                     const signal = metrics.match(/Command terminated by signal (\d+)/)[1];
                     testResults.push({

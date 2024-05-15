@@ -1,9 +1,9 @@
 const fs = require('fs');
 const { execSync } = require('child_process');
 const { generateDockerfile } = require('../generateDockerfile');
-const compilerCPP = (code, idSolution, language, _, codeNameFile, extension) => {
+const compilerCPP = (code, idSolution, language, _, codeNameFile, extension, problem) => {
     fs.mkdirSync(idSolution)
-    generateDockerfile(language, idSolution);
+    generateDockerfile(language, idSolution, problem);
     fs.writeFileSync(`${idSolution}/${codeNameFile}`, code);
     const fileMemory = fs.statSync(`${idSolution}/${codeNameFile}`).size;
     try {
@@ -35,7 +35,6 @@ const compilerCPP = (code, idSolution, language, _, codeNameFile, extension) => 
             status: 1
         }
     } catch (error) {
-        console.log(error)
         return {
             error: error.stdout,
             memorieFisier: fileMemory,
