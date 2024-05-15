@@ -1,7 +1,7 @@
 import {Link, useParams} from 'react-router-dom'
 import { useQuery, gql } from '@apollo/client'
 import { Loading } from './Loading'
-import { TableCell, Table, TableHeader, TableRow, TableColumn, TableBody, Snippet, Button, Select, SelectItem, useDisclosure, Tabs, Tab } from '@nextui-org/react'
+import { TableCell, Table, TableHeader, TableRow, TableColumn, TableBody, Snippet, Button, Select, SelectItem, useDisclosure, Tabs, Tab, Tooltip, Input, Textarea } from '@nextui-org/react'
 import {Editor} from '@monaco-editor/react'
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../context/UserContext";
@@ -92,6 +92,8 @@ export const Problem = () => {
     const [language, setLanguage] = useState('')
     const [code, setCode] = useState()
     const [error, setError] = useState()
+    const [prompt, setPrompt] = useState('')
+    const [chatbotMessage, setChatbotMessage] = useState('')
     useEffect(() => {
         setCode(getTemplate(language, problem))
     }, [language])
@@ -163,14 +165,34 @@ export const Problem = () => {
             }
         }
     `
+    const chatbotgql = gql`
+        mutation GetChatbotMessage($prompt: String, $problem: String, $code: String) {
+            getChatbotMessage(prompt: $prompt, problem: $problem, code: $code) {
+                message
+            }
+        }
+    `
     const {data: submissions, loading: loadingSubmissions, error: errorSubmissions} = useQuery(submissiongql, {
         variables: {
             title: id
         },
         onError: (error) => {
-            console.log(JSON.stringify(error))
+            setError(error)
         },
         skip: selected !== 'solutions'
+    })
+    const [getChatbotMessage, {loading:loadingBot, errorBot}] = useMutation(chatbotgql, {
+        onCompleted: (data) => {
+            setCode(data.getChatbotMessage.message)
+        },
+        onError: (error) => {
+            console.log(error)
+        },
+        variables: {
+            prompt,
+            problem: id,
+            code
+        }
     })
     const {data:problem, loading} = useQuery(queryProblem, {
         variables: {
@@ -298,15 +320,34 @@ export const Problem = () => {
                             <div className="mt-[85px] max-lg:mt-0">
                                 <div className='flex flex-col'>
                                     <div className='w-[100%] h-[100%] bg-[#1e1e1e] rounded flex justify-between align-center'>
-                                        <Select onChange={(e) => setLanguage(e.target.value)} label="Select language" size='sm' className='w-[200px] mt-1 ml-1'>
+                                        <Select  onChange={(e) => setLanguage(e.target.value)} label="Select language" size='sm' className='w-[150px] mt-1 ml-1'>
                                             {problem.getProblem.languages.map((language) => (
                                                 <SelectItem key={language}>{language}</SelectItem>
                                             ))}
                                         </Select>
-                                        <Button className='mt-2 mb-2 mr-2' color='danger' disabled={!language || !code || !user || !user.getUser} variant='flat' onClick={() => {onHandleSubmitSolution(); onOpenChange(); setTests('')}}>Submit solution</Button>
+                                        <div className='flex items-center gap-1'>
+                                            <Tooltip size='sm' closeDelay={1500} color='warning' placement='bottom-end' content={
+                                                <div>
+                                                    <p>ChatGPT 4. Please do not abuse of this or else you get the wrath of Savitar!</p>
+                                                    <p>Do not send pieces of code. It will automatically be sent! As well the problem.</p>
+                                                    <Textarea endContent={
+                                                        <Button isLoading={loadingBot} disabled={!prompt} color='warning' className='self-end text-2xl' size='sm' variant='flat' onClick={() => getChatbotMessage()}>↑</Button>
+                                                    } onChange={(e) => setPrompt(e.target.value)} value={prompt} label='Type your prompt here' />
+                                                </div>
+                                            }>
+                                                <Button isLoading={loadingBot} className='mt-2 mb-2 mr-2' color='warning' variant='flat'>🤖</Button>
+                                            </Tooltip>
+                                            <Tooltip color='danger' content='Run your code!'>
+                                                <Button className='mt-2 mb-2 mr-2' color='danger' disabled={!language || !code || !user || !user.getUser} variant='flat' onClick={() => {onHandleSubmitSolution(); onOpenChange(); setTests('')}}>Submit solution</Button>
+                                            </Tooltip>
+                                        </div>
                                     </div>
                                     <div>
-                                        <Editor onChange={(val, e) => setCode(val)} value={code} theme='vs-dark' language='cpp' height={'80vh'} />
+                                        <Editor options={{
+                                            minimap: {
+                                                enabled: false
+                                            }
+                                        }} onChange={(val, e) => setCode(val)} value={code} theme='vs-dark' language='cpp' height={'80vh'} />
                                     </div>
                                     <TestingSolution isOpen={isOpen} onClose={onOpenChange} loading={loadingTests} tests={tests}/>
                                 </div>
