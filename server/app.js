@@ -17,14 +17,8 @@ async function startServer(){
     })
     await apolloServer.start()
     app.use((req, res, next) => {
-      const allowedOrigins = [
-        "http://localhost:3001",
-        "https://159.89.12.247:3001",
-      ];
-      const origin = req.headers.origin;
-      if (allowedOrigins.includes(origin)) {
-        res.setHeader("Access-Control-Allow-Origin", origin);
-      }
+      const allowedOrigin = process.env.MODE === 'dev' ? 'http://localhost:3001' : "https://159.89.12.247:3001";
+      res.setHeader("Access-Control-Allow-Origin", allowedOrigin);
       res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
       res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
       res.setHeader("Access-Control-Allow-Credentials", "true");
@@ -44,17 +38,26 @@ async function startServer(){
         app,
         cors: false
     });    
-    const httpsServer = https.createServer({
-	      key: fs.readFileSync(path.join(__dirname, 'cert', 'key.pem')),
-	      cert: fs.readFileSync(path.join(__dirname, 'cert', 'cert.pem'))
-    }, app)
-    
-    httpsServer.listen(3000, () => {
-	      console.log('HTTPS initialized')
-        mongoose.connect(process.env.MONGO_DB_CONN).then(() => {
-          console.log('Database connected')
+    if(process.env.MODE === 'dev'){
+      app.listen(3000, () => {
           console.log('Server started! Have fun!')
-        })
-    })
+          mongoose.connect(process.env.MONGO_DB_CONN).then(() => {
+            console.log('Database connected')
+          })
+      })
+    }else{
+        const httpsServer = https.createServer({
+          key: fs.readFileSync(path.join(__dirname, 'cert', 'key.pem')),
+          cert: fs.readFileSync(path.join(__dirname, 'cert', 'cert.pem'))
+      }, app)
+    
+      httpsServer.listen(3000, () => {
+          console.log('HTTPS initialized')
+          mongoose.connect(process.env.MONGO_DB_CONN).then(() => {
+            console.log('Database connected')
+            console.log('Server started! Have fun!')
+          })
+      })
+    }
 }
 startServer()

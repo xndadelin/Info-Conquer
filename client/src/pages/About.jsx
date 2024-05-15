@@ -2,32 +2,30 @@ import { Link } from 'react-router-dom';
 export const About = () => {
     return (
         <div className="container mx-auto p-4 my-5">
-            <p className="text-4xl mb-4 font-bold">About</p>
+             <div className="flex flex-col gap-5 self-start mt-10 mb-20">
+                <div className="text-5xl text-white font-extrabold">ℹ️ About</div>
+                <p className="text-2xl text-white">
+                    Here you can find information about the platform.
+                </p>
+            </div>
             <p className="text-lg">
-                This is a platform for competitive programming enthusiasts.
-                <br/>
-                InfoConquer is a platform for competitive programming enthusiasts. It is a platform where you can practice problems, participate in contests, read articles, and publish your own problems and articles
-                <br/>
-                The platform also has a code judger thats tests your code based on tests cases and gives you (explicit) feedback on your code.
-                <br/>
-                The platform also has a code feedback feature that uses OpenAI API to give you feedback on your code (optimization, code quality, etc.). 
-                <br/>
-                The platform also has a feature that gives you insights on the problem you are solving (leaderbord, success rate, etc.).
-                <br/>
-                The platform is still in development and more features will be added soon.
-                <br/>
-                The authentication system is based on JWT tokens and the platform is (will be lol) secured with HTTPS.
-                <br/>
-                The problems are divided into categories and subcategories. The problems are also tagged with difficulty levels.
-                <br/>
-                The platform also has a feature that allows you to publish your own problems (you have to get my permission) and articles (can do it without admin, but need permission to actually publish).
-                <br/>
-                The platform also has a feature that allows you to post announcements (for admins).
-                <br/> 
-                The code editor is based on Monaco Editor. The code judger is based on Docker containers so you do no try things like system("rm -rf /") and stuff like that. I do not want my host machine to be destroyed.
-                <br/>
-                The platform is built using MERN stack and GraphQL.
-                <br/>
+                <b>InfoConquer </b>
+                <ul className='list-disc ml-8'>
+                    <li>Platform for competitive programming enthusiasts</li>
+                    <li>Practice problems, participate in contests, read articles, and publish your own problems and articles</li>
+                    <li>Code judger tests your code based on test cases and provides explicit feedback</li>
+                    <li>Code feedback feature utilizes OpenAI API to give feedback on code optimization, quality, etc.</li>
+                    <li>Insights feature provides information on the problem being solved (leaderboard, success rate, etc.)</li>
+                    <li>Constantly evolving with more features to be added soon</li>
+                    <li>Authentication system based on JWT tokens</li>
+                    <li>Platform secured with HTTPS</li>
+                    <li>Problems divided into categories, subcategories, and tagged with difficulty levels</li>
+                    <li>Ability to publish your own problems and articles (permission required)</li>
+                    <li>Announcement feature for admins</li>
+                    <li>Code editor based on Monaco Editor</li>
+                    <li>Code judger based on Docker containers for security</li>
+                    <li>Built using MERN stack and GraphQL</li>
+                </ul>
                 <br/>
                 <b>Features:</b>
                 <ul className="list-disc ml-8">

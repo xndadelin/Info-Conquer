@@ -230,7 +230,7 @@ export const Problem = () => {
                                             <TableCell>{problem.getProblem.difficulty}</TableCell>
                                             <TableCell>{problem.getProblem.category}</TableCell>
                                             <TableCell>{problem.getProblem.subcategories}</TableCell>
-                                            <TableCell>{problem.getProblem.successRate + '%'}</TableCell>
+                                            <TableCell>{parseInt(problem.getProblem.successRate) + '%'}</TableCell>
                                             <TableCell>69%</TableCell>
                                         </TableRow>
                                     </TableBody>

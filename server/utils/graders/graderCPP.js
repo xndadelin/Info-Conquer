@@ -56,7 +56,8 @@ const graderCPP = (testCases, code, problem, username, io, language) => {
                 let command;
                 switch (language) {
                     case 'C++':
-                        command = `docker run -i ${extension}-image time ./program < input.txt > output.txt 2> metrics.txt`;
+                        // time -v does not work, so we use /usr/bin/time -v, change next time
+                        command = `docker run -i ${extension}-image /usr/bin/time -v ./program < input.txt > output.txt 2> metrics.txt`;
                         break;
                     case 'C':
                         command = `docker run -i ${extension}-image time ./program < input.txt > output.txt 2> metrics.txt`;
@@ -140,6 +141,8 @@ const graderCPP = (testCases, code, problem, username, io, language) => {
                 id_solution: idSolution,
             }
         }catch(error){
+/*             fs.rmdirSync(idSolution, {recursive: true}) */
+            console.log(error)
             return {
                 username,
                 code,
@@ -152,7 +155,7 @@ const graderCPP = (testCases, code, problem, username, io, language) => {
                 compilationError: error,
                 success: false,
                 id_solution: idSolution,
-                date: new Date(),
+                date: new Date()
             }
         }
         

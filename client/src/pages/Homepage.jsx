@@ -21,10 +21,6 @@ query getHomepageInfo {
         successRate
         tags
       }
-      topUsers {
-        solvedProblems
-        username
-      }
     }
   }
 `
@@ -70,26 +66,7 @@ export const Homepage = () => {
                                         <Link color="danger" href={`/problems/${problem.title}`}>{problem.title}</Link>
                                     </TableCell>
                                     <TableCell>{problem.difficulty}</TableCell>
-                                    <TableCell>{problem.successRate}%</TableCell>
-                                </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </div>
-                <div className="flex flex-col gap-2 mt-4 w-full">
-                    <p className="text-2xl font-bold text-end">Top users</p>
-                    <Table isStriped isCompact>
-                        <TableHeader>
-                            <TableColumn>Username</TableColumn>
-                            <TableColumn>Solved problems</TableColumn>
-                        </TableHeader>
-                        <TableBody>
-                            {getInfo.data && getInfo.data.getHomepageInfo.topUsers.map((user, index) => (
-                                <TableRow key={index}>
-                                    <TableCell className="cursor-pointer">
-                                        <Link color="danger" href={`/profile/${user.username}`}>{user.username}</Link>
-                                    </TableCell>
-                                    <TableCell>{user.solvedProblems}</TableCell>
+                                    <TableCell>{parseInt(problem.successRate)}%</TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>

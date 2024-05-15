@@ -169,7 +169,12 @@ export const ProblemsSelection = () => {
     ]
     return (
         <div className="container mx-auto my-4 px-4">
-            <h1 className="font-bold text-5xl mb-4">Data Structures</h1>
+             <div className="flex flex-col gap-5 mt-20 mb-20">
+                <div className="text-5xl text-white font-extrabold">🎯 Problems</div>
+                <p className="text-2xl text-white">
+                    Choose a category and/or a subcategory to start solving problems and improve your skills!
+                </p>
+            </div>
             <div className="flex gap-10 flex-wrap">
                 {problems.map((problem, index) => (
                     <div className="flex flex-col">

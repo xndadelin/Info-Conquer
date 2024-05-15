@@ -100,12 +100,7 @@ module.exports = gql`
         tags: [String],
         successRate: String,
     }
-    type TopUser {
-        username: String,
-        solvedProblems: Int
-    }
     type HomepageInfo {
         topProblems: [TopProblem],
-        topUsers: [TopUser]
     }
 `;

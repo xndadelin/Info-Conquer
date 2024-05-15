@@ -1,6 +1,7 @@
 const { gql } = require('apollo-server-express');
 
 module.exports = gql`
+    scalar Date
     type User {
         username: String,
         createdAt: String,
@@ -37,5 +38,9 @@ module.exports = gql`
         admin: String,
         solutions: [SolutionProfile],
         solvedProblems: [solvedProblems]
+    }
+    type LeaderboardRow {
+        username: String,
+        solvedProblems: Int
     }
 `;

@@ -26,6 +26,7 @@ import { Login } from "./pages/Login";
 import { Register } from "./pages/Register";
 import { About } from "./pages/About";
 import { VerifyEmail } from "./components/VerifyEmail";
+import { Leaderboard } from "./pages/Leaderboard";
 function App() {
   const {user} = useContext(UserContext)
   if(!user)
@@ -113,6 +114,10 @@ function App() {
           <Route
             path="/verify/:token"
             element={<VerifyEmail/>}
+          />
+          <Route
+            path="/leaderboard"
+            element={<Leaderboard/>}
           />
           <Route
             path="*"

@@ -134,7 +134,6 @@ module.exports = {
             }
         },
         async getUser(_, {}, context){
-            console.log('HELLO I AM ALIVE')
             return getUser(context)
         },
         async getProblem(_, {title}, context){
@@ -182,10 +181,10 @@ module.exports = {
                 if(!user || !user.verified) {
                     throw new ApolloError('User does not exist');
                 }else{
+                    console.log(user)
                     return user
                 }
             }catch(error){
-                console.log(error)
                 throw new ApolloError(error)
             }
         },
@@ -375,6 +374,7 @@ module.exports = {
                 
                     return { date: date, count: solves.length > 0 ? solves[0].count : 0 };
                 }));
+                
                 return {
                     firstSubmissions: firstsolves,
                     timeExecution: bestTimeExecutions,
@@ -445,23 +445,8 @@ module.exports = {
         },
         async getHomepageInfo(_, {}, context){
             try{
-                const users = await User.aggregate([
-                    {
-                      $project: {
-                        username: 1,
-                        solvedProblems: { $size: "$solvedProblems" }
-                      }
-                    },
-                    {
-                      $sort: { solvedProblems: -1 }
-                    },
-                    {
-                      $limit: 5
-                    }
-                ])
                 const problems = (await Problem.find({}).sort({acceptedSolutions: -1}).limit(5))
                 return {
-                    topUsers: users,
                     topProblems: problems.map(problem => {
                         return {
                             title: problem.title,
@@ -471,6 +456,24 @@ module.exports = {
                         }
                     })
                 }
+            }catch(e){
+                throw new ApolloError(e)
+            }
+        },
+        async getLeaderboard(_, {}, context){
+            try{
+                const users = await User.aggregate([
+                    {
+                      $project: {
+                        username: 1,
+                        solvedProblems: { $size: "$solvedProblems" }
+                      }
+                    },
+                    {
+                      $sort: { solvedProblems: -1 }
+                    }
+                ])
+                return users
             }catch(e){
                 throw new ApolloError(e)
             }

@@ -41,6 +41,9 @@ export const ProblemStats = () => {
     if(!data || !data.getProblemStats) return <Loading/>
     return (
         <div className="container flex-col">
+            <h1 className="text-3xl font-bold mb-5 mt-5">
+                📈 Insigths about this problem
+            </h1>
             <Chart
                 chartType="LineChart"
                 data={[
