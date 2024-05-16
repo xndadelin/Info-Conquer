@@ -40,7 +40,7 @@ async function startServer(){
     });    
     if(process.env.MODE === 'dev'){
       app.listen(3000, () => {
-          console.log('Server started! Have fun!')
+          console.log('Server started in dev mode! Have fun!')
           mongoose.connect(process.env.MONGO_DB_CONN).then(() => {
             console.log('Database connected')
           })
@@ -55,7 +55,7 @@ async function startServer(){
           console.log('HTTPS initialized')
           mongoose.connect(process.env.MONGO_DB_CONN).then(() => {
             console.log('Database connected')
-            console.log('Server started! Have fun!')
+            console.log('Server started in production mode! Have fun!')
           })
       })
     }

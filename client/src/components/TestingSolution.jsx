@@ -9,7 +9,7 @@ export const TestingSolution = ({onClose, isOpen, loading, tests}) => {
     const testsTable = (user) => {
         return (
             <div>
-                <Table>
+                <Table isCompact selectionMode>
                     <TableHeader>
                         <TableColumn>Index</TableColumn>
                         <TableColumn>Time</TableColumn>
@@ -24,7 +24,7 @@ export const TestingSolution = ({onClose, isOpen, loading, tests}) => {
                                     <TableCell>{test.executionTime}</TableCell>
                                     <TableCell>{test.memoryUsed}</TableCell>
                                     <TableCell>{test.score}</TableCell>
-                                    <TableCell>{test.status}</TableCell>
+                                    <TableCell color="warning">{test.status}</TableCell>
                                 </TableRow>
                         ))}
                     </TableBody>
@@ -50,6 +50,9 @@ export const TestingSolution = ({onClose, isOpen, loading, tests}) => {
         <Modal
             isOpen={isOpen}
             onClose={onClose}
+            hideCloseButton={loading}
+            isDismissable={!loading}
+            isKeyboardDismissDisabled={loading}
         >
             <ModalContent>
                 <ModalHeader>Tests</ModalHeader>

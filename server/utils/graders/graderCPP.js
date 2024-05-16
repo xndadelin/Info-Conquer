@@ -2,7 +2,7 @@ const { execSync } = require('child_process');
 const {compilerCPP} = require('../compilers/compilerCPP');
 const fs = require('fs');
 global.crypto = require('crypto')    
-const graderCPP = (testCases, code, problem, username, io, language) => {
+const graderCPP = (testCases, code, problem, username, language, max_time, max_memory) => {
     const idSolution = crypto.randomUUID()
     /////////////////////////////////////////////////////////////////////////////
     let codeNameFile = ''
@@ -38,7 +38,6 @@ const graderCPP = (testCases, code, problem, username, io, language) => {
             code,
             problem,
             language,
-            io,
             score: 0,
             test: null,
             fileMemory: compilationResult.memorieFisier,
@@ -60,7 +59,7 @@ const graderCPP = (testCases, code, problem, username, io, language) => {
                         command = `docker run -i ${extension}-image /usr/bin/time -v ./program < input.txt > output.txt 2> metrics.txt`;
                         break;
                     case 'C':
-                        command = `docker run -i ${extension}-image time ./program < input.txt > output.txt 2> metrics.txt`;
+                        command = `docker run -i ${extension}-image /usr/bin/time -v ./program < input.txt > output.txt 2> metrics.txt`;
                         break;
                     case 'C#':
                         command = `docker run -i ${extension}-image time ./program.exe < input.txt > output.txt 2> metrics.txt`;
@@ -99,7 +98,7 @@ const graderCPP = (testCases, code, problem, username, io, language) => {
                 const executionTime = (parseFloat(elapsedTimeParts[0]) + (parseInt(elapsedTimeParts[1] || 0) * 60) + (parseInt(elapsedTimeParts[2] || 0) * 3600)) * 1000;
                 const memoryUsed = (metrics.match(/Maximum resident set size \(kbytes\): (\d+)/)[1] )/1024;
                 
-                if (expectedOutput === actualOutput) {
+                if (expectedOutput === actualOutput && executionTime <= max_time && memoryUsed <= max_memory) {
                     testResults.push({
                         status: 'AC',
                         success: true,
@@ -111,16 +110,58 @@ const graderCPP = (testCases, code, problem, username, io, language) => {
                         expectedOutput
                     });
                 }else{
-                    testResults.push({
-                        status: 'WA',
-                        success: false,
-                        executionTime,
-                        memoryUsed,
-                        score: 0,
-                        input: test.input,
-                        output: actualOutput,
-                        expectedOutput
-                    });
+                    if(executionTime > max_time && memoryUsed > max_memory){
+                        testResults.push({
+                            status: 'TLE_MLE',
+                            success: false,
+                            executionTime,
+                            memoryUsed,
+                            score: 0,
+                            input: test.input,
+                            output: actualOutput,
+                            expectedOutput
+                        });
+                        return ;
+                    }
+                    if (executionTime > max_time) {
+                        testResults.push({
+                            status: 'TLE',
+                            success: false,
+                            executionTime,
+                            memoryUsed,
+                            score: 0,
+                            input: test.input,
+                            output: actualOutput,
+                            expectedOutput
+                        });
+                        return;
+                    }
+                    if (memoryUsed > max_memory) {
+                        testResults.push({
+                            status: 'MLE',
+                            success: false,
+                            executionTime,
+                            memoryUsed,
+                            score: 0,
+                            input: test.input,
+                            output: actualOutput,
+                            expectedOutput
+                        });
+                        return;
+                    }
+                    if (expectedOutput !== actualOutput) {
+                        testResults.push({
+                            status: 'WA',
+                            success: false,
+                            executionTime,
+                            memoryUsed,
+                            score: 0,
+                            input: test.input,
+                            output: actualOutput,
+                            expectedOutput
+                        });
+                        return ;
+                    }
                 }
             });
             const success = testResults.every(test => test.success);
@@ -131,7 +172,6 @@ const graderCPP = (testCases, code, problem, username, io, language) => {
                 code,
                 problem,
                 language,
-                io,
                 score,
                 tests: testResults,
                 fileMemory: compilationResult.memorieFisier,
@@ -141,14 +181,12 @@ const graderCPP = (testCases, code, problem, username, io, language) => {
                 id_solution: idSolution,
             }
         }catch(error){
-/*             fs.rmdirSync(idSolution, {recursive: true}) */
-            console.log(error)
+            fs.rmdirSync(idSolution, {recursive: true}) 
             return {
                 username,
                 code,
                 problem,
                 language,
-                io,
                 score: 0,
                 tests: null,
                 fileMemory: compilationResult.memorieFisier,
@@ -158,22 +196,6 @@ const graderCPP = (testCases, code, problem, username, io, language) => {
                 date: new Date()
             }
         }
-        
-        /* fs.rmdirSync(idSolution, {recursive: true})
-        return {
-            username,
-            code,
-            problem,
-            language,
-            io,
-            score,
-            tests: testResults,
-            fileMemory: compilationResult.memorieFisier,
-            date: new Date(),
-            compilationError: null,
-            success,
-            id_solution: idSolution,
-        } */
     }
 }
 module.exports = {graderCPP}

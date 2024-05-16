@@ -618,7 +618,7 @@ module.exports = {
         },
         async submitSolution(_, {solutionInput: {problem, code, language}}, context){
             try{
-                const problema = await Problem.findOne({title: problem}).select('tests title type rejectedSolutions acceptedSolutions')
+                const problema = await Problem.findOne({title: problem}).select('tests title type rejectedSolutions acceptedSolutions timeExecution limitMemory')
                 const contest = await Contest.findOne({ "problems.id": problema.title });
                 if(!problem){
                     throw new ApolloError('This problem does not exist.')
@@ -642,7 +642,7 @@ module.exports = {
                         throw new ApolloError('This contest has not started yet')
                     }
                 }
-                const testResults = graderCPP(problema.tests, code, problema.title, user.username, problema.type, language);
+                const testResults = graderCPP(problema.tests, code, problema.title, user.username,language, problema.timeExecution, problema.limitMemory)
                 user.solutions.push(testResults)
                 if(testResults.score === 100){
                     if(!user.solvedProblems.find(solved => solved.problem === problema.title)){
@@ -937,7 +937,7 @@ module.exports = {
                 });
                 const response = completion.choices[0].message.content
                 let codeResponse = response.split('```')[1]
-                codeResponse = codeResponse.slice(4, codeResponse.length - 1)
+                codeResponse = codeResponse.split('\n').slice(1).join('\n')
                 return {    
                     message: codeResponse
                 }

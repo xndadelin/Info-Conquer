@@ -353,18 +353,29 @@ export const Problem = () => {
                                 </div>
                             </div>
                         ): (
-                            <div className="h-[100%] blur-md flex">
-                                <Editor options={{
-                                    readOnly: true,
-                                    minimap: {
-                                        enabled: false
-                                    },
-                                    scrollbar: {
-                                        vertical: 'hidden',
-                                        horizontal: 'hidden'
-                                    }
-                                }} height={'100vh'} value={placeholder} theme='vs-dark' language='cpp'  />
-                                
+                            <div className="h-[100%] flex justify-center items-center relative">
+                                <Editor
+                                    options={{
+                                        readOnly: true,
+                                        minimap: {
+                                            enabled: false
+                                        },
+                                        scrollbar: {
+                                            vertical: 'hidden',
+                                            horizontal: 'hidden'
+                                        },
+                                    }}
+                                    className='blur-md'
+                                    height={'100vh'}
+                                    value={placeholder}
+                                    theme='vs-dark'
+                                    language='cpp'
+                                />
+                                <div className='z-10 absolute'>
+                                    <div className='text-center font-bold text-xl'>
+                                        You need to be logged in to submit a solution!
+                                    </div>
+                                </div>
                             </div>
                         )}
                     </div>
