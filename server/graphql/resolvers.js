@@ -376,7 +376,7 @@ module.exports = {
                 
                     return { date: date, count: solves.length > 0 ? solves[0].count : 0 };
                 }));
-                
+                console.log(firstsolves, bestTimeExecutions, bestMemory, solvesPerDay)
                 return {
                     firstSubmissions: firstsolves,
                     timeExecution: bestTimeExecutions,
@@ -928,8 +928,9 @@ module.exports = {
                 Based on the code above, please respond to the following prompt:
                 ${prompt}, and provide me with just the code. Comment the code with the changes you made. Just the code, perhaps explanations, but comment them in the code.
                 If you have any other additional information, please just comment it in the code. Respond to the prompt above with only the code you wrote. Remember that
-                you must not add print statements or any other output statements. It will be considered as a wrong answer.
+                you must not add print statements or any other output statements (like : "Enter a number!"). It will be considered as a wrong answer.
                 If there any syntax errors (like semicolon errors), logical errors, time performance errors, or memory errors, please fix them and explain why you made the changes you made by commenting in the code.
+                Keep in mind that the input its not given as arguments, but you have to read it from the standard input. The output must be written to the standard output.
                 `
                 const completion = await client.chat.completions.create({
                     messages: [{ role: "system", content: buildPrompt    }],

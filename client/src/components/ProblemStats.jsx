@@ -6,27 +6,27 @@ import { Card, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow }
 const getStats = gql`
     query GetProblemStats($id: String) {
         getProblemStats(id: $id) {
-        bestMemory {
-            language
-            date
-            memory
-            username
-        }
-        firstSubmissions {
-            date
-            language
-            _id
-        }
-        timeExecution {
-            date
-            language
-            timeExecutions
-            username
-        }
-        solves {
-            count
-            date
-        }
+            bestMemory {
+                language
+                date
+                memory
+                username
+            }
+            firstSubmissions {
+                date
+                language
+                _id
+            }
+            timeExecution {
+                date
+                language
+                timeExecutions
+                username
+            }
+            solves {
+                count
+                date
+            }
         }
     }
 `
@@ -37,6 +37,7 @@ export const ProblemStats = () => {
             id
         },
     })
+    console.log(data)
     if(loading) return <Loading/>
     if(!data || !data.getProblemStats) return <Loading/>
     return (

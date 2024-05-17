@@ -21,8 +21,8 @@ export const TestingSolution = ({onClose, isOpen, loading, tests}) => {
                         {tests.tests && tests.tests.map((test, index) => (
                                 <TableRow>
                                     <TableCell>{index + 1}</TableCell>
-                                    <TableCell>{test.executionTime}</TableCell>
-                                    <TableCell>{test.memoryUsed}</TableCell>
+                                    <TableCell>{test.executionTime} ms</TableCell>
+                                    <TableCell>{test.memoryUsed} MB</TableCell>
                                     <TableCell>{test.score}</TableCell>
                                     <TableCell color="warning">{test.status}</TableCell>
                                 </TableRow>

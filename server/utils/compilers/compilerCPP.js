@@ -15,7 +15,6 @@ const compilerCPP = (code, idSolution, language, _, codeNameFile, extension, pro
             compilationResult = execSync(`docker run -i ${extension}-image cat compilation_error.txt > ${idSolution}/compilation_error.txt`)
             const compilationError = fs.readFileSync(`${idSolution}/compilation_error.txt`, 'utf-8');
             if(compilationError){
-                console.log(compilationError)
                 return {
                     error: compilationError,
                     memorieFisier: fileMemory,
