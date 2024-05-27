@@ -39,5 +39,6 @@ module.exports = gql`
     type Participant {
         username: String
         score: Int
+        problems: [Problem]
     }
 `;

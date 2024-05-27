@@ -32,7 +32,7 @@ const contestSchema = new mongoose.Schema({
         score: Number,
         problems: [{
             id: String,
-            score: Number
+            score: Number,
         }]
     }],
     submissions: {

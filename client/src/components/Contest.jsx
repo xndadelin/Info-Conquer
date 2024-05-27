@@ -34,6 +34,10 @@ const getContest = gql`
             participants {
                 username
                 score
+                problems {
+                    id
+                    score
+                }
             },
             hasEnded,
             hasStarted,
@@ -45,6 +49,7 @@ export const Contest = () => {
     const {id} = useParams()
     const [page, setPage] = useState(1)
     const [error, setError] = useState('')
+    const participantsPerPage = 20
     const {data, loading} = useQuery(getContest, {
         variables: {
             id
@@ -72,22 +77,41 @@ export const Contest = () => {
             <p className="text-gray-400">Has started: {data.getContest.hasStarted ? "Yes" : "No"}</p>
             <p className="text-gray-400">Has ended: {data.getContest.hasEnded ? "Yes" : "No"}</p>
             <p className="text-2xl font-bold mt-5">Leaderboard</p>
-            <Table isCompact isStriped className="mt-4" bottomContent={
-                <Pagination className="mt-3 flex justify-center" onChange={(page) => setPage(page)} loop showControls total={Math.ceil(data.getContest.participants.length/20)} initialPage={1}></Pagination>
-            }>
+            <Table
+                isCompact
+                isStriped
+                className="mt-4"
+                bottomContent={
+                    <Pagination
+                        className="mt-3 flex justify-center"
+                        onChange={(page) => setPage(page)}
+                        loop
+                        showControls
+                        total={Math.ceil(data.getContest.participants.length / participantsPerPage)}
+                        initialPage={1}
+                    />
+                }
+            >
                 <TableHeader>
-                    <TableColumn>Index</TableColumn>
-                    <TableColumn>User</TableColumn>
-                    <TableColumn>Score</TableColumn>
+                    <TableColumn>Rank</TableColumn>
+                    <TableColumn>Username</TableColumn>
+                    {data.getContest.problems.map((problem) => (
+                        <TableColumn key={problem.id}>{problem.id}</TableColumn>
+                    ))}
                 </TableHeader>
                 <TableBody>
-                    {data.getContest.participants.slice((page - 1)*20, page*20).map((participant, index) => (
-                        <TableRow key={index}>
-                            <TableCell>{index + 1}</TableCell>
-                            <TableCell>{participant.username}</TableCell>
-                            <TableCell>{participant.score ? participant.score : 0}</TableCell>
-                        </TableRow>
-                    ))}
+                    {data.getContest.participants
+                        .slice((page - 1) * participantsPerPage, page * participantsPerPage)
+                        .map((participant, index) => (
+                            <TableRow key={index}>
+                                <TableCell>{index + 1}</TableCell>
+                                <TableCell>{participant.username}</TableCell>
+                                {data.getContest.problems.map((problem) => {
+                                    const score = participant.problems.find(p => p.id === problem.id)?.score || 0;
+                                    return <TableCell key={problem.id}>{score}</TableCell>;
+                                })}
+                            </TableRow>
+                        ))}
                 </TableBody>
             </Table>
             <p className="text-2xl font-bold mt-5">Problems</p>

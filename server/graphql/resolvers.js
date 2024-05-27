@@ -153,11 +153,11 @@ module.exports = {
                     problem.successRate = successRate
                     await problem.save()    
                 }
-                if(problem.itsForContest){
+                const contest = await Contest.findOne({ "problems.id": problem.title });
+                if(contest){
                     if(!user){
                         return null
                     }
-                    const contest = await Contest.findOne({ "problems.id": problem.title });
                     if(!contest){
                         return problem
                     }
@@ -427,6 +427,7 @@ module.exports = {
                 const now = new Date();
                 const startDate = new Date(contest.startDate.year, contest.startDate.month - 1, contest.startDate.day, contest.startDate.hour, contest.startDate.minute)
                 const endDate = new Date(contest.endDate.year, contest.endDate.month - 1, contest.endDate.day, contest.endDate.hour, contest.endDate.minute)
+                contest.participants.sort((a, b) => b.score - a.score)
                 if(now > startDate && now < endDate){
                     contest.hasStarted = true
                     return contest
