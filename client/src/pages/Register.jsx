@@ -1,6 +1,6 @@
 import { Button, Card, CardBody, CardFooter, CardHeader, Checkbox, Chip, Divider, Input } from "@nextui-org/react";
 import { Link } from "@nextui-org/react";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { gql, useMutation } from "@apollo/client";
 import { UserContext } from "../context/UserContext";
 import { useContext } from "react";
@@ -22,11 +22,13 @@ export const Register = () => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [confirmPassword, setConfirmPassword] = useState("")
+    const turnstileRef = useRef(null);
     const [error, setError] = useState("")
     const {user} = useContext(UserContext)
     const [registerMutation, {loading}] = useMutation(RegisterMutation, {
         onError: (error) => {
             setError(error.message)
+            resetTurnstile()
           },
           onCompleted: (data) => {
               if(data.register.success)
@@ -55,6 +57,11 @@ export const Register = () => {
                 token
             }
         })
+    }
+    const resetTurnstile = () => {
+        if(window.turnstile) {
+            window.turnstile.reset(turnstileRef.current)
+        }
     }
     if(user.getUser) window.location.href = '/'
     return (
@@ -87,7 +94,7 @@ export const Register = () => {
                             <Checkbox color="danger">Remember me</Checkbox>
                             <Link href="/forgot-password" color="danger" isBlock>Forgot password?</Link>
                         </div>
-                        <div className="mb-4 self-center cf-turnstile" data-sitekey={process.env.REACT_APP_SITE_KEY}></div>
+                        <div className="mb-4 self-center cf-turnstile" ref={turnstileRef}  data-sitekey={process.env.REACT_APP_SITE_KEY}></div>
                         <Button isLoading={loading} disabled={!username || !confirmPassword || !email || !password} className="w-full" type="submit" color="danger" variant="flat">Register</Button>
                         <Divider className="mt-4 mx-auto w-[40px] p-0.5 rounded-lg"/>
                         <Link className="self-center mt-2" href="/login" color="foreground" isBlock>
@@ -96,7 +103,7 @@ export const Register = () => {
                     </form>
                 </CardBody>
                 {error && (
-                    <CardFooter>
+                    <CardFooter className="flex items-center justify-center">
                         <Chip className="whitespace-pre-wrap h-full p-3 rounded-md" color="danger" variant="flat">{error}</Chip>
                     </CardFooter>
                 )}

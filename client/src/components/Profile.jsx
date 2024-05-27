@@ -29,10 +29,23 @@ query GetProfile($username: String){
 }
 `
 const updateUsername = gql`
-mutation changeUsername($iusername: String, $newUsername: String){
+mutation changeUsername($username: String, $newUsername: String){
     changeUsername(username: $username, newUsername: $newUsername){
         success
     }
+}`
+const updateEmail = gql`
+mutation changeEmail($email: String, $newEmail: String){
+    changeEmail(email: $email, newEmail: $newEmail){
+        success
+    }
+}`
+const updatePassword = gql`
+mutation changePassword($currentpass: String, $password: String, $confirmPassword: String){
+    changePassword(currentpass: $currentpass, password: $password, confirmPassword: $confirmPassword){
+        success
+    }
+
 }`
 const logoutMutationQuery = gql`
 mutation {
@@ -43,7 +56,6 @@ mutation {
 export const Profile = () => {
     const {username} = useParams();
     const {user: currentUser} = useContext(UserContext)
-    const [user, setUser] = useState();
     const [page, setPage] = useState(1)
     const [love, setLove] = useState(false)
     const [error, setError] = useState('')
@@ -53,6 +65,11 @@ export const Profile = () => {
     const [bio, setBio] = useState('')
     const [logoutMutation] = useMutation(logoutMutationQuery)
     const [errorUsername, setErrorUsername] = useState('')
+    const [errorEmail, setErrorEmail] = useState('')
+    const [currentpass, setCurrentPass] = useState('')
+    const [password, setPassword] = useState('')
+    const [confirmPassword, setConfirmPassword] = useState('')
+    const [errorPassword, setErrorPassword] = useState('')
     const {data, loading} = useQuery(userQuery, {
         variables: {
             username
@@ -73,6 +90,33 @@ export const Profile = () => {
         },
         onError: (error) => {
             setErrorUsername(error.message)
+        }
+    })
+    const [changeEmail, {loading: changeEmailLoading}] = useMutation(updateEmail, {
+        variables: {
+            email,
+            newEmail
+        },
+        onCompleted: () => {
+            logoutMutation()
+            window.location.href = '/login'
+        },
+        onError: (error) => {
+            setErrorEmail(error.message)
+        }
+    })
+    const [changePassword, {loading: changePasswordLoading}] = useMutation(updatePassword, {
+        variables: {
+            currentpass,
+            password,
+            confirmPassword
+        },
+        onCompleted: () => {
+            logoutMutation()
+            window.location.reload()
+        },
+        onError: (error) => {
+            setErrorPassword(error.message)
         }
     })
     if(loading){
@@ -167,22 +211,29 @@ export const Profile = () => {
                            <Input label="Username" value={data.getProfile.username} disabled/> 
                            <Input label="New username" onChange={(e) => setNewUsername(e.target.value)}/>
                            <Button onClick={changeUsername} isLoading={changeUsernameLoading} color="danger" variant="flat">Change username</Button>
-                          {errorUsername && (
-                            <Chip color="success" variant="flat">{errorUsername}</Chip>
-                          )}
+                           {errorUsername && (
+                             <Chip color="danger" variant="flat">{errorUsername}</Chip>
+                           )}
                        </div>
                        <div className="flex flex-col gap-1">
                            <p className="text-3xl">Change email</p>
-                           <Input label="Email" onChange={(e) => setEmail(e.target.value)} value={email}  disabled/>
-                           <Input label="New email" value={email} onChange={(e) => setNewEmail(e.target.value)}/>
-                           <Button color="danger" variant="flat">Change email</Button>
+                            <p className="text-default-500">Your email is used to recover your account. </p>
+                           <Input label="Email" onChange={(e) => setEmail(e.target.value)} value={email}/>
+                           <Input label="New email" value={newEmail} onChange={(e) => setNewEmail(e.target.value)}/>
+                           <Button color="danger" variant="flat" onClick={changeEmail} isLoading={changeEmailLoading}>Change email</Button>
+                           {errorEmail && (
+                             <Chip color="danger" variant="flat">{errorEmail}</Chip>
+                           )}
                        </div>
                        <div className="flex flex-col gap-1">
                            <p className="text-3xl">Change password</p>
-                           <Input label="Current password" type="password"/>
-                           <Input label="New password" type="password"/>
-                           <Input label="Confirm new password" type="password"/>
-                           <Button color="danger" variant="flat">Change password</Button>
+                           <Input label="Current password" value={currentpass} onChange={(e) => setCurrentPass(e.target.value)} type="password"/>
+                           <Input label="New password" value={password} onChange={(e) => setPassword(e.target.value)} type="password"/>
+                           <Input label="Confirm password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} type="password"/>
+                            <Button color="danger" variant="flat" onClick={changePassword} isLoading={changePasswordLoading}>Change password</Button>
+                            {errorPassword && (
+                              <Chip color="danger" variant="flat">{errorPassword}</Chip>
+                            )}
                        </div>
                    </div>
                  </div>

@@ -1,6 +1,6 @@
 import { Button, Card, CardBody, CardFooter, CardHeader, Checkbox, Chip, Divider, Input } from "@nextui-org/react";
 import { Link } from "@nextui-org/react";
-import {  useState } from "react";
+import {  useState, useRef } from "react";
 import { gql, useMutation } from "@apollo/client";
 import { UserContext } from "../context/UserContext";
 import { useContext } from "react";
@@ -24,10 +24,12 @@ export const Login = () => {
     const [error, setError] = useState("")
     const {user} = useContext(UserContext)
     const navigate = useNavigate()
+    const turnstileRef = useRef(null);
     useTurnstile()
     const [loginMutation, {loading} ] = useMutation(LoginMutation, {
         onError: (error) => {
           setError(error.message)
+          resetTurnstile()
         },
         onCompleted: () => {
             navigate(-1)
@@ -46,6 +48,11 @@ export const Login = () => {
                 token
             }
         })   
+    }
+    const resetTurnstile = () => {
+        if(window.turnstile) {
+            window.turnstile.reset(turnstileRef.current)
+        }
     }
     if(user && user.getUser) return <NotFound/>
     return (
@@ -69,7 +76,7 @@ export const Login = () => {
                             <Checkbox color="danger">Remember me</Checkbox>
                             <Link href="/forgot-password" color="danger" isBlock>Forgot password?</Link>
                         </div>
-                        <div className="mb-4 self-center cf-turnstile" data-sitekey={process.env.REACT_APP_SITE_KEY}>
+                        <div className="mb-4 self-center cf-turnstile" ref={turnstileRef} data-sitekey={process.env.REACT_APP_SITE_KEY}>
                         </div>
                         <Button isLoading={loading} disabled={!query || !password} className="w-full" type="submit" color="danger" variant="flat">Login</Button>
                         <Divider className="mt-4 mx-auto w-[40px] p-0.5 rounded-lg"/>

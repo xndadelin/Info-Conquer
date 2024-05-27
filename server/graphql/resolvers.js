@@ -183,7 +183,6 @@ module.exports = {
                 if(!user || !user.verified) {
                     throw new ApolloError('User does not exist');
                 }else{
-                    console.log(user)
                     return user
                 }
             }catch(error){
@@ -376,7 +375,6 @@ module.exports = {
                 
                     return { date: date, count: solves.length > 0 ? solves[0].count : 0 };
                 }));
-                console.log(firstsolves, bestTimeExecutions, bestMemory, solvesPerDay)
                 return {
                     firstSubmissions: firstsolves,
                     timeExecution: bestTimeExecutions,
@@ -901,6 +899,28 @@ module.exports = {
             await Contest.updateMany({ createdBy: username }, { $set: { createdBy: newUsername } });
             await Contest.updateMany({ "participants.username": user.username }, { $set: { "participants.$[elem].username": username } },{ arrayFilters: [{ "elem.username": user.username }] });
 
+            return {
+                success: true
+            }
+        },
+        async changeEmail(_, {email, newEmail}, context){
+            const user = await getUser(context);
+            if(!user){
+                throw new ApolloError('You have to be logged in order to change the email')
+            }
+            if(email !== user.email){
+                throw new ApolloError('You have to be logged in with the same email in order to change the email. Please stop trying to hack the website!!!')
+            }
+            const exists = await User.findOne({email: newEmail})
+            if(exists){
+                throw new ApolloError('An account is already linked with this email')
+            }
+            const email_okey = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g
+            if(!email_okey.test(newEmail)){
+                throw new ApolloError('Invalid email. Please submit again with a valid email.');
+            }
+            user.email = newEmail;
+            await user.save()
             return {
                 success: true
             }
