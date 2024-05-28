@@ -109,8 +109,7 @@ int main()
                                 <p className='text-md'>
                                     Integrated OpenAI feedback
                                 </p>
-                                <Link isBlock showAnchorIcon href="https://openai.com">
-                                </Link>
+                                <a className='text-sm text-default-500' href='//put here the docs' >OpenAI Platform</a>
                             </div>
                         </CardHeader>
                         <Divider/>
