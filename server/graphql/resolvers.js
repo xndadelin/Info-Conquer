@@ -613,9 +613,7 @@ module.exports = {
                     }
                 }
             }catch(error){
-                return {
-                  success: false
-                } 
+                throw new ApolloError(error)
             }
         },
         async submitSolution(_, {solutionInput: {problem, code, language}}, context){
