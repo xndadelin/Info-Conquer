@@ -2,7 +2,7 @@ import {gql, useQuery} from '@apollo/client'
 import { useParams } from 'react-router-dom'
 import { NotFound } from '../pages/NotFound'
 import { Loading } from './Loading'
-import { Button,Spinner } from '@nextui-org/react'
+import { Button,Spinner, Textarea } from '@nextui-org/react'
 import { useState } from 'react'
 import { useContext } from 'react'
 import { UserContext } from '../context/UserContext'
@@ -86,22 +86,7 @@ export const EditArticle = () => {
                     <Chip className='cursor-pointer' key={index} onClick={() => onDeleteTag(tag)}>{tag}</Chip>
                 ))}
             </div>
-            <Editor
-                value={content}
-                onEditorChange={(e) => setContent(e)}
-                apiKey={process.env.REACT_APP_TINY_API}
-                init={{
-                    height: 1000,
-                    menubar: false,
-                    plugins: 'anchor advlist autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount linkchecker code ',
-                    toolbar: 'undo redo | blocks fontfamily fontsize | codesample | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat | code',
-                    skin: 'oxide-dark',
-                    content_css: 'tinymce-5-dark',
-                    force_br_newlines : true,
-                    force_p_newlines : false,
-                    forced_root_block : '',              
-                }}
-            />
+            <Textarea minRows={10} label='Content' value={content} onChange={(e) => setContent(e.target.value)} className='mb-5'/>
             <div className='flex justify-end gap-5 mt-5'>
                 <Button variant='flat' color='danger'>Close</Button>
                 <Button onClick={() => {handleSave();}} endContent={loadingSave ? <Spinner size='sm' color='secondary'/> : '' }  variant='flat' color='success'>Save</Button>

@@ -2,7 +2,7 @@ import { UserContext } from '../context/UserContext'
 import { useContext, useState } from 'react'
 import { NotFound } from './NotFound'
 import { Editor } from '@tinymce/tinymce-react'
-import { Input, Button, Chip } from '@nextui-org/react'
+import { Input, Button, Chip, Textarea } from '@nextui-org/react'
 import {gql, useMutation} from '@apollo/client'
 export const PublishArticle = () => {
     const [title, setTitle] = useState('')
@@ -54,20 +54,7 @@ export const PublishArticle = () => {
                     ))}
                 </div>
                 <p className="text-2xl font-bold">Content</p>
-                <Editor
-                    value={content}
-                    onEditorChange={(e) => setContent(e)}
-                    apiKey={process.env.REACT_APP_TINY_API}
-                    initialValue=""
-                    init={{
-                        height: 500,
-                        menubar: false,
-                        plugins: 'anchor autolink charmap codesample emoticons codesample image link lists media searchreplace table visualblocks wordcount linkchecker',
-                        toolbar: 'undo redo | blocks fontfamily fontsize codesample | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
-                        skin: 'oxide-dark',
-                        content_css: 'tinymce-5-dark',
-                    }}
-                />
+                <Textarea variant='flat' minRows={10} label='Content' value={content} onChange={(e) => setContent(e.target.value)}/>
             </div>
            <div className='flex mt-5 justify-between'>
                 {error &&  <Chip color='danger' variant='flat'>{error}</Chip>}

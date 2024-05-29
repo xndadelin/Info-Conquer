@@ -1,8 +1,8 @@
 const { execSync } = require('child_process');
-const {compilerCPP} = require('../compilers/compilerCPP');
+const {compiler} = require('../compilers/compiler');
 const fs = require('fs');
 global.crypto = require('crypto')    
-const graderCPP = (testCases, code, problem, username, language, max_time, max_memory) => {
+const grader = (testCases, code, problem, username, language, max_time, max_memory) => {
     const idSolution = crypto.randomUUID()
     /////////////////////////////////////////////////////////////////////////////
     let codeNameFile = ''
@@ -48,7 +48,7 @@ const graderCPP = (testCases, code, problem, username, language, max_time, max_m
             }
     }
     /////////////////////////////////////////////////////////////////////////////
-    const compilationResult = compilerCPP(code, idSolution, language, problem, codeNameFile, extension, problem);
+    const compilationResult = compiler(code, idSolution, language, problem, codeNameFile, extension, problem);
     if (compilationResult.error) {
         fs.rmdirSync(idSolution, {recursive: true})
         return {
@@ -232,4 +232,4 @@ const graderCPP = (testCases, code, problem, username, language, max_time, max_m
         }
     }
 }
-module.exports = {graderCPP}
+module.exports = {grader}

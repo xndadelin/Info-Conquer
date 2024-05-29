@@ -51,7 +51,7 @@ export const Contests = () => {
     if(loading) return <Loading/>
     if(!data || !user.getUser) return <NotFound/>
     return (
-        <div className="mt-10 p-4 container mx-auto ">
+        <div className="mt-10 p-4 container mx-auto h-screen">
             <div className="flex flex-col gap-5 self-start">
                 <div className="text-5xl text-white font-extrabold">🏆 Contests</div>
                 <p className="text-2xl text-white">

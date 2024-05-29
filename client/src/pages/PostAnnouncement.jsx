@@ -1,6 +1,5 @@
 import { useContext, useState } from 'react'
-import { Editor } from '@tinymce/tinymce-react'
-import { Button, Chip, Input } from '@nextui-org/react'
+import { Button, Chip, Input, Textarea } from '@nextui-org/react'
 import { gql, useMutation } from '@apollo/client'
 import { UserContext } from '../context/UserContext'
 import { NotFound } from './NotFound'
@@ -25,7 +24,7 @@ export const PostAnnouncement = () => {
                 setTitle('')
             }
         },
-        onError: (error) => {
+        onError: () => {
             setIsError(true)
         }
     })
@@ -33,27 +32,13 @@ export const PostAnnouncement = () => {
         return <NotFound/>
     }
     return (
-        <div className="container mx-auto py-10">
+        <div className="container mx-auto py-10 h-screen">
             <p className="text-3xl font-bold mb-5">Post an announcement!</p>
             {isError && (
                 <Chip className='mb-5' color="danger" variant='flat'>{error.message}</Chip>
             )} 
             <Input className='mb-5' label="Title" value={title} onChange={(e) => setTitle(e.target.value)}/>
-            <Editor
-                value={content}
-                onEditorChange={(e) => setContent(e)}
-                apiKey={process.env.REACT_APP_TINY_API}
-                initialValue=""
-                init={{
-                    height: 500,
-                    menubar: false,
-                    selector: 'textarea',
-                    plugins: 'anchor autolink charmap codesample emoticons codesample image link lists media searchreplace table visualblocks wordcount linkchecker',
-                    toolbar: 'undo redo | blocks fontfamily fontsize codesample | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
-                    skin: 'oxide-dark',
-                    content_css: 'tinymce-5-dark',
-                }}
-            />
+            <Textarea minRows={10} className='mb-5' label="Content" value={content} onChange={(e) => setContent(e.target.value)}/>
             <div className='flex justify-end'>
                 <Button color='danger' variant='flat' className='mt-5' onClick={() => {postAnnouncement({variables: {title, content}})}}>Post</Button>
             </div>

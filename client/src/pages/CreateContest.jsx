@@ -2,7 +2,6 @@ import { Button, Chip, DateInput, Input, Textarea } from "@nextui-org/react"
 import {gql, useMutation} from "@apollo/client"
 import { useState } from "react"
 import {useNavigate} from "react-router-dom"
-import { Error } from "../components/Error"
 import { Select, SelectItem } from "@nextui-org/react"
 export const CreateConstest = () => {
     const [problems, setProblems] = useState([])

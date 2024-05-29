@@ -65,7 +65,7 @@ export const Contest = () => {
     if(!data) return <NotFound/>
     if(error) return <Error error={error}/>
     return (
-        <div className="container mx-auto p-3 my-5">
+        <div className="container mx-auto p-3 my-5 h-screen">
             <p className="text-4xl font-bold">{data.getContest.name}</p>
             <p className="text-gray-400">Created by {data.getContest.createdBy}</p>
             <p className="text-gray-400">Start Date: {data.getContest.startDate.month}/{data.getContest.startDate.day}/{data.getContest.startDate.year} {data.getContest.startDate.hour}:{data.getContest.startDate.minute}</p>

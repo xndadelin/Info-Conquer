@@ -1,7 +1,7 @@
 const fs = require('fs');
 const { execSync } = require('child_process');
 const { generateDockerfile } = require('../generateDockerfile');
-const compilerCPP = (code, idSolution, language, _, codeNameFile, extension, problem) => {
+const compiler = (code, idSolution, language, _ , codeNameFile, extension, problem) => {
     fs.mkdirSync(idSolution)
     generateDockerfile(language, idSolution, problem);
     fs.writeFileSync(`${idSolution}/${codeNameFile}`, code);
@@ -41,4 +41,4 @@ const compilerCPP = (code, idSolution, language, _, codeNameFile, extension, pro
         }
     }
 }
-module.exports = {compilerCPP}
+module.exports = {compiler}

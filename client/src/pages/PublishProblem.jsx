@@ -4,7 +4,6 @@ import {Textarea} from "@nextui-org/react";
 import {Select, SelectItem} from "@nextui-org/react";
 import {Chip} from "@nextui-org/react";
 import { useMutation, gql  } from "@apollo/client";
-import { Error } from "../components/Error";
 import { useContext } from "react";
 import { UserContext } from "../context/UserContext";
 import { NotFound } from "./NotFound";

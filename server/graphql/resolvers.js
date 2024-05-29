@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken')
 const {ApolloError} = require('apollo-server-express')
 const cookie = require('cookie');
 const Problem = require('../models/problem');
-const {graderCPP} = require('../utils/graders/graderCPP')
+const {grader} = require('../utils/graders/grader')
 const Article = require('../models/article');
 const Announcement = require('../models/announcements');
 const Contest = require('../models/contest');
@@ -79,17 +79,19 @@ const getUser = async(context) => {
             const user = await User.findOne({username, verified: true})
             return user;
         }else{
-                const refreshVerified = jwt.verify(refreshtoken, process.env.SECRET_REFRESH);
-                    if(refreshVerified){
+            const refreshVerified = jwt.verify(refreshtoken, process.env.SECRET_REFRESH);
+                if(refreshVerified){
                     const newToken = generateToken(refreshVerified)
                     const newRefreshToken = generateRefreshToken(refreshVerified)
                     context.res.cookie('token', newToken, {
                         httpOnly: true, 
-                        secure: true
+                        secure: true,
+                        sameSite: 'Strict'
                     })
                     context.res.cookie('refreshToken', newRefreshToken, {
                         httpOnly: true, 
-                        secure: true
+                        secure: true,
+                        sameSite: 'Strict'
                     })
                     const refreshedUser = await User.findOne({username: refreshVerified.username, verified: true})
                     return refreshedUser
@@ -642,7 +644,7 @@ module.exports = {
                         throw new ApolloError('This contest has not started yet')
                     }
                 }
-                const testResults = graderCPP(problema.tests, code, problema.title, user.username,language, problema.timeExecution, problema.limitMemory)
+                const testResults = grader(problema.tests, code, problema.title, user.username,language, problema.timeExecution, problema.limitMemory)
                 user.solutions.push(testResults)
                 if(testResults.score === 100){
                     if(!user.solvedProblems.find(solved => solved.problem === problema.title)){
