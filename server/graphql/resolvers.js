@@ -603,6 +603,9 @@ module.exports = {
                 if(problemsExists){
                     throw new ApolloError('Problem exists')
                 }else{
+                    if(!creator || !creator.admin || !creator.verified || !creator.username ||  !title || !requirements || !tags || !difficulty || !category || !subcategories || !input || !output || !tests || !timeExecution || !limitMemory || !languages){
+                        throw new ApolloError('You have to fill all the fields')
+                    }
                     const problem =  new Problem({creator: creator.username, title, description, requirements, type, tags, difficulty, category, subcategories, input, output, tests, timeExecution, limitMemory, examples, indications, languages, restriction})
                     await problem.save()
                     return {
