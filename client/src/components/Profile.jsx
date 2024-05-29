@@ -75,6 +75,7 @@ export const Profile = () => {
             username
         },
         onError: (error) => {
+            console.log(error)
             setError(error)
         }
     })
@@ -119,15 +120,13 @@ export const Profile = () => {
             setErrorPassword(error.message)
         }
     })
-    if(loading){
-        return  <Loading/>
-    }
+    if(loading) return <Loading/>
     if(!data || error) return <NotFound/>
     const seeSettings = currentUser && currentUser.getUser && currentUser.getUser.username === username
     return (
         <Tabs className="container mx-auto flex flex-col my-5 px-5">
             <Tab key="general" title="General informations" className="mx-auto container p-5">
-                <div className='flex flex-col gap-6'>
+                <div className='flex flex-col gap-6 h-screen'>
                     <div className='flex'>
                         <Card className="w-full">
                             <CardHeader className="text-2xl flex justify-center">InfoConquer enjoyer</CardHeader>

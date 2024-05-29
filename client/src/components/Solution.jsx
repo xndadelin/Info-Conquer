@@ -4,7 +4,7 @@ import {useContext, useEffect, useState} from "react";
 import {Loading} from "./Loading";
 import {useNavigate, Link} from "react-router-dom";
 import {UserContext} from "../context/UserContext";
-import {Modal, ModalBody, ModalContent, ModalHeader, Table, TableCell, TableRow, TableColumn, TableHeader, Snippet, Button, TableBody} from "@nextui-org/react";
+import {Modal, ModalBody, ModalContent, ModalHeader, Table, TableCell, TableRow, TableColumn, TableHeader, Snippet, Button, TableBody, code} from "@nextui-org/react";
 import { NotFound } from "../pages/NotFound";
 export const Solution = () => {
     const {id, username} = useParams()
@@ -25,7 +25,6 @@ export const Solution = () => {
                 date
                 fileMemory
                 id_solution
-                io
                 language
                 problem
                 score
@@ -59,13 +58,23 @@ export const Solution = () => {
     return (
         <div className="container mx-auto grid grid-cols-2 max-lg:grid-cols-1 my-10 p-3 gap-5">
             <div>
-                <p className="text-5xl mb-5">Solution for problem: <Link className="text-default-500" to={`/problems/${solution.getSolution.problem}`}>{solution.getSolution.problem}</Link></p>
+                <p className="text-5xl mb-5">Solution for problem: <Link className="text-default-500" to={`/problems/${solution.getSolution.problem}?code=${encodeURIComponent(solution.getSolution.code)}&language=${solution.getSolution.language}`}>{solution.getSolution.problem}</Link></p>
                 <Table>
                     <TableHeader>
                         <TableColumn hidden></TableColumn>
                         <TableColumn hidden></TableColumn>
                     </TableHeader>
                     <TableBody>
+                        <TableRow>
+                            <TableCell>Problem</TableCell>
+                            <TableCell>
+                                <Link className="font-bold" to={`/problems/${solution.getSolution.problem}?code=${encodeURIComponent(solution.getSolution.code)}&language=${solution.getSolution.language}`}>{solution.getSolution.problem}</Link>
+                            </TableCell>
+                        </TableRow>
+                        <TableRow>
+                            <TableCell>Language</TableCell>
+                            <TableCell>{solution.getSolution.language}</TableCell>
+                        </TableRow>
                         <TableRow>
                             <TableCell>Status</TableCell>
                             <TableCell>{solution.getSolution.compilationError ? 'Rejected' : 'Accepted'}</TableCell>
@@ -81,10 +90,6 @@ export const Solution = () => {
                         <TableRow>
                             <TableCell>File memory</TableCell>
                             <TableCell>{solution.getSolution.fileMemory + ' bytes'}</TableCell>
-                        </TableRow>
-                        <TableRow>
-                            <TableCell>IO</TableCell>
-                            <TableCell>{solution.getSolution.io}</TableCell>
                         </TableRow>
                         <TableRow>
                             <TableCell>Score</TableCell>
@@ -108,6 +113,7 @@ export const Solution = () => {
                                 {solution.getSolution.tests.map((test, index) => (
                                     <TableRow>
                                         <TableCell>{index + 1}</TableCell>
+
                                         <TableCell>{test.executionTime + ' ms'}</TableCell>
                                         <TableCell>{test.memoryUsed + ' MB'}</TableCell>
                                         <TableCell>{test.score}</TableCell>

@@ -84,19 +84,32 @@ int main() {
     return 0;
 }
 `
+const languages_for_editor = {
+    'C++': 'cpp',
+    'Python': 'python',
+    'Java': 'java',
+    'Javascript': 'js',
+    'C#': 'csharp',
+    'C': 'c',
+}
 export const Problem = () => {
     const {user} = useContext(UserContext)
+    const {code: userCode, language: userLanguage} = Object.fromEntries(new URLSearchParams(window.location.search))
     const [selected, setSelected] = useState('problem')
     const [page, setPage] = useState(1)
     const {isOpen, onOpenChange} = useDisclosure()
-    const [language, setLanguage] = useState('')
-    const [code, setCode] = useState()
+    const [language, setLanguage] = useState(userLanguage || 'cpp')
+    const [code, setCode] = useState(userCode || '')
     const [error, setError] = useState()
     const [prompt, setPrompt] = useState('')
-    const [chatbotMessage, setChatbotMessage] = useState('')
     useEffect(() => {
         setCode(getTemplate(language, problem))
     }, [language])
+    useEffect(() => {
+        const {code: userCode, language: userLanguage} = Object.fromEntries(new URLSearchParams(window.location.search))
+        setCode(userCode)
+        setLanguage(userLanguage)
+    }, [])
     const [tests, setTests] = useState('')
     const {id} = useParams()
     const queryProblem = gql`
@@ -183,6 +196,7 @@ export const Problem = () => {
     })
     const [getChatbotMessage, {loading:loadingBot, errorBot}] = useMutation(chatbotgql, {
         onCompleted: (data) => {
+            console.log(data.getChatbotMessage.message)
             setCode(data.getChatbotMessage.message)
         },
         onError: (error) => {
@@ -320,13 +334,13 @@ export const Problem = () => {
                             <div className="mt-[85px] max-lg:mt-0">
                                 <div className='flex flex-col'>
                                     <div className='w-[100%] h-[100%] bg-[#1e1e1e] rounded flex justify-between align-center'>
-                                        <Select  onChange={(e) => setLanguage(e.target.value)} label="Select language" size='sm' className='w-[150px] mt-1 ml-1'>
+                                        <Select defaultSelectedKeys={[ language ]} onChange={(e) => setLanguage(e.target.value)} label="Select language" size='sm' className='w-[150px] mt-1 ml-1'>
                                             {problem.getProblem.languages.map((language) => (
                                                 <SelectItem key={language}>{language}</SelectItem>
                                             ))}
                                         </Select>
                                         <div className='flex items-center gap-1'>
-                                            <Tooltip size='sm' closeDelay={1500} color='warning' placement='bottom-end' content={
+                                            <Tooltip size='sm' closeDelay={1000} color='warning' placement='bottom-end' content={
                                                 <div>
                                                     <p>ChatGPT 4. Please do not abuse of this or else you get the wrath of Savitar!</p>
                                                     <p>Do not send pieces of code. It will automatically be sent! As well the problem.</p>
@@ -346,8 +360,8 @@ export const Problem = () => {
                                         <Editor options={{
                                             minimap: {
                                                 enabled: false
-                                            }
-                                        }} onChange={(val, e) => setCode(val)} value={code} theme='vs-dark' language='cpp' height={'80vh'} />
+                                            },
+                                        }} language={languages_for_editor[language]} onChange={(val, e) => setCode(val)} value={code} theme='vs-dark' height={'80vh'} />
                                     </div>
                                     <TestingSolution isOpen={isOpen} onClose={onOpenChange} loading={loadingTests} tests={tests}/>
                                 </div>

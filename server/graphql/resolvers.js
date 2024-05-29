@@ -936,7 +936,6 @@ module.exports = {
                 if(!problem) throw new ApolloError('Problem is null')
                 const problema = await Problem.findOne({title: problem})
                 if(!problema) throw new ApolloError('This problem does not exist')
-                if(!code) throw new ApolloError('Code is null')
                 const buildPrompt = 
                 `Description: ${problema.description},
                 Requirements: ${problema.requirements},
@@ -951,17 +950,22 @@ module.exports = {
                 If you have any other additional information, please just comment it in the code. Respond to the prompt above with only the code you wrote. Remember that
                 you must not add print statements or any other output statements (like : "Enter a number!"). It will be considered as a wrong answer.
                 If there any syntax errors (like semicolon errors), logical errors, time performance errors, or memory errors, please fix them and explain why you made the changes you made by commenting in the code.
-                Keep in mind that the input its not given as arguments, but you have to read it from the standard input. The output must be written to the standard output.
-                `
+                Keep in mind that the input its not given as arguments, but you have to read it from the standard input. The output must be written to the standard output.`
                 const completion = await client.chat.completions.create({
                     messages: [{ role: "system", content: buildPrompt    }],
                     model: "gpt-4",
                 });
                 const response = completion.choices[0].message.content
-                let codeResponse = response.split('```')[1]
-                codeResponse = codeResponse.split('\n').slice(1).join('\n')
-                return {    
-                    message: codeResponse
+                if(response.includes('```')){
+                    let codeResponse = response.split('```')[1]
+                    codeResponse = codeResponse.split('\n').slice(1).join('\n')
+                    return {
+                        message: codeResponse
+                    }
+                }else{
+                    return {
+                        message: response
+                    }
                 }
             }catch(e){
                 throw new ApolloError(e)
