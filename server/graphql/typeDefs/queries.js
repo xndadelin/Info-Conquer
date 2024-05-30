@@ -19,5 +19,6 @@ module.exports = gql`
         getContest(id: String): Contest
         getHomepageInfo: HomepageInfo
         getLeaderboard: [LeaderboardRow]
+        getSearch(query: String): SearchResults
     } 
 `;  

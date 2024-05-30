@@ -75,7 +75,6 @@ export const Profile = () => {
             username
         },
         onError: (error) => {
-            console.log(error)
             setError(error)
         }
     })

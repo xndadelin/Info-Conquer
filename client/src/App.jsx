@@ -26,6 +26,7 @@ import { Login } from "./pages/Login";
 import { Register } from "./pages/Register";
 import { VerifyEmail } from "./components/VerifyEmail";
 import { Leaderboard } from "./pages/Leaderboard";
+import { Search } from "./components/Search";
 function App() {
   const {user} = useContext(UserContext)
   if(!user)
@@ -113,6 +114,10 @@ function App() {
           <Route
             path="/leaderboard"
             element={<Leaderboard/>}
+          />
+          <Route
+            path="/search/:query"
+            element={<Search/>}
           />
           <Route
             path="*"

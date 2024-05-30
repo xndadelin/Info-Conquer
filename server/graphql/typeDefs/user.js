@@ -43,4 +43,12 @@ module.exports = gql`
         username: String,
         solvedProblems: Int
     }
+    type SearchResults {
+        users: [String],
+        problems: [String],
+        articles: [String],
+        contests: [String],
+        totalResults: Int,
+        announcements: [String]
+    }
 `;

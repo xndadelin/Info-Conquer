@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useMutation, gql  } from "@apollo/client";
 import { useContext } from "react";
 import { UserContext } from "../context/UserContext";
+import { SearchBar } from "./SearchBar";
 const logoutMutationQuery = gql`
 mutation {
     logout {
@@ -35,13 +36,13 @@ export const NavigationBar = () => {
                     <Link isBlock color="foreground" href="/contests">Contests</Link>
                 </NavbarItem>
                 <NavbarItem>
-                    <Link color="danger" isBlock href="/articles">Articles</Link>
+                    <Link isBlock color="danger" href="/problems" >Problems</Link>
                 </NavbarItem>
                 <NavbarItem>
-                    <Link isBlock color="foreground" href="/problems" >Problems</Link>
+                    <Link isBlock color="foreground" href="/leaderboard">Leaderboard</Link>
                 </NavbarItem>
                 <NavbarItem>
-                    <Link isBlock color="danger" href="/leaderboard">Leaderboard</Link>
+                    <SearchBar/>
                 </NavbarItem>
             </NavbarContent>
             {!user || !user.getUser ? (
