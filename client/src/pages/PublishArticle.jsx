@@ -32,6 +32,10 @@ export const PublishArticle = () => {
             tags
         }, onError: (error) => {
             setError(error.message)
+        },
+        onCompleted: (data) => {
+            if(data.publishArticle.success)
+                window.location.href = `/articles/${title}`
         }
     })
     const {user} = useContext(UserContext)

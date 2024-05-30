@@ -2,63 +2,74 @@ import { Button, Divider, Link } from '@nextui-org/react';
 import Editor from '@monaco-editor/react';
 import {Card, CardHeader, CardBody} from "@nextui-org/react";
 export const Landing = () => {
-  const code = `#include <iostream>
+  const code = `import math
+from Crypto.Util.number import long_to_bytes
+def gcd_extended(a, b):
+    if a == 0:
+        return b, 0, 1
+    gcd, x1, y1 = gcd_extended(b % a, a)
+    x = y1 - (b // a) * x1
+    y = x1
+    return gcd, x, y
+  
+def modular_inverse(e, phi):
+    gcd, x, y = gcd_extended(e, phi)
+    if gcd != 1:
+        raise ValueError("Modular inverse does not exist")
+    return x % phi
+  
+sieve = [1] * 1000000
+sieve[0] = sieve[1] = 0
+sieve[2] = 1
+primes = []
+  
+def sieve_of_eratosthenes(n):
+    for i in range(3, int(math.sqrt(n) + 1)):
+        if sieve[i] == 1:
+            for j in range(i * i, n, i):
+                sieve[j] = 0
+    for i in range(2, n):
+        if sieve[i] == 1:
+            primes.append(i)
+  
+def is_prime(a):
+    if a < 2:
+        return False
+    else:
+        d = 0
+        while primes[d] * primes[d] <= a:
+            if a % primes[d] == 0:
+                return False
+            d += 1
+        return True
+def encrypt(e, n):
+    message = input("Enter the message: ")
+    enc_mes = []
+  
+    for char in message:
+        enc_mes.append(ord(char))
+  
+    enc_mes = [pow(char, e, n) for char in enc_mes]
+    return enc_mes
+  
+def decrypt(d, n, enc_mes):
+    dec_mes = [chr(pow(char, d, n)) for char in enc_mes]
+    return "".join(dec_mes)
+  
+  # sieve_of_eratosthenes(100000)
 
-using namespace std;
-int n;
-struct Nod{
-    int info;
-    Nod *leg;
-};
-void FAdaugaInainte(Nod * &head){
-    Nod *current = head;
-    Nod *lastCurrent = nullptr;
-    Nod *nou;
-    while(current != nullptr){
-        if(current -> info % 2){
-            nou = new Nod;
-            nou -> info = current -> info * 2;
-            nou -> leg = current;
-            if(lastCurrent != nullptr){
-                lastCurrent -> leg = nou;
-            }else{
-                head = nou;
-            }
-        }
-        lastCurrent = current;
-        current = current -> leg;
-    }
-}
-int main()
-{
-    Nod *prim, *ultim, *nou;
-    prim = new Nod;
-    prim -> info = 123;
-    prim -> leg = nullptr;
-    ultim = prim;
-    int n, a; cin >> n;
-    for(int i = 1; i <= n; ++i){
-        cin >> a;
-        nou = new Nod;
-        nou -> info = a;
-        nou -> leg = nullptr;
-        ultim -> leg = nou;
-        ultim = nou;
-    }
-    Nod *p = prim -> leg;
-    FAdaugaInainte(p);
-    while(p){
-        cout << p -> info << " ";
-        p = p -> leg;
-    }
-    return 0;
-}`  
+p = 1617549722683965197900599011412144490161 
+q = 475693130177488446807040098678772442581573
+n = p * q
+phi = (p - 1) * (q - 1)
+e = 65537
+d = modular_inverse(e, phi)
+c = 8533139361076999596208540806559574687666062896040360148742851107661304651861689
+decrypted = pow(c, d, n)
+print(long_to_bytes(decrypted))`  
   return (
     <div className='flex flex-col container mx-auto'>
         <div>
-            <svg className='z-1 absolute top-0' viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                <path fill="#121212" d="M44.8,-49.4C57.9,-42.3,68.3,-28.1,73.2,-11.3C78,5.5,77.3,24.8,67.4,36C57.5,47.2,38.4,50.2,21,55.7C3.6,61.1,-12.2,69,-23.7,64.9C-35.2,60.8,-42.5,44.8,-49,30C-55.6,15.2,-61.4,1.7,-63.6,-15.6C-65.8,-32.9,-64.3,-53.9,-53.1,-61.3C-41.9,-68.7,-21,-62.5,-2.6,-59.4C15.8,-56.4,31.6,-56.5,44.8,-49.4Z" transform="translate(100 100)" />
-            </svg>
             <div className="grid grid-cols-2 max-md:grid-cols-1 z-2 relative flex-wrap md:mt-[200px] z-2">
                 <div className="flex p-4 flex-col gap-5 max-md:mt-[100px]">
                     <div className="text-5xl text-white font-extrabold">
@@ -74,7 +85,7 @@ int main()
                         </Button>
                     </div>
                     <div className='text-lg'>
-                        <span className='from-[#ed3131] to-[#f9f7f5] cursor-pointer bg-clip-text text-transparent bg-gradient-to-b'>InfoConquer</span> is dedicated to everyone who wants to learn programming by solving problems, reading articles, and participating in a forum-style community that encourages collaboration, knowledge-sharing, and skill development. Start conquering today!
+                        <span className='from-[#ed3131] to-[#f9f7f5] cursor-pointer bg-clip-text text-transparent bg-gradient-to-b'>InfoConquer</span> is dedicated to everyone who wants to learn programming by solving problems, participating in contests with other users, tackling challenges and problems. You can after create an article with your own solutions!
                     </div>
                 </div>
                 <div className="p-3">
@@ -90,7 +101,7 @@ int main()
                                 fontSize: 12,
                                 scrollbar: {vertical: 'hidden', horizontal: 'hidden'},
                                 readOnly: true,
-                            }} theme="vs-dark" height="500px" language="cpp" defaultValue={code}/>
+                            }} theme="vs-dark" height="500px" language="python" defaultValue={code}/>
                         </div>
                     </div>
                 </div>
@@ -107,14 +118,14 @@ int main()
                             <svg height={25} className='mr-2' xmlns="http://www.w3.org/2000/svg" fill='white' viewBox="0 0 640 512"><path d="M320 0c17.7 0 32 14.3 32 32V96H472c39.8 0 72 32.2 72 72V440c0 39.8-32.2 72-72 72H168c-39.8 0-72-32.2-72-72V168c0-39.8 32.2-72 72-72H288V32c0-17.7 14.3-32 32-32zM208 384c-8.8 0-16 7.2-16 16s7.2 16 16 16h32c8.8 0 16-7.2 16-16s-7.2-16-16-16H208zm96 0c-8.8 0-16 7.2-16 16s7.2 16 16 16h32c8.8 0 16-7.2 16-16s-7.2-16-16-16H304zm96 0c-8.8 0-16 7.2-16 16s7.2 16 16 16h32c8.8 0 16-7.2 16-16s-7.2-16-16-16H400zM264 256a40 40 0 1 0 -80 0 40 40 0 1 0 80 0zm152 40a40 40 0 1 0 0-80 40 40 0 1 0 0 80zM48 224H64V416H48c-26.5 0-48-21.5-48-48V272c0-26.5 21.5-48 48-48zm544 0c26.5 0 48 21.5 48 48v96c0 26.5-21.5 48-48 48H576V224h16z"/></svg>
                             <div className='flex flex-col'>
                                 <p className='text-md'>
-                                    Integrated OpenAI feedback
+                                    Integrated OpenAI Helper
                                 </p>
                                 <a className='text-sm text-default-500' href='//put here the docs' >OpenAI Platform</a>
                             </div>
                         </CardHeader>
                         <Divider/>
                         <CardBody>
-                           <p>Enjoy the benefits of our integrated OpenAI ChatGPT feedback. At request, you can get a feedback on your code from ChatGPT as soon as you submit it.</p>
+                           <p>Enjoy the benefits of our integrated OpenAI ChatGPT feedback. At request, you can get a feedback on your code from ChatGPT anytime you want.</p>
                         </CardBody>
                     </Card>
                     <Card>
@@ -137,7 +148,7 @@ int main()
                         <svg height={25} className='mr-2' fill='white' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM64 256c0-17.7 14.3-32 32-32H480c17.7 0 32 14.3 32 32s-14.3 32-32 32H96c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg>
                             <div className='flex flex-col'>
                                 <p className='text-md'>Variety of problems</p>
-                                <a className='text-sm text-default-500' href='https://159.89.12.247:3001/problems'>See problems</a>
+                                <a className='text-sm text-default-500' href='http://localhost:3000/problems'>See problems</a>
                             </div>
                         </CardHeader>
                         <Divider/>
@@ -152,13 +163,13 @@ int main()
                                 <p className='text-md'>
                                     Article publishing
                                 </p>
-                                <a className='text-sm text-default-500' href='https://159.89.12.247:3001/articles'>See articles</a>
+                                <a className='text-sm text-default-500' href='http://localhost:3000/articles'>See articles</a>
                             </div>
                         </CardHeader>
                         <Divider/>
                         <CardBody>
                            <p>
-                              Share your knowledge with the world by publishing articles on InfoConquer. Our forum is the perfect place to discuss ideas, ask questions, and share your insights.
+                              Share your knowledge with the world by publishing articles on InfoConquer. Our platform is the perfect place to share your insights.
                            </p>
                         </CardBody>
                     </Card>
@@ -167,6 +178,10 @@ int main()
         </div>
         <div className='mt-4 z-2 relative text-center font-bold text-5xl mb-[100px]'>
             <h1>So what are you waiting for? Create an account and start coding!😎</h1>
+        </div>
+        <div className='z-2 relative grid grid-cols-2 items-center max-md:grid-cols-1 gap-2 mb-2 h-[1100px] border-white'>
+            <p className='text-5xl font-bold'>📜 This website has been developed for the InfoEducatie contest</p>
+            <iframe className='border-white w-[100%] h-[100%]' src="https://drive.google.com/file/d/1_Lo7s8pUpVfLTK9L65YzGYa6KdQ9cj11/preview" allow="autoplay"></iframe>
         </div>
     </div>
   );

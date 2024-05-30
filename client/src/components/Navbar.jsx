@@ -1,4 +1,4 @@
-import {Navbar, useDisclosure, NavbarBrand, DropdownItem, DropdownTrigger, DropdownMenu, Avatar,  NavbarContent, NavbarItem,  NavbarMenuToggle,NavbarMenu,NavbarMenuItem, Button, Dropdown} from "@nextui-org/react";
+import {Navbar, NavbarBrand, DropdownItem, DropdownTrigger, DropdownMenu, Avatar,  NavbarContent, NavbarItem,  NavbarMenuToggle,NavbarMenu,NavbarMenuItem, Button, Dropdown} from "@nextui-org/react";
 import { Link } from "@nextui-org/react";
 import { useState } from "react";
 import { useMutation, gql  } from "@apollo/client";
@@ -35,7 +35,7 @@ export const NavigationBar = () => {
                     <Link isBlock color="foreground" href="/contests">Contests</Link>
                 </NavbarItem>
                 <NavbarItem>
-                    <Link color="danger" isBlock href="/about" >About</Link>
+                    <Link color="danger" isBlock href="/articles">Articles</Link>
                 </NavbarItem>
                 <NavbarItem>
                     <Link isBlock color="foreground" href="/problems" >Problems</Link>

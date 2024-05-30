@@ -80,7 +80,7 @@ export const Homepage = () => {
                 <Card key={index}>
                     <CardBody>
                         <p className="text-2xl font-bold">{announcement.title}</p>
-                        <p className="text-slate">Announcement by <Link to={`/profile/${announcement.createdBy}`} className="text-default-500">{announcement.createdBy}</Link></p>
+                        <p className="text-slate">Announcement by <Link to={`/profile/${announcement.createdBy}`} color="danger" >{announcement.createdBy}</Link></p>
                         <div dangerouslySetInnerHTML={{__html: announcement.content.slice(0, 500) + `... <a target='_blank' style='color: rgb(51,102,204);' href='/announcement/${announcement.title}'>Vezi mai multe</a>`}}></div>
                     </CardBody>
                 </Card>

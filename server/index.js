@@ -28,7 +28,7 @@ async function startServer(){
 
     app.set('trust proxy', true);
     app.use(cors({
-        origin: ["https://studio.apollographql.com", "http://localhost:3001", "https://159.89.12.247:3001"],
+        origin: ["https://studio.apollographql.com", "http://localhost:3000", "https://159.89.12.247:3001"],
         credentials: 'include'
     }))
     app.get('/', (req, res) => {
@@ -39,7 +39,7 @@ async function startServer(){
         cors: false
     });    
     if(process.env.MODE === 'dev'){
-      app.listen(3000, () => {
+      app.listen(8080, () => {
           console.log('Server started in dev mode! Have fun!')
           mongoose.connect(process.env.MONGO_DB_CONN).then(() => {
             console.log('Database connected')
@@ -51,7 +51,7 @@ async function startServer(){
           cert: fs.readFileSync(path.join(__dirname, 'cert', 'cert.pem'))
       }, app)
     
-      httpsServer.listen(3000, () => {
+      httpsServer.listen(8080, () => {
           console.log('HTTPS initialized')
           mongoose.connect(process.env.MONGO_DB_CONN).then(() => {
             console.log('Database connected')

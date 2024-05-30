@@ -24,7 +24,6 @@ import { Contests } from "./pages/Contests";
 import { Contest } from "./components/Contest";
 import { Login } from "./pages/Login";
 import { Register } from "./pages/Register";
-import { About } from "./pages/About";
 import { VerifyEmail } from "./components/VerifyEmail";
 import { Leaderboard } from "./pages/Leaderboard";
 function App() {
@@ -106,10 +105,6 @@ function App() {
           <Route
             path="/contests/view/:id"
             element={<Contest/>}
-          />
-          <Route
-            path="/about"
-            element={<About/>}
           />
           <Route
             path="/verify/:token"

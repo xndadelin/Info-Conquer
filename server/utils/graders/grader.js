@@ -87,7 +87,7 @@ const grader = (testCases, code, problem, username, language, max_time, max_memo
                 break;
         }
         try{
-            const testResults = [];
+            const testResults = [];-
             testCases.forEach(test => {
                 fs.writeFileSync(`${idSolution}/input.txt`, test.input);
                 fs.writeFileSync(`${idSolution}/expected_output.txt`, test.output);

@@ -18,7 +18,7 @@ export const Articles = () => {
     const {data, loading} = useQuery(getArticles)
     if(loading) return <Loading/>
     return (
-        <div className="container mx-auto p-5">
+        <div className="container mx-auto p-5 h-screen">
             <p className="text-5xl font-extrabold">Articles</p>
             <div className="flex flex-wrap gap-5 mt-5">
                 {data.getArticles.map((article, index) => (

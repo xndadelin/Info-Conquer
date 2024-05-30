@@ -11,7 +11,11 @@ const Contest = require('../models/contest');
 const nodemailer = require('nodemailer');
 const openai = require('openai');
 const client = new openai(process.env.OPENAI_API_KEY);
+const createDOMPurify = require('dompurify');
+const { JSDOM } = require('jsdom');
 require('dotenv').config();
+const window = new JSDOM('').window;
+const DOMPurify = createDOMPurify(window);
 const generateToken = (user) => {
     return jwt.sign({ username: user.username, admin: user.admin }, process.env.SECRET, { expiresIn: '1h' });
 };
@@ -608,6 +612,18 @@ module.exports = {
                     if(!creator || !creator.admin || !creator.verified || !creator.username ||  !title || !requirements || !tags || !difficulty || !category || !subcategories || !input || !output || !tests || !timeExecution || !limitMemory || !languages){
                         throw new ApolloError('You have to fill all the fields')
                     }
+                    description = DOMPurify.sanitize(description);
+                    requirements = DOMPurify.sanitize(requirements);
+                    input = DOMPurify.sanitize(input);
+                    output = DOMPurify.sanitize(output);
+                    examples = examples.map(example => {
+                        return {
+                            input: example.input,
+                            output: example.output,
+                            explanation: DOMPurify.sanitize(example.explanation)
+                        }
+                    })
+                    restriction = DOMPurify.sanitize(restriction);
                     const problem =  new Problem({creator: creator.username, title, description, requirements, type, tags, difficulty, category, subcategories, input, output, tests, timeExecution, limitMemory, examples, indications, languages, restriction})
                     await problem.save()
                     return {
@@ -690,6 +706,7 @@ module.exports = {
             if(!title || !content || !tags){
                 throw new ApolloError('You have to fill all the fields')
             }
+            content = DOMPurify.sanitize(content);
             try{
                 const exists = await Article.findOne({title})
                 if(exists){
@@ -697,6 +714,9 @@ module.exports = {
                 }
                 const newArticle = new Article({title, content, tags, creator: user.username, liked: [], disliked: []})
                 await newArticle.save()
+                return {
+                    success: true
+                }
             }catch(e){
                 throw new ApolloError(e)
             }

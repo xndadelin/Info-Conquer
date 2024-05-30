@@ -77,7 +77,7 @@ export const EditArticle = () => {
     if(error) return <NotFound/>
     if(!content || !title) return <NotFound/>
     return (
-        <div className='container mx-auto py-5'>
+        <div className='container mx-auto py-5 h-screen'>
             <p className='text-2xl font-bold'>Edit Article</p>
             <Input variant='flat' className='mt-5' onChange={(e) => setTitle(e.target.value)} value={title} label="Title"/>
             <Input label="Tags" endContent={<Button disabled={tag === ''} variant='flat' color='success' onClick={onAddTag}>Add</Button>} value={tag} onChange={(e) => setTag(e.target.value)} className='my-5'/>
@@ -86,7 +86,7 @@ export const EditArticle = () => {
                     <Chip className='cursor-pointer' key={index} onClick={() => onDeleteTag(tag)}>{tag}</Chip>
                 ))}
             </div>
-            <Textarea minRows={10} label='Content' value={content} onChange={(e) => setContent(e.target.value)} className='mb-5'/>
+            <Textarea minRows={10} maxRows={100} label='Content' value={content} onChange={(e) => setContent(e.target.value)} className='mb-5'/>
             <div className='flex justify-end gap-5 mt-5'>
                 <Button variant='flat' color='danger'>Close</Button>
                 <Button onClick={() => {handleSave();}} endContent={loadingSave ? <Spinner size='sm' color='secondary'/> : '' }  variant='flat' color='success'>Save</Button>
