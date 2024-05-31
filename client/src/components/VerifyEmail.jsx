@@ -24,7 +24,7 @@ export const VerifyEmail = () => {
         },
         onCompleted: data => {
             if(data.verifyEmail.success){
-                window.location.href = "/login"
+                window.location.href = "/"
             }
         },
         onError: err => {
