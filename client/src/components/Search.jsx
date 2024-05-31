@@ -26,7 +26,7 @@ export const Search = () => {
     })
     if(loading) return <Loading/>
     if(error) return <NotFound/>
-    if(!data || !data.getSearch || data.getSearch.totalResults === 0) return <NotFound/>
+    if(!data || !data.getSearch || data.getSearch.totalResults === 0) return <div className="container mx-auto h-screen w-screen my-5 p-3 text-center text-3xl">No results found</div>   
     return (
         <div className="container mx-auto h-screen w-screen my-5 p-3 ">
             <Tabs className="flex flex-col">

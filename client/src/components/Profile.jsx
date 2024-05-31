@@ -123,6 +123,7 @@ export const Profile = () => {
     if(!data || error) return <NotFound/>
     const seeSettings = currentUser && currentUser.getUser && currentUser.getUser.username === username
     return (
+        <div className="h-[2000px]">
         <Tabs className="container mx-auto flex flex-col my-5 px-5">
             <Tab key="general" title="General informations" className="mx-auto container p-5">
                 <div className='flex flex-col gap-6 h-screen'>
@@ -168,7 +169,7 @@ export const Profile = () => {
                                 <div>{'The user has not solved problems.'}</div>}
                         </div>
                     </div>
-                    <div className='flex flex-col gap-2'>
+                    <div className='flex flex-col gap-2 mb-10'>
                         <p className="text-3xl">Submited solutions</p>
                         <Table isStriped>
                             <TableHeader>
@@ -191,7 +192,7 @@ export const Profile = () => {
                                         <TableCell>{new Date(+solution.date).toLocaleString()}</TableCell>
                                         <TableCell>{solution.language}</TableCell>
                                         <TableCell>{solution.score}</TableCell>
-                                        <TableCell>{solution.compilationError ? 'Rejected' : 'Accepted'}</TableCell>
+                                        <TableCell>{solution.score === '100' ? 'Accepted' : 'Rejected'}</TableCell>
                                     </TableRow>
                                 ))}
                             </TableBody>
@@ -245,5 +246,6 @@ export const Profile = () => {
                </Tab>
             )}
         </Tabs>
+        </div>
     )
 }

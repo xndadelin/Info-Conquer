@@ -32,7 +32,7 @@ function App() {
   if(!user)
     return <Loading/>
   return (
-    <div>
+    <div className="flex flex-col min-h-screen">
       <NavigationBar/>
         <Routes>
           <Route

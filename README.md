@@ -54,7 +54,7 @@ Pentru a instala și rula proiectul, urmați acești pași:
 6. Rulează aplicațiile (BE & FE):
 
     ```bash
-    >client: npm run start:Dev
+    >client: npm run start:dev
     ```
 
     ```bash

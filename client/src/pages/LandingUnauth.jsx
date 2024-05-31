@@ -80,7 +80,7 @@ print(long_to_bytes(decrypted))`
                     Your ultimate hub for problem-solving!
                     </div>
                     <div>
-                        <Button size="lg" variant="flat">
+                        <Button as={Link} href='/register' size="lg" variant="flat">
                             Get started by creating an account!
                         </Button>
                     </div>

@@ -173,7 +173,7 @@ export const Solution = () => {
             </Modal>
             <div className="h-[100%]">
                 <div className="text-4xl mb-3">Submited code</div>
-                <Snippet className="w-full" symbol=""> <pre>{solution.getSolution.code}</pre> </Snippet>
+                <Snippet className="w-full overflow-auto" symbol=""> <pre>{solution.getSolution.code}</pre> </Snippet>
             </div>
         </div>
     )
