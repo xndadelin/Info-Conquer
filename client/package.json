@@ -30,7 +30,7 @@
   "scripts": {
     "start": "dotenv -e .env react-scripts start",
     "start:dev": "react-scripts start",
-    "start:prod": "HTTPS=true SSL_CRT_FILE=./cert.crt SSL_KEY_FILE=./cert.key react-scripts start",
+    "start:prod": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

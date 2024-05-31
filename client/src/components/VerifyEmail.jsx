@@ -17,14 +17,14 @@ export const VerifyEmail = () => {
     const [error, setError] = useState(null)
     useEffect(() => {
         verifyEmail()
-    }, )
+    }, [])
     const [verifyEmail, {loading}] = useMutation(verifyToken, {
         variables: {
             token
         },
         onCompleted: data => {
             if(data.verifyEmail.success){
-                window.location.href = "/"
+                window.location.href = "/login"
             }
         },
         onError: err => {
