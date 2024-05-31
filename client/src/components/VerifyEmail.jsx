@@ -31,10 +31,6 @@ export const VerifyEmail = () => {
             setError(err.message)
         }
     })
-    if(user.getUser){
-        window.location.href = "/"
-        return null
-    }
     if(loading) return <Loading />
     return (
         <div className="container mx-auto p-4 my-4">

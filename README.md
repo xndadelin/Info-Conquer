@@ -68,3 +68,5 @@ Pentru a instala și rula proiectul, urmați acești pași:
 8. [Docs](https://drive.google.com/file/d/1_Lo7s8pUpVfLTK9L65YzGYa6KdQ9cj11/view)
 
 9. Menționez că svg-urile nu sunt realizate de mine, ci sunt furnizate de FontAwesome.
+
+10. Absolut jaf.
