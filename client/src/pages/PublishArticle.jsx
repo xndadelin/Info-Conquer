@@ -1,7 +1,6 @@
 import { UserContext } from '../context/UserContext'
 import { useContext, useState } from 'react'
 import { NotFound } from './NotFound'
-import { Editor } from '@tinymce/tinymce-react'
 import { Input, Button, Chip, Textarea } from '@nextui-org/react'
 import {gql, useMutation} from '@apollo/client'
 export const PublishArticle = () => {

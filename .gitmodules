@@ -1,0 +1,3 @@
+[submodule "server/isolate"]
+	path = server/isolate
+	url = https://github.com/ioi/isolate

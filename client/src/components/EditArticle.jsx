@@ -7,7 +7,6 @@ import { useState } from 'react'
 import { useContext } from 'react'
 import { UserContext } from '../context/UserContext'
 import { useMutation } from '@apollo/client'
-import { Editor } from '@tinymce/tinymce-react'
 import { Input, Chip } from '@nextui-org/react'
 const getArticle = gql`
     query GetArticle($id: String) {
