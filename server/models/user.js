@@ -8,12 +8,10 @@ const userSchema = new mongoose.Schema({
     },
     email: {
         type: String, 
-        required: true,
         unique: true
     },
     password: {
         type: String,
-        required: true
     },
     verified: {
         type: Boolean,
@@ -34,8 +32,10 @@ const userSchema = new mongoose.Schema({
     },
     lastEmailVerification: {
         type: Date,
-        required: true
-    }
+    },
+    discordID: {
+        type: String,
+    },
 }, {timestamps: true})
 
 module.exports = mongoose.model('user', userSchema)

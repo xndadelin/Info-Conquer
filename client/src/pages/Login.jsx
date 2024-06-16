@@ -7,6 +7,7 @@ import { useContext } from "react";
 import { useTurnstile } from "../hooks/useTurnstile";
 import {useNavigate} from "react-router-dom"
 import {NotFound} from "./NotFound"
+import {Discord} from "../utils/Discord"
 const LoginMutation = gql`
 mutation Login($query: String!, $password: String!, $token: String!) {
     login(loginInput: { query: $query, password: $password, token: $token}) {
@@ -80,6 +81,10 @@ export const Login = () => {
                         </div>
                         <Button isLoading={loading} disabled={!query || !password} className="w-full" type="submit" color="danger" variant="flat">Login</Button>
                         <Divider className="mt-4 mx-auto w-[40px] p-0.5 rounded-lg"/>
+                        <Link className="self-center mt-2 flex gap-2 bg-[#5865F2] rounded-md p-2" href={`${process.env.REACT_APP_DISCORD_REDIRECT}`} color="foreground">
+                            <Discord className="w-6 h-6 mr-2 inline-block"/>
+                            Login with Discord
+                        </Link>
                         <Link className="self-center mt-2" href="/register" color="foreground" isBlock>Don't have an account? Register!</Link>
                     </form>
                 </CardBody>

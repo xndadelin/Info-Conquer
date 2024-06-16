@@ -172,7 +172,8 @@ const grader = (testCases, code, problem, username, language, max_time, max_memo
                     output: outputResult,
                     expectedOutput: testCase.output,
                     exitcode,
-                    exitsig
+                    exitsig,
+                    message: 'OK'
                 })
                 return ;
             }else {

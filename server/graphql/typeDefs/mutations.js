@@ -19,5 +19,6 @@ module.exports = gql`
         changeUsername(username: String, newUsername: String): Response
         changeEmail(email: String, newEmail: String): Response
         rateProblem(id: String, rating: Int): Response
+        authDiscord(code: String): Response
     }
-`;
+`;  
