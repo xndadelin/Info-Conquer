@@ -19,3 +19,29 @@
 .star-hovered{
     fill: yellow;
 }
+.left-to-right {
+    animation: left_to_right 1s;
+}
+.right-to-left {
+    animation: right_to_left 1s;
+}
+@keyframes left_to_right {
+    0% {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0%);
+        opacity: 1;
+    }
+}
+@keyframes right_to_left {
+    0% {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0%);
+        opacity: 1;
+    }
+}
