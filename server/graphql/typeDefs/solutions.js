@@ -29,6 +29,9 @@ module.exports = gql`
         input: String,
         output: String,
         expectedOutput: String,
+        message: String,
+        exitcode: Int,
+        exitsig: Int,
     }
     type Submission {
         username: String,

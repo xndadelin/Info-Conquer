@@ -1,7 +1,7 @@
 import {Link, useParams} from 'react-router-dom'
 import { useQuery, gql } from '@apollo/client'
 import { Loading } from './Loading'
-import { TableCell, Table, TableHeader, TableRow, TableColumn, TableBody, Snippet, Button, Select, SelectItem, useDisclosure, Tabs, Tab, Tooltip, Input, Textarea } from '@nextui-org/react'
+import { TableCell, Table, TableHeader, TableRow, TableColumn, TableBody, Snippet, Button, Select, SelectItem, useDisclosure, Tabs, Tab, Tooltip, Input, Textarea, Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from '@nextui-org/react'
 import {Editor} from '@monaco-editor/react'
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../context/UserContext";
@@ -11,6 +11,7 @@ import {NotFound} from "../pages/NotFound";
 import { getTemplate } from '../utils/getLanguageTemplate'
 import {Pagination} from '@nextui-org/react'
 import { ProblemStats } from './ProblemStats'
+import { RateProblem } from './RateProblem'
 const placeholder = `#include <iostream>
 #include <cstring>
 #include <string>
@@ -102,6 +103,7 @@ export const Problem = () => {
     const [code, setCode] = useState(userCode || '')
     const [error, setError] = useState()
     const [prompt, setPrompt] = useState('')
+    const [clickRate, setClickRate] = useState(false)
     useEffect(() => {
         setCode(getTemplate(language, problem))
     }, [language])
@@ -137,6 +139,7 @@ export const Problem = () => {
                 languages
                 restriction
                 successRate
+                userHasRated
             }
         }
     `
@@ -157,6 +160,9 @@ export const Problem = () => {
                     score
                     input
                     output
+                    message
+                    exitcode
+                    exitsig
                 }
                 date
                 fileMemory
@@ -239,38 +245,48 @@ export const Problem = () => {
     const onHandleSubmitSolution = () => {
         submitSolution()
     }
+    const onClickRate = () => {
+        setClickRate(!clickRate)
+    }
     return (
         <div className="container mx-auto px-5 py-5">
             <Tabs selectedKey={selected} onSelectionChange={setSelected} className="flex flex-col">
                 <Tab key="problem" title="Problem">
                     <div className="grid grid-cols-2 max-lg:grid-cols-1 gap-3">
                         <div className="flex flex-col gap-2">
-                            <p className='font-bold text-6xl'>
-                                #{problem.getProblem.title}
-                            </p>
+                                <p className='font-bold text-6xl'>
+                                    #{problem.getProblem.title}
+                                </p>
                             <div className='mt-4'>
                                 <Table>
                                     <TableHeader>
                                         <TableColumn>Creator</TableColumn>
-                                        <TableColumn>Type</TableColumn>
                                         <TableColumn>Difficulty</TableColumn>
                                         <TableColumn>Category</TableColumn>
                                         <TableColumn>Subcategory</TableColumn>
+                                        <TableColumn>Time Limit</TableColumn>
+                                        <TableColumn>Memory Limit</TableColumn>
                                         <TableColumn>Solve rate</TableColumn>
                                         <TableColumn>Rating</TableColumn>
                                     </TableHeader>
                                     <TableBody>
                                         <TableRow>
                                             <TableCell>{problem.getProblem.creator}</TableCell>
-                                            <TableCell>{problem.getProblem.type}</TableCell>
                                             <TableCell>{problem.getProblem.difficulty}</TableCell>
                                             <TableCell>{problem.getProblem.category}</TableCell>
                                             <TableCell>{problem.getProblem.subcategories}</TableCell>
+                                            <TableCell>{problem.getProblem.timeExecution} s</TableCell>
+                                            <TableCell>{Math.ceil(problem.getProblem.limitMemory / 1024)} MB</TableCell>
                                             <TableCell>{parseInt(problem.getProblem.successRate) + '%'}</TableCell>
                                             <TableCell>69%</TableCell>
                                         </TableRow>
                                     </TableBody>
                                 </Table>
+                                <div className='flex gap-3 mt-2'>
+                                    <Button color='success' variant='flat' className='flex-1'  isDisabled={problem.getProblem.userHasRated} onClick={onClickRate}>Rate this problem</Button>
+                                    <Button color='warning' variant='flat' className='flex-1' >Report this problem</Button>
+                                    <Button color='default' variant='flat' className='flex-1'>Share this problem</Button>
+                                </div>
                             </div>
                             {problem.getProblem.description && (
                                 <div>
@@ -393,6 +409,9 @@ export const Problem = () => {
                             </div>
                         )}
                     </div>
+                    {clickRate && (
+                        <RateProblem isOpen={clickRate} onClose={onClickRate} problem={problem.getProblem} user={user}/>
+                    )}
                 </Tab>
                 <Tab key="solutions" title="Submissions">
                     {submissions && (

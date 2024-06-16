@@ -16,3 +16,6 @@
 .view-line > span > span{
     font-family: monospace !important;
 }
+.star-hovered{
+    fill: yellow;
+}

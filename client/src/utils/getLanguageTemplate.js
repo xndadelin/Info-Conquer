@@ -25,13 +25,17 @@ int main() {
 }            
 `
         case 'Java':
-        return `class ${problem.getProblem.title} { // please, do not change this
+        return `class Main {
 public static void main(String[] args) {
         System.out.println("Hello, World!"); 
     }
 }`
         case 'Python':
-            return `print("Hello world!")`
+            return `#!/usr/bin/env python3
+print("Hello world!")`
+        case 'Javascript':
+            return `#!/usr/bin/env node
+console.log("Hello world!")`
         default:
             return null
     }

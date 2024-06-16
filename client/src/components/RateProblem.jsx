@@ -1,0 +1,95 @@
+import { gql, useMutation } from '@apollo/client';
+import { useState } from 'react';
+import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button } from '@nextui-org/react';
+import { Star } from '../utils/Star'; 
+
+const rateProblem = gql`
+    mutation rateProblem($id: String!, $rating: Int!) {
+        rateProblem(id: $id, rating: $rating) {
+            success
+        }
+    }
+`;
+
+export const RateProblem = ({ isOpen, onClose, problem, onOpenChange }) => {
+    const [rating, setRating] = useState(1);
+    const [stars, setStars] = useState({
+        'star-1': { hovered: false, selected: false },
+        'star-2': { hovered: false, selected: false },
+        'star-3': { hovered: false, selected: false },
+        'star-4': { hovered: false, selected: false },
+        'star-5': { hovered: false, selected: false }
+    });
+
+    const [rate, { loading, error, data }] = useMutation(rateProblem, {
+        onCompleted: () => {
+            onClose();
+        },
+    });
+
+    const submit = () => {
+        rate({ variables: { id: problem.title, rating } });
+    };
+
+    const onMouseEnter = (_, index) => {
+        const updatedStars = {};
+        for (let i = 1; i <= 5; i++) {
+            updatedStars[`star-${i}`] = {
+                ...stars[`star-${i}`],
+                hovered: i <= index
+            };
+        }
+        setStars(updatedStars);
+    };
+    const onMouseLeave = () => {
+        const updatedStars = {};
+        for (let i = 1; i <= 5; i++) {
+            updatedStars[`star-${i}`] = {
+                ...stars[`star-${i}`],
+                hovered: false
+            };
+        }
+        setStars(updatedStars);
+    }
+    const onClickStar = (_, index) => {
+        const updatedStars = {};
+        for (let i = 1; i <= 5; i++) {
+            updatedStars[`star-${i}`] = {
+                ...stars[`star-${i}`],
+                hovered: false,
+                selected: i <= index
+            };
+        }
+        setStars(updatedStars);
+        setRating(index);
+    }
+    return (
+        <div className="p-5">
+            <Modal size="md"  onOpenChange={onOpenChange} isOpen={isOpen} onClose={onClose} title="Rate problem">
+               <ModalContent>
+                     <ModalHeader>Rate problem</ModalHeader>
+                     <ModalBody>
+                        <div className='flex'>
+                            {Object.keys(stars).map((star, index) => (
+                                <Star
+                                    key={star}
+                                    number={index + 1}
+                                    hovered={stars[star].hovered}
+                                    onMouseEnter={() => onMouseEnter(star, index + 1)}
+                                    onMouseLeave={onMouseLeave}
+                                    selected={stars[star].selected}
+                                    onClick={() => onClickStar(star, index + 1)}
+                                />
+                            ))}
+                        </div>  
+                     </ModalBody>
+                     <ModalFooter align="right">
+                       <Button color='danger' variant='flat' onClick={submit} isLoading={loading}>
+                            Submit
+                        </Button>
+                    </ModalFooter>
+               </ModalContent>
+            </Modal>
+        </div>
+    );
+};

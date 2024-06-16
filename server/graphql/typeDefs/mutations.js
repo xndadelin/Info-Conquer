@@ -18,5 +18,6 @@ module.exports = gql`
         changePassword(currentpass: String, password: String, confirmPassword: String): Response
         changeUsername(username: String, newUsername: String): Response
         changeEmail(email: String, newEmail: String): Response
+        rateProblem(id: String, rating: Int): Response
     }
 `;

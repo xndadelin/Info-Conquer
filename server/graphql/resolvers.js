@@ -178,6 +178,9 @@ module.exports = {
                         if(startDate >  now) return null
                     }
                 }
+                if(user){
+                    problem.userHasRated = problem.ratings.some(rating => rating.username === user.username)
+                }
                 return problem
             }catch(error){
                 throw new ApolloError(error)
@@ -1013,6 +1016,31 @@ module.exports = {
                     return {
                         message: response
                     }
+                }
+            }catch(e){
+                throw new ApolloError(e)
+            }
+        },
+        async rateProblem(_, {id, rating}, context){
+            try{
+                const user = await getUser(context);
+                if(!user){
+                    throw new ApolloError('You have to be logged in to rate a problem')
+                }
+                const problem = await Problem.findOne({title: id})
+                if(!problem){
+                    throw new ApolloError('This problem does not exist')
+                }
+                if(rating < 1 || rating > 5){
+                    throw new ApolloError('Rating must be between 1 and 5')
+                }
+                if(problem.ratings.find(r => r.username === user.username)){
+                    throw new ApolloError('You have already rated this problem')
+                }
+                problem.ratings.push({username: user.username, rating})
+                await problem.save()
+                return {
+                    success: true
                 }
             }catch(e){
                 throw new ApolloError(e)

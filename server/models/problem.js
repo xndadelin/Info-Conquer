@@ -97,6 +97,16 @@ const problemSchema = new mongoose.Schema({
         required: true,
         default: 0
     },
+    rating: {
+        type: Number,
+        required: true,
+        default: 0
+    },
+    ratings: {
+        type: Array,
+        required: true,
+        default: []
+    },
 });
 
 module.exports = mongoose.model('problem', problemSchema)

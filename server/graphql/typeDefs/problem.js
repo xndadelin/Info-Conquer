@@ -22,6 +22,7 @@ module.exports = gql`
         restriction: String,
         itsForContest: Boolean,
         successRate: Float,
+        userHasRated: Boolean
     }
     input CreateProblemInput {
         creator: String, 
