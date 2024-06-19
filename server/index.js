@@ -24,7 +24,7 @@ async function startServer(){
     });
     app.set('trust proxy', true);
     app.use(cors({
-        origin: ["https://www.infoconquer.net", "http://localhost:3000"],
+        origin: ["https://www.infoconquer.net", "http://localhost:3000", "https://studio.apollographql.com"],
         credentials: 'include'
     }))
     apolloServer.applyMiddleware({
