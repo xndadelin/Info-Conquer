@@ -45,3 +45,14 @@
         opacity: 1;
     }
 }
+.background {
+    z-index: -1;
+}
+.glow-red {
+    background-image: radial-gradient(circle closest-side at center, hsl(0, 100%, 50%) 0%, hsl(0, 0%, 0%) 100%);
+    filter: blur(200px);
+ }
+ .glow-white {
+    background-image: radial-gradient(circle closest-side at center, hsl(0, 1%, 64%) 0%, hsl(0, 0%, 0%) 100%);
+    filter: blur(100px);
+ }

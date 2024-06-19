@@ -4,9 +4,6 @@ const mongoose = require('mongoose')
 const { ApolloServer } = require('apollo-server-express') 
 const cors = require('cors')
 const crypto = require('crypto')
-const https = require('https')
-const fs = require('fs')
-const path = require('path')
 require('dotenv').config()
 async function startServer(){
     const apolloServer = new ApolloServer({
@@ -17,7 +14,7 @@ async function startServer(){
     })
     await apolloServer.start()
     app.use((req, res, next) => {
-      const allowedOrigin = process.env.MODE === 'dev' ? 'http://localhost:3001' : "https://159.89.12.247:3001";
+      const allowedOrigin = process.env.MODE === 'dev' ? 'http://localhost:3000' : "https://www.infoconquer.net";
       res.setHeader("Access-Control-Allow-Origin", allowedOrigin);
       res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
       res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
@@ -28,7 +25,7 @@ async function startServer(){
 
     app.set('trust proxy', true);
     app.use(cors({
-        origin: ["https://studio.apollographql.com", "http://localhost:3000", "https://159.89.12.247:3001"],
+        origin: ["https://www.infoconquer.net", "http://localhost:3000"],
         credentials: 'include'
     }))
     app.get('/', (req, res) => {
@@ -38,26 +35,11 @@ async function startServer(){
         app,
         cors: false
     });    
-    if(process.env.MODE === 'dev'){
-      app.listen(8080, () => {
-          console.log('Server started in dev mode! Have fun!')
-          mongoose.connect(process.env.MONGO_DB_CONN).then(() => {
-            console.log('Database connected')
-          })
-      })
-    }else{
-        const httpsServer = https.createServer({
-          key: fs.readFileSync(path.join(__dirname, 'cert', 'key.pem')),
-          cert: fs.readFileSync(path.join(__dirname, 'cert', 'cert.pem'))
-        }, app)
-
-        httpsServer.listen(8080, () => {
-            console.log('HTTPS initialized')
-            mongoose.connect(process.env.MONGO_DB_CONN).then(() => {
-              console.log('Database connected')
-              console.log('Server started in production mode! Have fun!')
-            })
+    app.listen(8080, () => {
+        console.log('Server started in dev mode! Have fun!')
+        mongoose.connect(process.env.MONGO_DB_CONN).then(() => {
+          console.log('Database connected')
         })
-    }
+    })
 }
 startServer()
