@@ -49,15 +49,15 @@ async function startServer(){
         const httpsServer = https.createServer({
           key: fs.readFileSync(path.join(__dirname, 'cert', 'key.pem')),
           cert: fs.readFileSync(path.join(__dirname, 'cert', 'cert.pem'))
-      }, app)
-    
-      httpsServer.listen(8080, () => {
-          console.log('HTTPS initialized')
-          mongoose.connect(process.env.MONGO_DB_CONN).then(() => {
-            console.log('Database connected')
-            console.log('Server started in production mode! Have fun!')
-          })
-      })
+        }, app)
+
+        httpsServer.listen(8080, () => {
+            console.log('HTTPS initialized')
+            mongoose.connect(process.env.MONGO_DB_CONN).then(() => {
+              console.log('Database connected')
+              console.log('Server started in production mode! Have fun!')
+            })
+        })
     }
 }
 startServer()

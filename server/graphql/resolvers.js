@@ -1056,7 +1056,7 @@ module.exports = {
                     client_secret,
                     grant_type: 'authorization_code',
                     code,
-                    redirect_uri: 'http://localhost:3000/auth/discord/callback',
+                    redirect_uri: process.env.DISCORD_REDIRECT_URI,
                     prompt: 'consent',
                 })
                 const headers = {
