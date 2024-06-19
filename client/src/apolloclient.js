@@ -1,6 +1,6 @@
 import {ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client'
 const httpLink = createHttpLink({
-    uri: process.env.REACT_APP_SERVER + '/graphql',
+    uri: process.env.REACT_APP_SERVER,
     credentials: 'include'
 })
 const client = new ApolloClient({
