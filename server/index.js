@@ -22,15 +22,11 @@ async function startServer(){
       req.crsfToken = crypto.randomBytes(64).toString('hex');
       next();
     });
-
     app.set('trust proxy', true);
     app.use(cors({
         origin: ["https://www.infoconquer.net", "http://localhost:3000"],
         credentials: 'include'
     }))
-    app.get('/', (req, res) => {
-        res.send('Hello this is infoconquer server!!!')
-    })
     apolloServer.applyMiddleware({
         app,
         cors: false
