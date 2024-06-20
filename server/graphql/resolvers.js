@@ -16,6 +16,7 @@ const { JSDOM } = require('jsdom');
 require('dotenv').config();
 const window = new JSDOM('').window;
 const DOMPurify = createDOMPurify(window);
+const Report = require('../models/report');
 const generateToken = (user) => {
     return jwt.sign({ username: user.username, admin: user.admin }, process.env.SECRET, { expiresIn: '1h' });
 };
@@ -1121,6 +1122,33 @@ module.exports = {
                     return {
                         success: true,
                     }
+                }
+            }catch(e){
+                throw new ApolloError(e)
+            }
+        },
+        async createReport(_, {title, description, reporter, type, problem}, context){
+            try{
+                const user = await getUser(context);
+                if(!user){
+                    throw new ApolloError('You have to be logged in to report a problem')
+                }
+                if(!title || !description || !reporter || !type){
+                    throw new ApolloError('You have to fill all the fields')
+                }
+                if(type === 'problem' && !problem){
+                    throw new ApolloError('You have to fill all the fields')
+                }
+                if(type == 'problem'){
+                    const exists = await Problem.findOne({title: problem})
+                    if(!exists){
+                        throw new ApolloError('This problem does not exist')
+                    }
+                    const newReport = new Report({title, description, reporter, type, problem})
+                    await newReport.save()
+                }
+                return {
+                    success: true
                 }
             }catch(e){
                 throw new ApolloError(e)

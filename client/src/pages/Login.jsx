@@ -68,10 +68,10 @@ export const Login = () => {
                 <CardBody>
                     <form onSubmit={(e) => handleLogin(e)} className="flex flex-col">
                         <div className="mb-4">
-                           <Input label="Username or email" onChange={(e) => setQuery(e.target.value)}/>
+                           <Input variant="faded" label="Username or email" onChange={(e) => setQuery(e.target.value)}/>
                         </div>
                         <div className="mb-4">
-                            <Input label="Password" type="password" onChange={(e) => setPassword(e.target.value)} />
+                            <Input variant="faded" label="Password" type="password" onChange={(e) => setPassword(e.target.value)} />
                         </div>
                         <div className="mb-4 flex justify-between">
                             <Checkbox color="danger">Remember me</Checkbox>

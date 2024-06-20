@@ -78,16 +78,16 @@ export const Register = () => {
                 <CardBody>
                     <form onSubmit={(e) => handleRegister(e)}  className="flex flex-col">
                         <div className="mb-4">
-                           <Input value={username} label="Username" onChange={(e) => setUsername(e.target.value)}/>
+                           <Input variant="faded" value={username} label="Username" onChange={(e) => setUsername(e.target.value)}/>
                         </div>
                         <div className="mb-4">
-                            <Input value={email} label="Email" onChange={(e) => setEmail(e.target.value)} />
+                            <Input variant="faded" value={email} label="Email" onChange={(e) => setEmail(e.target.value)} />
                         </div>
                         <div className="mb-4">
-                            <Input label="Password" type="password" onChange={(e) => setPassword(e.target.value)} />
+                            <Input variant="faded" label="Password" type="password" onChange={(e) => setPassword(e.target.value)} />
                         </div>
                         <div className="mb-4">
-                            <Input label="Confirm password" type="password" onChange={(e) => setConfirmPassword(e.target.value)} />
+                            <Input variant="faded" label="Confirm password" type="password" onChange={(e) => setConfirmPassword(e.target.value)} />
                         </div>
 
                         <div className="mb-4 flex justify-between">
