@@ -95,7 +95,7 @@ export const Register = () => {
                             <Link href="/forgot-password" color="danger" isBlock>Forgot password?</Link>
                         </div>
                         <div className="mb-4 self-center cf-turnstile" ref={turnstileRef}  data-sitekey={process.env.REACT_APP_SITE_KEY}></div>
-                        <Button isLoading={loading} disabled={!username || !confirmPassword || !email || !password} className="w-full" type="submit" color="danger" variant="flat">Register</Button>
+                        <Button isLoading={loading} isDisabled={!username || !confirmPassword || !email || !password} className="w-full" type="submit" color="danger" variant="flat">Register</Button>
                         <Divider className="mt-4 mx-auto w-[40px] p-0.5 rounded-lg"/>
                         <Link className="self-center mt-2" href="/login" color="foreground" isBlock>
                             Already have an account? Login!
