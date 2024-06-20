@@ -36,7 +36,6 @@ function App() {
   return (
     <div className="flex flex-col min-h-screen">
       <NavigationBar/>
-      <Background/>
         <Routes>
           <Route
             path="/"

@@ -3,6 +3,7 @@ import {Card, CardHeader, CardBody} from "@nextui-org/react";
 import { CodeEditor } from '../components/CodeEditor';
 import {Waypoint} from 'react-waypoint';
 import { useState } from 'react';
+import { Background } from '../components/Background';
 export const Landing = () => {
 const [isVisibleWelcome, setIsVisibleWelcome] = useState(false);
 const [isVisibleCode, setIsVisibleCode] = useState(false);
@@ -481,6 +482,7 @@ public class BankTransactionAPI {
 
 return (
     <div className='flex flex-col container mx-auto'>
+              <Background/>
         <div>
             <div className="grid grid-cols-2 max-md:grid-cols-1 z-2 relative flex-wrap md:mt-[200px] z-2">
                 <Waypoint onEnter={() => setIsVisibleWelcome(true)}>
