@@ -12,6 +12,7 @@ import { getTemplate } from '../utils/getLanguageTemplate'
 import {Pagination} from '@nextui-org/react'
 import { ProblemStats } from './ProblemStats'
 import { RateProblem } from './RateProblem'
+import { ReportProblem } from './ReportProblem'
 const placeholder = `#include <iostream>
 #include <cstring>
 #include <string>
@@ -104,6 +105,7 @@ export const Problem = () => {
     const [error, setError] = useState()
     const [prompt, setPrompt] = useState('')
     const [clickRate, setClickRate] = useState(false)
+    const [clickReport, setClickReport] = useState(false)
     useEffect(() => {
         setCode(getTemplate(language, problem))
     }, [language])
@@ -248,6 +250,9 @@ export const Problem = () => {
     const onClickRate = () => {
         setClickRate(!clickRate)
     }
+    const onClickReport = () => {
+        setClickReport(!clickReport)
+    }
     return (
         <div className="container mx-auto px-5 py-5">
             <Tabs selectedKey={selected} onSelectionChange={setSelected} className="flex flex-col">
@@ -282,11 +287,15 @@ export const Problem = () => {
                                         </TableRow>
                                     </TableBody>
                                 </Table>
-                                <div className='flex gap-3 mt-2'>
-                                    <Button color='success' variant='flat' className='flex-1'  isDisabled={problem.getProblem.userHasRated} onClick={onClickRate}>Rate this problem</Button>
-                                    <Button color='warning' variant='flat' className='flex-1' >Report this problem</Button>
-                                    <Button color='default' variant='flat' className='flex-1'>Share this problem</Button>
-                                </div>
+                                {user && user.getUser && (
+                                    <div className='flex gap-3 mt-2 max-sm:flex-col max-sm:h-[150px]'>
+                                        <Button color='success' variant='flat' className='flex-1'  isDisabled={problem.getProblem.userHasRated} onClick={onClickRate}>Rate this problem</Button>
+                                        <Button color='warning' variant='flat' className='flex-1' onClick={onClickReport} >Report this problem</Button>
+                                        <Button color='default' variant='flat' className='flex-1' onClick={() => {
+                                            navigator.clipboard.writeText(window.location.href)
+                                        }}>Share this problem</Button>
+                                    </div>
+                                )}
                             </div>
                             {problem.getProblem.description && (
                                 <div>
@@ -411,6 +420,9 @@ export const Problem = () => {
                     </div>
                     {clickRate && (
                         <RateProblem isOpen={clickRate} onClose={onClickRate} problem={problem.getProblem} user={user}/>
+                    )}
+                    {clickReport && (
+                        <ReportProblem isOpen={clickReport} onClose={onClickReport} problem={problem.getProblem} user={user}/>
                     )}
                 </Tab>
                 <Tab key="solutions" title="Submissions">

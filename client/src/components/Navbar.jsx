@@ -21,7 +21,7 @@ export const NavigationBar = () => {
         window.location.reload()
     } 
     return (
-        <Navbar shouldHideOnScroll isBlurred className="bg-transparent" isMenuOpen={isOpen} onMenuOpenChange={setIsOpen}>
+        <Navbar isBlurred className="bg-transparent" isMenuOpen={isOpen} onMenuOpenChange={setIsOpen}>
             <NavbarContent>
                 <NavbarMenuToggle className="sm:hidden"/>
                 <NavbarBrand>

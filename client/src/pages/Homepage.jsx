@@ -31,7 +31,7 @@ export const Homepage = () => {
     if(getInfos.loading) return <Loading/>
     return (
        <div className="container flex flex-col px-5 mx-auto mt-20 gap-10">
-        <div className="flex flex-row gap-2 max-md:flex-col justify-between max-md:justify-start">
+        <div className="flex gap-2 max-md:flex-col justify-between max-md:justify-start">
             <div className="flex flex-col gap-5 flex-1">
                     <div className="text-5xl text-white font-extrabold">
                     🚀 Welcome to{' '}

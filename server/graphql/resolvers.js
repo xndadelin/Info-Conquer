@@ -368,7 +368,7 @@ module.exports = {
                 const dates = [];
                 const today = new Date();
                 dates.push(new Date(today));
-                
+
                 for (let i = 1; i <= 6; i++) {
                     const newDate = new Date(today);
                     newDate.setDate(today.getDate() - i);
@@ -384,6 +384,9 @@ module.exports = {
                 
                     return { date: date, count: solves.length > 0 ? solves[0].count : 0 };
                 }));
+                bestMemory.forEach(solution => {
+                    solution.memory = parseFloat(solution.memory.toFixed(2))
+                })
                 return {
                     firstSubmissions: firstsolves,
                     timeExecution: bestTimeExecutions,
@@ -949,7 +952,7 @@ module.exports = {
             await Announcement.updateMany({ createdBy: username }, { $set: { createdBy: newUsername } });
             await Contest.updateMany({ createdBy: username }, { $set: { createdBy: newUsername } });
             await Contest.updateMany({ "participants.username": user.username }, { $set: { "participants.$[elem].username": username } },{ arrayFilters: [{ "elem.username": user.username }] });
-
+            await Problem.updateMany({ "ratings.username": user.username }, { $set: { "ratings.$[elem].username": username } },{ arrayFilters: [{ "elem.username": user.username }] });
             return {
                 success: true
             }
