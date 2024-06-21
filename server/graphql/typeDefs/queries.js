@@ -20,5 +20,6 @@ module.exports = gql`
         getHomepageInfo: HomepageInfo
         getLeaderboard: [LeaderboardRow]
         getSearch(query: String): SearchResults
+        getActivity(username: String): [Activity]
     } 
 `;  

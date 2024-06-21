@@ -1,6 +1,6 @@
 import {Link, useParams} from "react-router-dom"
 import {useQuery, gql, useMutation} from "@apollo/client";
-import {useState} from "react";
+import {act, useState} from "react";
 import {Loading} from "./Loading";
 import {Button, ButtonGroup, Divider, Textarea} from "@nextui-org/react";
 import {Input} from "@nextui-org/react";
@@ -53,6 +53,14 @@ mutation {
         success
     }
 }`
+const getActivity = gql`
+    query getActivity($username: String){
+        getActivity(username: $username) {
+            date
+            message
+        }
+    }
+`
 export const Profile = () => {
     const {username} = useParams();
     const {user: currentUser} = useContext(UserContext)
@@ -70,6 +78,12 @@ export const Profile = () => {
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
     const [errorPassword, setErrorPassword] = useState('')
+    const [pageActivity, setPageActivity] = useState(1)
+    const {data:dataActivity, loading:loadingActivity} = useQuery(getActivity, {
+        variables: {
+            username
+        }
+    })
     const {data, loading} = useQuery(userQuery, {
         variables: {
             username
@@ -119,11 +133,11 @@ export const Profile = () => {
             setErrorPassword(error.message)
         }
     })
-    if(loading) return <Loading/>
+    if(loading || loadingActivity) return <Loading/>
     if(!data || error) return <NotFound/>
     const seeSettings = currentUser && currentUser.getUser && currentUser.getUser.username === username
     return (
-        <div className="h-[2000px]">
+        <div className="h-[100%] my-5 min-h-[3000px]">
         <Tabs className="container mx-auto flex flex-col my-5 px-5">
             <Tab key="general" title="General informations" className="mx-auto container p-5">
                 <div className='flex flex-col gap-6 h-screen'>
@@ -198,6 +212,18 @@ export const Profile = () => {
                             </TableBody>
                         </Table>
                         <Pagination color="danger" onChange={(page) => setPage(page)} loop showControls total={Math.ceil(data.getProfile.solutions.length/20)} initialPage={1}></Pagination>
+                    </div>
+                    <p className="text-3xl">Activity</p>
+                    <div className="space-y-4 p-4 rounded-lg bg-[#27272A]">
+                        {dataActivity && dataActivity.getActivity.slice((pageActivity - 1) * 10, pageActivity * 10).map((activity) => (
+                            <div key={activity.id} className="flex items-center gap-4 p-3 bg-[#18181B] rounded-lg">
+                                <span className="text-sm text-gray-400">
+                                    {new Date(+activity.date).toLocaleString()}
+                                </span>
+                                <span className="text-base text-gray-200">{activity.message}</span>
+                            </div>
+                        ))}
+                        <Pagination color="danger" onChange={setPageActivity} showControls total={Math.ceil(dataActivity.getActivity.length / 10)} initialPage={1} />
                     </div>
                 </div>
             </Tab>

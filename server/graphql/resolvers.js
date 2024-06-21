@@ -544,6 +544,17 @@ module.exports = {
             }catch(e){
                 throw new ApolloError(e)
             }
+        },
+        async getActivity(_, {username}) {
+            try{
+                const user = await User.findOne({username, verified:true})
+                if(!user) {
+                    throw new ApolloError('This account does not exist!');
+                }
+                return user.activity
+            }catch(e){
+                throw new ApolloError(e)
+            }
         }
     },
     Mutation: {
@@ -722,6 +733,7 @@ module.exports = {
                 }
                 const testResults = grader(problema.tests, code, problema.title, user.username,language, problema.timeExecution, problema.limitMemory)
                 user.solutions.push(testResults)
+                user.activity.push({date: new Date(), message: `${user.username} has submitted the code on problem ${problem} and scored ${testResults.score}`})
                 if(testResults.score === 100){
                     if(!user.solvedProblems.find(solved => solved.problem === problema.title)){
                         user.solvedProblems.push({problem: problema.title, date: new Date()});

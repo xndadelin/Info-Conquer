@@ -101,7 +101,4 @@ module.exports = gql`
         tags: [String],
         successRate: String,
     }
-    type HomepageInfo {
-        topProblems: [TopProblem],
-    }
 `;

@@ -50,5 +50,17 @@ module.exports = gql`
         contests: [String],
         totalResults: Int,
         announcements: [String]
+    },
+    type HomepageInfo {
+        topProblems: [TopProblem],
+        lastSeven: [SubmissionsLast7]
+    }
+    type SubmissionsLast7 {
+        date: String,
+        count: Int
+    }
+    type Activity {
+        date: String,
+        message: String
     }
 `;
