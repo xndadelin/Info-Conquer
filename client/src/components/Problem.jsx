@@ -377,7 +377,7 @@ export const Problem = () => {
                                                 <Button isLoading={loadingBot} className='mt-2 mb-2 mr-2' color='warning' variant='flat'>🤖</Button>
                                             </Tooltip>
                                             <Tooltip color='danger' content='Run your code!'>
-                                                <Button className='mt-2 mb-2 mr-2' color='danger' disabled={!language || !code || !user || !user.getUser} variant='flat' onClick={() => {onHandleSubmitSolution(); onOpenChange(); setTests('')}}>Submit solution</Button>
+                                                <Button className="mt-2 mb-2 mr-2" color='danger' disabled={!language || !code || !user || !user.getUser} variant='flat' onClick={() => {onHandleSubmitSolution(); onOpenChange(); setTests('')}}>Submit</Button>
                                             </Tooltip>
                                         </div>
                                     </div>

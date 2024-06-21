@@ -459,7 +459,35 @@ module.exports = {
         },
         async getHomepageInfo(_, {}, context){
             try{
+                const user = await getUser(context)
                 const problems = (await Problem.find({}).sort({acceptedSolutions: -1}).limit(5))
+                const dates = []
+                const today = new Date()
+                dates.push(new Date(today))
+                for (let i = 1; i <= 6; i++) {
+                    const newDate = new Date(today);
+                    newDate.setDate(today.getDate() - i);
+                    newDate.setHours(0, 0, 0, 0);
+                    dates.push(newDate);
+                }
+                const results = await Promise.all(dates.map(async(date, index) => {
+                    const submissions = await User.aggregate([
+                        { $unwind: '$solutions' },
+                        { $match : {
+                            'solutions.date' : {
+                                $lt: new Date(date)
+                            },
+                            username: user.username
+                        }},
+                        { $group : {
+                            _id: null, 
+                            count: { $sum : 1 }
+                        }}
+                    ])
+                    const count = submissions.length > 0 ? submissions[0].count : 0;
+                    return { date, count };
+                }))
+                
                 return {
                     topProblems: problems.map(problem => {
                         return {
@@ -468,7 +496,8 @@ module.exports = {
                             tags: problem.tags,
                             successRate: problem.successRate
                         }
-                    })
+                    }),
+                    lastSeven: results
                 }
             }catch(e){
                 throw new ApolloError(e)
@@ -696,7 +725,7 @@ module.exports = {
                 if(testResults.score === 100){
                     if(!user.solvedProblems.find(solved => solved.problem === problema.title)){
                         user.solvedProblems.push({problem: problema.title, date: new Date()});
-                        await user.save();
+                        user.activity.push({date: new Date(), message: `${user.username} has solved the ${problem} problem!`})
                     }
                     problema.acceptedSolutions += 1;
                     await problema.save();
@@ -705,7 +734,6 @@ module.exports = {
                     await problema.save();
                 }
                 if(contest){
-                    //update score
                     const Participant = contest.participants.find(participant => participant.username === user.username);
                     const problemIndex = Participant.problems.findIndex(problem => problem.id === problema.title);
                     if(problemIndex === -1){
@@ -769,6 +797,9 @@ module.exports = {
             }else{
                 article.dislikes = article.dislikes.filter(dislike => dislike !== user.username)
                 article.likes.push(user.username)
+                const usera = await User.findOne({username: user.username})
+                usera.activity.push({date: new Date(), message: `${user.username} has liked the ${article.title} article.`})
+                await user.save()
                 await article.save()
                 return {
                     success: true
@@ -792,6 +823,10 @@ module.exports = {
             }else{
                 article.likes = article.likes.filter(like => like !== user.username)
                 article.dislikes.push(user.username)
+                const usera = await User.findOne({username: user.username})
+                console.log(usera)
+                usera.activity.push({date: new Date(), message: `${user.username} has disliked the ${article.title} article.`})
+                await usera.save()
                 await article.save()
                 return {
                     success: true
@@ -875,9 +910,6 @@ module.exports = {
             if(!contest){
                 throw new ApolloError('This contest does not exist')
             }
-/*             const now = new Date();
-            const startDate = new Date(contest.startDate.year, contest.startDate.month, contest.startDate.day, contest.startDate.hour, contest.startDate.minute)
-            const endDate = new Date(contest.endDate.year, contest.endDate.month, contest.endDate.day, contest.endDate.hour, contest.endDate.minute) */
             const participantExists = contest.participants.some(participant => participant.username === user.username);
             if(participantExists){
                 return {
@@ -885,6 +917,8 @@ module.exports = {
                 }
             }else{
                 contest.participants.push({username: user.username, score: 0, problems: []})
+                const user = await User.find({username: user.username})
+                user.activity.push({date: new Date(), message: `${user.username} has joined the ${contest.name} contest`})
                 await contest.save()
                 return {
                     success: true

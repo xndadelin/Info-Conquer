@@ -36,6 +36,9 @@ const userSchema = new mongoose.Schema({
     discordID: {
         type: String,
     },
+    activity: {
+        type: Array
+    }
 }, {timestamps: true})
 
 module.exports = mongoose.model('user', userSchema)
