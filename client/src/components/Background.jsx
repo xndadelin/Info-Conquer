@@ -6,7 +6,7 @@ import { Terminal } from "../utils/Terminal"
 
 export const Background = () => {
     return (
-        <div className="background fixed w-full h-full bg-black">
+        <div className=" fixed w-full h-full bg-[#121212]">
             <Code/>
             <div className="glow-red top-[50%] fixed w-[300px] h-[300px]"></div>
             <CircleNodes/>    

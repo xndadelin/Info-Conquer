@@ -1,5 +1,5 @@
 import {useQuery, gql} from "@apollo/client";
-import {Card, CardBody, Button, User, CardHeader, CardFooter} from "@nextui-org/react";
+import {Card, CardBody, CardHeader} from "@nextui-org/react";
 import {Link} from "@nextui-org/react";
 import { Loading } from "../components/Loading";
 import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@nextui-org/react";
@@ -100,16 +100,18 @@ export const Homepage = () => {
         </div>
         <div>
             <p className="text-3xl font-bold mb-2">Your activity in the last 7 days</p>
-            <Chart
-                chartType="LineChart"
-                data={[
-                    ['Date', 'Subs'],
-                    ...getInfo.data.getHomepageInfo.lastSeven.map((obj) => [new Date(+obj.date).toDateString(), obj.count])
-                ]}
-                width="100%"
-                height="400px"
-                legendToggle
-            />
+            {getInfo.data && (
+                <Chart
+                    chartType="LineChart"
+                    data={[
+                        ['Date', 'Subs'],
+                        ...getInfo.data.getHomepageInfo.lastSeven.map((obj) => [new Date(+obj.date).toDateString(), obj.count])
+                    ]}
+                    width="100%"
+                    height="400px"
+                    legendToggle
+                />
+            )}
         </div>
         <div>
             <p className="text-3xl font-bold mb-2">Newest annoncements</p>

@@ -184,7 +184,7 @@ def submit_code():
     input_data = data.get('input', '')
 
     if not code or not language:
-        return jsonify({'error': 'Code and language are required'}), 400
+        return jsonify({'error': 'Code and language are requi#DA0037'}), 400
 
     file_extension = {
         'python': 'py',
@@ -215,7 +215,7 @@ def submit_code():
         error = result.stderr
     except subprocess.CalledProcessError as e:
         return jsonify({'error': str(e)}), 500
-    except subprocess.TimeoutExpired:
+    except subprocess.TimeoutExpi#DA0037:
         return jsonify({'error': 'Execution timed out'}), 500
     finally:
         os.remove(file_name)
@@ -409,11 +409,11 @@ export const VerticalTimeline = () => {
   return (
     <div className="relative mb-10 max-md:after:left-[32px] max-w-full after:content-[''] max-md:w-[92%] after:absolute after:w-[6px] after:bg-white after:top-0 after:bottom-0 after:left-[50%] after:ml-[-3px]">
       <Waypoint onEnter={() => setIsVisibleC(true)}>
-        <div className={`${isVisibleC ? 'left-to-right': ''} container max-md:after:left-[-12.5px] max-md:left-[32px]  max-md:before:border-transparent max-md:w-[100%] max-md:px-0 relative w-[50%] px-[40px] bg-inherit left-0 after:content-[''] after:absolute after:w-[25px] after:h-[25px] after:right-[-12.5px] after:bg-white after:border-[4px] after:border-[red] after:top-[15px] after:rounded-full after:z-10 before:content-[''] before:absolute before:top-[22px] before:right-[30px] before:h-0 before:w-0 before:border-[10px] before:border-transparent before:border-r-white`}>
+        <div className={`${isVisibleC ? 'left-to-right': ''} container max-md:after:left-[-12.5px] max-md:left-[32px]  max-md:before:border-transparent max-md:w-[100%] max-md:px-0 relative w-[50%] px-[40px] bg-inherit left-0 after:content-[''] after:absolute after:w-[25px] after:h-[25px] after:right-[-12.5px] after:bg-white after:border-[4px] after:border-[#DA0037] after:top-[15px] after:rounded-full after:z-10 before:content-[''] before:absolute before:top-[22px] before:right-[30px] before:h-0 before:w-0 before:border-[10px] before:border-transparent before:border-r-white`}>
             <div className="relative pt-[10px] rounded-[6px]">
                 <h1 className='text-5xl font-bold p-5 pb-0 pt-0 mt-0'>C</h1>
                 <p className='text-lg p-5 pb-0 pt-0 max'>
-                    C is a general-purpose, procedural computer programming language supporting structured programming, lexical variable scope, and recursion, with a static type system.
+                    C is a general-purpose, procedural computer programming language supporting structu#DA0037 programming, lexical variable scope, and recursion, with a static type system.
                 </p>
                 <div className="ml-2">
                     <CodeEditor height={"500px"} language='c' code={c_code}/>
@@ -422,7 +422,7 @@ export const VerticalTimeline = () => {
         </div>
       </Waypoint>
       <Waypoint onEnter={() => setIsVisibleCpp(true)}>
-        <div className={`${isVisibleCpp ? 'right-to-left': ''} container max-md:left-[32px] max-md:before:border-transparent max-md:w-[100%] relative w-[50%] max-md:px-0 px-[40px] bg-inherit left-[50%] after:content-[''] after:absolute after:w-[25px] after:h-[25px] after:left-[-12.5px] after:bg-white after:border-[4px] after:border-[red] after:top-[15px] after:rounded-full after:z-10 before:content-[''] before:absolute before:top-[22px] before:left-[30px] before:h-0 before:w-0 before:border-[10px] before:border-transparent before:border-l-white`}>
+        <div className={`${isVisibleCpp ? 'right-to-left': ''} container max-md:left-[32px] max-md:before:border-transparent max-md:w-[100%] relative w-[50%] max-md:px-0 px-[40px] bg-inherit left-[50%] after:content-[''] after:absolute after:w-[25px] after:h-[25px] after:left-[-12.5px] after:bg-white after:border-[4px] after:border-[#DA0037] after:top-[15px] after:rounded-full after:z-10 before:content-[''] before:absolute before:top-[22px] before:left-[30px] before:h-0 before:w-0 before:border-[10px] before:border-transparent before:border-l-white`}>
             <div className="relative pt-[10px] rounded-[6px]">
             <h1 className='text-5xl font-bold p-5 pb-0 pt-0'>C++</h1>
                 <p className='text-lg p-5 pb-0 pt-0'>
@@ -435,7 +435,7 @@ export const VerticalTimeline = () => {
         </div>
       </Waypoint>
       <Waypoint onEnter={() => setIsVisiblePython(true)}>
-        <div className={`${isVisiblePython ? 'left-to-right' : ''} container max-md:after:left-[-12.5px] max-md:left-[32px] max-md:px-0 max-md:before:border-transparent max-md:w-[100%] relative w-[50%] px-[40px] bg-inherit left-0 after:content-[''] after:absolute after:w-[25px] after:h-[25px] after:right-[-12.5px] after:bg-white after:border-[4px] after:border-[red] after:top-[15px] after:rounded-full after:z-10 before:content-[''] before:absolute before:top-[22px] before:right-[30px] before:h-0 before:w-0 before:border-[10px] before:border-transparent before:border-r-white`}>
+        <div className={`${isVisiblePython ? 'left-to-right' : ''} container max-md:after:left-[-12.5px] max-md:left-[32px] max-md:px-0 max-md:before:border-transparent max-md:w-[100%] relative w-[50%] px-[40px] bg-inherit left-0 after:content-[''] after:absolute after:w-[25px] after:h-[25px] after:right-[-12.5px] after:bg-white after:border-[4px] after:border-[#DA0037] after:top-[15px] after:rounded-full after:z-10 before:content-[''] before:absolute before:top-[22px] before:right-[30px] before:h-0 before:w-0 before:border-[10px] before:border-transparent before:border-r-white`}>
             <div className="relative pt-[10px] rounded-[6px]">
                 <h1 className='text-5xl font-bold p-5 pb-0 pt-0'>Python</h1>
                 <p className='text-lg p-5 pb-0 pt-0'>
@@ -448,7 +448,7 @@ export const VerticalTimeline = () => {
         </div>
       </Waypoint>
       <Waypoint onEnter={() => setIsVisibleJava(true)}>
-        <div className={`${isVisibleJava ? 'right-to-left' : ''} container max-md:left-[32px] max-md:before:border-transparent max-md:w-[100%] max-md:px-0 relative w-[50%] px-[40px] bg-inherit left-[50%] after:content-[''] after:absolute after:w-[25px] after:h-[25px] after:left-[-12.5px] after:bg-white after:border-[4px] after:border-[red] after:top-[15px] after:rounded-full after:z-10 before:content-[''] before:absolute before:top-[22px] before:left-[30px] before:h-0 before:w-0 before:border-[10px] before:border-transparent before:border-l-white`}>
+        <div className={`${isVisibleJava ? 'right-to-left' : ''} container max-md:left-[32px] max-md:before:border-transparent max-md:w-[100%] max-md:px-0 relative w-[50%] px-[40px] bg-inherit left-[50%] after:content-[''] after:absolute after:w-[25px] after:h-[25px] after:left-[-12.5px] after:bg-white after:border-[4px] after:border-[#DA0037] after:top-[15px] after:rounded-full after:z-10 before:content-[''] before:absolute before:top-[22px] before:left-[30px] before:h-0 before:w-0 before:border-[10px] before:border-transparent before:border-l-white`}>
             <div className="relative pt-[10px] rounded-[6px]">
             <h1 className='text-5xl font-bold p-5 pb-0 pt-0'>Java</h1>
                 <p className='text-lg p-5 pb-0 pt-0 '>

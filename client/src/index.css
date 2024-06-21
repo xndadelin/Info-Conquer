@@ -6,10 +6,6 @@
 .monaco-editor{
     padding-top: 10px;
 }
-/* * {
-    font-family: "Press Start 2P", system-ui;
-    font-size: small;
-} */
 * {
     font-family: "Poppins", system-ui;
 }
@@ -51,8 +47,11 @@
 .glow-red {
     background-image: radial-gradient(circle closest-side at center, hsl(0, 100%, 50%) 0%, hsl(0, 0%, 0%) 100%);
     filter: blur(200px);
- }
- .glow-white {
+}
+.glow-white {
     background-image: radial-gradient(circle closest-side at center, hsl(0, 1%, 64%) 0%, hsl(0, 0%, 0%) 100%);
     filter: blur(100px);
- }
+}
+body{
+    background-color: #121212;
+}

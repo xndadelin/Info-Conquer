@@ -75,7 +75,6 @@ c = 8533139361076999596208540806559574687666062896040360148742851107661304651861
 decrypted = pow(c, d, n)
 print(long_to_bytes(decrypted))`
 const [isVisibleStart, setIsVisibleStart] = useState(false);
-const [isVisibleDocs, setIsVisibleDocs] = useState(false);
 return (
     <div className='flex flex-col container mx-auto'>
         <Background/>
@@ -84,7 +83,7 @@ return (
                 <div className={`flex p-4 flex-col gap-5 max-md:mt-[100px] ${isVisibleWelcome ? 'left-to-right': ''}`}>
                     <div className="text-5xl text-white font-extrabold">
                         🚀 Welcome to{' '}
-                        <span className="from-[#ed3131] to-[#f9f7f5] cursor-pointer bg-clip-text text-transparent bg-gradient-to-b">
+                        <span className="from-[#DA0037] to-[#f9f7f5] cursor-pointer bg-clip-text text-transparent bg-gradient-to-r">
                             InfoConquer!
                         </span>{' '}
                         Your ultimate hub for problem-solving!
@@ -95,7 +94,7 @@ return (
                         </Button>
                     </div>
                     <div className='text-lg'>
-                        <span className='from-[#ed3131] to-[#f9f7f5] cursor-pointer bg-clip-text text-transparent bg-gradient-to-b'>InfoConquer</span> is dedicated to everyone who wants to learn programming by solving problems, participating in contests with other users, tackling challenges and problems. You can after create an article with your own solutions!
+                        <span className='from-[#DA0037] to-[#f9f7f5] cursor-pointer bg-clip-text text-transparent bg-gradient-to-r'>InfoConquer</span> is dedicated to everyone who wants to learn programming by solving problems, participating in contests with other users, tackling challenges and problems. You can after create an article with your own solutions!
                     </div>
                 </div>
             </Waypoint>

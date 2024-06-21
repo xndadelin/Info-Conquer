@@ -1,6 +1,6 @@
 import {Link, useParams} from "react-router-dom"
 import {useQuery, gql, useMutation} from "@apollo/client";
-import {act, useState} from "react";
+import {useState} from "react";
 import {Loading} from "./Loading";
 import {Button, ButtonGroup, Divider, Textarea} from "@nextui-org/react";
 import {Input} from "@nextui-org/react";
