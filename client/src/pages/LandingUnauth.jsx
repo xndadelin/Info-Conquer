@@ -182,12 +182,6 @@ return (
                 <h1>So what are you waiting for? Create an account and start coding!😎</h1>
             </div>
         </Waypoint>
-        <Waypoint onEnter={() => setIsVisibleDocs(true)}>
-            <div className={`z-2 relative grid grid-cols-2 items-center max-md:grid-cols-1 max-md:flex max-md:flex-col gap-4 p-2 mb-2 h-[1100px] border-white ${isVisibleDocs ? 'left-to-right': ''}`}>
-                <p className='text-5xl font-bold text-center'>📜 This website has been developed for the InfoEducatie contest</p>
-                <iframe className='border-white w-[100%] h-[100%]' src="https://drive.google.com/file/d/1_Lo7s8pUpVfLTK9L65YzGYa6KdQ9cj11/preview" allow="autoplay"></iframe>
-            </div>
-        </Waypoint>
     </div>
   );
 };
