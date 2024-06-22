@@ -106,6 +106,7 @@ export const Problem = () => {
     const [prompt, setPrompt] = useState('')
     const [clickRate, setClickRate] = useState(false)
     const [clickReport, setClickReport] = useState(false)
+    const [userHasRated, setUserHasRated] = useState(false)
     useEffect(() => {
         setCode(getTemplate(language, problem))
     }, [language])
@@ -142,6 +143,7 @@ export const Problem = () => {
                 restriction
                 successRate
                 userHasRated
+                rating
             }
         }
     `
@@ -283,13 +285,13 @@ export const Problem = () => {
                                             <TableCell>{problem.getProblem.timeExecution} s</TableCell>
                                             <TableCell>{Math.ceil(problem.getProblem.limitMemory / 1024)} MB</TableCell>
                                             <TableCell>{parseInt(problem.getProblem.successRate) + '%'}</TableCell>
-                                            <TableCell>69%</TableCell>
+                                            <TableCell>{problem.getProblem.rating === 0 ? 'Not rated' : problem.getProblem.rating} / 5</TableCell>
                                         </TableRow>
                                     </TableBody>
                                 </Table>
                                 {user && user.getUser && (
                                     <div className='flex gap-3 mt-2 max-sm:flex-col max-sm:h-[150px]'>
-                                        <Button color='success' variant='flat' className='flex-1'  isDisabled={problem.getProblem.userHasRated} onClick={onClickRate}>Rate this problem</Button>
+                                        <Button color='success' variant='flat' className='flex-1'  isDisabled={problem.getProblem.userHasRated || userHasRated} onClick={onClickRate}>Rate this problem</Button>
                                         <Button color='warning' variant='flat' className='flex-1' onClick={onClickReport} >Report this problem</Button>
                                         <Button color='default' variant='flat' className='flex-1' onClick={() => {
                                             navigator.clipboard.writeText(window.location.href)
@@ -351,7 +353,7 @@ export const Problem = () => {
                             {problem.getProblem.restriction && (
                                 <div>
                                     <p className='font-bold text-3xl mb-2'>Restrictions</p>
-                                    <p className='text-1xl' dangerouslySetInnerHTML={{__html: problem.getProblem.restriction}}></p>
+                                    <div className='text-1xl' dangerouslySetInnerHTML={{__html: problem.getProblem.restriction}}></div>
                                 </div>
                             )}
                         </div>
@@ -419,7 +421,7 @@ export const Problem = () => {
                         )}
                     </div>
                     {clickRate && (
-                        <RateProblem isOpen={clickRate} onClose={onClickRate} problem={problem.getProblem} user={user}/>
+                        <RateProblem isOpen={clickRate} setUserHasRated={setUserHasRated} onClose={onClickRate} problem={problem.getProblem} user={user}/>
                     )}
                     {clickReport && (
                         <ReportProblem isOpen={clickReport} onClose={onClickReport} problem={problem.getProblem} user={user}/>
@@ -452,7 +454,7 @@ export const Problem = () => {
                                     ))}
                                 </TableBody>
                             </Table>
-                            <Pagination className="mt-2" onChange={(page) => setPage(page)} loop showControls total={Math.ceil(submissions.getSubmissions.length/20)} initialPage={1}></Pagination>
+                            <Pagination color='danger' className="mt-2" onChange={(page) => setPage(page)} loop showControls total={Math.ceil(submissions.getSubmissions.length/20)} initialPage={1}></Pagination>
                         </>
                     )}
                     {loadingSubmissions && (

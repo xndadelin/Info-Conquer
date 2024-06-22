@@ -15,14 +15,15 @@ module.exports = gql`
         output: String,
         tests: [Test],
         timeExecution: String,
-        limitMemory: String,
+        limitMemory: Int,
         examples: [Example],
         indications: String,
         languages: [String],
         restriction: String,
         itsForContest: Boolean,
         successRate: Float,
-        userHasRated: Boolean
+        userHasRated: Boolean,
+        rating: Int
     }
     input CreateProblemInput {
         creator: String, 
@@ -38,7 +39,7 @@ module.exports = gql`
         output: String,
         tests: [TestInput],
         timeExecution: String,
-        limitMemory: String,
+        limitMemory: Int,
         examples: [ExampleInput],
         indications: String,
         languages: [String],
@@ -77,7 +78,7 @@ module.exports = gql`
         username: String,
         date: String,
         language: String,
-        timeExecutions: Int,
+        timeExecutions: Float,
     }
     type bestMemory {
         username: String,

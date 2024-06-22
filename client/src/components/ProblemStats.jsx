@@ -94,7 +94,7 @@ export const ProblemStats = () => {
                                     <TableCell><Link to={`/profile/${submission.username}`}>{submission.username}</Link></TableCell>
                                     <TableCell>{new Date(+submission.date).toDateString()}</TableCell>
                                     <TableCell>{submission.language}</TableCell>
-                                    <TableCell>{submission.memory}</TableCell>
+                                    <TableCell>{submission.memory / 1024} MB</TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>
@@ -116,7 +116,7 @@ export const ProblemStats = () => {
                                     <TableCell><Link to={`/profile/${submission.username}`}>{submission.username}</Link></TableCell>
                                     <TableCell>{new Date(+submission.date).toDateString()}</TableCell>
                                     <TableCell>{submission.language}</TableCell>
-                                    <TableCell>{submission.timeExecutions}</TableCell>
+                                    <TableCell>{parseFloat(submission.timeExecutions).toFixed(3)} s</TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>

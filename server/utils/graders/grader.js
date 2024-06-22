@@ -51,7 +51,6 @@ const languages = {
         'file': 'main.rb'
     },
 }
-const metas = ['exitcode', 'exitsig', 'killed', 'max-rss', 'message', 'status', 'time'];
 const initialize = () => {
     const idSolution = crypto.randomUUID();
     const received_time = new Date();
@@ -161,7 +160,7 @@ const grader = (testCases, code, problem, username, language, max_time, max_memo
     }else {
         testCases.forEach((testCase) => {
             const {output: outputResult, exitcode, exitsig, killed, max_rss, message, status, time} = run(language, sandboxPath, testCase, input, output, max_memory, max_time);
-            if(outputResult === testCase.output && time <= max_time && max_rss <= max_memory){
+            if(outputResult.trimEnd() === testCase.output.trimEnd() && time <= max_time && max_rss <= max_memory){
                 results.push({
                     status: 'AC',
                     success: true,

@@ -11,7 +11,7 @@ const rateProblem = gql`
     }
 `;
 
-export const RateProblem = ({ isOpen, onClose, problem, onOpenChange }) => {
+export const RateProblem = ({ isOpen, onClose, problem, onOpenChange, setUserHasRated }) => {
     const [rating, setRating] = useState(1);
     const [stars, setStars] = useState({
         'star-1': { hovered: false, selected: false },
@@ -24,6 +24,7 @@ export const RateProblem = ({ isOpen, onClose, problem, onOpenChange }) => {
     const [rate, { loading, error, data }] = useMutation(rateProblem, {
         onCompleted: () => {
             onClose();
+            setUserHasRated(true)
         },
     });
 

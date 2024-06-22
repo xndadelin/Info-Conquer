@@ -17,10 +17,6 @@ const problemSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    type: {
-        type: String, 
-        required: true,
-    },
     tags: {
         type: Array
     },
@@ -85,26 +81,22 @@ const problemSchema = new mongoose.Schema({
     },
     rejectedSolutions: {
         type: Number,
-        required: true
+        default: 0
     },
     acceptedSolutions: {
         type: Number,
-        required: true,
         default: 0
     },
     successRate: {
         type: Number,
-        required: true,
         default: 0
     },
     rating: {
         type: Number,
-        required: true,
         default: 0
     },
     ratings: {
         type: Array,
-        required: true,
         default: []
     },
 });

@@ -89,11 +89,7 @@ export const Solution = () => {
                         </TableRow>
                         <TableRow>
                             <TableCell>File memory</TableCell>
-                            <TableCell>{solution.getSolution.fileMemory + ' bytes'}</TableCell>
-                        </TableRow>
-                        <TableRow>
-                            <TableCell>Solution accepted</TableCell>
-                            <TableCell>{solution.getSolution.score === "100" ? 'Yes' : 'No'}</TableCell>
+                            <TableCell>{parseFloat(solution.getSolution.fileMemory).toFixed(2) + ' kbytes'}</TableCell>
                         </TableRow>
                     </TableBody>
                 </Table>
@@ -115,7 +111,7 @@ export const Solution = () => {
                                         <TableCell>{index + 1}</TableCell>
 
                                         <TableCell>{test.executionTime + ' ms'}</TableCell>
-                                        <TableCell>{test.memoryUsed + ' MB'}</TableCell>
+                                        <TableCell>{test.memoryUsed / 1024 + ' MB'}</TableCell>
                                         <TableCell>{test.score}</TableCell>
                                         <TableCell>{test.status}</TableCell>
                                         <TableCell>
@@ -143,27 +139,27 @@ export const Solution = () => {
                                 <div className="flex flex-col justify-between">
                                     <div className="flex flex-col mb-5">
                                         <p className="text-3xl mb-2">Input</p>
-                                        <Snippet symbol="">
-                                            <pre>
+                                        <pre>
+                                            <Snippet className="w-[100%]" symbol="">
                                                 {selectedTestCase.input}
-                                           </pre>
-                                        </Snippet>
+                                            </Snippet>
+                                        </pre>
                                     </div>
                                     <div className="flex flex-col mb-5">
                                         <p className="text-3xl mb-2">Output</p>
-                                        <Snippet symbol="">
-                                            <pre>
+                                        <pre>
+                                            <Snippet symbol="" className="w-[100%]">
                                                 {selectedTestCase.output}
-                                            </pre>
-                                        </Snippet>
+                                            </Snippet>
+                                        </pre>
                                     </div>
                                     <div className="flex flex-col mb-5">
                                         <p className="text-3xl mb-2">Expected output</p>
-                                            <Snippet symbol="">
-                                                <pre>
-                                                    {selectedTestCase.expectedOutput}
-                                                </pre>
-                                        </Snippet>
+                                        <pre>
+                                            <Snippet symbol="" className="w-[100%]">
+                                                {selectedTestCase.expectedOutput}
+                                            </Snippet>
+                                        </pre>
                                     </div>
                                 </div>
                             </ModalBody>

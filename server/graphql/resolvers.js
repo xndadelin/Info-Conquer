@@ -673,7 +673,7 @@ module.exports = {
               console.log(error)
             }                    
         },
-        async createProblem(_, {problemInput: {title, description, requirements, type, tags, difficulty, category, subcategories, input, output, tests, timeExecution, limitMemory, examples, indications, languages, restriction}}, context){
+        async createProblem(_, {problemInput: {title, description, requirements, type, tags, difficulty, category, subcategories, input, output, tests, timeExecution, limitMemory, examples, indications, languages, restriction, itsForContest}}, context){
             try{
                 const problemsExists = await Problem.findOne({title});
                 const creator = await getUser(context)
@@ -695,7 +695,7 @@ module.exports = {
                         }
                     })
                     restriction = DOMPurify.sanitize(restriction);
-                    const problem =  new Problem({creator: creator.username, title, description, requirements, type, tags, difficulty, category, subcategories, input, output, tests, timeExecution, limitMemory, examples, indications, languages, restriction})
+                    const problem =  new Problem({creator: creator.username, title, description, requirements, type, tags, difficulty, category, subcategories, input, output, tests, timeExecution, limitMemory, examples, indications, languages, restriction, itsForContest})
                     await problem.save()
                     return {
                         success: true
@@ -1088,6 +1088,12 @@ module.exports = {
                     throw new ApolloError('You have already rated this problem')
                 }
                 problem.ratings.push({username: user.username, rating})
+                await problem.save()
+                user.activity.push({date:new Date(), message: `${user.username} has rated the ${id} problem ${rating} stars`})
+                await user.save()
+                const allRatings = problem.ratings.reduce((total, current) => total + current.rating, 0)
+                const avgRating = allRatings / (problem.ratings ? problem.ratings.length : 1)
+                problem.rating = avgRating
                 await problem.save()
                 return {
                     success: true

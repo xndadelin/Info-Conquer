@@ -1,12 +1,18 @@
-import { Button, Chip, DateInput, Input, Textarea } from "@nextui-org/react"
-import {gql, useMutation} from "@apollo/client"
+import { Button, Chip, DateRangePicker ,Input, Textarea } from "@nextui-org/react"
+import {gql, useMutation, useQuery} from "@apollo/client"
 import { useState } from "react"
 import {useNavigate} from "react-router-dom"
 import { Select, SelectItem } from "@nextui-org/react"
+const GET_PROBLEMS = gql`
+    query GetProblems($category: String, $subcategory: String){
+        getProblems(category: $category, subcategory: $subcategory){
+            title
+        }
+    }   
+`
 export const CreateConstest = () => {
     const [problems, setProblems] = useState([])
-    const [currentProblem, setCurrentProblem] = useState('')
-    const [currentDifficulty, setCurrentDifficulty] = useState(0)
+    const [selectedProblems, setSelectedProblems] = useState([])
     const [name, setName] = useState('')
     const [description, setDescription] = useState('')
     const [startDate, setStartDate] = useState("")
@@ -14,20 +20,21 @@ export const CreateConstest = () => {
     const [error, setError] = useState('')
     const [languages, setLanguages] = useState([])
     const languagesDef = [
-        {value:'JavaScript'},{value:'Python'},{value:'Java'},{value:'C#'},
-        {value:'C++'},{value:'TypeScript'},{value:'Rust'},{value:'PHP'},{value: 'C'}
-    ];
+        { value: 'JavaScript' }, { value: 'Python' }, { value: 'Java' }, { value: 'C#' },
+        { value: 'C++' }, { value: 'TypeScript' }, { value: 'Rust' }, { value: 'PHP' }, { value: 'C' }
+    ]
     const navigate = useNavigate()
-    const onAddProblem = (id, score) => {
-        if(score !== 0 && id){
-            setProblems([...problems, {id, difficulty: currentDifficulty}])
-            setCurrentProblem('')
-            setCurrentDifficulty(0)
+    const {error: errorProblems} = useQuery(GET_PROBLEMS, {
+        variables : {
+            subcategory: 'none',
+            category: ''
+        },
+        onCompleted:(data) => {
+            setProblems(data.getProblems.map((problem) => {
+                return problem.title
+            }))
         }
-    }
-    const onRemoveProblem = (id) => {
-        setProblems(problems.filter(problem => problem.id !== id))
-    }
+    })
     const createContestMutation = gql`
         mutation CreateContest($name: String, $description: String, $startDate: ContestDateInput, $endDate: ContestDateInput, $problems: [ProblemInput], $languages: [String]) {
             createContest(name: $name, description: $description, startDate: $startDate, endDate: $endDate, problems: $problems, languages: $languages) {
@@ -61,7 +68,7 @@ export const CreateConstest = () => {
                 hour: endDate && endDate.hour,
                 minute: endDate && endDate.minute,
             },
-            problems,
+            problems: selectedProblems,
             languages
         }
     })
@@ -70,7 +77,7 @@ export const CreateConstest = () => {
         setLanguages(languages)
     }
     return (
-        <div className="container mx-auto my-5 mb-[400px]">
+        <div className="container mx-auto my-5 mb-[400px] p-5">
             <p className="text-4xl font-bold">Create contest </p>
             {error && (
                 <Chip className='mt-5' color="danger" variant='flat'>{error}</Chip>
@@ -79,14 +86,21 @@ export const CreateConstest = () => {
                 <Input value={name} onChange={(e) => setName(e.target.value)} label="Name"/>
                 <Textarea value={description} onChange={(e) => setDescription(e.target.value)} label="Description"/>
                 <div className="flex gap-5">
-                    <DateInput granularity="second" onChange={setStartDate} label="Start Date"/>
-                    <DateInput granularity="second" onChange={setEndDate} label="End Date"/>
+                <DateRangePicker
+                    hourCycle={24}
+                    label="Contest duration"
+                    visibleMonths={2}
+                    labelPlacement="outside"
+                    granularity="minute"
+                />
                 </div>
-                <div className="flex gap-5">
-                    <Input value={currentProblem} onChange={(e) => setCurrentProblem(e.target.value)} label="Problem"/>
-                    <Input value={currentDifficulty} onChange={(e) => setCurrentDifficulty(e.target.value)} label="Difficulty"/> 
-                    <Button variant="flat" color="danger" onClick={() => onAddProblem(currentProblem, currentDifficulty)}>Add</Button>
-                </div>
+                <Select label="Problems" selectionMode="multiple" placeholder="Choose problems" onSelectionChange={setSelectedProblems}>
+                    {problems.map((problem) => (
+                        <SelectItem key={problem}>
+                            {problem}
+                        </SelectItem>
+                    ))}
+                </Select>
                 <Select onChange={(e) => handleLanguagesChange(e)} items={languagesDef} label="Languages" isRequired isMultiline selectionMode="multiple" renderValue={(languages) => {
                     return (
                         <div className="flex flex-wrap gap-3">
@@ -98,12 +112,7 @@ export const CreateConstest = () => {
                 }}>
                     {(language) => <SelectItem key={language.value}>{language.value}</SelectItem>}
                 </Select>
-                <div className="flex gap-5">
-                    {problems.map((problem, index) => (
-                        <Chip key={index} className="cursor-pointer" onClick={() => onRemoveProblem(problem.id)}>{problem.id} : {problem.difficulty}</Chip>
-                    ))}
-                </div>
-                <Button disabled={!name || !name || !startDate || !endDate || !problems || !languages} variant="flat" isLoading={loading} color="danger" onClick={() => createContest()} >Create contest</Button>
+                <Button isDisabled={!name || !name || !startDate || !endDate || !problems || !languages} variant="flat" isLoading={loading} color="danger" onClick={() => createContest()} >Create contest</Button>
             </form>
         </div>
     )
