@@ -28,7 +28,7 @@ import { VerifyEmail } from "./components/VerifyEmail";
 import { Leaderboard } from "./pages/Leaderboard";
 import { Search } from "./components/Search";
 import { AuthDiscord } from "./components/AuthDiscord";
-import { Background } from "./components/Background";
+import { Calendar } from "./pages/Calendar";
 function App() {
   const {user} = useContext(UserContext)
   if(!user)
@@ -124,6 +124,14 @@ function App() {
           <Route
             path="/auth/discord/callback"
             element={<AuthDiscord/>}
+          />
+          <Route
+            path="/calendar"
+            element={<Calendar/>}
+          />
+          <Route
+            path="/contests/:contest/:id"
+            element={<Problem/>}
           />
           <Route
             path="*"

@@ -9,11 +9,11 @@ const contestSchema = new mongoose.Schema({
         type: String
     },
     startDate: {
-        type: Object,
+        type: Date,
         required: true
     },
     endDate: {
-        type: Object,
+        type: Date,
         required: true
     },
     problems: {
@@ -39,5 +39,13 @@ const contestSchema = new mongoose.Schema({
         type: Array,
         required: true
     },
+    started: {
+        type: Boolean,
+        default: false
+    },
+    ended: {
+        type: Boolean,
+        default: false
+    }
 }, {timestamps: true})
 module.exports = new mongoose.model('contest', contestSchema)

@@ -10,22 +10,10 @@ const getContests = gql`
         getContests {
             _id
             description
-            endDate {
-                minute
-                day
-                hour
-                month
-                year
-            }
+            endDate
             languages
             name
-            startDate {
-                day
-                hour
-                minute
-                year
-                month
-            }
+            startDate
             createdBy
         }
     }
@@ -69,18 +57,18 @@ export const Contests = () => {
                         </CardHeader>
                         <CardBody>
                             <p className="text-xl font-bold">Description</p>
-                            <p className="text-xl" dangerouslySetInnerHTML={{__html: contest.description.slice(0, 100) + `... <a target='_blank' style='color: rgb(51,102,204);' href='/contests/view/${contest._id}'>Vezi mai multe</a>`}}></p>
+                            <p dangerouslySetInnerHTML={{__html: contest.description.slice(0, 100) + `... <a target='_blank' style='color: rgb(51,102,204);' href='/contests/view/${contest._id}'>Vezi mai multe</a>`}}></p>
                             <p className="text-xl font-bold">Start date:</p>
-                                {contest.startDate.year + '.' + contest.startDate.month + '.' + contest.startDate.day + ' at ' + contest.startDate.hour + ":" + contest.startDate.minute}
+                                {new Date(contest.startDate).toLocaleString()}
                             <p className="text-xl font-bold">End date:</p>
-                                {contest.endDate.year + '.' + contest.endDate.month + '.' + contest.endDate.day + ' at ' + contest.endDate.hour + ":" + contest.endDate.minute}
+                                {new Date(contest.startDate).toLocaleString()}
                             <div className="flex flex-col">
                                 <p className="text-xl font-bold">Languages:</p>
-                                <div className="ml-3">
+                                <ul className="ml-3 list-disc">
                                     {contest.languages.map((language) => (
                                         <li>{language}</li>
                                     ))}
-                                </div>
+                                </ul>
                             </div>
                         </CardBody>
                         <CardFooter>

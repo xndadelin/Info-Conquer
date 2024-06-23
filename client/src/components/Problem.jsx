@@ -116,10 +116,10 @@ export const Problem = () => {
         setLanguage(userLanguage)
     }, [])
     const [tests, setTests] = useState('')
-    const {id} = useParams()
+    const {id, contest} = useParams()
     const queryProblem = gql`
-        query GetProblem($title: String!) {
-            getProblem(title: $title) {
+        query GetProblem($title: String!, $contest: String) {
+            getProblem(title: $title, contest: $contest) {
                 title
                 creator
                 description
@@ -144,6 +144,7 @@ export const Problem = () => {
                 successRate
                 userHasRated
                 rating
+                contest
             }
         }
     `
@@ -221,7 +222,7 @@ export const Problem = () => {
     const {data:problem, loading} = useQuery(queryProblem, {
         variables: {
             title: id,
-            code: code,
+            contest
         },
         onError: (error) => {
             setError(error)

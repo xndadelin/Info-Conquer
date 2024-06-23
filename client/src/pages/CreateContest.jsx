@@ -15,14 +15,25 @@ export const CreateConstest = () => {
     const [selectedProblems, setSelectedProblems] = useState([])
     const [name, setName] = useState('')
     const [description, setDescription] = useState('')
-    const [startDate, setStartDate] = useState("")
-    const [endDate, setEndDate] = useState("")
     const [error, setError] = useState('')
     const [languages, setLanguages] = useState([])
     const languagesDef = [
         { value: 'JavaScript' }, { value: 'Python' }, { value: 'Java' }, { value: 'C#' },
         { value: 'C++' }, { value: 'TypeScript' }, { value: 'Rust' }, { value: 'PHP' }, { value: 'C' }
     ]
+    const [date, setDate] = useState({startDate : {
+        year: undefined,
+        month: undefined,
+        day: undefined,
+        hour: undefined,
+        minute: undefined
+    }, endDate : {
+        year: undefined,
+        month: undefined,
+        day: undefined,
+        hour: undefined,
+        minute: undefined
+    }})
     const navigate = useNavigate()
     const {error: errorProblems} = useQuery(GET_PROBLEMS, {
         variables : {
@@ -36,7 +47,7 @@ export const CreateConstest = () => {
         }
     })
     const createContestMutation = gql`
-        mutation CreateContest($name: String, $description: String, $startDate: ContestDateInput, $endDate: ContestDateInput, $problems: [ProblemInput], $languages: [String]) {
+        mutation CreateContest($name: String, $description: String, $startDate: Date, $endDate: Date, $problems: [String], $languages: [String]) {
             createContest(name: $name, description: $description, startDate: $startDate, endDate: $endDate, problems: $problems, languages: $languages) {
                 success
             }
@@ -54,21 +65,9 @@ export const CreateConstest = () => {
         variables: {
             name,
             description,
-            startDate : {
-                year: startDate && startDate.year,
-                month: startDate && startDate.month,
-                day: startDate && startDate.day,
-                hour: startDate && startDate.hour,
-                minute: startDate && startDate.minute,
-            },
-            endDate : {
-                year: endDate && endDate.year,
-                month: endDate && endDate.month,
-                day: endDate && endDate.day,
-                hour: endDate && endDate.hour,
-                minute: endDate && endDate.minute,
-            },
-            problems: selectedProblems,
+            endDate: new Date(date.endDate.year, date.endDate.month, date.endDate.day, date.endDate.hour, date.endDate.minute),
+            startDate: new Date(date.startDate.year, date.startDate.month, date.startDate.day, date.startDate.hour, date.startDate.minute),
+            problems: [...selectedProblems],
             languages
         }
     })
@@ -89,9 +88,9 @@ export const CreateConstest = () => {
                 <DateRangePicker
                     hourCycle={24}
                     label="Contest duration"
-                    visibleMonths={2}
                     labelPlacement="outside"
                     granularity="minute"
+                    onChange={(e) => setDate({startDate: e.start, endDate:e.end})}
                 />
                 </div>
                 <Select label="Problems" selectionMode="multiple" placeholder="Choose problems" onSelectionChange={setSelectedProblems}>
@@ -112,7 +111,7 @@ export const CreateConstest = () => {
                 }}>
                     {(language) => <SelectItem key={language.value}>{language.value}</SelectItem>}
                 </Select>
-                <Button isDisabled={!name || !name || !startDate || !endDate || !problems || !languages} variant="flat" isLoading={loading} color="danger" onClick={() => createContest()} >Create contest</Button>
+                <Button isDisabled={!name || !date.startDate || !date.endDate || !problems || !languages} variant="flat" isLoading={loading} color="danger" onClick={() => createContest()} >Create contest</Button>
             </form>
         </div>
     )

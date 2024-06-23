@@ -145,7 +145,7 @@ module.exports = {
         async getUser(_, {}, context){
             return getUser(context)
         },
-        async getProblem(_, {title}, context){
+        async getProblem(_, {title, contest}, context){
             try{
                 const user = await getUser(context);
                 const problem = await Problem.findOne({title})
@@ -160,23 +160,21 @@ module.exports = {
                     problem.successRate = successRate
                     await problem.save()    
                 }
-                const contest = await Contest.findOne({ "problems.id": problem.title });
-                if(contest){
+                const contesta = await Contest.findOne({ _id: contest });
+                if(contesta){
                     if(!user){
                         return null
                     }
-                    if(!contest){
+                    if(!contesta){
                         return problem
                     }
                     const now = new Date();
-                    const startDate = new Date(contest.startDate.year, contest.startDate.month - 1, contest.startDate.day, contest.startDate.hour, contest.startDate.minute)
-                    const endDate = new Date(contest.endDate.year, contest.endDate.month - 1, contest.endDate.day, contest.endDate.hour, contest.endDate.minute)
-                    if(contest){
-                        const participantExists = contest.participants.some(participant => participant.username === user.username);
+                    if(contesta){
+                        const participantExists = contesta.participants.some(participant => participant.username === user.username);
                         if(!participantExists){
                             return null
                         }
-                        if(startDate >  now) return null
+                        if(contesta.startDate >  now) return null
                     }
                 }
                 if(user){
@@ -429,29 +427,19 @@ module.exports = {
         },
         async getContest(_, {id}, context){
             try{
-                const user = await getUser(context);
-                if(!user){
-                    throw new ApolloError('You are not logged in')
-                }   
+                const user = await getUser(context)
                 const contest = await Contest.findOne({_id: id})
                 if(!contest){
                     throw new ApolloError('This contest does not exist')
-                }
+                }   
                 const now = new Date();
-                const startDate = new Date(contest.startDate.year, contest.startDate.month - 1, contest.startDate.day, contest.startDate.hour, contest.startDate.minute)
-                const endDate = new Date(contest.endDate.year, contest.endDate.month - 1, contest.endDate.day, contest.endDate.hour, contest.endDate.minute)
                 contest.participants.sort((a, b) => b.score - a.score)
-                if(now > startDate && now < endDate){
-                    contest.hasStarted = true
+                const participates = contest.participants.some((participant) => participant.username === user.username)
+                if(now > contest.startDate && now < contest.endDate && participates || now > contest.endDate ){
                     return contest
-                }else if(now < startDate){
-                    contest.hasStarted = false
+                }else if(now < contest.startDate && !participates){
                     contest.problems = []
                     return contest
-                }else if(now > endDate){
-                    contest.hasStarted = false
-                    contest.hasEnded = true    
-                    return contest               
                 }
             }catch(e){
                 throw new ApolloError(e)
@@ -521,7 +509,7 @@ module.exports = {
                 throw new ApolloError(e)
             }
         },
-        async getSearch(_, {query}, context){
+        async getSearch(_, {query}){
             try{
                 let users = await User.find({username: { $regex: query, $options: 'i'}}).select('username')
                 users = users.map(user => user.username)
@@ -722,12 +710,10 @@ module.exports = {
                         throw new ApolloError('You have to join the contest in order to submit a solution')
                     }
                     const now = new Date();
-                    const startDate = new Date(contest.startDate.year, contest.startDate.month - 1, contest.startDate.day, contest.startDate.hour, contest.startDate.minute)
-                    const endDate = new Date(contest.endDate.year, contest.endDate.month - 1, contest.endDate.day, contest.endDate.hour, contest.endDate.minute)
-                    if(now > endDate){
+                    if(now > contest.endDate){
                         throw new ApolloError('This contest has ended')
                     }
-                    if(now < startDate){
+                    if(now < contest.startDate){
                         throw new ApolloError('This contest has not started yet')
                     }
                 }
@@ -929,9 +915,9 @@ module.exports = {
                 }
             }else{
                 contest.participants.push({username: user.username, score: 0, problems: []})
-                const user = await User.find({username: user.username})
-                user.activity.push({date: new Date(), message: `${user.username} has joined the ${contest.name} contest`})
+                user.activity.push({date: new Date(), message: `${user.username} has registered for the ${contest.name} contest`})
                 await contest.save()
+                await user.save()
                 return {
                     success: true
                 }
