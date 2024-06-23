@@ -8,6 +8,7 @@ const {grader} = require('../utils/graders/grader')
 const Article = require('../models/article');
 const Announcement = require('../models/announcements');
 const Contest = require('../models/contest');
+const Daily = require('../models/daily')
 const nodemailer = require('nodemailer');
 const openai = require('openai');
 const client = new openai(process.env.OPENAI_API_KEY);
@@ -145,7 +146,7 @@ module.exports = {
         async getUser(_, {}, context){
             return getUser(context)
         },
-        async getProblem(_, {title, contest}, context){
+        async getProblem(_, {title, contest, daily}, context){
             try{
                 const user = await getUser(context);
                 const problem = await Problem.findOne({title})
@@ -176,6 +177,12 @@ module.exports = {
                         }
                         if(contesta.startDate >  now) return null
                     }
+                }
+                if(daily){
+                    const Problema = await Daily.findOne({date:daily})
+                    if(!Problema) return null
+                    const dailyProblem = await Problem.findOne({title:Problema.problem})
+                    return dailyProblem
                 }
                 if(user){
                     problem.userHasRated = problem.ratings.some(rating => rating.username === user.username)
@@ -543,7 +550,22 @@ module.exports = {
             }catch(e){
                 throw new ApolloError(e)
             }
-        }
+        },
+        async getDailies(_, {}, context) {
+            try{
+                const user = await getUser(context)
+                if(!user) throw new ApolloError('You have to be logged in order to access the dailies!')
+                const dailies = await Daily.find({})
+                for(const daily of dailies){
+                    const solved = daily.solvers.includes(user.username)
+                    daily.solved = solved;
+        
+                }
+                return dailies
+            }catch(e){
+                throw new ApolloError(e)
+            }
+        },
     },
     Mutation: {
         async register(_, { registerInput: { username, email, password, confirmPassword, token}}, context){
@@ -692,8 +714,8 @@ module.exports = {
             }catch(error){
                 throw new ApolloError(error)
             }
-        },
-        async submitSolution(_, {solutionInput: {problem, code, language}}, context){
+        }, 
+        async submitSolution(_, {solutionInput: {problem, code, language, type}}, context){
             try{
                 const problema = await Problem.findOne({title: problem}).select('tests title type rejectedSolutions acceptedSolutions timeExecution limitMemory')
                 const contest = await Contest.findOne({ "problems.id": problema.title });
@@ -726,6 +748,15 @@ module.exports = {
                         user.activity.push({date: new Date(), message: `${user.username} has solved the ${problem} problem!`})
                     }
                     problema.acceptedSolutions += 1;
+                    if(type.split(':')[0] === 'daily'){
+                        const dates = type.split(':')[1].split("/")
+                        const year = dates[0], month = dates[1], day = dates[2];
+                        const date = new Date(Date.UTC(year, month - 1, day)).toISOString().replace('Z', '+00:00')
+                        const daily = await Daily.findOne({date})
+                        if(!daily) throw new ApolloError('This daily does not exist')
+                        daily.solvers.push(user.username)
+                        await daily.save()
+                    }
                     await problema.save();
                 }else{
                     problema.rejectedSolutions += 1;

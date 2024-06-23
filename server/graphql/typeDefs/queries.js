@@ -4,7 +4,7 @@ module.exports = gql`
     type Query {
         getUsers: [User]
         getUser: User
-        getProblem(title: String!, contest: String): Problem
+        getProblem(title: String!, contest: String, daily: Date): Problem
         getProfile(username: String): ProfileUser
         getSolution(id: String): Solution
         getProblems(category: String, subcategory: String): [Problem]
@@ -21,5 +21,7 @@ module.exports = gql`
         getLeaderboard: [LeaderboardRow]
         getSearch(query: String): SearchResults
         getActivity(username: String): [Activity]
+        getDailies: [Daily]
+        getDaily(daily: String): Daily
     } 
 `;  

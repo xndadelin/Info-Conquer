@@ -18,7 +18,8 @@ module.exports = gql`
     input SolutionInput {
         code: String,
         problem: String,
-        language: String
+        language: String,
+        type: String
     }
     type TestCase {
         status: String,

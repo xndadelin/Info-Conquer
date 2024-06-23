@@ -31,10 +31,10 @@ const getStats = gql`
     }
 `
 export const ProblemStats = () => {
-    const {id} = useParams();
+    const {id, problem_name} = useParams();
     const {loading, data} = useQuery(getStats, {
         variables: {
-            id
+            id: id || problem_name
         },
     })
     console.log(data)

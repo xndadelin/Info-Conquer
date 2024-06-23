@@ -116,15 +116,15 @@ export const Problem = () => {
         setLanguage(userLanguage)
     }, [])
     const [tests, setTests] = useState('')
-    const {id, contest} = useParams()
+    const {id, contest, year, problem_name, month, day} = useParams()
+    const type = contest ? `contest:${contest}` : year && month && day && problem_name ? `daily:${year}/${month}/${day}` : 'problem'
     const queryProblem = gql`
-        query GetProblem($title: String!, $contest: String) {
-            getProblem(title: $title, contest: $contest) {
+        query GetProblem($title: String!, $contest: String, $daily: Date) {
+            getProblem(title: $title, contest: $contest, daily: $daily) {
                 title
                 creator
                 description
                 requirements
-                type
                 tags
                 category
                 difficulty
@@ -198,7 +198,7 @@ export const Problem = () => {
     `
     const {data: submissions, loading: loadingSubmissions, error: errorSubmissions} = useQuery(submissiongql, {
         variables: {
-            title: id
+            title: id || problem_name
         },
         onError: (error) => {
             setError(error)
@@ -221,8 +221,9 @@ export const Problem = () => {
     })
     const {data:problem, loading} = useQuery(queryProblem, {
         variables: {
-            title: id,
-            contest
+            title: id || problem_name,
+            contest,
+            daily: new Date(Date.UTC(year, month - 1, day)).toISOString().replace('Z', '+00:00')
         },
         onError: (error) => {
             setError(error)
@@ -234,7 +235,8 @@ export const Problem = () => {
             solutionInput: {
                 code: code,
                 problem: problem && problem.getProblem && problem.getProblem.title,
-                language
+                language,
+                type
             }
         },
         onCompleted: (data) => {
@@ -256,6 +258,7 @@ export const Problem = () => {
     const onClickReport = () => {
         setClickReport(!clickReport)
     }
+    console.log(problem)
     return (
         <div className="container mx-auto px-5 py-5">
             <Tabs selectedKey={selected} onSelectionChange={setSelected} className="flex flex-col">

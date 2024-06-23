@@ -103,4 +103,9 @@ module.exports = gql`
         tags: [String],
         successRate: String,
     }
+    type Daily {
+        problem: String,
+        date: Date,
+        solved: Boolean
+    }
 `;

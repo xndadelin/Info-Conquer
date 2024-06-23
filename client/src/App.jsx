@@ -134,6 +134,10 @@ function App() {
             element={<Problem/>}
           />
           <Route
+            path="/daily/:problem_name/:year/:month/:day"
+            element={<Problem/>}
+          />
+          <Route
             path="*"
             element={<NotFound/>}
           />
