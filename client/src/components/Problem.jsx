@@ -223,7 +223,7 @@ export const Problem = () => {
         variables: {
             title: id || problem_name,
             contest,
-            daily: new Date(Date.UTC(year, month - 1, day)).toISOString().replace('Z', '+00:00')
+            daily: year && month && day && new Date(Date.UTC(year, month - 1, day)).toISOString().replace('Z', '+00:00')
         },
         onError: (error) => {
             setError(error)
@@ -234,7 +234,7 @@ export const Problem = () => {
         variables: {
             solutionInput: {
                 code: code,
-                problem: problem && problem.getProblem && problem.getProblem.title,
+                problem: problem?.getProblem?.title,
                 language,
                 type
             }
