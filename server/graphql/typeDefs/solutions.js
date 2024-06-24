@@ -13,7 +13,7 @@ module.exports = gql`
         date: String,
         compilationError: String,
         success: String,
-        id_solution: String
+        id_solution: String,
     }
     input SolutionInput {
         code: String,
@@ -33,6 +33,7 @@ module.exports = gql`
         message: String,
         exitcode: Int,
         exitsig: Int,
+        cerr: String
     }
     type Submission {
         username: String,

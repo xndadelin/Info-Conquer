@@ -38,6 +38,7 @@ export const Solution = () => {
                   status
                   success
                   expectedOutput
+                  cerr
                 }
                 username
             }
@@ -56,7 +57,7 @@ export const Solution = () => {
     }
     if(error) return <NotFound/>
     return (
-        <div className="container mx-auto grid grid-cols-2 max-lg:grid-cols-1 my-10 p-3 gap-5 h-screen">
+        <div className="container mx-auto grid grid-cols-2 max-lg:grid-cols-1 my-10 p-3 gap-5 h-[1500px]">
             <div>
                 <p className="text-5xl mb-5">Solution for problem: <Link className="text-default-500" to={`/problems/${solution.getSolution.problem}?code=${encodeURIComponent(solution.getSolution.code)}&language=${solution.getSolution.language}`}>{solution.getSolution.problem}</Link></p>
                 <Table>
@@ -110,7 +111,7 @@ export const Solution = () => {
                                     <TableRow>
                                         <TableCell>{index + 1}</TableCell>
 
-                                        <TableCell>{test.executionTime + ' ms'}</TableCell>
+                                        <TableCell>{test.executionTime + ' s'}</TableCell>
                                         <TableCell>{test.memoryUsed / 1024 + ' MB'}</TableCell>
                                         <TableCell>{test.score}</TableCell>
                                         <TableCell>{test.status}</TableCell>
@@ -132,12 +133,12 @@ export const Solution = () => {
             </div>
             <Modal onClose={() => setSelectedTestCase(null)} isOpen={selectedTestCase !== null}>
                 <ModalContent>
-                    {(onClose) => (
+                    {() => (
                         <>
                             <ModalHeader>Test case</ModalHeader>
                             <ModalBody>
                                 <div className="flex flex-col justify-between">
-                                    <div className="flex flex-col mb-5">
+                                    <div className="mb-5">
                                         <p className="text-3xl mb-2">Input</p>
                                         <pre>
                                             <Snippet className="w-[100%]" symbol="">
@@ -145,7 +146,7 @@ export const Solution = () => {
                                             </Snippet>
                                         </pre>
                                     </div>
-                                    <div className="flex flex-col mb-5">
+                                    <div className="mb-5">
                                         <p className="text-3xl mb-2">Output</p>
                                         <pre>
                                             <Snippet symbol="" className="w-[100%]">
@@ -153,11 +154,19 @@ export const Solution = () => {
                                             </Snippet>
                                         </pre>
                                     </div>
-                                    <div className="flex flex-col mb-5">
+                                    <div className="mb-5">
                                         <p className="text-3xl mb-2">Expected output</p>
                                         <pre>
                                             <Snippet symbol="" className="w-[100%]">
                                                 {selectedTestCase.expectedOutput}
+                                            </Snippet>
+                                        </pre>
+                                    </div>
+                                    <div className="mb-5">
+                                        <p className="text-3xl mb-2">Cerr</p>
+                                        <pre>
+                                            <Snippet symbol="" className="w-[100%]">
+                                                {selectedTestCase.cerr}
                                             </Snippet>
                                         </pre>
                                     </div>

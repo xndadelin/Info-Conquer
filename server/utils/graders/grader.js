@@ -50,6 +50,12 @@ const languages = {
         'run': 'ruby main.rb',
         'file': 'main.rb'
     },
+    'Rust': {
+        'compile': 'rustc main.rs 2> error.txt',
+        'extension': 'rs',
+        'run': './main',
+        'file': 'main.rs'
+    }
 }
 const initialize = () => {
     const idSolution = crypto.randomUUID();
@@ -57,12 +63,15 @@ const initialize = () => {
     return {idSolution, received_time};
 }
 
-const populate_sandbox = (sandboxPath, code, file) => {
-    fs.writeFileSync(path.join(sandboxPath, 'box', file), code);
+const populate_sandbox = (sandboxPath, code, file, language) => {
+    let file_content = code;
+    if(languages[language].shebang){
+        file_content = languages[language].shebang + '\n' + code;
+    }
+    fs.writeFileSync(path.join(sandboxPath, 'box', file), file_content);
 }
 
 const compile = (language, sandboxPath) => {
-    const error = fs.writeFileSync(path.join(sandboxPath, 'box', 'error.txt'), '');
     const command = languages[language].compile;
     try{
         execSync(command, {cwd: path.join(sandboxPath, 'box')});
@@ -80,7 +89,10 @@ const check_error = (sandboxPath) => {
     const error = fs.readFileSync(path.join(sandboxPath, 'box', 'error.txt')).toString();
     return error;
 }
-
+const get_cerr = (sandboxPath) => {
+    const cerr = fs.readFileSync(path.join(sandboxPath, 'box', 'cerr.txt')).toString();
+    return cerr;
+}
 const get_file_size = (sandboxPath, file) => {
     const File = fs.statSync(path.join(sandboxPath, 'box', file));
     return File.size / 1024;
@@ -92,6 +104,8 @@ const prepare_sandbox = (language, code) => {
     const input = path.join(sandboxPath, 'box', 'input.txt');
     const output = path.join(sandboxPath, 'box', 'output.txt');
     const meta = path.join(sandboxPath, 'box', 'meta.txt');
+    fs.writeFileSync(path.join(sandboxPath, 'box', 'error.txt'), '');
+    fs.writeFileSync(path.join(sandboxPath, 'box', 'cerr.txt'), '');
     fs.writeFileSync(path.join(sandboxPath, 'box', file), code);
     return {sandboxPath, input, output, meta};
 }
@@ -111,7 +125,7 @@ const run = (language, sandboxPath, testCase, inputPath, outputPath, memory, run
     fs.writeFileSync(outputPath, ''); 
     let exitcode = null, exitsig = null, killed = null, max_rss = null, message = null, status = null, time = null;
     try{
-        execSync(`isolate --box-id=1 --mem=${memory} --time=${runtime} --meta=${path.join(sandboxPath, 'box', 'meta.txt')} --stdin=input.txt --stdout=output.txt --run -- "${command}"`, {cwd: path.join(sandboxPath, 'box'), env: process.env});
+        execSync(`isolate --box-id=1 --mem=${memory} --time=${runtime} --meta=${path.join(sandboxPath, 'box', 'meta.txt')} --stderr=cerr.txt --stdin=input.txt --stdout=output.txt --run -- "${command}"`, {cwd: path.join(sandboxPath, 'box'), env: process.env});
     }catch(error){
         console.log(error); 
     }  
@@ -124,7 +138,8 @@ const run = (language, sandboxPath, testCase, inputPath, outputPath, memory, run
     status = meta.status ? meta.status : null;
     time = meta.time ? parseFloat(meta.time) : null;
     const output = fs.readFileSync(outputPath).toString();
-    return {output, exitcode, exitsig, killed, max_rss, message, status, time};
+    const cerr = fs.readFileSync(path.join(sandboxPath, 'box', 'cerr.txt')).toString()
+    return {output, exitcode, exitsig, killed, max_rss, message, status, time, cerr};
 
 }
 
@@ -138,11 +153,12 @@ const grader = (testCases, code, problem, username, language, max_time, max_memo
     max_memory = parseFloat(max_memory);
     const {idSolution, received_time} = initialize();
     const {sandboxPath, input, output, meta} = prepare_sandbox(language, code);
-    populate_sandbox(sandboxPath, code, languages[language].file);
+    populate_sandbox(sandboxPath, code, languages[language].file, language);
 
     const {status, message, error} = compile(language, sandboxPath)
     const results = [];
     check_files(sandboxPath);
+    const cerr = get_cerr(sandboxPath)
     if(status === 'ERROR'){
         return {
             username,
@@ -156,10 +172,11 @@ const grader = (testCases, code, problem, username, language, max_time, max_memo
             success: false,
             id_solution: idSolution,
             date: new Date(),
+            cerr
         }
     }else {
         testCases.forEach((testCase) => {
-            const {output: outputResult, exitcode, exitsig, killed, max_rss, message, status, time} = run(language, sandboxPath, testCase, input, output, max_memory, max_time);
+            const {output: outputResult, exitcode, exitsig, killed, max_rss, message, status, time, cerr} = run(language, sandboxPath, testCase, input, output, max_memory, max_time);
             if(outputResult.trimEnd() === testCase.output.trimEnd() && time <= max_time && max_rss <= max_memory){
                 results.push({
                     status: 'AC',
@@ -172,7 +189,8 @@ const grader = (testCases, code, problem, username, language, max_time, max_memo
                     expectedOutput: testCase.output,
                     exitcode,
                     exitsig,
-                    message: 'OK'
+                    message: 'OK',
+                    cerr
                 })
                 return ;
             }else {
@@ -188,7 +206,8 @@ const grader = (testCases, code, problem, username, language, max_time, max_memo
                         expectedOutput: testCase.output,
                         message: message,
                         exitcode,
-                        exitsig 
+                        exitsig,
+                        cerr
                     })
                     return ;
                 }
@@ -204,7 +223,8 @@ const grader = (testCases, code, problem, username, language, max_time, max_memo
                         expectedOutput: testCase.output,
                         message: 'Time Limit Exceeded and Memory Limit Exceeded',
                         exitcode,
-                        exitsig
+                        exitsig,
+                        cerr
                     })
                     return ;
                 }
@@ -220,7 +240,8 @@ const grader = (testCases, code, problem, username, language, max_time, max_memo
                         expectedOutput: testCase.output,
                         message: 'Time Limit Exceeded',
                         exitcode,
-                        exitsig
+                        exitsig,
+                        cerr
                     })
                     return ;
                 }
@@ -236,7 +257,8 @@ const grader = (testCases, code, problem, username, language, max_time, max_memo
                         expectedOutput: testCase.output,
                         message: 'Memory Limit Exceeded',
                         exitcode,
-                        exitsig
+                        exitsig,
+                        cerr
                     })
                     return ;
                 }
@@ -252,7 +274,8 @@ const grader = (testCases, code, problem, username, language, max_time, max_memo
                         expectedOutput: testCase.output,
                         message: 'Wrong Answer',
                         exitcode,
-                        exitsig
+                        exitsig,
+                        cerr
                     })
                     return ;
                 }

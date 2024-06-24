@@ -91,8 +91,9 @@ const languages_for_editor = {
     'Python': 'python',
     'Java': 'java',
     'Javascript': 'js',
-    'C#': 'csharp',
+    'C#': 'cs',
     'C': 'c',
+    'Rust': 'rs'
 }
 export const Problem = () => {
     const {user} = useContext(UserContext)
