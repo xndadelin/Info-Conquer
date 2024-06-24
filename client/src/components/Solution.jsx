@@ -57,7 +57,7 @@ export const Solution = () => {
     }
     if(error) return <NotFound/>
     return (
-        <div className="container mx-auto grid grid-cols-2 max-lg:grid-cols-1 my-10 p-3 gap-5 h-[1500px]">
+        <div className="container mx-auto grid grid-cols-2 max-lg:grid-cols-1 my-10 p-3 gap-5">
             <div>
                 <p className="text-5xl mb-5">Solution for problem: <Link className="text-default-500" to={`/problems/${solution.getSolution.problem}?code=${encodeURIComponent(solution.getSolution.code)}&language=${solution.getSolution.language}`}>{solution.getSolution.problem}</Link></p>
                 <Table>

@@ -49,7 +49,7 @@ export const Calendar = () => {
     return (
         <div className="container mx-auto my-5 p-5">
             <p className="text-3xl font-bold">{`${monthName} ${currentMonth.year}`}</p>
-            <div className="grid grid-cols-7 max-md:grid-cols-4 gap-2 mt-4">
+            <div className="grid grid-cols-7 max-md:grid-cols-3 gap-2 mt-4">
                 {Array.from({ length: new Date(currentMonth.year, currentMonth.month).getDay() }).map(() => (
                     <div className="invisible">
                         <Card />

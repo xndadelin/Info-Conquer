@@ -2,7 +2,7 @@ import { Button, Divider, Link } from "@nextui-org/react"
 
 export const Footer = () => {
     return (
-        <footer className="relative bottom-0 mt-auto flex justify-center items-center flex-col gap-2 font-md text-white bg-zinc-900 shadow h-[170px]">
+        <footer className="relative mt-[500px] bottom-0 flex justify-center items-center flex-col gap-2 font-md text-white bg-zinc-900 shadow h-[170px]">
             <p className="text-3xl" >
                 &lt;InfoConquer/&gt;
             </p>
