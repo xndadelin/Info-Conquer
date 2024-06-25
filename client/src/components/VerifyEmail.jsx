@@ -24,7 +24,7 @@ export const VerifyEmail = () => {
         },
         onCompleted: data => {
             if(data.verifyEmail.success){
-                window.location.href = "/login"
+                window.location.href = "/"
             }
         },
         onError: err => {
@@ -32,8 +32,9 @@ export const VerifyEmail = () => {
         }
     })
     if(loading) return <Loading />
+    if(user.getUser) window.location.href = '/'
     return (
-        <div className="container mx-auto p-4 my-4">
+        <div className="container mx-auto p-4 my-4 h-screen">
             {error && <div className="bg-red-500 text-white p-2 my-2">{error}</div>}
         </div>
     )

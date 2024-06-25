@@ -13,19 +13,15 @@ module.exports = {
         if(!title || !content){
             throw new ApolloError('You have to fill all the fields')
         }
-        try{
-            const exists = await Announcement.findOne({title})
-            if(exists){
-                throw new ApolloError('An announcement with this title already exists')
-            }else{
-                const newAnnouncement = new Announcement({title, content, createdBy: user.username})
-                await newAnnouncement.save()
-            }
-            return {
-                success: true
-            }
-        }catch(e){
-            throw new ApolloError(e)
+        const exists = await Announcement.findOne({title})
+        if(exists){
+            throw new ApolloError('An announcement with this title already exists')
+        }else{
+            const newAnnouncement = new Announcement({title, content, createdBy: user.username})
+            await newAnnouncement.save()
+        }
+        return {
+            success: true
         }
     }
 }

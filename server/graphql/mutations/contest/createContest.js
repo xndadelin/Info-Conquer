@@ -14,14 +14,10 @@ module.exports = {
         if(!name || !description || !startDate || !endDate || !problems){
             throw new ApolloError('You have to fill all the fields')
         }
-        try{
-            const newContest = new Contest({name, description, startDate, endDate, problems, languages, createdBy: user.username})
-            await newContest.save()
-            return {
-                success: true
-            }
-        }catch(e){
-            throw new ApolloError(e)
+        const newContest = new Contest({name, description, startDate, endDate, problems, languages, createdBy: user.username})
+        await newContest.save()
+        return {
+            success: true
         }
     }
 }
