@@ -162,14 +162,16 @@ export const Solution = () => {
                                             </Snippet>
                                         </pre>
                                     </div>
-                                    <div className="mb-5">
-                                        <p className="text-3xl mb-2">Cerr</p>
-                                        <pre>
-                                            <Snippet symbol="" className="w-[100%]">
-                                                {selectedTestCase.cerr}
-                                            </Snippet>
-                                        </pre>
-                                    </div>
+                                    {selectedTestCase.cerr && (
+                                        <div className="mb-5">
+                                            <p className="text-3xl mb-2">Cerr</p>
+                                            <pre>
+                                                <Snippet symbol="" className="w-[100%]">
+                                                    {selectedTestCase.cerr}
+                                                </Snippet>
+                                            </pre>
+                                        </div>
+                                    )}
                                 </div>
                             </ModalBody>
                         </>

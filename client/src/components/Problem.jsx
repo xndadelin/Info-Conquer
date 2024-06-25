@@ -290,7 +290,7 @@ export const Problem = () => {
                                             <TableCell>{problem.getProblem.timeExecution} s</TableCell>
                                             <TableCell>{Math.ceil(problem.getProblem.limitMemory / 1024)} MB</TableCell>
                                             <TableCell>{parseInt(problem.getProblem.successRate) + '%'}</TableCell>
-                                            <TableCell>{problem.getProblem.rating === 0 ? 'Not rated' : problem.getProblem.rating} / 5</TableCell>
+                                            <TableCell>{problem.getProblem.rating === 0 ? 'NR' : problem.getProblem.rating} / 5</TableCell>
                                         </TableRow>
                                     </TableBody>
                                 </Table>

@@ -23,5 +23,6 @@ module.exports = gql`
         getActivity(username: String): [Activity]
         getDailies: [Daily]
         getDaily(daily: String): Daily
+        getChatbotMessage(prompt: String, problem: String, code: String): message
     } 
 `;  

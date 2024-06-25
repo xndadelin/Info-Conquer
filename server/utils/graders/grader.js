@@ -55,6 +55,12 @@ const languages = {
         'extension': 'rs',
         'run': './main',
         'file': 'main.rs'
+    },
+    'Go': {
+        'compile': 'go build main.go 2> error.txt',
+        'extension': 'go',
+        'run': './main',
+        'file': 'main.go'
     }
 }
 const initialize = () => {
