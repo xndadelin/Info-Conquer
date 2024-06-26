@@ -1,10 +1,12 @@
-import { useParams } from "react-router-dom"
-import { gql, useQuery } from "@apollo/client"
-import { Loading } from "../components/Loading"
-import { useState } from "react"
-import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, Pagination, Card, CardHeader, Link } from "@nextui-org/react"
-import { NotFound } from "../pages/NotFound"
-import { Error } from "../components/Error"
+import { useParams } from "react-router-dom";
+import { gql, useQuery } from "@apollo/client";
+import { Loading } from "../components/Loading";
+import { useState } from "react";
+import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, Pagination, Card, CardHeader, Link } from "@nextui-org/react";
+import { NotFound } from "../pages/NotFound";
+import { Error } from "../components/Error";
+import { useTranslation } from 'react-i18next';
+
 const getContest = gql`
     query GetContest($id: String) {
         getContest(id: $id) {
@@ -24,40 +26,41 @@ const getContest = gql`
             ended
         }
     }
+`;
 
-`
 export const Contest = () => {
-    const {id} = useParams()
-    const [page, setPage] = useState(1)
-    const [error, setError] = useState('')
-    const participantsPerPage = 20
-    const {data, loading} = useQuery(getContest, {
-        variables: {
-            id
-        },
+    const { id } = useParams();
+    const [page, setPage] = useState(1);
+    const [error, setError] = useState('');
+    const participantsPerPage = 20;
+    const { data, loading } = useQuery(getContest, {
+        variables: { id },
         onCompleted: (data) => {
-            console.log(data)
+            console.log(data);
         },
         onError: (error) => {
-            setError(error.message)
+            setError(error.message);
         }
-    })
-    if(loading) return <Loading/>
-    if(!data) return <NotFound/>
-    if(error) return <Error error={error}/>
+    });
+    const { t } = useTranslation();
+
+    if (loading) return <Loading />;
+    if (!data) return <NotFound />;
+    if (error) return <Error error={error} />;
+
     return (
         <div className="container mx-auto p-3 my-5 h-screen">
             <p className="text-4xl font-bold">{data.getContest.name}</p>
-            <p className="text-gray-400">Created by {data.getContest.createdBy}</p>
-            <p className="text-gray-400 font-bold">Start Date: {new Date(data.getContest.startDate).toLocaleString()}</p>
-            <p className="text-gray-400 font-bold">End Date: {new Date(data.getContest.endDate).toLocaleString()} </p>
-            <p className="text-gray-400">Languages: {data.getContest.languages.join(", ")}</p>
-            <p className="text-gray-400">Description: {data.getContest.description}</p>
-            <p className="text-gray-400">Problems: {data.getContest.problems.length}</p>
-            <p className="text-gray-400">Participants: {data.getContest.participants.length}</p>
-            <p className="text-gray-400">Has started: {data.getContest.started ? "Yes" : "No"}</p>
-            <p className="text-gray-400">Has ended: {data.getContest.ended ? "Yes" : "No"}</p>
-            <p className="text-2xl font-bold mt-5">Leaderboard</p>
+            <p className="text-gray-400">{t('contest.createdBy')} {data.getContest.createdBy}</p>
+            <p className="text-gray-400 font-bold">{t('contest.startDate')}: {new Date(data.getContest.startDate).toLocaleString()}</p>
+            <p className="text-gray-400 font-bold">{t('contest.endDate')}: {new Date(data.getContest.endDate).toLocaleString()} </p>
+            <p className="text-gray-400">{t('contest.languages')}: {data.getContest.languages.join(", ")}</p>
+            <p className="text-gray-400">{t('contest.description')}: {data.getContest.description}</p>
+            <p className="text-gray-400">{t('contest.problems')}: {data.getContest.problems.length}</p>
+            <p className="text-gray-400">{t('contest.participants')}: {data.getContest.participants.length}</p>
+            <p className="text-gray-400">{t('contest.hasStarted')}: {data.getContest.started ? t('contest.yes') : t('contest.no')}</p>
+            <p className="text-gray-400">{t('contest.hasEnded')}: {data.getContest.ended ? t('contest.yes') : t('contest.no')}</p>
+            <p className="text-2xl font-bold mt-5">{t('contest.leaderboard')}</p>
             <Table
                 isCompact
                 isStriped
@@ -75,8 +78,8 @@ export const Contest = () => {
                 }
             >
                 <TableHeader>
-                    <TableColumn>Rank</TableColumn>
-                    <TableColumn>Username</TableColumn>
+                    <TableColumn>{t('contest.rank')}</TableColumn>
+                    <TableColumn>{t('contest.username')}</TableColumn>
                     {data.getContest.problems.map((problem) => (
                         <TableColumn key={problem}>{problem}</TableColumn>
                     ))}
@@ -98,7 +101,7 @@ export const Contest = () => {
             </Table>
             {data.getContest.started || data.getContest.ended ? (
                 <div>
-                    <p className="text-2xl font-bold mt-5">Problems</p>
+                    <p className="text-2xl font-bold mt-5">{t('contest.problems')}</p>
                     <div className="grid grid-cols-3 gap-2 mt-3">
                         {data.getContest.problems.map((problem) => (
                             <Card as={Link} href={`/contests/${id}/${problem}`} className="flex-1">
@@ -109,10 +112,10 @@ export const Contest = () => {
                         ))}
                     </div>
                 </div>
-            ): 
-              <div className="text-3xl font-bold">
-                
-              </div>
+            ) :
+                <div className="text-3xl font-bold">
+                    {t('contest.noProblemsYet')}
+                </div>
             }
         </div>
     )

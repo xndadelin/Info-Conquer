@@ -7,13 +7,13 @@ import { Terminal } from "../utils/Terminal"
 export const Background = () => {
     return (
         <div className=" fixed w-full h-full bg-[#121212]">
-            <Code/>
+            <Code />
             <div className="glow-red top-[50%] fixed w-[300px] h-[300px]"></div>
-            <CircleNodes/>    
+            <CircleNodes />
             <div className="glow-white blur-3xl right-0 top-[20%] fixed w-[300px] h-[300px]"></div>
-            <Terminal/>
-            <Network/>
-            <Gears/>
+            <Terminal />
+            <Network />
+            <Gears />
         </div>
     )
 }

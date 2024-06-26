@@ -1,8 +1,8 @@
 import { gql, useMutation } from '@apollo/client';
 import { useState } from 'react';
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button } from '@nextui-org/react';
-import { Star } from '../utils/Star'; 
-
+import { Star } from '../utils/Star';
+import { useTranslation } from 'react-i18next';
 const rateProblem = gql`
     mutation rateProblem($id: String!, $rating: Int!) {
         rateProblem(id: $id, rating: $rating) {
@@ -12,6 +12,7 @@ const rateProblem = gql`
 `;
 
 export const RateProblem = ({ isOpen, onClose, problem, onOpenChange, setUserHasRated }) => {
+    const { t } = useTranslation();
     const [rating, setRating] = useState(1);
     const [stars, setStars] = useState({
         'star-1': { hovered: false, selected: false },
@@ -21,10 +22,10 @@ export const RateProblem = ({ isOpen, onClose, problem, onOpenChange, setUserHas
         'star-5': { hovered: false, selected: false }
     });
 
-    const [rate, { loading, error, data }] = useMutation(rateProblem, {
+    const [rate, { loading }] = useMutation(rateProblem, {
         onCompleted: () => {
             onClose();
-            setUserHasRated(true)
+            setUserHasRated(true);
         },
     });
 
@@ -42,6 +43,7 @@ export const RateProblem = ({ isOpen, onClose, problem, onOpenChange, setUserHas
         }
         setStars(updatedStars);
     };
+
     const onMouseLeave = () => {
         const updatedStars = {};
         for (let i = 1; i <= 5; i++) {
@@ -51,7 +53,8 @@ export const RateProblem = ({ isOpen, onClose, problem, onOpenChange, setUserHas
             };
         }
         setStars(updatedStars);
-    }
+    };
+
     const onClickStar = (_, index) => {
         const updatedStars = {};
         for (let i = 1; i <= 5; i++) {
@@ -63,13 +66,14 @@ export const RateProblem = ({ isOpen, onClose, problem, onOpenChange, setUserHas
         }
         setStars(updatedStars);
         setRating(index);
-    }
+    };
+
     return (
         <div className="p-5">
-            <Modal size="md"  onOpenChange={onOpenChange} isOpen={isOpen} onClose={onClose} title="Rate problem">
-               <ModalContent>
-                     <ModalHeader>Rate problem</ModalHeader>
-                     <ModalBody>
+            <Modal size="md" onOpenChange={onOpenChange} isOpen={isOpen} onClose={onClose} title={t('rateProblemPage.rateProblemTitle')}>
+                <ModalContent>
+                    <ModalHeader>{t('rateProblemPage.rateProblemHeader')}</ModalHeader>
+                    <ModalBody>
                         <div className='flex'>
                             {Object.keys(stars).map((star, index) => (
                                 <Star
@@ -82,14 +86,14 @@ export const RateProblem = ({ isOpen, onClose, problem, onOpenChange, setUserHas
                                     onClick={() => onClickStar(star, index + 1)}
                                 />
                             ))}
-                        </div>  
-                     </ModalBody>
-                     <ModalFooter align="right">
-                       <Button color='danger' variant='flat' onClick={submit} isLoading={loading}>
-                            Submit
+                        </div>
+                    </ModalBody>
+                    <ModalFooter align="right">
+                        <Button color='danger' variant='flat' onClick={submit} isLoading={loading}>
+                            {t('rateProblemPage.submitButton')}
                         </Button>
                     </ModalFooter>
-               </ModalContent>
+                </ModalContent>
             </Modal>
         </div>
     );

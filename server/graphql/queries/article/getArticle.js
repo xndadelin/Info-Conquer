@@ -1,6 +1,5 @@
 const Article = require('../../../models/article')
-const {ApolloError} = require('apollo-server-express')
-
+const { getUser } = require('../../../utils/getUser')
 module.exports = {
     async getArticle(_, {id}, context){
         const user = await getUser(context);

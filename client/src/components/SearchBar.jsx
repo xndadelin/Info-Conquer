@@ -1,23 +1,23 @@
 import { Input, Tooltip } from "@nextui-org/react";
 import { useState } from "react";
 import { Link } from "@nextui-org/react";
-import { useTranslation } from 'react-i18next'; 
+import { useTranslation } from 'react-i18next';
 
 export const SearchBar = () => {
-    const { t } = useTranslation(); 
+    const { t } = useTranslation();
     const [search, setSearch] = useState('');
 
     return (
         <Tooltip text={t('searchBar.text')} placement="bottom" content={
-            <Input 
+            <Input
                 onKeyDown={(e) => {
                     if (e.key === 'Enter') {
                         window.location.href = `/search/${search}`;
                     }
-                }} 
-                label={t('searchBar.label')} 
-                value={search} 
-                onChange={(e) => setSearch(e.target.value)} 
+                }}
+                label={t('searchBar.label')}
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
                 placeholder={t('searchBar.text')}
             />
         }>

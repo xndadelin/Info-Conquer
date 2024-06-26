@@ -361,6 +361,184 @@
     "calendar": {
       "noDailyAvailable": "Nu există o problemă.",
       "noDailyYet": "Încă nu există problema."
+    },
+    "announcement": {
+      "announcementBy": "Anunț de"
+    },
+    "article": {
+      "by": "De",
+      "on": "La",
+      "like": "Apreciază",
+      "dislike": "Nu apreciază",
+      "edit": "Editează"
+    },
+    "contest": {
+      "createdBy": "Creat de",
+      "startDate": "Data de început",
+      "endDate": "Data de sfârșit",
+      "languages": "Limbaje",
+      "description": "Descriere",
+      "problems": "Probleme",
+      "participants": "Participanți",
+      "hasStarted": "A început",
+      "hasEnded": "S-a terminat",
+      "yes": "Da",
+      "no": "Nu",
+      "leaderboard": "Clasament",
+      "rank": "Rang",
+      "username": "Utilizator",
+      "noProblemsYet": "Nu există probleme încă!"
+    },
+    "tabs": {
+      "problem": "Problema",
+      "solutions": "Soluții",
+      "insights": "Statistici"
+    },
+    "problem": {
+      "creator": "Creator",
+      "difficulty": "Dificultate",
+      "category": "Categorie",
+      "subcategory": "Subcategorie",
+      "timeLimit": "Limita de Timp",
+      "memoryLimit": "Limita de Memorie",
+      "solveRate": "Rata de Rezolvare",
+      "rating": "Evaluare",
+      "rate": "Evaluează această problemă",
+      "report": "Raportează această problemă",
+      "share": "Distribuie această problemă",
+      "description": "Descriere",
+      "requirements": "Cerințe",
+      "input": "Intrare",
+      "output": "Ieșire",
+      "example": "Exemplu",
+      "explanation": "Explicație",
+      "restrictions": "Restricții",
+      "selectLanguage": "Selectează limba",
+      "chatGPT": "ChatGPT 4. Te rugăm să nu abuzezi de acest serviciu, altfel vei atrage mânia lui Savitar!",
+      "chatGPTNote": "Nu trimite bucăți de cod. Se va trimite automat! La fel și problema.",
+      "prompt": "Scrie aici promptul tău",
+      "runCode": "Rulează codul tău!",
+      "submit": "Trimite",
+      "loginToSubmit": "Trebuie să fii autentificat pentru a trimite o soluție!"
+    },
+    "submissions": {
+      "username": "Nume utilizator",
+      "language": "Limbă",
+      "score": "Scor",
+      "date": "Dată",
+      "status": "Stare",
+      "accepted": "Acceptat",
+      "rejected": "Respins"
+    },
+    "problemsPage": {
+      "title": "Probleme",
+      "table": {
+        "id": "#ID",
+        "category": "Categorie",
+        "subcategories": "Subcategorii",
+        "difficulty": "Dificultate"
+      },
+      "pagination": {
+        "next": "Următoare",
+        "prev": "Anterioară"
+      }
+    },
+    "problemStatsPage": {
+      "insightsTitle": "📈 Informații despre această problemă",
+      "solvesChartTitle": "Grafic Soluții",
+      "firstSubmissionsTitle": "Primele Submisii",
+      "noSolvesMessage": "Nimeni nu a rezolvat încă această problemă. Fii primul!",
+      "secondSolveMessage": "Poți fi al doilea care rezolvă această problemă!",
+      "thirdSolveMessage": "Poți fi al treilea care rezolvă această problemă!",
+      "bestMemoryTitle": "Cele mai bune utilizări de memorie",
+      "timeExecutionsTitle": "Execuții de timp",
+      "tableHeaders": {
+        "top": "Top",
+        "username": "Utilizator",
+        "date": "Data",
+        "language": "Limbă",
+        "memory": "Memorie",
+        "timeExecutions": "Timp Execuție"
+      }
+    },
+    "rateProblemPage": {
+      "rateProblemTitle": "Evaluează problema",
+      "rateProblemHeader": "Evaluare problemă",
+      "submitButton": "Trimite"
+    },
+    "reportProblemPage": {
+      "reportProblemTitle": "Raportează o problemă",
+      "reportedBy": "Raportată de:",
+      "problem": "Problemă:",
+      "titleInputPlaceholder": "Titlu",
+      "titleInputErrorMessage": "Introduceți un titlu",
+      "descriptionTextareaPlaceholder": "Descrieți problema",
+      "descriptionTextareaErrorMessage": "Scrieți o descriere",
+      "submitButtonText": "Trimite",
+      "closeButtonText": "Închide",
+      "errorChipTitle": "Eroare:"
+    },
+    "search": {
+      "users": "Utilizatori",
+      "problems": "Probleme",
+      "articles": "Articole",
+      "contests": "Concursuri",
+      "noResults": "Niciun rezultat găsit"
+    },
+    "errors": {
+      "notFound": "Pagina nu a fost găsită"
+    },
+    "solution": {
+      "title": "Soluția pentru problema: ",
+      "labels": {
+        "problem": "Problemă",
+        "language": "Limba",
+        "status": "Stare",
+        "username": "Nume utilizator",
+        "date": "Data",
+        "fileMemory": "Memorie fișier"
+      },
+      "status": {
+        "rejected": "Respinsă",
+        "accepted": "Acceptată"
+      },
+      "summary": {
+        "title": "Rezumat teste",
+        "table": {
+          "test": "Test",
+          "executionTime": "Timp de execuție",
+          "memoryUsed": "Memorie utilizată",
+          "score": "Scor",
+          "status": "Stare",
+          "testCase": "Caz de test",
+          "viewTestCase": "Vezi cazul de test"
+        }
+      },
+      "modal": {
+        "testCase": "Caz de test",
+        "input": "Intrare",
+        "output": "Ieșire",
+        "expectedOutput": "Ieșire așteptată",
+        "cerr": "Cerr"
+      },
+      "submittedCode": "Codul trimis"
+    },
+    "testingSolution": {
+      "tests": {
+        "index": "Index",
+        "time": "Timp",
+        "memory": "Memorie",
+        "score": "Scor",
+        "status": "Stare",
+        "exitcode": "Cod de ieșire",
+        "exitsig": "Semnal de ieșire",
+        "message": "Mesaj",
+        "allTestsPassed": "Toate testele au trecut! Felicitări!",
+        "failedTestsMessage": "Există teste care au eșuat. Verificați mesajul pentru mai multe informații."
+      },
+      "modalHeader": "Teste",
+      "compilationError": {
+        "title": "Eroare de compilare"
+      }
     }
 }
-  

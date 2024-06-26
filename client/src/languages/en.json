@@ -362,6 +362,185 @@
     "calendar": {
       "noDailyAvailable": "No daily available.",
       "noDailyYet": "No daily yet."
-    }
+    },
+    "announcement": {
+      "announcementBy": "Announcement by"
+    },
+    "article": {
+      "by": "By",
+      "on": "On",
+      "like": "Like",
+      "dislike": "Dislike",
+      "edit": "Edit"
+    },
+    "contest": {
+      "createdBy": "Created by",
+      "startDate": "Start Date",
+      "endDate": "End Date",
+      "languages": "Languages",
+      "description": "Description",
+      "problems": "Problems",
+      "participants": "Participants",
+      "hasStarted": "Has started",
+      "hasEnded": "Has ended",
+      "yes": "Yes",
+      "no": "No",
+      "leaderboard": "Leaderboard",
+      "rank": "Rank",
+      "username": "Username",
+      "noProblemsYet": "No problems yet!"
+    },
+    "tabs": {
+      "problem": "Problem",
+      "solutions": "Submissions",
+      "insights": "Insights"
+    },
+    "problem": {
+      "creator": "Creator",
+      "difficulty": "Difficulty",
+      "category": "Category",
+      "subcategory": "Subcategory",
+      "timeLimit": "Time Limit",
+      "memoryLimit": "Memory Limit",
+      "solveRate": "Solve Rate",
+      "rating": "Rating",
+      "rate": "Rate this problem",
+      "report": "Report this problem",
+      "share": "Share this problem",
+      "description": "Description",
+      "requirements": "Requirements",
+      "input": "Input",
+      "output": "Output",
+      "example": "Example",
+      "explanation": "Explanation",
+      "restrictions": "Restrictions",
+      "selectLanguage": "Select language",
+      "chatGPT": "ChatGPT 4. Please do not abuse of this or else you get the wrath of Savitar!",
+      "chatGPTNote": "Do not send pieces of code. It will automatically be sent! As well the problem.",
+      "prompt": "Type your prompt here",
+      "runCode": "Run your code!",
+      "submit": "Submit",
+      "loginToSubmit": "You need to be logged in to submit a solution!"
+    },
+    "submissions": {
+      "username": "Username",
+      "language": "Language",
+      "score": "Score",
+      "date": "Date",
+      "status": "Status",
+      "accepted": "Accepted",
+      "rejected": "Rejected"
+    },
+    "problemsPage": {
+      "title": "Problems",
+      "table": {
+        "id": "#ID",
+        "category": "Category",
+        "subcategories": "Subcategories",
+        "difficulty": "Difficulty"
+      },
+      "pagination": {
+        "next": "Next",
+        "prev": "Previous"
+      }
+    },
+    "problemStatsPage": {
+      "insightsTitle": "📈 Insights about this problem",
+      "solvesChartTitle": "Solves Chart",
+      "firstSubmissionsTitle": "First Submissions",
+      "noSolvesMessage": "No one has solved this problem yet. Be the first one!",
+      "secondSolveMessage": "You can be the second to solve this problem!",
+      "thirdSolveMessage": "You can be the third to solve this problem!",
+      "bestMemoryTitle": "Best Memory Usages",
+      "timeExecutionsTitle": "Time Executions",
+      "tableHeaders": {
+        "top": "Top",
+        "username": "Username",
+        "date": "Date",
+        "language": "Language",
+        "memory": "Memory",
+        "timeExecutions": "Time Executions"
+      }
+    },
+    "rateProblemPage": {
+      "rateProblemTitle": "Rate the problem",
+      "rateProblemHeader": "Rate Problem",
+      "submitButton": "Submit"
+    },
+    "reportProblemPage": {
+      "reportProblemTitle": "Report a problem",
+      "reportedBy": "Reported by:",
+      "problem": "Problem:",
+      "titleInputPlaceholder": "Title",
+      "titleInputErrorMessage": "Enter a title",
+      "descriptionTextareaPlaceholder": "Describe the problem",
+      "descriptionTextareaErrorMessage": "Write a description",
+      "submitButtonText": "Submit",
+      "closeButtonText": "Close",
+      "errorChipTitle": "Error:"
+    },
+    "search": {
+      "users": "Users",
+      "problems": "Problems",
+      "articles": "Articles",
+      "contests": "Contests",
+      "noResults": "No results found"
+    },
+    "errors": {
+      "notFound": "Page not found"
+    },
+    "solution": {
+      "title": "Solution for problem: ",
+      "labels": {
+        "problem": "Problem",
+        "language": "Language",
+        "status": "Status",
+        "username": "Username",
+        "date": "Date",
+        "fileMemory": "File Memory"
+      },
+      "status": {
+        "rejected": "Rejected",
+        "accepted": "Accepted"
+      },
+      "summary": {
+        "title": "Tests Summary",
+        "table": {
+          "test": "Test",
+          "executionTime": "Execution Time",
+          "memoryUsed": "Memory Used",
+          "score": "Score",
+          "status": "Status",
+          "testCase": "Test Case",
+          "viewTestCase": "View Test Case"
+        }
+      },
+      "modal": {
+        "testCase": "Test Case",
+        "input": "Input",
+        "output": "Output",
+        "expectedOutput": "Expected Output",
+        "cerr": "Cerr"
+      },
+      "submittedCode": "Submitted Code"
+    },
+    "testingSolution": {
+      "tests": {
+        "index": "Index",
+        "time": "Time",
+        "memory": "Memory",
+        "score": "Score",
+        "status": "Status",
+        "exitcode": "Exit Code",
+        "exitsig": "Exit Signal",
+        "message": "Message",
+        "allTestsPassed": "All tests passed! Congratulations!",
+        "failedTestsMessage": "There are tests that failed. Check the message for more information."
+      },
+      "modalHeader": "Tests",
+      "compilationError": {
+        "title": "Compilation Error"
+      }
+    }    
 }
   

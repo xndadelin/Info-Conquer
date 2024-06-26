@@ -1,6 +1,7 @@
 const Article = require('../../../models/article')
 const { getUser } = require('../../../utils/getUser')
 const {ApolloError} = require('apollo-server-express')
+const User = require('../../../models/user')
 module.exports = {
     async dislikeArticle(_, {id}, context){
         if(!id) throw new ApolloError('This article does not exist')

@@ -1,18 +1,20 @@
-import {Link, useParams} from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { useQuery, gql } from '@apollo/client'
 import { Loading } from './Loading'
 import { TableCell, Table, TableHeader, TableRow, TableColumn, TableBody, Snippet, Button, Select, SelectItem, useDisclosure, Tabs, Tab, Tooltip, Input, Textarea, Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from '@nextui-org/react'
-import {Editor} from '@monaco-editor/react'
+import { Editor } from '@monaco-editor/react'
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../context/UserContext";
-import {useMutation} from '@apollo/client'
+import { useMutation } from '@apollo/client'
 import { TestingSolution } from './TestingSolution'
-import {NotFound} from "../pages/NotFound";
+import { NotFound } from "../pages/NotFound";
 import { getTemplate } from '../utils/getLanguageTemplate'
-import {Pagination} from '@nextui-org/react'
+import { Pagination } from '@nextui-org/react'
 import { ProblemStats } from './ProblemStats'
 import { RateProblem } from './RateProblem'
 import { ReportProblem } from './ReportProblem'
+import { useTranslation } from 'react-i18next'
+
 const placeholder = `#include <iostream>
 #include <cstring>
 #include <string>
@@ -96,11 +98,11 @@ const languages_for_editor = {
     'Rust': 'rs'
 }
 export const Problem = () => {
-    const {user} = useContext(UserContext)
-    const {code: userCode, language: userLanguage} = Object.fromEntries(new URLSearchParams(window.location.search))
+    const { user } = useContext(UserContext)
+    const { code: userCode, language: userLanguage } = Object.fromEntries(new URLSearchParams(window.location.search))
     const [selected, setSelected] = useState('problem')
     const [page, setPage] = useState(1)
-    const {isOpen, onOpenChange} = useDisclosure()
+    const { isOpen, onOpenChange } = useDisclosure()
     const [language, setLanguage] = useState(userLanguage || 'cpp')
     const [code, setCode] = useState(userCode || '')
     const [error, setError] = useState()
@@ -112,13 +114,14 @@ export const Problem = () => {
         setCode(getTemplate(language, problem))
     }, [language])
     useEffect(() => {
-        const {code: userCode, language: userLanguage} = Object.fromEntries(new URLSearchParams(window.location.search))
+        const { code: userCode, language: userLanguage } = Object.fromEntries(new URLSearchParams(window.location.search))
         setCode(userCode)
         setLanguage(userLanguage)
     }, [])
     const [tests, setTests] = useState('')
-    const {id, contest, year, problem_name, month, day} = useParams()
+    const { id, contest, year, problem_name, month, day } = useParams()
     const type = contest ? `contest:${contest}` : year && month && day && problem_name ? `daily:${year}/${month}/${day}` : 'problem'
+    const { t } = useTranslation()
     const queryProblem = gql`
         query GetProblem($title: String!, $contest: String, $daily: Date) {
             getProblem(title: $title, contest: $contest, daily: $daily) {
@@ -197,7 +200,7 @@ export const Problem = () => {
             }
         }
     `
-    const {data: submissions, loading: loadingSubmissions, error: errorSubmissions} = useQuery(submissiongql, {
+    const { data: submissions, loading: loadingSubmissions, error: errorSubmissions } = useQuery(submissiongql, {
         variables: {
             title: id || problem_name
         },
@@ -206,7 +209,7 @@ export const Problem = () => {
         },
         skip: selected !== 'solutions'
     })
-    const [getChatbotMessage, {loading:loadingBot, errorBot}] = useMutation(chatbotgql, {
+    const [getChatbotMessage, { loading: loadingBot, errorBot }] = useMutation(chatbotgql, {
         onCompleted: (data) => {
             console.log(data.getChatbotMessage.message)
             setCode(data.getChatbotMessage.message)
@@ -220,7 +223,7 @@ export const Problem = () => {
             code
         }
     })
-    const {data:problem, loading} = useQuery(queryProblem, {
+    const { data: problem, loading } = useQuery(queryProblem, {
         variables: {
             title: id || problem_name,
             contest,
@@ -231,7 +234,7 @@ export const Problem = () => {
         }
 
     })
-    const [submitSolution, {error: errorSolution, loading: loadingTests}] = useMutation(solutionMutation, {
+    const [submitSolution, { error: errorSolution, loading: loadingTests }] = useMutation(solutionMutation, {
         variables: {
             solutionInput: {
                 code: code,
@@ -244,12 +247,12 @@ export const Problem = () => {
             setTests(data.submitSolution)
         }
     })
-    if(loading){
+    if (loading) {
         return (
-            <Loading/>
+            <Loading />
         )
     }
-    if(!problem || !problem.getProblem || error) return <NotFound/>
+    if (!problem || !problem.getProblem || error) return <NotFound />
     const onHandleSubmitSolution = () => {
         submitSolution()
     }
@@ -259,34 +262,33 @@ export const Problem = () => {
     const onClickReport = () => {
         setClickReport(!clickReport)
     }
-    console.log(problem)
     return (
         <div className="container mx-auto px-5 py-5">
             <Tabs selectedKey={selected} onSelectionChange={setSelected} className="flex flex-col">
-                <Tab key="problem" title="Problem">
+                <Tab key="problem" title={t('tabs.problem')}>
                     <div className="grid grid-cols-2 max-lg:grid-cols-1 gap-3">
                         <div className="flex flex-col gap-2">
-                                <p className='font-bold text-6xl'>
-                                    #{problem.getProblem.title}
-                                </p>
+                            <p className='font-bold text-6xl'>
+                                #{problem.getProblem.title}
+                            </p>
                             <div className='mt-4'>
-                                <Table>
+                                <Table isCompact>
                                     <TableHeader>
-                                        <TableColumn>Creator</TableColumn>
-                                        <TableColumn>Difficulty</TableColumn>
-                                        <TableColumn>Category</TableColumn>
-                                        <TableColumn>Subcategory</TableColumn>
-                                        <TableColumn>Time Limit</TableColumn>
-                                        <TableColumn>Memory Limit</TableColumn>
-                                        <TableColumn>Solve rate</TableColumn>
-                                        <TableColumn>Rating</TableColumn>
+                                        <TableColumn>{t('problem.creator')}</TableColumn>
+                                        <TableColumn>{t('problem.difficulty')}</TableColumn>
+                                        <TableColumn>{t('problem.category')}</TableColumn>
+                                        <TableColumn>{t('problem.subcategory')}</TableColumn>
+                                        <TableColumn>{t('problem.timeLimit')}</TableColumn>
+                                        <TableColumn>{t('problem.memoryLimit')}</TableColumn>
+                                        <TableColumn>{t('problem.solveRate')}</TableColumn>
+                                        <TableColumn>{t('problem.rating')}</TableColumn>
                                     </TableHeader>
                                     <TableBody>
                                         <TableRow>
                                             <TableCell>{problem.getProblem.creator}</TableCell>
                                             <TableCell>{problem.getProblem.difficulty}</TableCell>
-                                            <TableCell>{problem.getProblem.category}</TableCell>
-                                            <TableCell>{problem.getProblem.subcategories}</TableCell>
+                                            <TableCell>{t(`problems.categories.${problem.getProblem.category}`)}</TableCell>
+                                            <TableCell>{t(`problems.subcategories.${problem.getProblem.subcategories}`)}</TableCell>
                                             <TableCell>{problem.getProblem.timeExecution} s</TableCell>
                                             <TableCell>{Math.ceil(problem.getProblem.limitMemory / 1024)} MB</TableCell>
                                             <TableCell>{parseInt(problem.getProblem.successRate) + '%'}</TableCell>
@@ -296,50 +298,56 @@ export const Problem = () => {
                                 </Table>
                                 {user && user.getUser && (
                                     <div className='flex gap-3 mt-2 max-sm:flex-col max-sm:h-[150px]'>
-                                        <Button color='success' variant='flat' className='flex-1'  isDisabled={problem.getProblem.userHasRated || userHasRated} onClick={onClickRate}>Rate this problem</Button>
-                                        <Button color='warning' variant='flat' className='flex-1' onClick={onClickReport} >Report this problem</Button>
+                                        <Button color='success' variant='flat' className='flex-1' isDisabled={problem.getProblem.userHasRated || userHasRated} onClick={onClickRate}>
+                                            {t('problem.rate')}
+                                        </Button>
+                                        <Button color='warning' variant='flat' className='flex-1' onClick={onClickReport}>
+                                            {t('problem.report')}
+                                        </Button>
                                         <Button color='default' variant='flat' className='flex-1' onClick={() => {
                                             navigator.clipboard.writeText(window.location.href)
-                                        }}>Share this problem</Button>
+                                        }}>
+                                            {t('problem.share')}
+                                        </Button>
                                     </div>
                                 )}
                             </div>
                             {problem.getProblem.description && (
                                 <div>
-                                    <p className='font-bold text-3xl mb-2'>Description</p>
-                                    <p className='text-1xl' dangerouslySetInnerHTML={{__html: problem.getProblem.description}}></p>
+                                    <p className='font-bold text-3xl mb-2'>{t('problem.description')}</p>
+                                    <p className='text-1xl' dangerouslySetInnerHTML={{ __html: problem.getProblem.description }}></p>
                                 </div>
                             )}
                             {problem.getProblem.requirements && (
                                 <div>
-                                    <p className='font-bold text-3xl mb-2'>Requirements</p>
-                                    <p className='text-1xl' dangerouslySetInnerHTML={{__html: problem.getProblem.requirements}}></p>
+                                    <p className='font-bold text-3xl mb-2'>{t('problem.requirements')}</p>
+                                    <p className='text-1xl' dangerouslySetInnerHTML={{ __html: problem.getProblem.requirements }}></p>
                                 </div>
                             )}
                             {problem.getProblem.input && (
                                 <div>
-                                    <p className='font-bold text-3xl mb-2'>Input</p>
-                                    <p className='text-1xl' dangerouslySetInnerHTML={{__html: problem.getProblem.input}}></p>
+                                    <p className='font-bold text-3xl mb-2'>{t('problem.input')}</p>
+                                    <p className='text-1xl' dangerouslySetInnerHTML={{ __html: problem.getProblem.input }}></p>
                                 </div>
                             )}
                             {problem.getProblem.output && (
                                 <div>
-                                    <p className='font-bold text-3xl mb-2'>Output</p>
-                                    <p className='text-1xl' dangerouslySetInnerHTML={{__html: problem.getProblem.output}}></p>
+                                    <p className='font-bold text-3xl mb-2'>{t('problem.output')}</p>
+                                    <p className='text-1xl' dangerouslySetInnerHTML={{ __html: problem.getProblem.output }}></p>
                                 </div>
                             )}
                             {problem.getProblem.examples && (
                                 <div>
                                     {problem.getProblem.examples.map((example, index) => (
-                                        <div className='flex flex-col gap-1'>
-                                            <p className='font-bold text-3xl'>Example {index + 1}</p>
-                                            <p className='font-bold text-xl'>Input</p>
+                                        <div className='flex flex-col gap-1' key={index}>
+                                            <p className='font-bold text-3xl'>{t('problem.example')} {index + 1}</p>
+                                            <p className='font-bold text-xl'>{t('problem.input')}</p>
                                             <Snippet symbol="">
                                                 <pre>
                                                     {example.input}
                                                 </pre>
                                             </Snippet>
-                                            <p className='font-bold text-xl'>Output</p>
+                                            <p className='font-bold text-xl'>{t('problem.output')}</p>
                                             <Snippet symbol="">
                                                 <pre>
                                                     {example.output}
@@ -347,8 +355,8 @@ export const Problem = () => {
                                             </Snippet>
                                             {example.explanation && (
                                                 <>
-                                                    <p className='font-bold text-xl'>Explanation</p>
-                                                    <Snippet dangerouslySetInnerHTML={{__html: example.output}} symbol=""></Snippet>
+                                                    <p className='font-bold text-xl'>{t('problem.explanation')}</p>
+                                                    <Snippet dangerouslySetInnerHTML={{ __html: example.explanation }} symbol=""></Snippet>
                                                 </>
                                             )}
                                         </div>
@@ -357,8 +365,8 @@ export const Problem = () => {
                             )}
                             {problem.getProblem.restriction && (
                                 <div>
-                                    <p className='font-bold text-3xl mb-2'>Restrictions</p>
-                                    <div className='text-1xl' dangerouslySetInnerHTML={{__html: problem.getProblem.restriction}}></div>
+                                    <p className='font-bold text-3xl'>{t('problem.restrictions')}</p>
+                                    <div className='ml-5' dangerouslySetInnerHTML={{ __html: problem.getProblem.restriction }}></div>
                                 </div>
                             )}
                         </div>
@@ -366,25 +374,25 @@ export const Problem = () => {
                             <div className="mt-[85px] max-lg:mt-0">
                                 <div className='flex flex-col'>
                                     <div className='w-[100%] h-[100%] bg-[#1e1e1e] rounded flex justify-between align-center'>
-                                        <Select defaultSelectedKeys={[ language ]} onChange={(e) => setLanguage(e.target.value)} label="Select language" size='sm' className='w-[150px] mt-1 ml-1'>
-                                            {problem.getProblem.languages.map((language) => (
-                                                <SelectItem key={language}>{language}</SelectItem>
+                                        <Select defaultSelectedKeys={[language]} onChange={(e) => setLanguage(e.target.value)} label={t('problem.selectLanguage')} size='sm' className='w-[150px] mt-1 ml-1'>
+                                            {problem.getProblem.languages.map((lang) => (
+                                                <SelectItem key={lang}>{lang}</SelectItem>
                                             ))}
                                         </Select>
                                         <div className='flex items-center gap-1'>
                                             <Tooltip size='sm' closeDelay={1000} color='warning' placement='bottom-end' content={
                                                 <div>
-                                                    <p>ChatGPT 4. Please do not abuse of this or else you get the wrath of Savitar!</p>
-                                                    <p>Do not send pieces of code. It will automatically be sent! As well the problem.</p>
+                                                    <p>{t('problem.chatGPT')}</p>
+                                                    <p>{t('problem.chatGPTNote')}</p>
                                                     <Textarea endContent={
                                                         <Button isLoading={loadingBot} disabled={!prompt} color='warning' className='self-end text-2xl' size='sm' variant='flat' onClick={() => getChatbotMessage()}>↑</Button>
-                                                    } onChange={(e) => setPrompt(e.target.value)} value={prompt} label='Type your prompt here' />
+                                                    } onChange={(e) => setPrompt(e.target.value)} value={prompt} label={t('problem.prompt')} />
                                                 </div>
                                             }>
                                                 <Button isLoading={loadingBot} className='mt-2 mb-2 mr-2' color='warning' variant='flat'>🤖</Button>
                                             </Tooltip>
-                                            <Tooltip color='danger' content='Run your code!'>
-                                                <Button className="mt-2 mb-2 mr-2" color='danger' disabled={!language || !code || !user || !user.getUser} variant='flat' onClick={() => {onHandleSubmitSolution(); onOpenChange(); setTests('')}}>Submit</Button>
+                                            <Tooltip color='danger' content={t('problem.runCode')}>
+                                                <Button className="mt-2 mb-2 mr-2" color='danger' disabled={!language || !code || !user || !user.getUser} variant='flat' onClick={() => { onHandleSubmitSolution(); onOpenChange(); setTests('') }}>{t('problem.submit')}</Button>
                                             </Tooltip>
                                         </div>
                                     </div>
@@ -395,10 +403,10 @@ export const Problem = () => {
                                             },
                                         }} language={languages_for_editor[language]} onChange={(val, e) => setCode(val)} value={code} theme='vs-dark' height={'80vh'} />
                                     </div>
-                                    <TestingSolution isOpen={isOpen} onClose={onOpenChange} loading={loadingTests} tests={tests}/>
+                                    <TestingSolution isOpen={isOpen} onClose={onOpenChange} loading={loadingTests} tests={tests} />
                                 </div>
                             </div>
-                        ): (
+                        ) : (
                             <div className="h-[100%] flex justify-center items-center relative">
                                 <Editor
                                     options={{
@@ -419,33 +427,33 @@ export const Problem = () => {
                                 />
                                 <div className='z-10 absolute'>
                                     <div className='text-center font-bold text-xl'>
-                                        You need to be logged in to submit a solution!
+                                        {t('problem.loginToSubmit')}
                                     </div>
                                 </div>
                             </div>
                         )}
                     </div>
                     {clickRate && (
-                        <RateProblem isOpen={clickRate} setUserHasRated={setUserHasRated} onClose={onClickRate} problem={problem.getProblem} user={user}/>
+                        <RateProblem isOpen={clickRate} setUserHasRated={setUserHasRated} onClose={onClickRate} problem={problem.getProblem} user={user} />
                     )}
                     {clickReport && (
-                        <ReportProblem isOpen={clickReport} onClose={onClickReport} problem={problem.getProblem} user={user}/>
+                        <ReportProblem isOpen={clickReport} onClose={onClickReport} problem={problem.getProblem} user={user} />
                     )}
                 </Tab>
-                <Tab key="solutions" title="Submissions">
+                <Tab key="solutions" title={t('tabs.solutions')}>
                     {submissions && (
                         <>
                             <Table isStriped>
                                 <TableHeader>
-                                    <TableColumn>Username</TableColumn>
-                                    <TableColumn>Language</TableColumn>
-                                    <TableColumn>Score</TableColumn>
-                                    <TableColumn>Date</TableColumn>
-                                    <TableColumn>Status</TableColumn>
+                                    <TableColumn>{t('submissions.username')}</TableColumn>
+                                    <TableColumn>{t('submissions.language')}</TableColumn>
+                                    <TableColumn>{t('submissions.score')}</TableColumn>
+                                    <TableColumn>{t('submissions.date')}</TableColumn>
+                                    <TableColumn>{t('submissions.status')}</TableColumn>
                                 </TableHeader>
                                 <TableBody>
-                                    {submissions.getSubmissions.slice((page - 1)*20, page*20).map((submission) => (
-                                        <TableRow>
+                                    {submissions.getSubmissions.slice((page - 1) * 20, page * 20).map((submission, index) => (
+                                        <TableRow key={index}>
                                             <TableCell>
                                                 <Link to={`/profile/${submission.username}`}>
                                                     {submission.username}
@@ -454,22 +462,22 @@ export const Problem = () => {
                                             <TableCell>{submission.language}</TableCell>
                                             <TableCell>{submission.score}</TableCell>
                                             <TableCell>{new Date(+submission.date).toLocaleString()}</TableCell>
-                                            <TableCell>{submission.score === "100" ? 'Accepted': 'Rejected'}</TableCell>
+                                            <TableCell>{submission.score === "100" ? t('submissions.accepted') : t('submissions.rejected')}</TableCell>
                                         </TableRow>
                                     ))}
                                 </TableBody>
                             </Table>
-                            <Pagination color='danger' className="mt-2" onChange={(page) => setPage(page)} loop showControls total={Math.ceil(submissions.getSubmissions.length/20)} initialPage={1}></Pagination>
+                            <Pagination color='danger' className="mt-2" onChange={(page) => setPage(page)} loop showControls total={Math.ceil(submissions.getSubmissions.length / 20)} initialPage={1}></Pagination>
                         </>
                     )}
                     {loadingSubmissions && (
-                        <Loading/>
+                        <Loading />
                     )}
                 </Tab>
-                <Tab key="insights" title="Insights">
-                    <ProblemStats/>
+                <Tab key="insights" title={t('tabs.insights')}>
+                    <ProblemStats />
                 </Tab>
             </Tabs>
-            </div>
+        </div>
     )
 }

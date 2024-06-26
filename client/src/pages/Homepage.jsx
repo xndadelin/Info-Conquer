@@ -79,7 +79,7 @@ export const Homepage = () => {
                             </p>
                         </CardBody>
                     </Card>
-                    <Card as={Link} href={"/problems"} className="flex flex-col bg-blue-400 flex-1 h-full">
+                    <Card as={Link} href={"/contests"} className="flex flex-col bg-blue-400 flex-1 h-full">
                         <CardHeader className="pt-10 flex justify-center items-center">
                             <Trophy/>
                         </CardHeader>

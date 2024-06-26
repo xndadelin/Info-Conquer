@@ -1,5 +1,6 @@
 const Contest = require('../../../models/contest')
 const {ApolloError} = require('apollo-server-express')
+const { getUser } = require('../../../utils/getUser')
 module.exports = {
     async getContest(_, {id}, context){
         const user = await getUser(context)
