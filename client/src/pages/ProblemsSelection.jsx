@@ -1,6 +1,9 @@
-import {  Link } from "@nextui-org/react"
+import { useTranslation } from 'react-i18next';
+import { Link } from '@nextui-org/react';
 
 export const ProblemsSelection = () => {
+    const { t } = useTranslation();
+
     const problems = [
         {
             category: 'Array',
@@ -165,28 +168,28 @@ export const ProblemsSelection = () => {
                 'AVL Tree',
             ]
         }
-        
-    ]
+    ];
+
     return (
         <div className="container mx-auto my-4 px-4">
-             <div className="flex flex-col gap-5 mt-20 mb-20">
-                <div className="text-5xl text-white font-extrabold">🎯 Problems</div>
+            <div className="flex flex-col gap-5 mt-20 mb-20">
+                <div className="text-5xl text-white font-extrabold">{t('problems.header')}</div>
                 <p className="text-2xl text-white">
-                    Choose a category and/or a subcategory to start solving problems and improve your skills!
+                    {t('problems.description')}
                 </p>
             </div>
             <div className="flex gap-10 flex-wrap">
                 {problems.map((problem, index) => (
-                    <div className="flex flex-col">
-                        <Link href={`/problems/${problem.category}/none`} key={index} color="danger" isBlock className="text-2xl font-bold">{problem.category}</Link>
+                    <div className="flex flex-col" key={index}>
+                        <Link href={`/problems/${problem.category}/none`} color="danger" isBlock className="text-2xl font-bold">{t(`problems.categories.${problem.category}`)}</Link>
                         <div className="flex flex-col">
-                            {problem.subcategories.map((subcategory, index) => (
-                                <Link href={`/problems/${problem.category}/${subcategory}`} key={index} color="foreground" isBlock>{subcategory}</Link>
+                            {problem.subcategories.map((subcategory, subIndex) => (
+                                <Link href={`/problems/${problem.category}/${subcategory}`} key={subIndex} color="foreground" isBlock>{t(`problems.subcategories.${subcategory}`)}</Link>
                             ))}
                         </div>
                     </div>
                 ))}
             </div>
         </div>
-    )
-}
+    );
+};

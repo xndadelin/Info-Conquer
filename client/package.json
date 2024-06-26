@@ -17,10 +17,12 @@
     "dotenv": "^16.4.5",
     "framer-motion": "^11.1.7",
     "monaco-editor": "^0.45.0",
+    "monaco-themes": "^0.4.4",
     "prismjs": "^1.29.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-google-charts": "^4.0.1",
+    "react-i18next": "^14.1.2",
     "react-quill": "^2.0.0",
     "react-router-dom": "^6.22.0",
     "react-scripts": "^5.0.1",
@@ -53,6 +55,7 @@
     ]
   },
   "devDependencies": {
+    "i18next-scanner": "^4.5.0",
     "tailwindcss": "^3.4.1"
   }
 }

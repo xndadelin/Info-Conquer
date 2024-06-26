@@ -12,7 +12,7 @@ export const Solution = () => {
     const {user} = useContext(UserContext)
     const navigate = useNavigate()
     useEffect(() => {
-        if(user && user.getUser.username !== username && user.getUser.admin === false){
+        if(user && user.getUser && user.getUser.username !== username && user.getUser.admin === false){
             navigate(-1);
         }
     }, [user, username])
@@ -55,7 +55,7 @@ export const Solution = () => {
     if(loading || !solution) {
         return <Loading/>
     }
-    if(error) return <NotFound/>
+    if(error || !user || !user.getUser) return <NotFound/>
     return (
         <div className="container mx-auto grid grid-cols-2 max-lg:grid-cols-1 my-10 p-3 gap-5">
             <div>

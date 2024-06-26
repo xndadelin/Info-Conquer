@@ -1,14 +1,18 @@
-import {Button} from "@nextui-org/react";
-import {useNavigate} from "react-router-dom";
+import { Button } from "@nextui-org/react";
+import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+
 export const NotFound = () => {
-    const navigate = useNavigate()
+    const { t } = useTranslation();
+    const navigate = useNavigate();
+
     return (
-        <div className="container mx-auto flex gap-2 flex-col items-center justify-center h-screen px-5">
+        <div className="container mx-auto flex items-center justify-center h-screen p-16">
             <div className="grid gap-2">
-                <p className="text-5xl">The page you tried to access does not exist.</p>
-                <p className="text-default-500">This means the page is not found or there has been an internal server error or you are not allowed here. Please try again later!</p>
-                <Button className="self-start" onClick={() => navigate(-1)}>Get back!</Button>
+                <p className="text-5xl">{t('notFound.title')}</p>
+                <p className="text-default-500">{t('notFound.description')}</p>
+                <Button className="self-start" onClick={() => navigate(-1)}>{t('notFound.buttonText')}</Button>
             </div>
         </div>
-    )
-}
+    );
+};

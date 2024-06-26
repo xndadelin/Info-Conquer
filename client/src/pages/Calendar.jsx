@@ -3,16 +3,20 @@ import { Card, CardBody, CardHeader, Link } from '@nextui-org/react';
 import { gql, useQuery } from '@apollo/client' 
 import { NotFound } from './NotFound';
 import { Loading } from '../components/Loading';
-const GET_DAILIS = gql`
-    query GetDailies{
+import { useTranslation } from 'react-i18next';
+
+const GET_DAILIES = gql`
+    query GetDailies {
         getDailies {
             problem
             date
             solved
         }
     }
-`
+`;
+
 export const Calendar = () => {
+    const { t } = useTranslation(); 
     const months = [
         'January', 'February', 'March', 'April', 'May', 'June',
         'July', 'August', 'September', 'October', 'November', 'December'
@@ -35,23 +39,24 @@ export const Calendar = () => {
         setMonthName(months[currentMonth.month]);
     }, [currentMonth]);
 
-    const {data, loading, error} = useQuery(GET_DAILIS)
-    if(loading) return <Loading/>
-    if(!data || error) return <NotFound/>
+    const { data, loading, error } = useQuery(GET_DAILIES);
+    if (loading) return <Loading />;
+    if (!data || error) return <NotFound />;
 
-    const dailies = data.getDailies
+    const dailies = data.getDailies;
     const dailiesMap = dailies.reduce((acc, d) => {
         const dailyDate = new Date(d.date);
         const key = `${dailyDate.getFullYear()}-${dailyDate.getMonth() + 1}-${dailyDate.getDate()}`;
         acc[key] = d;
         return acc;
     }, {});
+
     return (
         <div className="container mx-auto my-5 p-5">
             <p className="text-3xl font-bold">{`${monthName} ${currentMonth.year}`}</p>
             <div className="grid grid-cols-7 max-md:grid-cols-3 gap-2 mt-4">
-                {Array.from({ length: new Date(currentMonth.year, currentMonth.month).getDay() }).map(() => (
-                    <div className="invisible">
+                {Array.from({ length: new Date(currentMonth.year, currentMonth.month).getDay() }).map((_, index) => (
+                    <div key={`empty-${index}`} className="invisible">
                         <Card />
                     </div>
                 ))}
@@ -60,6 +65,7 @@ export const Calendar = () => {
                     const daily = dailiesMap[key];
                     return (
                         <Card
+                            key={key}
                             isDisabled={!day.passed}
                             as={Link}
                             href={`/daily/${daily && daily.problem}/${currentMonth.year}/${currentMonth.month + 1}/${day.day}`}
@@ -72,11 +78,11 @@ export const Calendar = () => {
                             <CardBody>
                                 {daily ? (
                                     <p>{daily.problem}</p>
-                                ):(
+                                ) : (
                                     day.passed ? (
-                                        <p>No daily available.</p>
+                                        <p>{t('calendar.noDailyAvailable')}</p>
                                     ) : (
-                                        <p>No daily yet.</p>
+                                        <p>{t('calendar.noDailyYet')}</p>
                                     )
                                 )}
                             </CardBody>

@@ -11,9 +11,9 @@ export const CodeEditor = ({language, code, height}) => {
                         <div className={`h-[${height}] flex-1`}>
                             <Editor options={{
                                 minimap: {enabled: false},
-                                fontSize: 12,
+                                fontSize: 15,
                                 scrollbar: {vertical: 'hidden', horizontal: 'hidden'},
-                                readOnly: true,
+                                readOnly: true
                             }} theme="vs-dark" height={height} language={language} defaultValue={code}/>
                         </div>
                     </div>
