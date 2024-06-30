@@ -295,7 +295,8 @@
       "bio": "Bio",
       "writeAboutYourself": "Write something about you...",
       "changeBio": "Change Bio",
-      "settings": "Settings"
+      "settings": "Settings",
+      "see_solution": "See solution"
     },
     "publishProblem": {
       "title": "Publish a problem",
@@ -429,7 +430,9 @@
       "date": "Date",
       "status": "Status",
       "accepted": "Accepted",
-      "rejected": "Rejected"
+      "rejected": "Rejected",
+      "all_submissions": "All submissions",
+      "ur_submissions": "Your submissions"
     },
     "problemsPage": {
       "title": "Problems",

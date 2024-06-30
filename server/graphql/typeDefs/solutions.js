@@ -14,6 +14,7 @@ module.exports = gql`
         compilationError: String,
         success: String,
         id_solution: String,
+        status: String
     }
     input SolutionInput {
         code: String,
@@ -42,5 +43,11 @@ module.exports = gql`
         score: String,
         date: String,
         compilationError: String,
+        _id: String,
+        status: String
+    }
+    type Submissions {
+        allSolutions: [Submission]
+        userSolutions: [Submission]
     }
 `;

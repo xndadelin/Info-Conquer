@@ -110,6 +110,7 @@ export const Problem = () => {
     const [clickRate, setClickRate] = useState(false)
     const [clickReport, setClickReport] = useState(false)
     const [userHasRated, setUserHasRated] = useState(false)
+    const [userPage, setUserPage] = useState(1)
     useEffect(() => {
         setCode(getTemplate(language, problem))
     }, [language])
@@ -184,12 +185,24 @@ export const Problem = () => {
     const submissiongql = gql`
         query GetSubmissions($title: String) {
             getSubmissions(title: $title) {
-                compilationError
-                date
-                language
-                problem
-                score
-                username
+                allSolutions {
+                    status
+                    date
+                    language
+                    problem
+                    score
+                    username
+                    status
+                }
+                userSolutions {
+                    status
+                    date
+                    language
+                    problem
+                    score
+                    username
+                    _id
+                }
             }
         }
     `
@@ -211,7 +224,6 @@ export const Problem = () => {
     })
     const [getChatbotMessage, { loading: loadingBot, errorBot }] = useMutation(chatbotgql, {
         onCompleted: (data) => {
-            console.log(data.getChatbotMessage.message)
             setCode(data.getChatbotMessage.message)
         },
         onError: (error) => {
@@ -380,7 +392,7 @@ export const Problem = () => {
                                             ))}
                                         </Select>
                                         <div className='flex items-center gap-1'>
-                                            <Tooltip size='sm' closeDelay={1000} color='warning' placement='bottom-end' content={
+                                            <Tooltip size='sm' closeDelay={1000} color='warning' placement="left" content={
                                                 <div>
                                                     <p>{t('problem.chatGPT')}</p>
                                                     <p>{t('problem.chatGPTNote')}</p>
@@ -443,31 +455,66 @@ export const Problem = () => {
                 <Tab key="solutions" title={t('tabs.solutions')}>
                     {submissions && (
                         <>
-                            <Table isStriped>
-                                <TableHeader>
-                                    <TableColumn>{t('submissions.username')}</TableColumn>
-                                    <TableColumn>{t('submissions.language')}</TableColumn>
-                                    <TableColumn>{t('submissions.score')}</TableColumn>
-                                    <TableColumn>{t('submissions.date')}</TableColumn>
-                                    <TableColumn>{t('submissions.status')}</TableColumn>
-                                </TableHeader>
-                                <TableBody>
-                                    {submissions.getSubmissions.slice((page - 1) * 20, page * 20).map((submission, index) => (
-                                        <TableRow key={index}>
-                                            <TableCell>
-                                                <Link to={`/profile/${submission.username}`}>
-                                                    {submission.username}
-                                                </Link>
-                                            </TableCell>
-                                            <TableCell>{submission.language}</TableCell>
-                                            <TableCell>{submission.score}</TableCell>
-                                            <TableCell>{new Date(+submission.date).toLocaleString()}</TableCell>
-                                            <TableCell>{submission.score === "100" ? t('submissions.accepted') : t('submissions.rejected')}</TableCell>
-                                        </TableRow>
-                                    ))}
-                                </TableBody>
-                            </Table>
-                            <Pagination color='danger' className="mt-2" onChange={(page) => setPage(page)} loop showControls total={Math.ceil(submissions.getSubmissions.length / 20)} initialPage={1}></Pagination>
+                            <Tabs>
+                                <Tab key="all" title={t('submissions.all_submissions')}>
+                                    <Table isStriped>
+                                        <TableHeader>
+                                            <TableColumn>{t('submissions.username')}</TableColumn>
+                                            <TableColumn>{t('submissions.language')}</TableColumn>
+                                            <TableColumn>{t('submissions.score')}</TableColumn>
+                                            <TableColumn>{t('submissions.date')}</TableColumn>
+                                            <TableColumn>{t('submissions.status')}</TableColumn>
+                                        </TableHeader>
+                                        <TableBody>
+                                            {submissions.getSubmissions.allSolutions.slice((page - 1) * 20, page * 20).map((submission, index) => (
+                                                <TableRow key={index}>
+                                                    <TableCell>
+                                                        <Link to={`/profile/${submission.username}`}>
+                                                            {submission.username}
+                                                        </Link>
+                                                    </TableCell>
+                                                    <TableCell>{submission.language}</TableCell>
+                                                    <TableCell>{submission.score}</TableCell>
+                                                    <TableCell>{new Date(+submission.date).toLocaleString()}</TableCell>
+                                                    <TableCell>{submission.status}</TableCell>
+                                                </TableRow>
+                                            ))}
+                                        </TableBody>
+                                    </Table>
+                                    <Pagination color='danger' className="mt-2" onChange={(page) => setPage(page)} loop showControls total={Math.ceil(submissions.getSubmissions.allSolutions.length / 20)} initialPage={1}></Pagination>
+                                </Tab>
+                                <Tab key="user" title={t('submissions.ur_submissions')}>
+                                    <Table isStriped>
+                                        <TableHeader>
+                                            <TableColumn>{t('profile.see_solution')}</TableColumn>
+                                            <TableColumn>{t('submissions.username')}</TableColumn>
+                                            <TableColumn>{t('submissions.language')}</TableColumn>
+                                            <TableColumn>{t('submissions.score')}</TableColumn>
+                                            <TableColumn>{t('submissions.date')}</TableColumn>
+                                            <TableColumn>{t('submissions.status')}</TableColumn>
+                                        </TableHeader>
+                                        <TableBody>
+                                            {submissions.getSubmissions.userSolutions.slice((userPage - 1) * 20, userPage * 20).map((submission, index) => (
+                                                <TableRow key={index}>
+                                                    <TableCell>
+                                                        <Link to={`/solution/${user.getUser.username}/${submission._id}`}>{t('profile.see_solution')}</Link>
+                                                    </TableCell>
+                                                    <TableCell>
+                                                        <Link to={`/profile/${submission.username}`}>
+                                                            {submission.username}
+                                                        </Link>
+                                                    </TableCell>
+                                                    <TableCell>{submission.language}</TableCell>
+                                                    <TableCell>{submission.score}</TableCell>
+                                                    <TableCell>{new Date(+submission.date).toLocaleString()}</TableCell>
+                                                    <TableCell>{submission.status}</TableCell>
+                                                </TableRow>
+                                            ))}
+                                        </TableBody>
+                                    </Table>
+                                    <Pagination color='danger' className="mt-2" onChange={(page) => setUserPage(page)} loop showControls total={Math.ceil(submissions.getSubmissions.userSolutions.length / 20)} initialPage={1}></Pagination>
+                                </Tab>
+                            </Tabs>
                         </>
                     )}
                     {loadingSubmissions && (

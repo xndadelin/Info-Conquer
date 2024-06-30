@@ -1,6 +1,10 @@
 const Article = require('../../../models/article')
 const { getUser } = require('../../../utils/getUser')
 const {ApolloError} = require('apollo-server-express')
+const createDOMPurify = require('dompurify');
+const { JSDOM } = require('jsdom');
+const window = new JSDOM('').window;
+const DOMPurify = createDOMPurify(window);
 module.exports = {
     async publishArticle(_, {title, content, tags}, context){
         const user = await getUser(context);

@@ -201,7 +201,7 @@ export const Profile = () => {
                                     {data.getProfile.solutions.slice((page - 1) * 20, page * 20).map((solution) => (
                                         <TableRow key={solution.id_solution}>
                                             <TableCell>
-                                                <Link to={`/solution/${username}/${solution.id_solution}`}>See solution</Link>
+                                                <Link to={`/solution/${username}/${solution.id_solution}`}>{t('profile.see_solution')}</Link>
                                             </TableCell>
                                             <TableCell>
                                                 <Link to={`/problems/${solution.problem}`}>{solution.problem}</Link>

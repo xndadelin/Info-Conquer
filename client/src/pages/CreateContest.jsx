@@ -1,9 +1,11 @@
 import { Button, Chip, DateRangePicker, Input, Textarea } from "@nextui-org/react";
 import { gql, useMutation, useQuery } from "@apollo/client";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Select, SelectItem } from "@nextui-org/react";
 import { useTranslation } from "react-i18next";
+import { UserContext } from "../context/UserContext";
+import { NotFound } from "./NotFound";
 const GET_PROBLEMS = gql`
     query GetProblems($category: String, $subcategory: String){
         getProblems(category: $category, subcategory: $subcategory){
@@ -12,7 +14,7 @@ const GET_PROBLEMS = gql`
     }`   
 export const CreateConstest = () => {
     const { t } = useTranslation();
-
+    const { user } = useContext(UserContext)
     const [problems, setProblems] = useState([]);
     const [selectedProblems, setSelectedProblems] = useState([]);
     const [name, setName] = useState('');
@@ -82,7 +84,7 @@ export const CreateConstest = () => {
         const languages = language.target.value.split(",");
         setLanguages(languages);
     };
-
+    if(!user || !user.getUser || !user.getUser.admin) return <NotFound/>
     return (
         <div className="container mx-auto my-5 mb-[400px] p-5">
             <p className="text-4xl font-bold">{t('createContest.title')}</p>

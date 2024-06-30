@@ -15,6 +15,7 @@ const { createProblem } = require('./mutations/problem/createProblem');
 const { rateProblem } = require('./mutations/problem/rateProblem');
 const { submitSolution } = require('./mutations/problem/submitSolution');
 const { createReport } = require('./mutations/report/createReport');
+const { getChatbotMessage } = require('./mutations/problem/getChatbotMessage');
 
 
 const { getAnnouncement } = require('./queries/announcement/getAnnouncement');
@@ -23,7 +24,6 @@ const { getArticle } = require('./queries/article/getArticle');
 const { getArticles } = require('./queries/article/getArticles');
 const { getContest } = require('./queries/contest/getContest');
 const { getContests } = require('./queries/contest/getContests');
-const { getChatbotMessage } = require('./queries/miscellaneous/getChatbotMessage');
 const { getHomepageInfo } = require('./queries/miscellaneous/getHomepageInfo');
 const { getLeaderboard } = require('./queries/miscellaneous/getLeaderboard');
 const { getSearch } = require('./queries/miscellaneous/getSearch');
@@ -46,7 +46,6 @@ const resolvers = {
     getArticles,
     getContest,
     getContests,
-    getChatbotMessage,
     getHomepageInfo,
     getLeaderboard,
     getSearch,
@@ -80,7 +79,8 @@ const resolvers = {
     createProblem,
     rateProblem,
     submitSolution,
-    createReport
+    createReport,
+    getChatbotMessage,
   }
 };
 

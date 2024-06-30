@@ -21,5 +21,6 @@ module.exports = gql`
         rateProblem(id: String, rating: Int): Response
         authDiscord(code: String): Response
         createReport(title: String, reporter: String, description: String, type: String, problem: String): Response
+        getChatbotMessage(prompt: String, problem: String, code: String): message
     }
 `;  

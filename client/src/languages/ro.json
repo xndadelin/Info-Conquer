@@ -294,7 +294,8 @@
       "bio": "Despre tine",
       "writeAboutYourself": "Scrie ceva despre tine...",
       "changeBio": "Schimbă descrierea",
-      "settings": "Setări"
+      "settings": "Setări",
+      "see_solution": "Vezi solutia"
     },
     "publishProblem": {
       "title": "Publică o problemă",
@@ -428,7 +429,9 @@
       "date": "Dată",
       "status": "Stare",
       "accepted": "Acceptat",
-      "rejected": "Respins"
+      "rejected": "Respins",
+      "all_submissions": "Toate submisiile",
+      "ur_submissions": "Submisiile tale"
     },
     "problemsPage": {
       "title": "Probleme",

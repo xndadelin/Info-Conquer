@@ -57,11 +57,11 @@ export const Solution = () => {
 
     const navigate = useNavigate();
 
-    if (loading || !solution) {
+    if (loading) {
         return <Loading />;
     }
 
-    if (error || !user || !user.getUser) {
+    if (error || !user || !user.getUser || !solution.getSolution) {
         return <NotFound />;
     }
 

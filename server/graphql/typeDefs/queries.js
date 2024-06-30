@@ -8,7 +8,7 @@ module.exports = gql`
         getProfile(username: String): ProfileUser
         getSolution(id: String): Solution
         getProblems(category: String, subcategory: String): [Problem]
-        getSubmissions(title: String): [Submission]
+        getSubmissions(title: String): Submissions
         getArticles: [Article]
         getArticle(id: String): Article
         getProblemStats(id: String): Stats
@@ -23,6 +23,5 @@ module.exports = gql`
         getActivity(username: String): [Activity]
         getDailies: [Daily]
         getDaily(daily: String): Daily
-        getChatbotMessage(prompt: String, problem: String, code: String): message
     } 
 `;  

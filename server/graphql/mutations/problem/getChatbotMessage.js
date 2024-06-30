@@ -2,6 +2,7 @@ const openai = require('openai');
 const client = new openai(process.env.OPENAI_API_KEY);
 const { getUser } = require('../../../utils/getUser')
 const {ApolloError} = require('apollo-server-express')
+const Problem = require('../../../models/problem')
 module.exports = {
     async getChatbotMessage(_, {prompt, problem, code}, context){
         const user = await getUser(context);

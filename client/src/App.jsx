@@ -29,6 +29,7 @@ import { Leaderboard } from "./pages/Leaderboard";
 import { Search } from "./components/Search";
 import { AuthDiscord } from "./components/AuthDiscord";
 import { Calendar } from "./pages/Calendar";
+import { Help } from "./components/Help";
 function App() {
   const {user} = useContext(UserContext)
   if(!user)
@@ -36,6 +37,7 @@ function App() {
   return (
     <div className="flex flex-col min-h-screen">
       <NavigationBar/>
+      <Help/>
         <Routes>
           <Route
             path="/"

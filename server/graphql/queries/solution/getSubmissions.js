@@ -1,7 +1,9 @@
 const User = require('../../../models/user')
 const {ApolloError} = require('apollo-server-express')
+const { getUser } = require('../../../utils/getUser')
 module.exports = {
     async getSubmissions(_, {title}, context){
+        const user = await getUser(context)
         if(!title){
             throw new ApolloError('The title is null')
         }
@@ -22,10 +24,35 @@ module.exports = {
                     language: "$solutions.language", 
                     score: "$solutions.score",
                     date: "$solutions.date",
-                    compilationError: { $toString: "$solutions.compilationError" } 
+                    status: "$solutions.status"
                 }
             }
         ]);
-        return solutions
+        const userSolutions = await User.aggregate([
+            {
+                $unwind: "$solutions"
+            },
+            {
+                $match: {
+                    "solutions.username": user.username,
+                    "solutions.problem": title
+                }
+            },
+            {
+                $project: {
+                    _id: "$solutions.id_solution",
+                    username: 1,
+                    problem: "$solutions.problem",
+                    language: "$solutions.language",
+                    score: "$solutions.score",
+                    date: "$solutions.date",
+                    status: "$solutions.status"
+                }
+            }
+        ]);
+        return {
+            allSolutions: solutions,
+            userSolutions: userSolutions
+        }
     }
 }

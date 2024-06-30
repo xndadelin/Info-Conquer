@@ -46,7 +46,7 @@ module.exports = {
         }
         user.username = newUsername;
         await user.save()
-        await User.updateMany({ "solutions.username": user.username }, { $set: { "solutions.$[elem].username": username } },{ arrayFilters: [{ "elem.username": user.username }] });
+        await User.updateMany({ "solutions.username": username }, { $set: { "solutions.$[elem].username": newUsername } },{ arrayFilters: [{ "elem.username": user.username }] });
         await Problem.updateMany({ creator: username }, { $set: { creator: newUsername } });
         await Article.updateMany({ creator: username }, { $set: { creator: newUsername } });
         await Announcement.updateMany({ createdBy: username }, { $set: { createdBy: newUsername } });

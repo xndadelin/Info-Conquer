@@ -109,7 +109,7 @@ return (
                                         {t('why_choose_section.features.3.title')}
                                     </p>
                                     <a className='text-sm text-default-500' href='http://localhost:3000/articles'>
-                                        {t('why_choose_section.features.0.text_link')}  
+                                        {t('why_choose_section.features.3.link_text')}  
                                     </a>
                                 </div>
                             </CardHeader>
