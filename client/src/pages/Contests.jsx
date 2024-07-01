@@ -7,7 +7,7 @@ import { UserContext } from "../context/UserContext";
 import { NotFound } from "./NotFound";
 import { useTranslation } from "react-i18next";
 
-const getContests = gql`
+const GET_CONTESTS = gql`
     query GetContests {
         getContests {
             _id
@@ -21,8 +21,8 @@ const getContests = gql`
     }
 `;
 
-const joinContest = gql`
-    mutation JoinContest($id: String) {
+const JOIN_CONTEST = gql`
+    mutation JoinContest($id: String!) {
         joinContest(id: $id) {
             success
         }
@@ -30,31 +30,30 @@ const joinContest = gql`
 `;
 
 export const Contests = () => {
-    const { data, loading } = useQuery(getContests);
+    const { data, loading } = useQuery(GET_CONTESTS);
     const [id, setId] = useState('');
-    const { user } = useContext(UserContext);
     const { t } = useTranslation();
-    const [joinContestMutation] = useMutation(joinContest, {
+    const [joinContestMutation] = useMutation(JOIN_CONTEST, {
         onCompleted: (data) => {
             if (data.joinContest.success) {
                 window.location.href = `/contests/view/${id}`;
             }
         },
         onError: (error) => {
-            console.log(error);
+            console.error("Error joining contest:", error);
         }
     });
 
     if (loading) return <Loading />;
-    if (!data) return <NotFound />;
+    if (!data || !data.getContests || data.getContests.length === 0) return <NotFound />;
 
     const features = t('contests.meta', { returnObjects: true });
 
     return (
-        <div className="mt-10 p-4 container mx-auto h-screen">
-            <div className="flex flex-col gap-5 self-start">
-                <div className="text-5xl text-white font-extrabold">🏆 {t('contests.header')}</div>
-                <p className="text-2xl text-white">{t('contests.description')}</p>
+        <div className="container mx-auto mt-20 p-4 h-full">
+            <div className="flex flex-col gap-5 text-center">
+                <div className="text-5xl font-extrabold text-red-500">🏆 {t('contests.header')}</div>
+                <p className="text-xl text-gray-400 mt-4e">{t('contests.description')}</p>
             </div>
             <div className="container grid grid-cols-3 my-5 mt-10 gap-5 max-md:grid-cols-2 max-sm:grid-cols-1">
                 {data.getContests.map((contest) => (

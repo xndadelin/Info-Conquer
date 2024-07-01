@@ -193,7 +193,10 @@
         "top": "Top",
         "username": "Nume de utilizator",
         "solvedProblems": "Probleme rezolvate"
-      }
+      },
+      "gold": "Aur",
+      "silver": "Argint",
+      "bronze": "Bronz"
     },
     "navbar": {
       "brand": "<InfoConquer/>",

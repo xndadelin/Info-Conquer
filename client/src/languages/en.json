@@ -194,7 +194,10 @@
         "top": "Top",
         "username": "Username",
         "solvedProblems": "Solved problems"
-      }
+      },
+      "gold": "Gold",
+      "silver": "Silver",
+      "bronze": "Bronze"
     },
     "navbar": {
       "brand": "<InfoConquer/>",

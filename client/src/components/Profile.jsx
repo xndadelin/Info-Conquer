@@ -62,9 +62,11 @@ const getActivity = gql`
         }
     }
 `
+
 export const Profile = () => {
     const { username } = useParams();
     const { t } = useTranslation()
+
     const { user: currentUser } = useContext(UserContext)
     const [page, setPage] = useState(1)
     const [love, setLove] = useState(false)
@@ -81,6 +83,7 @@ export const Profile = () => {
     const [confirmPassword, setConfirmPassword] = useState('')
     const [errorPassword, setErrorPassword] = useState('')
     const [pageActivity, setPageActivity] = useState(1)
+
     const { data: dataActivity, loading: loadingActivity } = useQuery(getActivity, {
         variables: {
             username
@@ -135,9 +138,12 @@ export const Profile = () => {
             setErrorPassword(error.message)
         }
     })
+
     if (loading || loadingActivity) return <Loading />
     if (!data || error) return <NotFound />
+
     const seeSettings = currentUser && currentUser.getUser && currentUser.getUser.username === username
+
     return (
         <div className="h-[100%] my-5 min-h-[3000px]">
             <Tabs className="container mx-auto flex flex-col my-5 px-5">

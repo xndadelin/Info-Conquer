@@ -171,25 +171,27 @@ export const ProblemsSelection = () => {
     ];
 
     return (
-        <div className="container mx-auto my-4 px-4">
-            <div className="flex flex-col gap-5 mt-20 mb-20">
-                <div className="text-5xl text-white font-extrabold">{t('problems.header')}</div>
-                <p className="text-2xl text-white">
+        <div className="container mx-auto mt-20 px-4 text-white">
+            <div className="text-center mb-10">
+                <h1 className="text-5xl font-extrabold text-red-500">{t('problems.header')}</h1>
+                <p className="text-xl text-gray-400 mt-4">
                     {t('problems.description')}
                 </p>
             </div>
-            <div className="flex gap-10 flex-wrap">
-                {problems.map((problem, index) => (
-                    <div className="flex flex-col" key={index}>
-                        <Link href={`/problems/${problem.category}/none`} color="danger" isBlock className="text-2xl font-bold">{t(`problems.categories.${problem.category}`)}</Link>
-                        <div className="flex flex-col">
-                            {problem.subcategories.map((subcategory, subIndex) => (
-                                <Link href={`/problems/${problem.category}/${subcategory}`} key={subIndex} color="foreground" isBlock>{t(`problems.subcategories.${subcategory}`)}</Link>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                {problems.map((problem) => (
+                    <div  className="flex flex-col p-4 bg-[#18181B] border border-gray-700 rounded-lg">
+                        <Link href={`/problems/${problem.category}/none`} className="text-red-500 font-extrabold text-lg">{t(`problems.categories.${problem.category}`)}</Link>
+                        <ul className="list-disc list-inside space-y-1">
+                            {problem.subcategories.map((subcategory) => (
+                                <li className="text-md">
+                                    <Link href={`/problems/${problem.category}/${subcategory}`} className="text-foreground-900 inline">{t(`problems.subcategories.${subcategory}`)}</Link>
+                                </li>
                             ))}
-                        </div>
+                        </ul>
                     </div>
                 ))}
             </div>
-        </div>
+    </div>
     );
 };
