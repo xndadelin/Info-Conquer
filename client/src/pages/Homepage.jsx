@@ -128,15 +128,15 @@ export const Homepage = () => {
                 <h2 className="text-3xl font-bold text-center mb-6">{t('homepage.newestAnnouncements')}</h2>
                 <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                     {announcementsData.getAnnouncements.map((announcement, index) => (
-                        <Card key={index}>
+                        <Card as={Link} href={`/announcement/${encodeURIComponent(announcement.title)}`} key={index}>
                             <CardBody>
                                 <h3 className="text-2xl font-bold text-danger">{announcement.title}</h3>
-                                <p className="text-gray-600">{t('homepage.announcementBy')}{' '}
+                                <p className="text-gray-400">{t('homepage.announcementBy')}{' '}
                                     <Link href={`/profile/${announcement.createdBy}`} color="danger">
                                         {announcement.createdBy}
                                     </Link>
                                 </p>
-                                <div className="text-gray-700" dangerouslySetInnerHTML={{ __html: `${announcement.content.slice(0, 500)}... <a class="text-danger" href='/announcement/${encodeURIComponent(announcement.title)}'>${t('homepage.seeMore')}</a>` }}></div>
+                                <div className="text-white" dangerouslySetInnerHTML={{ __html: `${announcement.content.slice(0, 500)}... <a class="text-danger" href='/announcement/${encodeURIComponent(announcement.title)}'>${t('homepage.seeMore')}</a>` }}></div>
                             </CardBody>
                         </Card>
                     ))}

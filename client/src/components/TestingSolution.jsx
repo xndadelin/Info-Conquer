@@ -27,7 +27,7 @@ export const TestingSolution = ({ onClose, isOpen, loading, tests }) => {
                             <TableRow key={index}>
                                 <TableCell>{index + 1}</TableCell>
                                 <TableCell>{test.executionTime} s</TableCell>
-                                <TableCell>{test.memoryUsed / 1024} MB</TableCell>
+                                <TableCell>{parseFloat(test.memoryUsed / 1024).toFixed(3)} MB</TableCell>
                                 <TableCell>{test.score}</TableCell>
                                 <TableCell color="warning">{test.status}</TableCell>
                                 <TableCell>{test.exitcode != null ? test.exitcode : test.exitsig ? test.exitsig : '-'}</TableCell>

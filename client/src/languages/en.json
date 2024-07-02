@@ -51,8 +51,13 @@
         "end_date": "End date",
         "languages": "Languages",
         "view_more": "view more",
-        "join": "Join"
-      }
+        "join": "Join",
+        "joined": "Joined"
+      },
+      "ended": "Ended contests",
+      "ongoing": "Ongoing contests",
+      "upcoming": "Upcoming contests",
+      "solvedPercentage": "Solved percentage"
     },
     "problems": {
         "header": "🎯 Problems",

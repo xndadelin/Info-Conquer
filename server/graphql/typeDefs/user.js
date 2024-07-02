@@ -26,7 +26,8 @@ module.exports = gql`
         date: String, 
         id_solution: String,
         compilationError: String
-        language: String
+        language: String,
+        status: String,
     }
     type solvedProblems {
         problem: String,

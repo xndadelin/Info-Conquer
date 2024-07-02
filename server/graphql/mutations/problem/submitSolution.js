@@ -7,7 +7,6 @@ const Daily = require('../../../models/daily')
 module.exports = {
     async submitSolution(_, {solutionInput: {problem, code, language, type}}, context){
         const problema = await Problem.findOne({title: problem}).select('tests title type rejectedSolutions acceptedSolutions timeExecution limitMemory')
-        const contest = await Contest.findOne({ "problems.id": problema.title });
         if(!problem){
             throw new ApolloError('This problem does not exist.')
         }
@@ -15,21 +14,9 @@ module.exports = {
         if(!user){
             throw new ApolloError('You have to be logged in order to submit a solution');
         }
-        if(contest){
-            const participantExists = contest.participants.some(participant => participant.username === user.username);
-            if(!participantExists){
-                throw new ApolloError('You have to join the contest in order to submit a solution')
-            }
-            const now = new Date();
-            if(now > contest.endDate){
-                throw new ApolloError('This contest has ended')
-            }
-            if(now < contest.startDate){
-                throw new ApolloError('This contest has not started yet')
-            }
-        }
         const testResults = grader(problema.tests, code, problema.title, user.username,language, problema.timeExecution, problema.limitMemory)
         user.solutions.push(testResults)
+        await user.save()
         user.activity.push({date: new Date(), message: `${user.username} has submitted the code on problem ${problem} and scored ${testResults.score}`})
         if(testResults.score === 100){
             if(!user.solvedProblems.find(solved => solved.problem === problema.title)){
@@ -53,7 +40,19 @@ module.exports = {
             problema.rejectedSolutions += 1;
             await problema.save();
         }
-        if(contest){
+        if(type.split(':')[0] === 'contest'){
+            const contest = await Contest.findOne({ _id: type.split(':')[1]});
+            const participantExists = contest.participants.some(participant => participant.username === user.username);
+            if(!participantExists){
+                throw new ApolloError('You have to join the contest in order to submit a solution')
+            }
+            const now = new Date();
+            if(now > contest.endDate){
+                throw new ApolloError('This contest has ended')
+            }
+            if(now < contest.startDate){
+                throw new ApolloError('This contest has not started yet')
+            }
             const Participant = contest.participants.find(participant => participant.username === user.username);
             const problemIndex = Participant.problems.findIndex(problem => problem.id === problema.title);
             if(problemIndex === -1){

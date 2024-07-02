@@ -171,7 +171,7 @@ export const ProblemsSelection = () => {
     ];
 
     return (
-        <div className="container mx-auto mt-20 px-4 text-white">
+        <div className="container mx-auto mt-20 mb-20 px-4 text-white">
             <div className="text-center mb-10">
                 <h1 className="text-5xl font-extrabold text-red-500">{t('problems.header')}</h1>
                 <p className="text-xl text-gray-400 mt-4">

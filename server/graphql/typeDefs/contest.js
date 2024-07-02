@@ -7,17 +7,25 @@ module.exports = gql`
         description: String
         startDate: Date
         endDate: Date
-        problems: [String]
+        problems: [ProblemContest]
         languages: [String],
         createdBy: String,
         ended: Boolean,
         started: Boolean,
         participants: [Participant],
+        hasJoined: Boolean
     }
 
     type Participant {
         username: String
         score: Int
-        problems: [String]
+        problems: [ProblemContest]
+    }
+    type ProblemContest {
+        id: String, 
+        score: Int,
+        category: String,
+        difficulty: String,
+        subcategories: [String]
     }
 `;

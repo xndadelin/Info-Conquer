@@ -22,6 +22,7 @@ query GetProfile($username: String){
             compilationError,
             id_solution,
             language
+            status
         },
         solvedProblems {
             problem
@@ -215,7 +216,7 @@ export const Profile = () => {
                                             <TableCell>{new Date(+solution.date).toLocaleString()}</TableCell>
                                             <TableCell>{solution.language}</TableCell>
                                             <TableCell>{solution.score}</TableCell>
-                                            <TableCell>{solution.score === "100" ? "Accepted" : "Rejected"}</TableCell>
+                                            <TableCell>{solution.status}</TableCell>
                                         </TableRow>
                                     ))}
                                 </TableBody>

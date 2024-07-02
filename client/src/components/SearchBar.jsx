@@ -8,7 +8,7 @@ export const SearchBar = () => {
     const [search, setSearch] = useState('');
 
     return (
-        <Tooltip text={t('searchBar.text')} placement="bottom" content={
+        <Tooltip text={t('searchBar.text')} className="p-0" placement="bottom" content={
             <Input
                 onKeyDown={(e) => {
                     if (e.key === 'Enter') {
