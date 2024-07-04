@@ -54,6 +54,10 @@ export const ProblemStats = () => {
             legend: {
                 position: 'bottom'
             },
+            title: {
+                display: true,
+                text: t('problemStatsPage.solvesOverTimeTitle')
+            }
         },
     };
 
@@ -74,9 +78,13 @@ export const ProblemStats = () => {
     return (
         <div className="container flex-col">
             <h1 className="text-3xl font-bold mb-5 mt-5">{t('problemStatsPage.insightsTitle')}</h1>
-            <div className="mt-5 max-w-[50%] mx-auto">
-                <Line data={chartData} options={options} />
+
+            <div className="bg-[#282828] rounded-lg shadow-md p-6 text-white mt-5 mx-auto">
+                <div className="bg-[#181818] p-5 rounded-lg">
+                    <Line data={chartData} options={options} />
+                </div>
             </div>
+
             <h1 className="text-3xl font-bold mt-5">{t('problemStatsPage.firstSubmissionsTitle')}</h1>
             <div className="grid grid-cols-3 max-md:grid-cols-1 gap-5 mt-5">
                 <Card className="p-7">

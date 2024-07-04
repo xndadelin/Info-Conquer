@@ -23,7 +23,7 @@ export const Leaderboard = () => {
     const rest = data.getLeaderboard.slice(3);
 
     const heights = ['h-60', 'h-40', 'h-50'];
-    
+
     return (
         <div className="container flex flex-col px-5 mx-auto mt-20 gap-10 mb-[100vh] text-white">
             <div className="text-center mb-10">
@@ -31,37 +31,68 @@ export const Leaderboard = () => {
                 <p className="text-xl text-gray-400 mt-4">{t('leaderboard.description')}</p>
             </div>
 
-            
+
             <div className="flex flex-col items-end md:flex-row mx-auto mb-16">
-                <div className="flex flex-col items-center mb-6 md:mb-0 md:mr-6">
-                    <div className={`flex flex-col justify-end items-center w-32 ${heights[1]} bg-[#1E1E24] p-5 rounded-t-lg border border-gray-700 shadow-lg relative`}>
-                        <div className={`absolute top-0 -mt-5 px-4 py-1 rounded-full bg-[#FF5555] text-lg text-white font-bold shadow-md`}>#2</div>
-                        <div className="text-xl mt-3">{top3[1].username}</div>
-                        <div className="text-lg text-gray-400 mt-1">{top3[1].solvedProblems}</div>
+                {top3[1] ? (
+                    <div className="flex flex-col items-center mb-6 md:mb-0 md:mr-6">
+                        <div className={`flex flex-col justify-end items-center w-32 ${heights[1]} bg-[#1E1E24] p-5 rounded-t-lg border border-gray-700 shadow-lg relative`}>
+                            <div className={`absolute top-0 -mt-5 px-4 py-1 rounded-full bg-[#FF5555] text-lg text-white font-bold shadow-md`}>#2</div>
+                            <div className="text-xl mt-3">{top3[1].username}</div>
+                            <div className="text-lg text-gray-400 mt-1">{top3[1].solvedProblems}</div>
+                        </div>
+                        <div className="text-center mt-3 font-bold">{t('leaderboard.silver')}</div>
                     </div>
-                    <div className="text-center mt-3 font-bold">{t('leaderboard.silver')}</div>
-                </div>
+                ) : (
+                    <div className="flex flex-col items-center mb-6 md:mb-0 md:mr-6">
+                        <div className={`flex flex-col justify-end items-center w-32 ${heights[1]} bg-[#1E1E24] p-5 rounded-t-lg border border-gray-700 shadow-lg relative`}>
+                            <div className={`absolute top-0 -mt-5 px-4 py-1 rounded-full bg-[#FF5555] text-lg text-white font-bold shadow-md`}>#2</div>
+                            <div className="text-xl mt-3">-</div>
+                            <div className="text-lg text-gray-400 mt-1">-</div>
+                        </div>
+                        <div className="text-center mt-3 font-bold">{t('leaderboard.silver')}</div>
+                    </div>
+                )}
+                {top3[0] ? (
+                    <div className="flex flex-col items-center mb-6 md:mb-0">
+                        <div className={`flex flex-col justify-end items-center w-32 ${heights[0]} bg-[#1E1E24] p-5 rounded-t-lg border border-gray-700 shadow-lg relative`}>
+                            <div className={`absolute top-0 -mt-5 px-4 py-1 rounded-full bg-[#FF5555] text-lg text-white font-bold shadow-md`}>#1</div>
+                            <div className="text-xl mt-3">{top3[0].username}</div>
+                            <div className="text-lg text-gray-400 mt-1">{top3[0].solvedProblems}</div>
+                        </div>
+                        <div className="text-center mt-3 font-bold">{t('leaderboard.gold')}</div>
+                    </div>
+                ) : (
+                    <div className="flex flex-col items-center mb-6 md:mb-0">
+                        <div className={`flex flex-col justify-end items-center w-32 ${heights[0]} bg-[#1E1E24] p-5 rounded-t-lg border border-gray-700 shadow-lg relative`}>
+                            <div className={`absolute top-0 -mt-5 px-4 py-1 rounded-full bg-[#FF5555] text-lg text-white font-bold shadow-md`}>#1</div>
+                            <div className="text-xl mt-3">-</div>
+                            <div className="text-lg text-gray-400 mt-1">-</div>
+                        </div>
+                        <div className="text-center mt-3 font-bold">{t('leaderboard.gold')}</div>
+                    </div>
 
-                <div className="flex flex-col items-center mb-6 md:mb-0">
-                    <div className={`flex flex-col justify-end items-center w-32 ${heights[0]} bg-[#1E1E24] p-5 rounded-t-lg border border-gray-700 shadow-lg relative`}>
-                        <div className={`absolute top-0 -mt-5 px-4 py-1 rounded-full bg-[#FF5555] text-lg text-white font-bold shadow-md`}>#1</div>
-                        <div className="text-xl mt-3">{top3[0].username}</div>
-                        <div className="text-lg text-gray-400 mt-1">{top3[0].solvedProblems}</div>
-                    </div>
-                    <div className="text-center mt-3 font-bold">{t('leaderboard.gold')}</div>
-                </div>
+                )}
 
-               <div className="flex flex-col items-center ml-6 max-md:ml-0">
-                    <div className={`flex flex-col justify-end items-center w-32 ${heights[2]} bg-[#1E1E24] p-5 rounded-t-lg border border-gray-700 shadow-lg relative`}>
-                        <div className={`absolute top-0 -mt-5 px-4 py-1 rounded-full bg-[#FF5555] text-lg text-white font-bold shadow-md`}>#3</div>
-                        <div className="text-xl mt-3">{top3[2].username}</div>
-                        <div className="text-lg text-gray-400 mt-1">{top3[2].solvedProblems}</div>
+                {top3[2] ? (
+                    <div className="flex flex-col items-center ml-6 max-md:ml-0">
+                        <div className={`flex flex-col justify-end items-center w-32 ${heights[2]} bg-[#1E1E24] p-5 rounded-t-lg border border-gray-700 shadow-lg relative`}>
+                            <div className={`absolute top-0 -mt-5 px-4 py-1 rounded-full bg-[#FF5555] text-lg text-white font-bold shadow-md`}>#3</div>
+                            <div className="text-xl mt-3">{top3[2].username}</div>
+                            <div className="text-lg text-gray-400 mt-1">{top3[2].solvedProblems}</div>
+                        </div>
+                        <div className="text-center mt-3 font-bold">{t('leaderboard.bronze')}</div>
                     </div>
-                    <div className="text-center mt-3 font-bold">{t('leaderboard.bronze')}</div>
-                </div>
+                ) : (
+                    <div className="flex flex-col items-center ml-6 max-md:ml-0">
+                        <div className={`flex flex-col justify-end items-center w-32 ${heights[2]} bg-[#1E1E24] p-5 rounded-t-lg border border-gray-700 shadow-lg relative`}>
+                            <div className={`absolute top-0 -mt-5 px-4 py-1 rounded-full bg-[#FF5555] text-lg text-white font-bold shadow-md`}>#3</div>
+                            <div className="text-xl mt-3">-</div>
+                            <div className="text-lg text-gray-400 mt-1">-</div>
+                        </div>
+                        <div className="text-center mt-3 font-bold">{t('leaderboard.bronze')}</div>
+                    </div>
+                )}
             </div>
-
-
             {rest.length > 0 && (
                 <div className="overflow-x-auto">
                     <Table isCompact>

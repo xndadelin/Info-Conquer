@@ -55,7 +55,7 @@ export const TestingSolution = ({ onClose, isOpen, loading, tests }) => {
 
     const compilationError = () => {
         return (
-            <Snippet hideSymbol color="danger">
+            <Snippet hideSymbol color="danger"> 
                 <pre className="whitespace-pre-wrap">
                     {tests.compilationError}
                 </pre>
@@ -66,6 +66,7 @@ export const TestingSolution = ({ onClose, isOpen, loading, tests }) => {
     return (
         <div className="p-5">
             <Modal
+                scrollBehavior="inside"
                 size="3xl"
                 isOpen={isOpen}
                 onClose={onClose}

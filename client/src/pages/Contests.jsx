@@ -95,14 +95,14 @@ export const Contests = () => {
                                     </CardBody>
                                     <CardFooter>
                                         <Button
-                                            isDisabled={contest.hasJoined}
+                                            isDisabled={contest.hasJoined || index === 0 || index === 2}
                                             onClick={() => {
                                                 joinContestMutation({ variables: { id: contest._id } });
                                                 setId(contest._id);
                                             }}
                                             variant="faded"
                                         >
-                                            {contest.hasJoined ? features.joined : features.join}
+                                            {contest.hasJoined ? features.joined : index === 0 ? features.ongoing : index === 2 ? features.ended : features.join}
                                         </Button>
                                     </CardFooter>
                                 </Card>

@@ -52,7 +52,8 @@
         "languages": "Languages",
         "view_more": "view more",
         "join": "Join",
-        "joined": "Joined"
+        "joined": "Joined",
+        "ended": "Ended"
       },
       "ended": "Ended contests",
       "ongoing": "Ongoing contests",
@@ -320,7 +321,7 @@
       "output": "Output",
       "restriction": "Restrictions",
       "timeLimit": "Time limit (in s)",
-      "memoryLimit": "Memory limit (in MB)",
+      "memoryLimit": "Memory limit (in KB)",
       "forContest": "This problem is for a contest",
       "examples": "Examples",
       "addExample": "Add example",
@@ -471,7 +472,8 @@
         "language": "Language",
         "memory": "Memory",
         "timeExecutions": "Time Executions"
-      }
+      },
+      "solvesOverTimeTitle": "Solves Over Time" 
     },
     "rateProblemPage": {
       "rateProblemTitle": "Rate the problem",

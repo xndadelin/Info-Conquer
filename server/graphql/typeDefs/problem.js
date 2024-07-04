@@ -23,7 +23,7 @@ module.exports = gql`
         itsForContest: Boolean,
         successRate: Float,
         userHasRated: Boolean,
-        rating: Int,
+        rating: Float,
         contest: String
     }
     input CreateProblemInput {
@@ -40,7 +40,7 @@ module.exports = gql`
         output: String,
         tests: [TestInput],
         timeExecution: String,
-        limitMemory: Int,
+        limitMemory: String,
         examples: [ExampleInput],
         indications: String,
         languages: [String],
@@ -52,12 +52,13 @@ module.exports = gql`
     type Test {
         score: String, 
         input: String,
-        output: String
+        output: String,
     }
     input TestInput {
         score: String, 
         input: String,
-        output: String
+        output: String,
+        number: String
     }
     type Example {
         input: String,

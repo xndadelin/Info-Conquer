@@ -14,6 +14,8 @@ import { ProblemStats } from './ProblemStats'
 import { RateProblem } from './RateProblem'
 import { ReportProblem } from './ReportProblem'
 import { useTranslation } from 'react-i18next'
+import { Chip } from '@nextui-org/react'
+import { getStatusColor } from '../utils/getStatusColor'
 
 const placeholder = `#include <iostream>
 #include <cstring>
@@ -476,7 +478,11 @@ export const Problem = () => {
                                                     <TableCell>{submission.language}</TableCell>
                                                     <TableCell>{submission.score}</TableCell>
                                                     <TableCell>{new Date(+submission.date).toLocaleString()}</TableCell>
-                                                    <TableCell>{submission.status}</TableCell>
+                                                    <TableCell>
+                                                        <Chip color={getStatusColor(submission.status)}>
+                                                            {submission.status}
+                                                        </Chip>
+                                                    </TableCell>
                                                 </TableRow>
                                             ))}
                                         </TableBody>
@@ -507,7 +513,11 @@ export const Problem = () => {
                                                     <TableCell>{submission.language}</TableCell>
                                                     <TableCell>{submission.score}</TableCell>
                                                     <TableCell>{new Date(+submission.date).toLocaleString()}</TableCell>
-                                                    <TableCell>{submission.status}</TableCell>
+                                                    <TableCell>
+                                                        <Chip color={getStatusColor(submission.status)}>
+                                                            {submission.status}
+                                                        </Chip>
+                                                    </TableCell>
                                                 </TableRow>
                                             ))}
                                         </TableBody>

@@ -115,7 +115,7 @@ export const Homepage = () => {
                 </Card>
             </div>
 
-            <div className="mt-12">
+            <div className="mt-12 bg-[#282828] p-5 rounded-lg">
                 <h2 className="text-3xl font-bold text-center mb-6">{t('homepage.activityLast7Days')}</h2>
                 {infoData && (
                     <div className="bg-[#181818] p-5 rounded-lg"> 

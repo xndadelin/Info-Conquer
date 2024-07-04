@@ -29,6 +29,9 @@ module.exports = {
         }else if(now < contest.startDate && !participates){
             contest.problems = []
             return contest
+        }else if(now < contest.startDate && participates){
+            contest.problems = []
+            return contest
         }
     }
 }
