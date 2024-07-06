@@ -154,7 +154,7 @@ export const Profile = () => {
     return (
     <div className="min-h-screen py-8">
             <div className="container mx-auto px-4">
-                <Card className="mb-8">
+                <Card className="mb-8 bg-gray-800">
                     <CardBody className="flex flex-col md:flex-row items-center gap-6 p-6">
                         <Avatar 
                             className="w-24 h-24 text-large"
@@ -165,7 +165,7 @@ export const Profile = () => {
                                 {data.getProfile.admin === "true" ? t("profile.admin") : t("profile.user")}
                             </p>
                             <ButtonGroup>
-                                <Button color="danger" variant="flat">
+                                <Button color="primary" variant="flat">
                                     <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" viewBox="0 0 512 512">
                                         <path d="M47.6 300.4L228.3 469.1c7.5 7 17.4 10.9 27.7 10.9s20.2-3.9 27.7-10.9L464.4 300.4c30.4-28.3 47.6-68 47.6-109.5v-5.8c0-69.9-50.5-129.5-119.4-141C347 36.5 300.6 51.4 268 84L256 96 244 84c-32.6-32.6-79-47.5-124.6-39.9C50.5 55.6 0 115.2 0 185.1v5.8c0 41.5 17.2 81.2 47.6 109.5z" />
                                     </svg>
@@ -185,9 +185,9 @@ export const Profile = () => {
                     </CardBody>
                 </Card>
 
-                <Tabs className="mb-8" color="danger">
+                <Tabs className="mb-8" color="primary">
                     <Tab key="general" title={t("profile.generalInformation")}>
-                        <Card className="p-6">
+                        <Card className="p-6 bg-gray-800">
                             <CardHeader>
                                 <h2 className="text-2xl font-bold">{t("profile.solvedProblems")}</h2>
                             </CardHeader>
@@ -205,74 +205,62 @@ export const Profile = () => {
                             </CardBody>
                         </Card>
 
-                        <Card className="mt-8 p-6">
+                        <Card className="mt-8 p-6 bg-gray-800">
                             <CardHeader>
                                 <h2 className="text-2xl font-bold">{t("profile.submittedSolutions")}</h2>
                             </CardHeader>
                             <CardBody>
-                                <Table 
-                                    isStriped
-                                    isCompact
-                                    selectionMode="single"
-                                    aria-label="Submitted solutions"
-                                    className="shadow-lg"
-                                    bottomContent={
-                                        <Pagination
-                                            color="danger"
-                                            onChange={(page) => setPage(page)}
-                                            loop
-                                            showControls
-                                            total={Math.ceil(data.getProfile.solutions.length / 20)}
-                                            initialPage={1}
-                                        />
-                                    }
-                                >
-                                    <TableHeader>
-                                        <TableColumn>{t("profile.index")}</TableColumn>
-                                        <TableColumn>{t("profile.problem")}</TableColumn>
-                                        <TableColumn>{t("profile.date")}</TableColumn>
-                                        <TableColumn>{t("profile.language")}</TableColumn>
-                                        <TableColumn>{t("profile.score")}</TableColumn>
-                                        <TableColumn>{t("profile.status")}</TableColumn>
-                                    </TableHeader>
-                                    <TableBody>
-                                        {data.getProfile.solutions.slice((page - 1) * 20, page * 20).reverse().map((solution) => (
-                                            <TableRow key={solution.id_solution}>
-                                                <TableCell>
-                                                    <Link to={`/solution/${username}/${solution.id_solution}`}>{t('profile.see_solution')}</Link>
-                                                </TableCell>
-                                                <TableCell>
-                                                    <Link to={`/problems/${solution.problem}`} >{solution.problem}</Link>
-                                                </TableCell>
-                                                <TableCell>{new Date(+solution.date).toLocaleString()}</TableCell>
-                                                <TableCell>{solution.language}</TableCell>
-                                                <TableCell>{solution.score}</TableCell>
-                                                <TableCell>
-                                                    <Chip color={getStatusColor(solution.status)} variant="flat">
-                                                        {solution.status}
-                                                    </Chip>
-                                                </TableCell>
-                                            </TableRow>
+                                <table className="w-full text-sm text-left text-gray-300 shadow-2xl">
+                                    <thead className="text-xs uppercase bg-gray-700 text-gray-100">
+                                        <tr>
+                                            <th className="px-6 py-4" scope="col">{t("profile.problem")}</th>
+                                            <th className="px-6 py-4" scope="col">{t("profile.language")}</th>
+                                            <th className="px-6 py-4" scope="col">{t("profile.score")}</th>
+                                            <th className="px-6 py-4" scope="col">{t("profile.status")}</th>
+                                            <th className="px-6 py-4" scope="col">{t("profile.date")}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="divide-y divide-gray-700">
+                                        {data.getProfile.solutions.slice((page - 1) * 10, page * 10).map((solution) => (
+                                            <tr className="bg-gray-800 hover:bg-gray-700 transition-colors duration-200">
+                                                <td className="px-6 py-4">
+                                                    <Link to={`/problems/${solution.problem}`}>{solution.problem}</Link>
+                                                </td>
+                                                <td className="px-6 py-4">{solution.language}</td>
+                                                <td className="px-6 py-4">{solution.score}</td>
+                                                <td className="px-6 py-4">
+                                                    <Chip color={getStatusColor(solution.status)}>{solution.status}</Chip>
+                                                </td>
+                                                <td>{new Date(+solution.date).toLocaleString()}</td>
+                                            </tr>
                                         ))}
-                                    </TableBody>
-                                </Table>
+                                    </tbody>
+                                </table>
+                                <Pagination
+                                    color="primary"
+                                    onChange={setPage}
+                                    showControls
+                                    total={Math.ceil(data.getProfile.solutions.length / 10)}
+                                    initialPage={1}
+                                    className="mt-4"
+                                />
                             </CardBody>
                         </Card>
 
-                        <Card className="mt-8 p-6">
+                        <Card className="mt-8 p-6 bg-gray-800">
                             <CardHeader>
                                 <h2 className="text-2xl font-bold">{t("profile.activity")}</h2>
                             </CardHeader>
                             <CardBody >
                                 {dataActivity &&
                                     dataActivity.getActivity.slice((pageActivity - 1) * 10, pageActivity * 10).map((activity) => (
-                                        <div className="mb-4 p-4 rounded-lg shadow-lg bg-[#121212]">
+                                        <div className="mb-4 p-4 rounded-lg shadow-lg bg-gray-900">
                                             <p className="text-sm text-gray-400 mb-1">{new Date(+activity.date).toLocaleString()}</p>
                                             <p className="text-gray-200">{activity.message}</p>
                                         </div>
                                     ))}
                                 <Pagination
-                                    color="danger"
+                                    color="primary"
                                     onChange={setPageActivity}
                                     showControls
                                     total={Math.ceil(dataActivity.getActivity.length / 10)}
@@ -284,35 +272,35 @@ export const Profile = () => {
 
                     {seeSettings && (
                         <Tab key="settings" title={t("profile.settings")}>
-                            <Card className="p-6">
+                            <Card className="p-6 bg-gray-800">
                                 <CardHeader>
                                     <h2 className="text-2xl font-bold">{t("profile.changeUsername")}</h2>
                                 </CardHeader>
                                 <CardBody className="space-y-4">
                                     <Input label={t("profile.username")} value={data.getProfile.username} disabled />
                                     <Input label={t("profile.newUsername")} onChange={(e) => setNewUsername(e.target.value)} />
-                                    <Button color="danger" variant="flat" onClick={changeUsername} isLoading={changeUsernameLoading}>
+                                    <Button color="primary" variant="flat" onClick={changeUsername} isLoading={changeUsernameLoading}>
                                         {t("profile.changeUsername")}
                                     </Button>
-                                    {errorUsername && <Chip color="danger">{errorUsername}</Chip>}
+                                    {errorUsername && <Chip color="primary">{errorUsername}</Chip>}
                                 </CardBody>
                             </Card>
 
-                            <Card className="mt-8 p-6">
+                            <Card className="mt-8 p-6 bg-gray-800">
                                 <CardHeader>
                                     <h2 className="text-2xl font-bold">{t("profile.changeEmail")}</h2>
                                 </CardHeader>
                                 <CardBody className="space-y-4">
                                     <Input label={t("profile.email")} onChange={(e) => setEmail(e.target.value)} value={email} />
                                     <Input label={t("profile.newEmail")} value={newEmail} onChange={(e) => setNewEmail(e.target.value)} />
-                                    <Button color="danger" variant="flat" onClick={changeEmail} isLoading={changeEmailLoading}>
+                                    <Button color="primary" variant="flat" onClick={changeEmail} isLoading={changeEmailLoading}>
                                         {t("profile.changeEmail")}
                                     </Button>
-                                    {errorEmail && <Chip color="danger">{errorEmail}</Chip>}
+                                    {errorEmail && <Chip color="primary">{errorEmail}</Chip>}
                                 </CardBody>
                             </Card>
 
-                            <Card className="mt-8 p-6">
+                            <Card className="mt-8 p-6 bg-gray-800">
                                 <CardHeader>
                                     <h2 className="text-2xl font-bold">{t("profile.changePassword")}</h2>
                                 </CardHeader>
@@ -320,20 +308,20 @@ export const Profile = () => {
                                     <Input label={t("profile.currentPassword")} value={currentpass} onChange={(e) => setCurrentPass(e.target.value)} type="password" />
                                     <Input label={t("profile.newPassword")} value={password} onChange={(e) => setPassword(e.target.value)} type="password" />
                                     <Input label={t("profile.confirmPassword")} value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} type="password" />
-                                    <Button color="danger" variant="flat" onClick={changePassword} isLoading={changePasswordLoading}>
+                                    <Button color="primary" variant="flat" onClick={changePassword} isLoading={changePasswordLoading}>
                                         {t("profile.changePassword")}
                                     </Button>
-                                    {errorPassword && <Chip color="danger">{errorPassword}</Chip>}
+                                    {errorPassword && <Chip color="primary">{errorPassword}</Chip>}
                                 </CardBody>
                             </Card>
 
-                            <Card className="mt-8 p-6">
+                            <Card className="mt-8 p-6 bg-gray-800">
                                 <CardHeader>
                                     <h2 className="text-2xl font-bold">{t("profile.bio")}</h2>
                                 </CardHeader>
                                 <CardBody className="space-y-4">
                                     <Textarea value={bio} onChange={(e) => setBio(e.target.value)} label={t("profile.writeAboutYourself")} />
-                                    <Button color="danger" variant="flat">{t("profile.changeBio")}</Button>
+                                    <Button color="primary" variant="flat">{t("profile.changeBio")}</Button>
                                 </CardBody>
                             </Card>
                         </Tab>

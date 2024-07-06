@@ -99,21 +99,39 @@ export const DropFile = ({ tests, setTests }) => {
         </p>
       )}
 
-      {tests.map(({ number, score }, index) => (
+      {tests.map(({ number, score, input, output }, index) => (
         <Card key={number} className="shadow-md">
-          <CardHeader className="flex justify-between items-center max-md:flex-col gap-5">
-            <p className="text-md font-semibold">Test Case {index + 1}</p>
-            <div className="flex items-center gap-2">
-              <Input    
+          <CardHeader className="flex justify-between max-md:flex-col gap-5">
+            <div>
+              <p className="text-md font-semibold">Test Case {index + 1}</p>
+              <p className="text-sm text-gray-500">
+                Score: {score || 'Not set'}
+              </p>
+              <div className="flex gap-2 flex-col mt-1">
+                <div className="flex flex-col">
+                  <p className="text-sm text-gray-500">Input:</p>
+                  <div className="p-2 bg-neutral-800 rounded-lg">
+                    <pre className="text-xs whitespace-pre-wrap">{input}</pre>
+                  </div>
+                </div>
+                <div className="flex flex-col">
+                  <p className="text-sm text-gray-500">Output:</p>
+                  <div className="p-2 bg-neutral-800 rounded-lg">
+                    <pre className="text-xs whitespace-pre-wrap">{output}</pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="flex gap-2 mb-auto">
+              <Input
                 type="number"
                 placeholder="Score"
-                value={score || ''}
-                onChange={(e) => handleScoreChange(e.target.value)}
+                onChange={(e) => handleScoreChange(number, e.target.value)}
                 className="w-20"
               />
               <Button
                 color="danger"
-                variant='flat'
+                variant="flat"
                 onClick={() => handleDelete(number)}
               >
                 Delete Test Case
@@ -122,6 +140,7 @@ export const DropFile = ({ tests, setTests }) => {
           </CardHeader>
         </Card>
       ))}
+
     </div>
   );
 

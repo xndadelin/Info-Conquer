@@ -21,7 +21,7 @@ export const SearchBar = () => {
                 placeholder={t('searchBar.text')}
             />
         }>
-            <Link isBlock color="danger">{t('searchBar.label')}</Link>
+            <Link isBlock color="primary">{t('searchBar.label')}</Link>
         </Tooltip>
     );
 };

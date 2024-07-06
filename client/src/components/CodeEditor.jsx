@@ -1,5 +1,8 @@
-import { Editor } from "@monaco-editor/react"
-export const CodeEditor = ({ language, code, height }) => {
+import CodeMirror from '@uiw/react-codemirror';
+import { oneDark } from '@codemirror/theme-one-dark';
+import { loadLanguage } from '@uiw/codemirror-extensions-langs'
+
+export const CodeEditor = ({ language, code }) => {
     return (
         <div className="p-3">
             <div className="text-5xl flex flex-col p-0 h-[100%]">
@@ -8,14 +11,7 @@ export const CodeEditor = ({ language, code, height }) => {
                     <div className="h-[13px] mx-1 self-center w-[13px] rounded-full bg-yellow-400"></div>
                     <div className="h-[13px] mx-1 self-center w-[13px] rounded-full bg-green-600"></div>
                 </div>
-                <div className={`h-[${height}] flex-1`}>
-                    <Editor options={{
-                        minimap: { enabled: false },
-                        fontSize: 15,
-                        scrollbar: { vertical: 'hidden', horizontal: 'hidden' },
-                        readOnly: true
-                    }} theme="vs-dark" height={height} language={language} defaultValue={code} />
-                </div>
+                <CodeMirror extensions={[loadLanguage(language)]} height='550px' clas value={code} theme={oneDark}  />
             </div>
         </div>
     )

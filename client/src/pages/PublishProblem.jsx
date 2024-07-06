@@ -235,51 +235,19 @@ export const PublishProblem = () => {
         }
 
     ]
+    
     const onAddTag = () => {
         if (!tags.includes(tag)) {
             setTags([...tags, tag])
         }
         setTag('')
     }
+
     const onAddDelete = (tagName) => {
         setTags(tags.filter((tag) => tag !== tagName))
     }
-    const handleInputTest = (index, value) => {
-        setTests(prev => {
-            const updatedTests = [...prev];
-            updatedTests[index].input = value;
-            return updatedTests;
-        });
-    }
-    const handleOutputTest = (index, value) => {
-        setTests(prev => {
-            const updatedTests = [...prev];
-            updatedTests[index].output = value;
-            return updatedTests;
-        });
-    }
-    const handleScoreTest = (index, value) => {
-        setTests(prev => {
-            const updatedTests = [...prev];
-            updatedTests[index].score = value;
-            return updatedTests;
-        });
-    }
-    const addTest = () => {
-        setNumberTests((prev) => prev + 1)
-        setTests((tests) => [
-            ...tests, {
-                input: '',
-                output: '',
-                score: ''
-            }
-        ])
-    }
-    const deleteTest = (index) => {
-        ;
-        setTests(prev => prev.filter((_, i) => i !== index));
-        setNumberTests(prev => prev - 1);
-    }
+
+
     const handleInputExample = (index, value) => {
         setExamples(prev => {
             const updatedExamples = [...prev]
@@ -287,6 +255,7 @@ export const PublishProblem = () => {
             return updatedExamples
         })
     }
+
     const handleExampleExplanation = (index, value) => {
         setExamples(prev => {
             const updatedExamples = [...prev]
@@ -294,6 +263,7 @@ export const PublishProblem = () => {
             return updatedExamples
         })
     }
+
     const handleOutputExample = (index, value) => {
         setExamples(prev => {
             const updatedExamples = [...prev]
@@ -301,6 +271,7 @@ export const PublishProblem = () => {
             return updatedExamples
         })
     }
+
     const addExample = () => {
         setNumberExamples(prev => prev + 1)
         setExamples(prev => [
@@ -310,18 +281,22 @@ export const PublishProblem = () => {
             }
         ])
     }
+
     const deleteExample = (index) => {
         setExamples(prev => prev.filter((_, i) => i !== index))
         setNumberExamples(prev => prev - 1)
     }
+
     const handleSubcategoryChange = (subcategory) => {
         const subcategories = subcategory.target.value.split(",")
         setSubcategories(subcategories)
     }
+
     const handleLanguagesChange = (language) => {
         const languages = language.target.value.split(",")
         setLanguages(languages)
     }
+
     const Subcategories = (category) => {
         const index = problems.findIndex(problem => problem.category === category)
         if (index !== -1) {
@@ -353,7 +328,7 @@ export const PublishProblem = () => {
             <Textarea label="Description" value={description} onChange={(e) => setDescription(e.target.value)} />
             <Textarea isRequired label="Requirements" value={requirement} onChange={(e) => setRequirements(e.target.value)} />
             <Input endContent={
-                <Button disabled={tag === ''} color="danger" onClick={onAddTag} variant="flat">Add tag</Button>
+                <Button disabled={tag === ''} color="primary" onClick={onAddTag} variant="flat">Add tag</Button>
             } value={tag} onChange={(e) => setTag(e.target.value)} label="Tags" />
             <div className="flex flex-wrap gap-2 text-white">
                 {tags.map((tag) => (
@@ -394,7 +369,7 @@ export const PublishProblem = () => {
                 <div className="flex flex-col gap-2">
                     <div className="flex justify-between">
                         <label>Example {index + 1}</label>
-                        <Button variant="flat" onClick={() => deleteExample(index)} color="danger">Delete example</Button>
+                        <Button variant="flat" onClick={() => deleteExample(index)} color="primary">Delete example</Button>
                     </div>
                     <Textarea isRequired type="text" label="Input" onChange={(e) => handleInputExample(index, e.target.value)} />
                     <Textarea isRequired type="text" label="Output" onChange={(e) => handleOutputExample(index, e.target.value)} />
@@ -402,22 +377,7 @@ export const PublishProblem = () => {
                 </div>
             ))}
             <Divider />
-            <div className="flex justify-between font-bold text-3xl">
-                <p>Tests</p>
-                <Button variant="bordered" onClick={addTest}>Add test</Button>
-            </div>
-            {Array.from({ length: numberTests }, (_, index) => (
-                <div className="flex flex-col gap-2">
-                    <div className="flex justify-between">
-                        <label>Test {index + 1}</label>
-                        <Button variant="flat" onClick={() => deleteTest(index)} color="danger">Delete test</Button>
-                    </div>
-                    <Textarea isRequired type="text" label="Input" onChange={(e) => handleInputTest(index, e.target.value)} />
-                    <Textarea isRequired type="text" label="Output" onChange={(e) => handleOutputTest(index, e.target.value)} />
-                    <Textarea isRequired type="numar" label="Score" onChange={(e) => handleScoreTest(index, e.target.value)} />
-                </div>
-            ))}
-            <Button variant="flat" color="danger" onClick={onOpen}>Publish problem</Button>
+            <p className="text-3xl font-bold">Tests</p>
             <Modal isOpen={isOpen} onOpenChange={onOpen} onClose={onClose}>
                 <ModalContent>
                     <ModalHeader>
@@ -428,11 +388,11 @@ export const PublishProblem = () => {
                     </ModalBody>
                     <ModalFooter>
                         <Button variant="flat" color="success" onClick={handleCreateProblem}>Publish</Button>
-                        <Button variant="flat" color="danger" onClick={onClose}>Close</Button>
+                        <Button variant="flat" color="primary" onClick={onClose}>Close</Button>
                     </ModalFooter>
                     {error && (
-                        <div className="p-4">
-                            <Chip className="p-4 whitespace-pre-wrap h-full rounded-lg" variant="flat" color="danger">
+                        <div className="p-4 w-[100%] text-center">
+                            <Chip className="p-4 w-full rounded-lg" variant="flat" color="danger">
                                 {error.message}
                             </Chip>
                         </div>
@@ -440,6 +400,7 @@ export const PublishProblem = () => {
                 </ModalContent>
             </Modal>
             <DropFile tests={tests} setTests={setTests} />
+            <Button variant="flat" color="primary" onClick={onOpen}>Publish problem</Button>
         </div>
     )
 }

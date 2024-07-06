@@ -91,7 +91,7 @@ export const EditArticle = () => {
             />
             <Input
                 label={t('article.edit')}
-                endContent={<Button disabled={tag === ''} variant='flat' color='danger' onClick={onAddTag}>{t('article.edit')}</Button>}
+                endContent={<Button disabled={tag === ''} variant='flat' color='primary' onClick={onAddTag}>{t('article.edit')}</Button>}
                 value={tag}
                 onChange={(e) => setTag(e.target.value)}
                 className='my-5'
@@ -114,7 +114,7 @@ export const EditArticle = () => {
                     onClick={handleSave}
                     endContent={loadingSave ? <Spinner size='sm' color='secondary' /> : ''}
                     variant='flat'
-                    color='danger'
+                    color='primary'
                 >
                     {t('article.edit')}
                 </Button>

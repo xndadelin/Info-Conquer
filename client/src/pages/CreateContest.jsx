@@ -121,7 +121,7 @@ export const CreateConstest = () => {
                 }}>
                     {(language) => <SelectItem key={language.value}>{language.value}</SelectItem>}
                 </Select>
-                <Button isDisabled={!name || !date.startDate || !date.endDate || !problems || !languages} variant="flat" isLoading={loading} color="danger" onClick={() => createContest()}>{t('createContest.createButton')}</Button>
+                <Button isDisabled={!name || !date.startDate || !date.endDate || !problems || !languages} variant="flat" isLoading={loading} color="primary" onClick={() => createContest()}>{t('createContest.createButton')}</Button>
             </form>
         </div>
     );

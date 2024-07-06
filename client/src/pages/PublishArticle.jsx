@@ -56,7 +56,7 @@ export const PublishArticle = () => {
                 <Input variant="flat" onChange={(e) => setTitle(e.target.value)} value={title} label={t('publishArticle.title')} />
                 <Input
                     label={t('publishArticle.tags')}
-                    endContent={<Button disabled={tag === ''} variant="flat" color="danger" onClick={onAddTag}>{t('publishArticle.addTag')}</Button>}
+                    endContent={<Button disabled={tag === ''} variant="flat" color="primart" onClick={onAddTag}>{t('publishArticle.addTag')}</Button>}
                     value={tag}
                     onChange={(e) => setTag(e.target.value)}
                 />
@@ -73,7 +73,7 @@ export const PublishArticle = () => {
             </div>
             <div className="flex mt-5 justify-between">
                 {error && <Chip color="danger" variant="flat">{error}</Chip>}
-                <Button className="ml-auto" loading={loading} onClick={publishArticle} variant="flat" color="danger">
+                <Button className="ml-auto" loading={loading} onClick={publishArticle} variant="flat" color="primary">
                     {t('publishArticle.publishButton')}
                 </Button>
             </div>

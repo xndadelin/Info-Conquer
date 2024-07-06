@@ -12,6 +12,7 @@ import { useTranslation } from "react-i18next";
 import { Chart, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Filler, Legend } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 
+
 export const Homepage = () => {
     const { t } = useTranslation();
     const { user } = useContext(UserContext);
@@ -62,8 +63,8 @@ export const Homepage = () => {
             {
                 label: 'Submissions',
                 data: infoData.getHomepageInfo.lastSeven.slice().reverse().map(obj => obj.count),
-                borderColor: 'rgba(224, 67, 67, 0.8)',
-                backgroundColor: 'rgba(224, 67, 67, 0.2)',
+                borderColor: 'rgba(20, 24, 39, 0.8)',
+                backgroundColor: 'rgba(20, 24, 39, 0.8)',
                 fill: true
             }
         ]
@@ -115,7 +116,7 @@ export const Homepage = () => {
                 </Card>
             </div>
 
-            <div className="mt-12 bg-[#282828] p-5 rounded-lg">
+            <div className="mt-12 bg-gray-800 p-5 rounded-lg">
                 <h2 className="text-3xl font-bold text-center mb-6">{t('homepage.activityLast7Days')}</h2>
                 {infoData && (
                     <div className="bg-[#181818] p-5 rounded-lg"> 
@@ -128,41 +129,45 @@ export const Homepage = () => {
                 <h2 className="text-3xl font-bold text-center mb-6">{t('homepage.newestAnnouncements')}</h2>
                 <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                     {announcementsData.getAnnouncements.map((announcement, index) => (
-                        <Card as={Link} href={`/announcement/${encodeURIComponent(announcement.title)}`} key={index}>
+                        <Card className="bg-gray-800" as={Link} href={`/announcement/${encodeURIComponent(announcement.title)}`} key={index}>
                             <CardBody>
-                                <h3 className="text-2xl font-bold text-danger">{announcement.title}</h3>
+                                <h3 className="text-2xl font-bold text-primary-900">{announcement.title}</h3>
                                 <p className="text-gray-400">{t('homepage.announcementBy')}{' '}
-                                    <Link href={`/profile/${announcement.createdBy}`} color="danger">
+                                    <Link href={`/profile/${announcement.createdBy}`} color="primary">
                                         {announcement.createdBy}
                                     </Link>
                                 </p>
-                                <div className="text-white" dangerouslySetInnerHTML={{ __html: `${announcement.content.slice(0, 500)}... <a class="text-danger" href='/announcement/${encodeURIComponent(announcement.title)}'>${t('homepage.seeMore')}</a>` }}></div>
+                                <div className="text-white" dangerouslySetInnerHTML={{ __html: `${announcement.content.slice(0, 500)}... <a class="text-primary" href='/announcement/${encodeURIComponent(announcement.title)}'>${t('homepage.seeMore')}</a>` }}></div>
                             </CardBody>
                         </Card>
                     ))}
                 </div>
             </div>
 
-            <div className="mt-12">
+            <div className="mt-12 rounded-3xl">
                 <h2 className="text-3xl font-bold text-center mb-6">{t('homepage.topProblems')}</h2>
-                <Table isStriped isCompact>
-                    <TableHeader>
-                        <TableColumn>{t('homepage.title')}</TableColumn>
-                        <TableColumn>{t('homepage.difficulty')}</TableColumn>
-                        <TableColumn>{t('homepage.successRate')}</TableColumn>
-                    </TableHeader>
-                    <TableBody>
-                        {infoData.getHomepageInfo.topProblems.map((problem, index) => (
-                            <TableRow key={index}>
-                                <TableCell>
-                                    <Link href={`/problems/${problem.title}`} color="danger">{problem.title}</Link>
-                                </TableCell>
-                                <TableCell>{problem.difficulty}</TableCell>
-                                <TableCell>{parseInt(problem.successRate)}%</TableCell>
-                            </TableRow>
+                <table class="w-full text-sm text-left text-gray-300">
+                    <thead class="text-xs uppercase bg-gray-700 text-gray-100">
+                        <tr>
+                            <th scope="col" className="px-6 py-4">{t('homepage.title')}</th>
+                            <th scope="col" className="px-6 py-4">{t('homepage.difficulty')}</th>
+                            <th scope="col" className="px-6 py-4">{t('homepage.successRate')}</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-700">
+                        {infoData.getHomepageInfo.topProblems.map((problem) => (
+                        <tr class="bg-gray-800 hover:bg-gray-700 transition-colors duration-200">
+                            <td class="px-6 py-4 font-medium">
+                                <Link href={`/problem/${encodeURIComponent(problem.title)}`} color="primary">
+                                    {problem.title}
+                                </Link>
+                            </td>
+                            <td className="px-6 py-4">{problem.difficulty}</td>
+                            <td className="px-6 py-4">{parseInt(problem.successRate)}%</td>
+                        </tr>
                         ))}
-                    </TableBody>
-                </Table>
+                    </tbody>
+                </table>
             </div>
         </div>
     );

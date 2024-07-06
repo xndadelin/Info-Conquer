@@ -114,8 +114,8 @@ export const Register = () => {
                             />
                         </div>
                         <div className="mb-4 flex justify-between">
-                            <Checkbox color="danger">{t('register.rememberMe')}</Checkbox>
-                            <Link href="/forgot-password" color="danger" isBlock>{t('register.forgotPassword')}</Link>
+                            <Checkbox color="primary">{t('register.rememberMe')}</Checkbox>
+                            <Link href="/forgot-password" color="primary" isBlock>{t('register.forgotPassword')}</Link>
                         </div>
                         <div className="mb-4 self-center cf-turnstile" ref={turnstileRef} data-sitekey={process.env.REACT_APP_SITE_KEY}></div>
                         <Button 
@@ -123,7 +123,7 @@ export const Register = () => {
                             isDisabled={!username || !confirmPassword || !email || !password} 
                             className="w-full" 
                             type="submit" 
-                            color="danger" 
+                            color="primary" 
                             variant="flat"
                         >
                             {t('register.registerButton')}

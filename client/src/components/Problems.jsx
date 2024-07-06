@@ -1,7 +1,7 @@
 import { Link, useParams } from "react-router-dom";
 import { gql, useQuery } from "@apollo/client";
 import { useState } from "react";
-import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, Chip, Pagination } from "@nextui-org/react";
+import { Pagination } from "@nextui-org/react";
 import { Loading } from "./Loading";
 import { useTranslation } from 'react-i18next';
 
@@ -24,7 +24,7 @@ export const Problems = () => {
       }
     }
   `;
-  const { data, loading } = useQuery(gqlProblems, {
+  const { loading } = useQuery(gqlProblems, {
     variables: {
       category,
       subcategory,
@@ -44,32 +44,44 @@ export const Problems = () => {
   return (
     <div className="container mx-auto my-10 p-4">
       <p className="text-6xl mb-5">{t('problemsPage.title')}</p>
-      <Table isCompact isStriped>
-        <TableHeader>
-          <TableColumn>{t('problemsPage.table.id')}</TableColumn>
-          <TableColumn>{t('problemsPage.table.category')}</TableColumn>
-          <TableColumn>{t('problemsPage.table.subcategories')}</TableColumn>
-          <TableColumn>{t('problemsPage.table.difficulty')}</TableColumn>
-        </TableHeader>
-        <TableBody>
-          {problems.getProblems.slice((page - 1) * 20, page * 20).map((problem) => (
-            <TableRow key={problem.title}>
-              <TableCell>
-                <Link to={`/problems/${problem.title}`}>{problem.title}</Link>
-              </TableCell>
-              <TableCell>{t(`problems.categories.${problem.category}`)}</TableCell>
-              <TableCell>
-                {problem.subcategories.map((subcategory, index) => (
-                  <Chip key={index}>{subcategory}</Chip>
-                ))}
-              </TableCell>
-              <TableCell>{problem.difficulty}</TableCell>
-            </TableRow>
+      <table className="w-full text-sm text-gray-300 border-collapse shadow-2xl rounded-tr">
+        <thead className="bg-gray-800">
+          <tr>
+            <th className="px-6 py-3 text-left font-medium uppercase tracking-wider">{t('problemsPage.table.id')}</th>
+            <th className="px-6 py-3 text-left font-medium uppercase tracking-wider">{t('problemsPage.table.category')}</th>
+            <th className="px-6 py-3 text-left font-medium uppercase tracking-wider">{t('problemsPage.table.subcategories')}</th>
+            <th className="px-6 py-3 text-left font-medium uppercase tracking-wider">{t('problemsPage.table.difficulty')}</th>
+          </tr>
+        </thead>
+        <tbody className="bg-gray-900 divide-y divide-gray-700">
+          {problems.getProblems.slice((page - 1) * 20, page * 20).map((problem, index) => (
+            <tr key={problem.title} className={index % 2 === 0 ? 'bg-gray-800' : 'bg-gray-900'}>
+              <td className="px-6 py-4 whitespace-nowrap">
+                <Link to={`/problems/${problem.title}`} className="text-blue-300 hover:text-blue-200 transition-colors">
+                  {problem.title}
+                </Link>
+              </td>
+              <td className="px-6 py-4 whitespace-nowrap">
+                {t(`problems.categories.${problem.category}`)}
+              </td>
+              <td className="px-6 py-4">
+                <div className="flex flex-wrap gap-2">
+                  {problem.subcategories.map((subcategory, index) => (
+                    <span key={index} className="px-2 py-1 text-xs font-medium bg-gray-700 rounded-full">
+                      {subcategory}
+                    </span>
+                  ))}
+                </div>
+              </td>
+              <td className="px-6 py-4 whitespace-nowrap">
+                {problem.difficulty}
+              </td>
+            </tr>
           ))}
-        </TableBody>
-      </Table>
+        </tbody>
+      </table>
       <Pagination
-        color="danger"
+        color="primary"
         className="pt-5"
         onChange={(page) => setPage(page)}
         loop

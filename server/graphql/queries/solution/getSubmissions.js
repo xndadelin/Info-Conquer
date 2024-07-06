@@ -28,31 +28,36 @@ module.exports = {
                 }
             }
         ]);
-        const userSolutions = await User.aggregate([
-            {
-                $unwind: "$solutions"
-            },
-            {
-                $match: {
-                    "solutions.username": user.username,
-                    "solutions.problem": title
+        if(user) {
+            const userSolutions = await User.aggregate([
+                {
+                    $unwind: "$solutions"
+                },
+                {
+                    $match: {
+                        "solutions.username": user.username,
+                        "solutions.problem": title
+                    }
+                },
+                {
+                    $project: {
+                        _id: "$solutions.id_solution",
+                        username: 1,
+                        problem: "$solutions.problem",
+                        language: "$solutions.language",
+                        score: "$solutions.score",
+                        date: "$solutions.date",
+                        status: "$solutions.status"
+                    }
                 }
-            },
-            {
-                $project: {
-                    _id: "$solutions.id_solution",
-                    username: 1,
-                    problem: "$solutions.problem",
-                    language: "$solutions.language",
-                    score: "$solutions.score",
-                    date: "$solutions.date",
-                    status: "$solutions.status"
-                }
+            ]);
+            return {
+                allSolutions: solutions,
+                userSolutions: userSolutions
             }
-        ]);
+        }
         return {
             allSolutions: solutions,
-            userSolutions: userSolutions
         }
     }
 }

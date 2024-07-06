@@ -56,7 +56,7 @@ export const Calendar = () => {
             <p className="text-3xl font-bold">{`${monthName} ${currentMonth.year}`}</p>
             <div className="grid grid-cols-7 max-md:grid-cols-3 gap-2 mt-4">
                 {Array.from({ length: new Date(currentMonth.year, currentMonth.month).getDay() }).map((_, index) => (
-                    <div key={`empty-${index}`} className="invisible">
+                    <div className="invisible">
                         <Card />
                     </div>
                 ))}
@@ -65,11 +65,10 @@ export const Calendar = () => {
                     const daily = dailiesMap[key];
                     return (
                         <Card
-                            key={key}
                             isDisabled={!day.passed}
                             as={Link}
                             href={`/daily/${daily && daily.problem}/${currentMonth.year}/${currentMonth.month + 1}/${day.day}`}
-                            className={`p-2 hover:opacity-75 ${daily?.problem ? daily.solved ? 'bg-green-500 text-black' : 'bg-red-500 text-black hover:opacity-75 ' : ''} ${day.day === current.getDate() ? 'bg-yellow-400 text-black' : ''}`}
+                            className={`p-2 hover:opacity-75 ${daily?.problem ? daily.solved ? 'bg-green-500 text-black' : 'bg-red-500 text-black hover:opacity-75 ' : 'bg-gray-800'} ${day.day === current.getDate() ? 'bg-yellow-400 text-black' : ''}`}
                         >
                             <CardHeader className='flex flex-col items-start'>
                                 <p className="font-bold text-xl">{day.day}</p>

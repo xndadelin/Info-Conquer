@@ -89,8 +89,8 @@ export const Login = () => {
                             />
                         </div>
                         <div className="mb-4 flex justify-between">
-                            <Checkbox color="danger">{t('login.rememberMe')}</Checkbox>
-                            <Link href="/forgot-password" color="danger" isBlock>{t('login.forgotPassword')}</Link>
+                            <Checkbox color="primary">{t('login.rememberMe')}</Checkbox>
+                            <Link href="/forgot-password" color="primary" isBlock>{t('login.forgotPassword')}</Link>
                         </div>
                         <div className="mb-4 self-center cf-turnstile" ref={turnstileRef} data-sitekey={process.env.REACT_APP_SITE_KEY}>
                         </div>
@@ -99,7 +99,7 @@ export const Login = () => {
                             isDisabled={!query || !password} 
                             className="w-full" 
                             type="submit" 
-                            color="danger" 
+                            color="primary" 
                             variant="flat"
                         >
                             {t('login.loginButton')}

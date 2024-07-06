@@ -53,5 +53,26 @@
     filter: blur(100px);
 }
 body{
-    background-color: #121212;
+    background-color: rgb(17 24 39);
+}
+.cm-content > div,
+.cm-content span {
+    font-family: monospace;
+    font-size: large;
+}
+.cm-lineNumbers > div {
+    font-family: monospace;
+    font-size: large;
+}
+.cm-gutterElement {
+    font-size: 0px;
+}
+.cm-editor{
+    background-color: #1e1e1e;
+}
+.cm-gutter {
+    background-color: #1e1e1e;
+}
+.cm-theme {
+    height: 100%;
 }

@@ -1,5 +1,6 @@
 export const getStatusColor = (status) => {
-    if (status === 'Accepted') {
+    if(!status) return ''
+    if (status === 'Accepted' || status == 'AC') {
         return 'success'
     }
     if (status.includes('WA')) {

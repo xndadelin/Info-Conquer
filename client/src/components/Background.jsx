@@ -6,9 +6,9 @@ import { Terminal } from "../utils/Terminal"
 
 export const Background = () => {
     return (
-        <div className=" fixed w-full h-full bg-[#121212]">
+        <div className=" fixed w-full h-full bg-grey-900">
             <Code />
-            <div className="glow-red top-[50%] fixed w-[300px] h-[300px]"></div>
+            <div className="glow-white top-[50%] fixed w-[300px] h-[300px]"></div>
             <CircleNodes />
             <div className="glow-white blur-3xl right-0 top-[20%] fixed w-[300px] h-[300px]"></div>
             <Terminal />

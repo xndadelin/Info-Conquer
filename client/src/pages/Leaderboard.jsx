@@ -27,7 +27,7 @@ export const Leaderboard = () => {
     return (
         <div className="container flex flex-col px-5 mx-auto mt-20 gap-10 mb-[100vh] text-white">
             <div className="text-center mb-10">
-                <h1 className="text-5xl font-extrabold text-red-500">{t('leaderboard.header')}</h1>
+                <h1 className="text-5xl font-extrabold text-primary-900">{t('leaderboard.header')}</h1>
                 <p className="text-xl text-gray-400 mt-4">{t('leaderboard.description')}</p>
             </div>
 
@@ -35,8 +35,8 @@ export const Leaderboard = () => {
             <div className="flex flex-col items-end md:flex-row mx-auto mb-16">
                 {top3[1] ? (
                     <div className="flex flex-col items-center mb-6 md:mb-0 md:mr-6">
-                        <div className={`flex flex-col justify-end items-center w-32 ${heights[1]} bg-[#1E1E24] p-5 rounded-t-lg border border-gray-700 shadow-lg relative`}>
-                            <div className={`absolute top-0 -mt-5 px-4 py-1 rounded-full bg-[#FF5555] text-lg text-white font-bold shadow-md`}>#2</div>
+                        <div className={`flex flex-col justify-end items-center w-32 ${heights[1]} bg-gray-800 p-5 rounded-t-lg border border-gray-700 shadow-lg relative`}>
+                            <div className={`absolute top-0 -mt-5 px-4 py-1 rounded-full bg-gray-800 text-lg text-white font-bold shadow-md`}>#2</div>
                             <div className="text-xl mt-3">{top3[1].username}</div>
                             <div className="text-lg text-gray-400 mt-1">{top3[1].solvedProblems}</div>
                         </div>
@@ -44,8 +44,8 @@ export const Leaderboard = () => {
                     </div>
                 ) : (
                     <div className="flex flex-col items-center mb-6 md:mb-0 md:mr-6">
-                        <div className={`flex flex-col justify-end items-center w-32 ${heights[1]} bg-[#1E1E24] p-5 rounded-t-lg border border-gray-700 shadow-lg relative`}>
-                            <div className={`absolute top-0 -mt-5 px-4 py-1 rounded-full bg-[#FF5555] text-lg text-white font-bold shadow-md`}>#2</div>
+                        <div className={`flex flex-col justify-end items-center w-32 ${heights[1]} bg-gray-800 p-5 rounded-t-lg border border-gray-700 shadow-lg relative`}>
+                            <div className={`absolute top-0 -mt-5 px-4 py-1 rounded-full bg-gray-800 text-lg text-white font-bold shadow-md`}>#2</div>
                             <div className="text-xl mt-3">-</div>
                             <div className="text-lg text-gray-400 mt-1">-</div>
                         </div>
@@ -54,8 +54,8 @@ export const Leaderboard = () => {
                 )}
                 {top3[0] ? (
                     <div className="flex flex-col items-center mb-6 md:mb-0">
-                        <div className={`flex flex-col justify-end items-center w-32 ${heights[0]} bg-[#1E1E24] p-5 rounded-t-lg border border-gray-700 shadow-lg relative`}>
-                            <div className={`absolute top-0 -mt-5 px-4 py-1 rounded-full bg-[#FF5555] text-lg text-white font-bold shadow-md`}>#1</div>
+                        <div className={`flex flex-col justify-end items-center w-32 ${heights[0]} bg-gray-800 p-5 rounded-t-lg border border-gray-700 shadow-lg relative`}>
+                            <div className={`absolute top-0 -mt-5 px-4 py-1 rounded-full bg-gray-800 text-lg text-white font-bold shadow-md`}>#1</div>
                             <div className="text-xl mt-3">{top3[0].username}</div>
                             <div className="text-lg text-gray-400 mt-1">{top3[0].solvedProblems}</div>
                         </div>
@@ -63,8 +63,8 @@ export const Leaderboard = () => {
                     </div>
                 ) : (
                     <div className="flex flex-col items-center mb-6 md:mb-0">
-                        <div className={`flex flex-col justify-end items-center w-32 ${heights[0]} bg-[#1E1E24] p-5 rounded-t-lg border border-gray-700 shadow-lg relative`}>
-                            <div className={`absolute top-0 -mt-5 px-4 py-1 rounded-full bg-[#FF5555] text-lg text-white font-bold shadow-md`}>#1</div>
+                        <div className={`flex flex-col justify-end items-center w-32 ${heights[0]} bg-gray-800 p-5 rounded-t-lg border border-gray-700 shadow-lg relative`}>
+                            <div className={`absolute top-0 -mt-5 px-4 py-1 rounded-full bg-gray-800 text-lg text-white font-bold shadow-md`}>#1</div>
                             <div className="text-xl mt-3">-</div>
                             <div className="text-lg text-gray-400 mt-1">-</div>
                         </div>
@@ -75,8 +75,8 @@ export const Leaderboard = () => {
 
                 {top3[2] ? (
                     <div className="flex flex-col items-center ml-6 max-md:ml-0">
-                        <div className={`flex flex-col justify-end items-center w-32 ${heights[2]} bg-[#1E1E24] p-5 rounded-t-lg border border-gray-700 shadow-lg relative`}>
-                            <div className={`absolute top-0 -mt-5 px-4 py-1 rounded-full bg-[#FF5555] text-lg text-white font-bold shadow-md`}>#3</div>
+                        <div className={`flex flex-col justify-end items-center w-32 ${heights[2]} bg-gray-800 p-5 rounded-t-lg border border-gray-700 shadow-lg relative`}>
+                            <div className={`absolute top-0 -mt-5 px-4 py-1 rounded-full bg-gray-800 text-lg text-white font-bold shadow-md`}>#3</div>
                             <div className="text-xl mt-3">{top3[2].username}</div>
                             <div className="text-lg text-gray-400 mt-1">{top3[2].solvedProblems}</div>
                         </div>
@@ -84,8 +84,8 @@ export const Leaderboard = () => {
                     </div>
                 ) : (
                     <div className="flex flex-col items-center ml-6 max-md:ml-0">
-                        <div className={`flex flex-col justify-end items-center w-32 ${heights[2]} bg-[#1E1E24] p-5 rounded-t-lg border border-gray-700 shadow-lg relative`}>
-                            <div className={`absolute top-0 -mt-5 px-4 py-1 rounded-full bg-[#FF5555] text-lg text-white font-bold shadow-md`}>#3</div>
+                        <div className={`flex flex-col justify-end items-center w-32 ${heights[2]} bg-gray-800 p-5 rounded-t-lg border border-gray-700 shadow-lg relative`}>
+                            <div className={`absolute top-0 -mt-5 px-4 py-1 rounded-full bg-gray-800 text-lg text-white font-bold shadow-md`}>#3</div>
                             <div className="text-xl mt-3">-</div>
                             <div className="text-lg text-gray-400 mt-1">-</div>
                         </div>
@@ -96,7 +96,7 @@ export const Leaderboard = () => {
             {rest.length > 0 && (
                 <div className="overflow-x-auto">
                     <Table isCompact>
-                        <TableHeader className="bg-[#1E1E24] text-gray-300">
+                        <TableHeader className="bg-gray-800 text-gray-300">
                             <TableColumn className="border-b border-gray-700">{t('leaderboard.table.rank')}</TableColumn>
                             <TableColumn className="border-b border-gray-700">{t('leaderboard.table.username')}</TableColumn>
                             <TableColumn className="border-b border-gray-700">{t('leaderboard.table.solvedProblems')}</TableColumn>

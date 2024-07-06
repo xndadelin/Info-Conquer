@@ -2,8 +2,7 @@ import { Link, useParams } from 'react-router-dom'
 import { useQuery, gql } from '@apollo/client'
 import { Loading } from './Loading'
 import { TableCell, Table, TableHeader, TableRow, TableColumn, TableBody, Snippet, Button, Select, SelectItem, useDisclosure, Tabs, Tab, Tooltip, Input, Textarea, Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from '@nextui-org/react'
-import { Editor } from '@monaco-editor/react'
-import { useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { UserContext } from "../context/UserContext";
 import { useMutation } from '@apollo/client'
 import { TestingSolution } from './TestingSolution'
@@ -16,6 +15,13 @@ import { ReportProblem } from './ReportProblem'
 import { useTranslation } from 'react-i18next'
 import { Chip } from '@nextui-org/react'
 import { getStatusColor } from '../utils/getStatusColor'
+import { Card, CardHeader, CardBody } from '@nextui-org/react'
+
+import CodeMirror from '@uiw/react-codemirror';
+
+import { oneDark } from '@codemirror/theme-one-dark';
+import { loadLanguage } from '@uiw/codemirror-extensions-langs'
+import { ProblemDescription } from './ProblemDescription';
 
 const placeholder = `#include <iostream>
 #include <cstring>
@@ -94,10 +100,11 @@ const languages_for_editor = {
     'C++': 'cpp',
     'Python': 'python',
     'Java': 'java',
-    'Javascript': 'js',
-    'C#': 'cs',
+    'Javascript': 'javascript',
+    'C#': 'csharp',
     'C': 'c',
-    'Rust': 'rs'
+    'Rust': 'rust',
+    'PHP': 'php',
 }
 export const Problem = () => {
     const { user } = useContext(UserContext)
@@ -105,22 +112,23 @@ export const Problem = () => {
     const [selected, setSelected] = useState('problem')
     const [page, setPage] = useState(1)
     const { isOpen, onOpenChange } = useDisclosure()
-    const [language, setLanguage] = useState(userLanguage || 'cpp')
-    const [code, setCode] = useState(userCode || '')
+    const [language, setLanguage] = useState(userLanguage || 'C++')
+    const [code, setCode] = useState(userCode || getTemplate(language))
     const [error, setError] = useState()
     const [prompt, setPrompt] = useState('')
     const [clickRate, setClickRate] = useState(false)
     const [clickReport, setClickReport] = useState(false)
     const [userHasRated, setUserHasRated] = useState(false)
     const [userPage, setUserPage] = useState(1)
+
+    const onChangeCode = useCallback((val) => {
+        setCode(val)
+    })
+
     useEffect(() => {
-        setCode(getTemplate(language, problem))
+        setCode(getTemplate(language))
     }, [language])
-    useEffect(() => {
-        const { code: userCode, language: userLanguage } = Object.fromEntries(new URLSearchParams(window.location.search))
-        setCode(userCode)
-        setLanguage(userLanguage)
-    }, [])
+
     const [tests, setTests] = useState('')
     const { id, contest, year, problem_name, month, day } = useParams()
     const type = contest ? `contest:${contest}` : year && month && day && problem_name ? `daily:${year}/${month}/${day}` : 'problem'
@@ -277,264 +285,277 @@ export const Problem = () => {
         setClickReport(!clickReport)
     }
     return (
-        <div className="container mx-auto px-5 py-5">
-            <Tabs selectedKey={selected} onSelectionChange={setSelected} className="flex flex-col">
-                <Tab key="problem" title={t('tabs.problem')}>
-                    <div className="grid grid-cols-2 max-lg:grid-cols-1 gap-3">
-                        <div className="flex flex-col gap-2">
-                            <p className='font-bold text-6xl'>
-                                #{problem.getProblem.title}
-                            </p>
-                            <div className='mt-4'>
-                                <Table isCompact>
-                                    <TableHeader>
-                                        <TableColumn>{t('problem.creator')}</TableColumn>
-                                        <TableColumn>{t('problem.difficulty')}</TableColumn>
-                                        <TableColumn>{t('problem.category')}</TableColumn>
-                                        <TableColumn>{t('problem.subcategory')}</TableColumn>
-                                        <TableColumn>{t('problem.timeLimit')}</TableColumn>
-                                        <TableColumn>{t('problem.memoryLimit')}</TableColumn>
-                                        <TableColumn>{t('problem.solveRate')}</TableColumn>
-                                        <TableColumn>{t('problem.rating')}</TableColumn>
-                                    </TableHeader>
-                                    <TableBody>
-                                        <TableRow>
-                                            <TableCell>{problem.getProblem.creator}</TableCell>
-                                            <TableCell>{problem.getProblem.difficulty}</TableCell>
-                                            <TableCell>{t(`problems.categories.${problem.getProblem.category}`)}</TableCell>
-                                            <TableCell>{t(`problems.subcategories.${problem.getProblem.subcategories}`)}</TableCell>
-                                            <TableCell>{problem.getProblem.timeExecution} s</TableCell>
-                                            <TableCell>{Math.ceil(problem.getProblem.limitMemory / 1024)} MB</TableCell>
-                                            <TableCell>{parseInt(problem.getProblem.successRate) + '%'}</TableCell>
-                                            <TableCell>{problem.getProblem.rating === 0 ? 'NR' : problem.getProblem.rating} / 5</TableCell>
-                                        </TableRow>
-                                    </TableBody>
-                                </Table>
-                                {user && user.getUser && (
-                                    <div className='flex gap-3 mt-2 max-sm:flex-col max-sm:h-[150px]'>
-                                        <Button color='success' variant='flat' className='flex-1' isDisabled={problem.getProblem.userHasRated || userHasRated} onClick={onClickRate}>
-                                            {t('problem.rate')}
-                                        </Button>
-                                        <Button color='warning' variant='flat' className='flex-1' onClick={onClickReport}>
-                                            {t('problem.report')}
-                                        </Button>
-                                        <Button color='default' variant='flat' className='flex-1' onClick={() => {
-                                            navigator.clipboard.writeText(window.location.href)
-                                        }}>
-                                            {t('problem.share')}
-                                        </Button>
+        <div className="container mx-auto px-5 py-5 0 min-h-screen">
+            <Card className="shadow-xl rounded-xl overflow-hidden bg-gray-800 pb-5">
+                <CardHeader className="bg-gray-700 text-white p-6">
+                    <h1 className="text-4xl font-bold">#{problem.getProblem.title}</h1>
+                </CardHeader>
+                <CardBody>
+                    <Tabs
+                        selectedKey={selected}
+                        onSelectionChange={setSelected}
+                        variant="underlined"
+                        classNames={{
+                            tabList: "gap-6 w-full relative rounded-none p-0 border-b border-divider",
+                            cursor: "w-full bg-blue-500",
+                            tab: "max-w-fit px-0 h-12",
+                            tabContent: "group-data-[selected=true]:text-blue-500",
+                        }}
+                    >
+                        <Tab
+                            key="problem"
+                            className='overflow-hidden'
+                            title={
+                                <div className="flex items-center space-x-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clipRule="evenodd" />
+                                    </svg>
+                                    <span>{t('tabs.problem')}</span>
+                                </div>
+                            }
+                        >
+                            <div className="grid gap-6">
+                                <div className="flex flex-col gap-6 rounded-2xl">
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 bg-gray-900 rounded-lg">
+                                        {[
+                                            { key: 'creator', icon: '👤', value: problem.getProblem.creator },
+                                            { key: 'difficulty', icon: '🏋️', value: problem.getProblem.difficulty },
+                                            { key: 'category', icon: '📚', value: problem.getProblem.category },
+                                            { key: 'subcategory', icon: '🏷️', value: <div className='flex gap-2'>
+                                                {problem.getProblem.subcategories.map((subcategory) => (
+                                                    <Chip color='primary' className='text-xs'>{t(`problems.subcategories.${subcategory}`)}</Chip>
+                                                ))}
+                                            </div> },
+                                            { key: 'timeLimit', icon: '⏱️', value: `${problem.getProblem.timeExecution} s` },
+                                            { key: 'memoryLimit', icon: '💾', value: `${Math.ceil(problem.getProblem.limitMemory / 1024)} MB` },
+                                            { key: 'solveRate', icon: '📊', value: `${parseInt(problem.getProblem.successRate)}%` },
+                                            { key: 'rating', icon: '⭐', value: problem.getProblem.rating === 0 ? 'NR' : `${parseFloat(problem.getProblem.rating).toFixed(2)} / 5` },
+                                        ].map((row) => (
+                                            <div key={row.key} className="bg-gray-800 p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+                                            <div className="flex items-center mb-2">
+                                                <span className="text-2xl mr-2">{row.icon}</span>
+                                                <h3 className="text-gray-400 font-medium uppercase tracking-wider">
+                                                {t(`problem.${row.key}`)}
+                                                </h3>
+                                            </div>
+                                            <p className="text-gray-200 text-lg">
+                                                {row.key === 'category' ? t(`problems.categories.${row.value}`) :
+                                                row.key === 'subcategory' ? row.value :
+                                                row.value}
+                                            </p>
+                                            </div>
+                                        ))}
+                                    </div>
+                                    {user && user.getUser && (
+                                        <div className='flex gap-3 mt-2 max-sm:flex-col max-sm:h-[150px]'>
+                                            <Button color='success' variant='flat' className='flex-1' isDisabled={problem.getProblem.userHasRated || userHasRated} onClick={onClickRate}>
+                                                {t('problem.rate')}
+                                            </Button>
+                                            <Button color='warning' variant='flat' className='flex-1' onClick={onClickReport}>
+                                                {t('problem.report')}
+                                            </Button>
+                                            <Button color='default' variant='flat' className='flex-1' onClick={() => {
+                                                navigator.clipboard.writeText(window.location.href)
+                                            }}>
+                                                {t('problem.share')}
+                                            </Button>
+                                        </div>
+                                    )}
+                                    <ProblemDescription problem={problem} t={t} />
+                                </div>
+                                {user?.getUser ? (
+                                    <div>
+                                        <div className="flex justify-between items-center bg-[#1e1e1e] rounded-tl-2xl rounded-tr-2xl">
+                                            <Select
+                                                defaultSelectedKeys={[language]}
+                                                onChange={(e) => setLanguage(e.target.value)}
+                                                label={t('problem.selectLanguage')}
+                                                className="w-48"
+                                            >
+                                                {problem.getProblem.languages.map((lang) => (
+                                                    <SelectItem key={lang} value={lang}>{lang}</SelectItem>
+                                                ))}
+                                            </Select>
+                                            <div className="flex gap-2">
+                                                <Tooltip size='sm' closeDelay={1000} color='warning' placement="left" content={
+                                                    <div>
+                                                        <p>{t('problem.chatGPT')}</p>
+                                                        <p>{t('problem.chatGPTNote')}</p>
+                                                        <Textarea onKeyDown={(e) => {
+                                                                if (e.key === 'Enter') {
+                                                                    getChatbotMessage()
+                                                                    setPrompt('')
+                                                                }
+                                                            }} endContent={
+                                                                <Button isLoading={loadingBot} disabled={!prompt} color='warning' className='self-end text-2xl' size='sm' variant='flat' onClick={() => getChatbotMessage()}>↑</Button>
+                                                        } onChange={(e) => setPrompt(e.target.value)} value={prompt} label={t('problem.prompt')} />
+                                                    </div>
+                                                }>
+                                                    <Button isLoading={loadingBot} className='mt-2 mb-2 mr-2' color='warning' variant='flat'>🤖</Button>
+                                                </Tooltip>
+                                                <Tooltip color='danger' content={t('problem.runCode')}>
+                                                    <Button className="mt-2 mb-2 mr-2" color='danger' disabled={!language || !code || !user || !user.getUser} variant='flat' onClick={() => { onHandleSubmitSolution(); onOpenChange(); setTests('') }}>{t('problem.submit')}</Button>
+                                                </Tooltip>
+                                            </div>
+                                        </div>
+                                        <CodeMirror
+                                            value={code}
+                                            theme={oneDark}
+                                            extensions={[loadLanguage(languages_for_editor[language] || 'markdown')]}
+                                            onChange={onChangeCode}
+                                            height="700px"
+                                        />
+                                    </div>
+                                ): (
+                                    <div>
+                                        <CodeMirror
+                                            value={placeholder}
+                                            theme={oneDark}
+                                            extensions={[loadLanguage(languages_for_editor[language] || 'markdown')]}
+                                            className="rounded-md overflow-hidden blur-sm"
+                                            readOnly
+                                            height="100%"
+                                        />
                                     </div>
                                 )}
                             </div>
-                            {problem.getProblem.description && (
-                                <div>
-                                    <p className='font-bold text-3xl mb-2'>{t('problem.description')}</p>
-                                    <p className='text-1xl' dangerouslySetInnerHTML={{ __html: problem.getProblem.description }}></p>
-                                </div>
-                            )}
-                            {problem.getProblem.requirements && (
-                                <div>
-                                    <p className='font-bold text-3xl mb-2'>{t('problem.requirements')}</p>
-                                    <p className='text-1xl' dangerouslySetInnerHTML={{ __html: problem.getProblem.requirements }}></p>
-                                </div>
-                            )}
-                            {problem.getProblem.input && (
-                                <div>
-                                    <p className='font-bold text-3xl mb-2'>{t('problem.input')}</p>
-                                    <p className='text-1xl' dangerouslySetInnerHTML={{ __html: problem.getProblem.input }}></p>
-                                </div>
-                            )}
-                            {problem.getProblem.output && (
-                                <div>
-                                    <p className='font-bold text-3xl mb-2'>{t('problem.output')}</p>
-                                    <p className='text-1xl' dangerouslySetInnerHTML={{ __html: problem.getProblem.output }}></p>
-                                </div>
-                            )}
-                            {problem.getProblem.examples && (
-                                <div>
-                                    {problem.getProblem.examples.map((example, index) => (
-                                        <div className='flex flex-col gap-1' key={index}>
-                                            <p className='font-bold text-3xl'>{t('problem.example')} {index + 1}</p>
-                                            <p className='font-bold text-xl'>{t('problem.input')}</p>
-                                            <Snippet symbol="">
-                                                <pre>
-                                                    {example.input}
-                                                </pre>
-                                            </Snippet>
-                                            <p className='font-bold text-xl'>{t('problem.output')}</p>
-                                            <Snippet symbol="">
-                                                <pre>
-                                                    {example.output}
-                                                </pre>
-                                            </Snippet>
-                                            {example.explanation && (
-                                                <>
-                                                    <p className='font-bold text-xl'>{t('problem.explanation')}</p>
-                                                    <Snippet dangerouslySetInnerHTML={{ __html: example.explanation }} symbol=""></Snippet>
-                                                </>
-                                            )}
+                        </Tab>
+
+                        <Tab key="solutions" title={
+                            <div className="flex items-center space-x-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                    <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
+                                    <path fillRule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clipRule="evenodd" />
+                                </svg>
+                                <span>{t('tabs.solutions')}</span>
+                            </div>
+                        }>
+                            {submissions && (
+                                <Tabs color='primary' variant='bordered'>
+                                    <Tab key="all" title={
+                                        <div className="flex items-center space-x-2">
+                                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                                <path fillRule="evenodd" d="M3 3a1 1 0 000 2v8a2 2 0 002 2h2.586l-1.293 1.293a1 1 0 101.414 1.414L10 15.414l2.293 2.293a1 1 0 001.414-1.414L12.414 15H15a2 2 0 002-2V5a1 1 0 100-2H3zm11.707 4.707a1 1 0 00-1.414-1.414L10 8.586l-2.293-2.293a1 1 0 00-1.414 1.414L8.586 10l-2.293 2.293a1 1 0 001.414 1.414L10 11.414l2.293 2.293a1 1 0 001.414-1.414L11.414 10l2.293-2.293z" clipRule="evenodd" />
+                                            </svg>
+                                            <span>{t('submissions.all_submissions')}</span>
                                         </div>
-                                    ))}
-                                </div>
-                            )}
-                            {problem.getProblem.restriction && (
-                                <div>
-                                    <p className='font-bold text-3xl'>{t('problem.restrictions')}</p>
-                                    <div className='ml-5' dangerouslySetInnerHTML={{ __html: problem.getProblem.restriction }}></div>
-                                </div>
-                            )}
-                        </div>
-                        {user && user.getUser ? (
-                            <div className="mt-[85px] max-lg:mt-0">
-                                <div className='flex flex-col'>
-                                    <div className='w-[100%] h-[100%] bg-[#1e1e1e] rounded flex justify-between align-center'>
-                                        <Select defaultSelectedKeys={[language]} onChange={(e) => setLanguage(e.target.value)} label={t('problem.selectLanguage')} size='sm' className='w-[150px] mt-1 ml-1'>
-                                            {problem.getProblem.languages.map((lang) => (
-                                                <SelectItem key={lang}>{lang}</SelectItem>
+                                    }>
+                                        <table className="w-full text-sm text-gray-300 border-collapse shadow-2xl" aria-label="All submissions">
+                                            <thead className="bg-gray-800">
+                                            <tr>
+                                                <th className="px-6 py-3 text-left font-medium uppercase tracking-wider">{t('submissions.username')}</th>
+                                                <th className="px-6 py-3 text-left font-medium uppercase tracking-wider">{t('submissions.language')}</th>
+                                                <th className="px-6 py-3 text-left font-medium uppercase tracking-wider">{t('submissions.score')}</th>
+                                                <th className="px-6 py-3 text-left font-medium uppercase tracking-wider">{t('submissions.date')}</th>
+                                                <th className="px-6 py-3 text-left font-medium uppercase tracking-wider">{t('submissions.status')}</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody className="bg-gray-900 divide-y divide-gray-700">
+                                            {submissions.getSubmissions.allSolutions.slice((page - 1) * 20, page * 20).map((submission, index) => (
+                                                <tr className={index % 2 === 1 ? 'bg-gray-800' : 'bg-gray-900'}>
+                                                    <td className="px-6 py-4 whitespace-nowrap">
+                                                        <Link to={`/profile/${submission.username}`} className="text-blue-300 hover:text-blue-200 transition-colors">
+                                                            {submission.username}
+                                                        </Link>
+                                                    </td>
+                                                    <td className="px-6 py-4 whitespace-nowrap">{submission.language}</td>
+                                                    <td className="px-6 py-4 whitespace-nowrap">{submission.score}</td>
+                                                    <td className="px-6 py-4 whitespace-nowrap">{new Date(+submission.date).toLocaleString()}</td>
+                                                    <td className="px-6 py-4 whitespace-nowrap">
+                                                        <Chip className={`px-2 py-1 text-xs font-medium rounded-full`} color={getStatusColor(submission.status)}>
+                                                            {submission.status}
+                                                        </Chip>
+                                                    </td>
+                                                </tr>
                                             ))}
-                                        </Select>
-                                        <div className='flex items-center gap-1'>
-                                            <Tooltip size='sm' closeDelay={1000} color='warning' placement="left" content={
-                                                <div>
-                                                    <p>{t('problem.chatGPT')}</p>
-                                                    <p>{t('problem.chatGPTNote')}</p>
-                                                    <Textarea endContent={
-                                                        <Button isLoading={loadingBot} disabled={!prompt} color='warning' className='self-end text-2xl' size='sm' variant='flat' onClick={() => getChatbotMessage()}>↑</Button>
-                                                    } onChange={(e) => setPrompt(e.target.value)} value={prompt} label={t('problem.prompt')} />
+                                            </tbody>
+                                        </table>
+                                        <Pagination
+                                            total={Math.ceil(submissions.getSubmissions.allSolutions.length / 20)}
+                                            page={page}
+                                            onChange={setPage}
+                                            className='mt-5'
+                                            showControls
+                                            loop
+                                        />
+
+                                    </Tab>
+                                        {submissions?.getSubmissions?.userSolutions?.length > 0 && (
+                                            <Tab key="user" title={
+                                                <div className="flex items-center space-x-2">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                                        <path fillRule="evenodd" d="M3 3a1 1 0 000 2v8a2 2 0 002 2h2.586l-1.293 1.293a1 1 0 101.414 1.414L10 15.414l2.293 2.293a1 1 0 001.414-1.414L12.414 15H15a2 2 0 002-2V5a1 1 0 100-2H3zm11.707 4.707a1 1 0 00-1.414-1.414L10 8.586l-2.293-2.293a1 1 0 00-1.414 1.414L8.586 10l-2.293 2.293a1 1 0 001.414 1.414L10 11.414l2.293 2.293a1 1 0 001.414-1.414L11.414 10l2.293-2.293z" clipRule="evenodd" />
+                                                    </svg>
+                                                    <span>{t('submissions.ur_submissions')}</span>
                                                 </div>
                                             }>
-                                                <Button isLoading={loadingBot} className='mt-2 mb-2 mr-2' color='warning' variant='flat'>🤖</Button>
-                                            </Tooltip>
-                                            <Tooltip color='danger' content={t('problem.runCode')}>
-                                                <Button className="mt-2 mb-2 mr-2" color='danger' disabled={!language || !code || !user || !user.getUser} variant='flat' onClick={() => { onHandleSubmitSolution(); onOpenChange(); setTests('') }}>{t('problem.submit')}</Button>
-                                            </Tooltip>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <Editor options={{
-                                            minimap: {
-                                                enabled: false
-                                            },
-                                        }} language={languages_for_editor[language]} onChange={(val, e) => setCode(val)} value={code} theme='vs-dark' height={'80vh'} />
-                                    </div>
-                                    <TestingSolution isOpen={isOpen} onClose={onOpenChange} loading={loadingTests} tests={tests} />
-                                </div>
+                                                <table className="w-full text-sm text-gray-300 border-collapse shadow-2xl" aria-label="User submissions">
+                                                    <thead className="bg-gray-800">
+                                                    <tr>
+                                                        <th className="px-6 py-3 text-left font-medium uppercase tracking-wider">{t('submissions.seeSolution')}</th>
+                                                        <th className="px-6 py-3 text-left font-medium uppercase tracking-wider">{t('submissions.language')}</th>
+                                                        <th className="px-6 py-3 text-left font-medium uppercase tracking-wider">{t('submissions.score')}</th>
+                                                        <th className="px-6 py-3 text-left font-medium uppercase tracking-wider">{t('submissions.date')}</th>
+                                                        <th className="px-6 py-3 text-left font-medium uppercase tracking-wider">{t('submissions.status')}</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody className="bg-gray-900 divide-y divide-gray-700">
+                                                    {submissions.getSubmissions.userSolutions.slice((userPage - 1) * 20, userPage * 20).map((submission, index) => (
+                                                        <tr className={index % 2 === 1 ? 'bg-gray-800' : 'bg-gray-900'}>
+                                                            <td className="px-6 py-4 whitespace-nowrap">
+                                                                <Link to={`/solution/${submission.username}/${submission._id}`} className="text-blue-300 hover:text-blue-200 transition-colors">
+                                                                    See solution
+                                                                </Link>
+                                                            </td>
+                                                            <td className="px-6 py-4 whitespace-nowrap">{submission.language}</td>
+                                                            <td className="px-6 py-4 whitespace-nowrap">{submission.score}</td>
+                                                            <td className="px-6 py-4 whitespace-nowrap">{new Date(+submission.date).toLocaleString()}</td>
+                                                            <td className="px-6 py-4 whitespace-nowrap">
+                                                                <Chip className={`px-2 py-1 text-xs font-medium rounded-full`} color={getStatusColor(submission.status)}>
+                                                                    {submission.status}
+                                                                </Chip>
+                                                            </td>
+                                                        </tr>
+                                                    ))}
+                                                    </tbody>
+                                                </table>
+                                                <Pagination
+                                                    color='primary'
+                                                    className="mt-4"
+                                                    onChange={(page) => setUserPage(page)}
+                                                    total={Math.ceil(submissions.getSubmissions.userSolutions.length / 20)}
+                                                    initialPage={1}
+                                                    showControls
+                                                    loop
+                                                />
+                                        </Tab>
+                                        )}
+                                </Tabs>
+                            )}
+                            {loadingSubmissions && <Loading />}
+                        </Tab>
+
+                        <Tab key="insights" title={
+                            <div className="flex items-center space-x-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fillRule="evenodd" d="M3 3a1 1 0 000 2v8a2 2 0 002 2h2.586l-1.293 1.293a1 1 0 101.414 1.414L10 15.414l2.293 2.293a1 1 0 001.414-1.414L12.414 15H15a2 2 0 002-2V5a1 1 0 100-2H3zm11.707 4.707a1 1 0 00-1.414-1.414L10 9.586 8.707 8.293a1 1 0 00-1.414 0l-2 2a1 1 0 101.414 1.414L8 10.414l1.293 1.293a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                                </svg>
+                                <span>{t('tabs.insights')}</span>
                             </div>
-                        ) : (
-                            <div className="h-[100%] flex justify-center items-center relative">
-                                <Editor
-                                    options={{
-                                        readOnly: true,
-                                        minimap: {
-                                            enabled: false
-                                        },
-                                        scrollbar: {
-                                            vertical: 'hidden',
-                                            horizontal: 'hidden'
-                                        },
-                                    }}
-                                    className='blur-md'
-                                    height={'100vh'}
-                                    value={placeholder}
-                                    theme='vs-dark'
-                                    language='cpp'
-                                />
-                                <div className='z-10 absolute'>
-                                    <div className='text-center font-bold text-xl'>
-                                        {t('problem.loginToSubmit')}
-                                    </div>
-                                </div>
-                            </div>
-                        )}
-                    </div>
-                    {clickRate && (
-                        <RateProblem isOpen={clickRate} setUserHasRated={setUserHasRated} onClose={onClickRate} problem={problem.getProblem} user={user} />
-                    )}
-                    {clickReport && (
-                        <ReportProblem isOpen={clickReport} onClose={onClickReport} problem={problem.getProblem} user={user} />
-                    )}
-                </Tab>
-                <Tab key="solutions" title={t('tabs.solutions')}>
-                    {submissions && (
-                        <>
-                            <Tabs>
-                                <Tab key="all" title={t('submissions.all_submissions')}>
-                                    <Table isStriped>
-                                        <TableHeader>
-                                            <TableColumn>{t('submissions.username')}</TableColumn>
-                                            <TableColumn>{t('submissions.language')}</TableColumn>
-                                            <TableColumn>{t('submissions.score')}</TableColumn>
-                                            <TableColumn>{t('submissions.date')}</TableColumn>
-                                            <TableColumn>{t('submissions.status')}</TableColumn>
-                                        </TableHeader>
-                                        <TableBody>
-                                            {submissions.getSubmissions.allSolutions.slice((page - 1) * 20, page * 20).map((submission, index) => (
-                                                <TableRow key={index}>
-                                                    <TableCell>
-                                                        <Link to={`/profile/${submission.username}`}>
-                                                            {submission.username}
-                                                        </Link>
-                                                    </TableCell>
-                                                    <TableCell>{submission.language}</TableCell>
-                                                    <TableCell>{submission.score}</TableCell>
-                                                    <TableCell>{new Date(+submission.date).toLocaleString()}</TableCell>
-                                                    <TableCell>
-                                                        <Chip color={getStatusColor(submission.status)}>
-                                                            {submission.status}
-                                                        </Chip>
-                                                    </TableCell>
-                                                </TableRow>
-                                            ))}
-                                        </TableBody>
-                                    </Table>
-                                    <Pagination color='danger' className="mt-2" onChange={(page) => setPage(page)} loop showControls total={Math.ceil(submissions.getSubmissions.allSolutions.length / 20)} initialPage={1}></Pagination>
-                                </Tab>
-                                <Tab key="user" title={t('submissions.ur_submissions')}>
-                                    <Table isStriped>
-                                        <TableHeader>
-                                            <TableColumn>{t('profile.see_solution')}</TableColumn>
-                                            <TableColumn>{t('submissions.username')}</TableColumn>
-                                            <TableColumn>{t('submissions.language')}</TableColumn>
-                                            <TableColumn>{t('submissions.score')}</TableColumn>
-                                            <TableColumn>{t('submissions.date')}</TableColumn>
-                                            <TableColumn>{t('submissions.status')}</TableColumn>
-                                        </TableHeader>
-                                        <TableBody>
-                                            {submissions.getSubmissions.userSolutions.slice((userPage - 1) * 20, userPage * 20).map((submission, index) => (
-                                                <TableRow key={index}>
-                                                    <TableCell>
-                                                        <Link to={`/solution/${user.getUser.username}/${submission._id}`}>{t('profile.see_solution')}</Link>
-                                                    </TableCell>
-                                                    <TableCell>
-                                                        <Link to={`/profile/${submission.username}`}>
-                                                            {submission.username}
-                                                        </Link>
-                                                    </TableCell>
-                                                    <TableCell>{submission.language}</TableCell>
-                                                    <TableCell>{submission.score}</TableCell>
-                                                    <TableCell>{new Date(+submission.date).toLocaleString()}</TableCell>
-                                                    <TableCell>
-                                                        <Chip color={getStatusColor(submission.status)}>
-                                                            {submission.status}
-                                                        </Chip>
-                                                    </TableCell>
-                                                </TableRow>
-                                            ))}
-                                        </TableBody>
-                                    </Table>
-                                    <Pagination color='danger' className="mt-2" onChange={(page) => setUserPage(page)} loop showControls total={Math.ceil(submissions.getSubmissions.userSolutions.length / 20)} initialPage={1}></Pagination>
-                                </Tab>
-                            </Tabs>
-                        </>
-                    )}
-                    {loadingSubmissions && (
-                        <Loading />
-                    )}
-                </Tab>
-                <Tab key="insights" title={t('tabs.insights')}>
-                    <ProblemStats />
-                </Tab>
-            </Tabs>
+                        }>
+                            <ProblemStats />
+                        </Tab>
+                    </Tabs>
+                </CardBody>
+            </Card>
+
+            {clickRate && (
+                <RateProblem isOpen={clickRate} setUserHasRated={setUserHasRated} onClose={onClickRate} problem={problem.getProblem} user={user} />
+            )}
+            {clickReport && (
+                <ReportProblem isOpen={clickReport} onClose={onClickReport} problem={problem.getProblem} user={user} />
+            )}
+            <TestingSolution isOpen={isOpen} onClose={onOpenChange} loading={loadingTests} tests={tests} />
         </div>
     )
 }

@@ -38,13 +38,15 @@ export const PostAnnouncement = () => {
     return (
         <div className="container mx-auto py-10 h-screen">
             <p className="text-3xl font-bold mb-5">{t('postAnnouncement.title')}</p>
-            {isError && (
-                <Chip className="mb-5" color="danger" variant="flat">{t('postAnnouncement.errorChip')}</Chip>
+            {isError && error && (
+                <Chip className="mb-5" color="danger" variant="flat">
+                    {error.message}
+                </Chip>
             )}
             <Input className="mb-5" label={t('postAnnouncement.titleLabel')} value={title} onChange={(e) => setTitle(e.target.value)} />
             <Textarea minRows={10} className="mb-5" label={t('postAnnouncement.contentLabel')} value={content} onChange={(e) => setContent(e.target.value)} />
             <div className="flex justify-end">
-                <Button color="danger" variant="flat" className="mt-5" onClick={() => { postAnnouncement({ variables: { title, content } }) }}>{t('postAnnouncement.postButton')}</Button>
+                <Button color="primary" variant="flat" className="mt-5" onClick={() => { postAnnouncement({ variables: { title, content } }) }}>{t('postAnnouncement.postButton')}</Button>
             </div>
         </div>
     );

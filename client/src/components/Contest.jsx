@@ -86,7 +86,6 @@ export const Contest = () => {
     Chart.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Filler, Legend, BarElement);
 
     const barConfig = {
-        type: 'bar',
         options: {
             plugins: {
                 legend: {
@@ -95,10 +94,29 @@ export const Contest = () => {
                 title: {
                     display: true,
                     text: 'Solved Percentage',
+                    color: '#e0e0e0',
+                    font: {
+                        size: 16,
+                        weight: 'bold'
+                    }
                 },
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: { color: '#e0e0e0' },
+                    grid: { color: '#404040' }
+                },
+                x: {
+                    ticks: { color: '#e0e0e0' },
+                    grid: { color: '#404040' }
+                }
             }
         }
     }
+
+
+
     const barData = {
         labels: data.getContest.problems.map(problem => problem.id),
         datasets: [{
@@ -109,42 +127,50 @@ export const Contest = () => {
                 ).length;
                 return (solvedCount / data.getContest.participants.length) * 100;
             }),
-            backgroundColor: 'rgba(224, 67, 67, 0.8)',
-            borderColor: 'rgba(224, 67, 67, 0.2)',
+            backgroundColor: 'rgba(29, 78, 216, 0.2)',
+            borderColor: 'rgba(29, 78, 216, 0.2)',
             borderWidth: 1
         }]
     };
 
+    const InfoItem = ({label, value }) => (
+        <div className="space-x-2 text-gray-300">
+            <span className="font-semibold">{label}:</span>
+            <span>{value}</span>
+        </div>
+    );
+
     return (
-        <div className="container mx-auto p-5 my-5">
-            <div className="bg-[#1f1f1f] rounded-lg shadow-md p-8 text-white mb-10">
-                <h1 className="text-4xl font-bold mb-4">{data.getContest.name}</h1>
-                <div className="grid gap-1">
-                    <p className="text-gray-400"><strong>{t('contest.createdBy')}:</strong> {data.getContest.createdBy}</p>
-                    <p className="text-gray-400"><strong>{t('contest.startDate')}:</strong> {new Date(data.getContest.startDate).toLocaleString()}</p>
-                    <p className="text-gray-400"><strong>{t('contest.endDate')}:</strong> {new Date(data.getContest.endDate).toLocaleString()}</p>
-                    <p className="text-gray-400"><strong>Duration:</strong> {(Math.abs(new Date(data.getContest.endDate) - new Date(data.getContest.startDate)) / (1000 * 60 * 60)).toFixed(2)} hours</p>
-                    <p className="text-gray-400"><strong>{t('contest.languages')}:</strong> {data.getContest.languages.join(", ")}</p>
-                    <p className="text-gray-400"><strong>{t('contest.description')}:</strong> {data.getContest.description}</p>
-                    <p className="text-gray-400"><strong>{t('contest.problems')}:</strong> {data.getContest.problems.length ? data.getContest.problems.map(problem => problem.id).join(", ") : 'Soon'}</p>
-                    <p className="text-gray-400"><strong>{t('contest.participants')}:</strong> {data.getContest.participants.length}</p>
-                    <p className="text-gray-400"><strong>{t('contest.hasStarted')}:</strong> {data.getContest.started ? t('contest.yes') : t('contest.no')}</p>
-                    <p className="text-gray-400"><strong>{t('contest.hasEnded')}:</strong> {data.getContest.ended ? t('contest.yes') : t('contest.no')}</p>
+        <div className="container mx-auto p-5 my-5 bg-gray-900 text-white">
+            <div className="bg-gray-800 rounded-lg shadow-lg p-8 mb-10 transition-all duration-300 hover:shadow-xl">
+                <h1 className="text-4xl font-bold mb-6 text-blue-400">{data.getContest.name}</h1>
+                <div>
+                    <InfoItem  label={t('contest.createdBy')} value={data.getContest.createdBy} />
+                    <InfoItem  label={t('contest.startDate')} value={new Date(data.getContest.startDate).toLocaleString()} />
+                    <InfoItem  label={t('contest.endDate')} value={new Date(data.getContest.endDate).toLocaleString()} />
+                    <InfoItem   label="Duration" value={`${(Math.abs(new Date(data.getContest.endDate) - new Date(data.getContest.startDate)) / (1000 * 60 * 60)).toFixed(2)} hours`} />
+                    <InfoItem  label={t('contest.languages')} value={data.getContest.languages.join(", ")} />
+                    <InfoItem  label={t('contest.description')} value={data.getContest.description} />
+                    <InfoItem  label={t('contest.problems')} value={data.getContest.problems.length ? data.getContest.problems.map(problem => problem.id).join(", ") : 'Soon'} />
+                    <InfoItem  label={t('contest.participants')} value={data.getContest.participants.length} />
+                    <InfoItem  label={t('contest.hasStarted')} value={data.getContest.started ? t('contest.yes') : t('contest.no')} />
+                    <InfoItem  label={t('contest.hasEnded')} value={data.getContest.ended ? t('contest.yes') : t('contest.no')} />
                 </div>
             </div>
-            <div className="bg-[#282828] rounded-lg shadow-md p-6 text-white mb-10">
-                <h2 className="text-2xl font-bold mb-5">{t('contest.leaderboard')}</h2>
-                <div className="overflow-x-auto">
-                    <table className="min-w-full bg-[#181818] text-white rounded-lg">
-                        <thead className="bg-[#222] text-gray-400">
+
+            <div className="bg-gray-800 rounded-lg shadow-lg p-6 mb-10 transition-all duration-300 hover:shadow-xl">
+                <h2 className="text-3xl font-bold mb-6 text-blue-400">{t('contest.leaderboard')}</h2>
+                <div className="overflow-x-auto shadow-2xl rounded-lg">
+                    <table className="w-full text-sm text-left">
+                        <thead className="text-xs uppercase bg-gray-700 sticky top-0">
                             <tr>
-                                <th className="px-6 py-3 border-b border-gray-700 text-left text-sm font-medium">Rank</th>
-                                <th className="px-6 py-3 border-b border-gray-700 text-left text-sm font-medium">Username</th>
+                                <th className="px-6 py-4" scope="col">Rank</th>
+                                <th className="px-6 py-4" scope="col">Username</th>
                                 {data.getContest.problems.map((problem, index) => (
-                                    <th className="px-6 py-3 border-b border-gray-700 text-left text-sm font-medium">{problem.id}</th>
+                                    <th className="px-6 py-4" key={index} scope="col">{problem.id}</th>
                                 ))}
                                 {data?.getContest?.problems.length > 0 && (
-                                    <th className="px-6 py-3 border-b border-gray-700 text-left text-sm font-medium">Total</th>
+                                    <th className="px-6 py-4" scope="col">Total</th>
                                 )}
                             </tr>
                         </thead>
@@ -152,21 +178,21 @@ export const Contest = () => {
                             {data.getContest.participants
                                 .slice((page - 1) * participantsPerPage, page * participantsPerPage)
                                 .map((participant, index) => (
-                                    <tr className="border-b border-gray-700 hover:bg-gray-700">
-                                        <td className="px-6 py-4 text-left text-sm">{index + 1 + (page - 1) * participantsPerPage}</td>
-                                        <td className="px-6 py-4 text-left text-sm">
-                                            <Link className="text-white hover:underline" href={`/${participant.username}`}>
+                                    <tr className={`border-b border-gray-700 hover:bg-gray-700 transition-colors duration-200 ${index % 2 === 0 ? 'bg-gray-800' : 'bg-gray-900'}`} key={index}>
+                                        <td className="px-6 py-4">{index + 1 + (page - 1) * participantsPerPage}</td>
+                                        <td className="px-6 py-4">
+                                            <Link className="text-blue-400 hover:underline" href={`/${participant.username}`}>
                                                 {participant.username}
                                             </Link>
                                         </td>
-                                        {data.getContest.problems.map((problem) => {
+                                        {data.getContest.problems.map((problem, problemIndex) => {
                                             const score = participant.problems.find(p => p.id === problem.id)?.score || 0;
                                             return (
-                                                <td className={`px-6 py-4 text-left text-sm ${getColor(score)}`}>{score}</td>
+                                                <td key={problemIndex} className={`px-6 py-4 ${getColor(score)}`}>{score}</td>
                                             );
                                         })}
                                         {data?.getContest?.problems.length > 0 && (
-                                            <td className={`px-6 py-4 text-left text-sm ${getTotalColor(participant.problems.reduce((a, b) => a + b.score, 0), 100 * data.getContest.problems.length)}`}>
+                                            <td className={`px-6 py-4 ${getTotalColor(participant.problems.reduce((a, b) => a + b.score, 0), 100 * data.getContest.problems.length)}`}>
                                                 {participant.problems.reduce((a, b) => a + b.score, 0)}
                                             </td>
                                         )}
@@ -176,56 +202,57 @@ export const Contest = () => {
                     </table>
                 </div>
                 <div className="flex justify-between mt-5">
-                    <Button isDisabled={page === 1} color="danger" variant="faded" disabled={page === 1} onClick={() => setPage(page - 1)}>Previous</Button>
-                    <Button isDisabled={data.getContest.participants.length <= page * participantsPerPage} color="danger" variant="faded" disabled={data.getContest.participants.length <= page * participantsPerPage} onClick={() => setPage(page + 1)}>Next</Button>
+                    <Button isDisabled={page === 1} color="primary" variant="flat" onClick={() => setPage(page - 1)}>Previous</Button>
+                    <Button isDisabled={data.getContest.participants.length <= page * participantsPerPage} color="primary" variant="flat" onClick={() => setPage(page + 1)}>Next</Button>
                 </div>
             </div>
+
             {(data.getContest.started || data.getContest.ended) ? (
                 <>
-                    <div className="bg-[#282828] rounded-lg shadow-md p-6 text-white mb-10">
-                        <h2 className="text-2xl font-bold mb-5">{t('contest.problems')}</h2>
-                        <div className="overflow-x-auto">
-                            <table className="min-w-full bg-[#181818] text-white rounded-lg">
-                                <thead className="bg-[#222] text-gray-400">
+                    <div className="bg-gray-800 rounded-lg shadow-lg p-6 mb-10 transition-all duration-300 hover:shadow-xl">
+                        <h2 className="text-3xl font-bold mb-6 text-blue-400">{t('contest.problems')}</h2>
+                        <div className="overflow-x-auto shadow-2xl bg-gray-700 rounded-lg">
+                            <table className="w-full text-sm text-left">
+                                <thead className="text-xs uppercase sticky top-0 bg-gray-700">
                                     <tr>
-                                        <th className="px-6 py-3 border-b border-gray-700 text-left text-sm font-medium">Index</th>
-                                        <th className="px-6 py-3 border-b border-gray-700 text-left text-sm font-medium">Problems</th>
-                                        <th className="px-6 py-3 border-b border-gray-700 text-left text-sm font-medium">Category</th>
-                                        <th className="px-6 py-3 border-b border-gray-700 text-left text-sm font-medium">Subcategories</th>
-                                        <th className="px-6 py-3 border-b border-gray-700 text-left text-sm font-medium">Difficulty</th>
+                                        <th className="px-6 py-4" scope="col">Index</th>
+                                        <th className="px-6 py-4" scope="col">Problems</th>
+                                        <th className="px-6 py-4" scope="col">Category</th>
+                                        <th className="px-6 py-4" scope="col">Subcategories</th>
+                                        <th className="px-6 py-4" scope="col">Difficulty</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {data.getContest.problems.map((problem, index) => (
-                                        <tr className="border-b border-gray-700 hover:bg-gray-700">
-                                            <td className="px-6 py-4 text-left text-sm">{index + 1}</td>
-                                            <td className="px-6 py-4 text-left text-sm">
-                                                <Link className="text-white hover:underline" href={`/contests/${id}/${problem.id}`}>
+                                        <tr className={`border-b border-gray-700 hover:bg-gray-700 transition-colors duration-200 ${index % 2 === 0 ? 'bg-gray-800' : 'bg-gray-900'}`} key={index}>
+                                            <td className="px-6 py-4">{index + 1}</td>
+                                            <td className="px-6 py-4">
+                                                <Link className="text-blue-400 hover:underline" href={`/contests/${id}/${problem.id}`}>
                                                     {problem.id}
                                                 </Link>
                                             </td>
-                                            <td className="px-6 py-4 text-left text-sm">{problem.category}</td>
-                                            <td className="px-6 py-4 text-left text-sm flex gap-1">
-                                                {problem.subcategories.map((subcategory) => (
-                                                    <Chip color="danger" className="mr-2">{subcategory}</Chip>
+                                            <td className="px-6 py-4">{problem.category}</td>
+                                            <td className="px-6 py-4 flex gap-1 flex-wrap">
+                                                {problem.subcategories.map((subcategory, subIndex) => (
+                                                    <Chip key={subIndex} color="primary" className="mr-2">{subcategory}</Chip>
                                                 ))}
                                             </td>
-                                            <td className="px-6 py-4 text-left text-sm">{problem.difficulty}</td>
+                                            <td className="px-6 py-4">{problem.difficulty}</td>
                                         </tr>
                                     ))}
                                 </tbody>
                             </table>
                         </div>
                     </div>
-                    <div className="bg-[#282828] rounded-lg shadow-md p-6">
-                        <h2 className="text-2xl font-bold mb-5">{t('contests.solvedPercentage')}</h2>
-                        <div className="bg-[#181818] p-5 rounded-lg">
+                    <div className="bg-gray-800 rounded-lg shadow-lg p-6 transition-all duration-300 hover:shadow-xl">
+                        <h2 className="text-3xl font-bold mb-6 text-blue-400">{t('contests.solvedPercentage')}</h2>
+                        <div className="bg-gray-900 p-5 rounded-lg">
                             <Bar data={barData} options={barConfig.options} />
                         </div>
                     </div>
                 </>
             ) : (
-                <div className="text-3xl font-bold text-white">
+                <div className="text-3xl font-bold text-center py-10">
                     {t('contest.noProblemsYet')}
                 </div>
             )}
