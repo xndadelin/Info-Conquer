@@ -214,7 +214,7 @@ export const ProblemStats = () => {
                                     <td className="px-6 py-4 whitespace-nowrap"><Link to={`/profile/${submission.username}`}>{submission.username}</Link></td>
                                     <td className="px-6 py-4 whitespace-nowrap">{new Date(+submission.date).toDateString()}</td>
                                     <td className="px-6 py-4 whitespace-nowrap">{submission.language}</td>
-                                    <td className="px-6 py-4 whitespace-nowrap">{submission.timeExecutions} ms</td>
+                                    <td className="px-6 py-4 whitespace-nowrap">{parseFloat(submission.timeExecutions).toFixed(4)} ms</td>
                                 </tr>
                             ))}
                         </tbody>

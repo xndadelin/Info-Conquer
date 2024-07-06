@@ -14,8 +14,8 @@ module.exports = gql`
         input: String,
         output: String,
         tests: [Test],
-        timeExecution: String,
-        limitMemory: Int,
+        timeExecution: Float,
+        limitMemory: Float,
         examples: [Example],
         indications: String,
         languages: [String],
@@ -39,23 +39,21 @@ module.exports = gql`
         input: String,
         output: String,
         tests: [TestInput],
-        timeExecution: String,
-        limitMemory: String,
+        timeExecution: Float,
+        limitMemory: Float,
         examples: [ExampleInput],
         indications: String,
         languages: [String],
-        inputFile: String,
-        outputFile: String,
         restriction: String,
         itsForContest: Boolean,
     }
     type Test {
-        score: String, 
+        score: Float, 
         input: String,
         output: String,
     }
     input TestInput {
-        score: String, 
+        score: Float, 
         input: String,
         output: String,
         number: String

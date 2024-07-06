@@ -34,7 +34,7 @@ export const Leaderboard = () => {
 
             <div className="flex flex-col items-end md:flex-row mx-auto mb-16">
                 {top3[1] ? (
-                    <div className="flex flex-col items-center mb-6 md:mb-0 md:mr-6">
+                    <div className="flex flex-col items-center mb-6 md:mb-0 md:mr-6 transform transition duration-500 ease-in-out hover:scale-105">
                         <div className={`flex flex-col justify-end items-center w-32 ${heights[1]} bg-gray-800 p-5 rounded-t-lg border border-gray-700 shadow-lg relative`}>
                             <div className={`absolute top-0 -mt-5 px-4 py-1 rounded-full bg-gray-800 text-lg text-white font-bold shadow-md`}>#2</div>
                             <div className="text-xl mt-3">{top3[1].username}</div>
@@ -43,7 +43,7 @@ export const Leaderboard = () => {
                         <div className="text-center mt-3 font-bold">{t('leaderboard.silver')}</div>
                     </div>
                 ) : (
-                    <div className="flex flex-col items-center mb-6 md:mb-0 md:mr-6">
+                    <div className="flex flex-col items-center mb-6 md:mb-0 md:mr-6 transform transition duration-500 ease-in-out hover:scale-105">
                         <div className={`flex flex-col justify-end items-center w-32 ${heights[1]} bg-gray-800 p-5 rounded-t-lg border border-gray-700 shadow-lg relative`}>
                             <div className={`absolute top-0 -mt-5 px-4 py-1 rounded-full bg-gray-800 text-lg text-white font-bold shadow-md`}>#2</div>
                             <div className="text-xl mt-3">-</div>
@@ -53,7 +53,7 @@ export const Leaderboard = () => {
                     </div>
                 )}
                 {top3[0] ? (
-                    <div className="flex flex-col items-center mb-6 md:mb-0">
+                    <div className="flex flex-col items-center mb-6 md:mb-0 transform transition duration-500 ease-in-out hover:scale-105">
                         <div className={`flex flex-col justify-end items-center w-32 ${heights[0]} bg-gray-800 p-5 rounded-t-lg border border-gray-700 shadow-lg relative`}>
                             <div className={`absolute top-0 -mt-5 px-4 py-1 rounded-full bg-gray-800 text-lg text-white font-bold shadow-md`}>#1</div>
                             <div className="text-xl mt-3">{top3[0].username}</div>
@@ -62,7 +62,7 @@ export const Leaderboard = () => {
                         <div className="text-center mt-3 font-bold">{t('leaderboard.gold')}</div>
                     </div>
                 ) : (
-                    <div className="flex flex-col items-center mb-6 md:mb-0">
+                    <div className="flex flex-col items-center mb-6 md:mb-0 transform transition duration-500 ease-in-out hover:scale-105">
                         <div className={`flex flex-col justify-end items-center w-32 ${heights[0]} bg-gray-800 p-5 rounded-t-lg border border-gray-700 shadow-lg relative`}>
                             <div className={`absolute top-0 -mt-5 px-4 py-1 rounded-full bg-gray-800 text-lg text-white font-bold shadow-md`}>#1</div>
                             <div className="text-xl mt-3">-</div>
@@ -74,7 +74,7 @@ export const Leaderboard = () => {
                 )}
 
                 {top3[2] ? (
-                    <div className="flex flex-col items-center ml-6 max-md:ml-0">
+                    <div className="flex flex-col items-center ml-6 max-md:ml-0 transform transition duration-500 ease-in-out hover:scale-105">
                         <div className={`flex flex-col justify-end items-center w-32 ${heights[2]} bg-gray-800 p-5 rounded-t-lg border border-gray-700 shadow-lg relative`}>
                             <div className={`absolute top-0 -mt-5 px-4 py-1 rounded-full bg-gray-800 text-lg text-white font-bold shadow-md`}>#3</div>
                             <div className="text-xl mt-3">{top3[2].username}</div>
@@ -83,7 +83,7 @@ export const Leaderboard = () => {
                         <div className="text-center mt-3 font-bold">{t('leaderboard.bronze')}</div>
                     </div>
                 ) : (
-                    <div className="flex flex-col items-center ml-6 max-md:ml-0">
+                    <div className="flex flex-col items-center ml-6 max-md:ml-0 transform transition duration-500 ease-in-out hover:scale-105">
                         <div className={`flex flex-col justify-end items-center w-32 ${heights[2]} bg-gray-800 p-5 rounded-t-lg border border-gray-700 shadow-lg relative`}>
                             <div className={`absolute top-0 -mt-5 px-4 py-1 rounded-full bg-gray-800 text-lg text-white font-bold shadow-md`}>#3</div>
                             <div className="text-xl mt-3">-</div>

@@ -104,7 +104,7 @@ export const NavigationBar = () => {
                                 isBordered
                                 as="button"
                                 size="sm"
-                                src={user.getUser.avatarUrl || "/default-avatar.png"}
+                                src={user.getUser.profilePicture}
                             />
                         </DropdownTrigger>
                         <DropdownMenu variant="flat">

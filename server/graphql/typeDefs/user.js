@@ -7,6 +7,7 @@ module.exports = gql`
         createdAt: String,
         email: String,
         admin: Boolean,
+        profilePicture: String
     }
     input RegisterInput {
         username: String,
@@ -28,6 +29,7 @@ module.exports = gql`
         compilationError: String
         language: String,
         status: String,
+        username: String,
     }
     type solvedProblems {
         problem: String,
@@ -36,9 +38,11 @@ module.exports = gql`
     type ProfileUser {
         username: String,
         createdAt: String, 
-        admin: String,
+        admin: Boolean,
         solutions: [SolutionProfile],
-        solvedProblems: [solvedProblems]
+        solvedProblems: [solvedProblems],
+        profilePicture: String,
+        bio: String
     }
     type LeaderboardRow {
         username: String,

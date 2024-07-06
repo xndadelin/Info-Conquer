@@ -109,6 +109,7 @@ const languages_for_editor = {
 export const Problem = () => {
     const { user } = useContext(UserContext)
     const { code: userCode, language: userLanguage } = Object.fromEntries(new URLSearchParams(window.location.search))
+    console.log(userCode, userLanguage)
     const [selected, setSelected] = useState('problem')
     const [page, setPage] = useState(1)
     const { isOpen, onOpenChange } = useDisclosure()
@@ -125,9 +126,10 @@ export const Problem = () => {
         setCode(val)
     })
 
-    useEffect(() => {
+    const onChangeLanguage = (language) => {
+        setLanguage(language)
         setCode(getTemplate(language))
-    }, [language])
+    }
 
     const [tests, setTests] = useState('')
     const { id, contest, year, problem_name, month, day } = useParams()
@@ -368,7 +370,7 @@ export const Problem = () => {
                                         <div className="flex justify-between items-center bg-[#1e1e1e] rounded-tl-2xl rounded-tr-2xl">
                                             <Select
                                                 defaultSelectedKeys={[language]}
-                                                onChange={(e) => setLanguage(e.target.value)}
+                                                onChange={(e) => onChangeLanguage(e.target.value)}
                                                 label={t('problem.selectLanguage')}
                                                 className="w-48"
                                             >

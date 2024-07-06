@@ -2,10 +2,25 @@ import { useParams, Link, useNavigate } from "react-router-dom";
 import { gql, useQuery } from "@apollo/client";
 import { useContext, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Modal, ModalBody, ModalContent, ModalHeader, Table, TableCell, TableRow, TableColumn, TableHeader, Button, TableBody, CardBody, Card, CardFooter, CardHeader, Divider } from "@nextui-org/react";
+import { Modal, ModalBody, ModalContent, ModalHeader, Button, CardBody, Card, CardHeader, Divider, Chip } from "@nextui-org/react";
 import { NotFound } from "../pages/NotFound";
 import { Loading } from "./Loading";
 import { UserContext } from "../context/UserContext";
+import CodeMirror from '@uiw/react-codemirror';
+import { oneDark } from '@codemirror/theme-one-dark';
+import { loadLanguage } from '@uiw/codemirror-extensions-langs'
+import { getStatusColor } from "../utils/getStatusColor";
+
+const languages_for_editor = {
+    'C++': 'cpp',
+    'Python': 'python',
+    'Java': 'java',
+    'Javascript': 'javascript',
+    'C#': 'csharp',
+    'C': 'c',
+    'Rust': 'rust',
+    'PHP': 'php',
+}
 
 export const Solution = () => {
     const { id, username } = useParams();
@@ -52,7 +67,7 @@ export const Solution = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (user && user.getUser && user.getUser.username !== username && user.getUser.admin === false) {
+        if (!loading && (error || !user || !user.getUser || !solution || (user.getUser.username !== username && !user.getUser.admin))) {
             navigate(-1);
         }
     }, [user, username, navigate]);
@@ -78,67 +93,58 @@ export const Solution = () => {
                         </h1>
                     </CardHeader>
                     <CardBody className="p-6">
-                        <Table 
-                            aria-label="Solution details"
-                            className="mb-8"
-                        >
-                            <TableHeader>
-                                <TableColumn>Property</TableColumn>
-                                <TableColumn>Value</TableColumn>
-                            </TableHeader>
-                            <TableBody>
-                                {[
-                                    { label: t("solution.labels.problem"), value: <Link className="text-blue-300 hover:text-blue-200" to={`/problems/${solution.problem}?code=${encodeURIComponent(solution.code)}&language=${solution.language}`}>{solution.problem}</Link> },
-                                    { label: t("solution.labels.language"), value: solution.language },
-                                    { label: t("solution.labels.status"), value: <span className={solution.compilationError ? "text-red-400" : "text-green-400"}>{solution.compilationError ? t("solution.status.rejected") : t("solution.status.accepted")}</span> },
-                                    { label: t("solution.labels.username"), value: solution.username },
-                                    { label: t("solution.labels.date"), value: new Date(+solution.date).toLocaleString() },
-                                    { label: t("solution.labels.fileMemory"), value: parseFloat(solution.fileMemory).toFixed(2) + ' kbytes' },
-                                ].map((row, index) => (
-                                    <TableRow key={index} className="hover:bg-gray-700 transition-colors">
-                                        <TableCell>{row.label}</TableCell>
-                                        <TableCell>{row.value}</TableCell>
-                                    </TableRow>
-                                ))}
-                            </TableBody>
-                        </Table>
-                        
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+                            {[
+                                { label: t("solution.labels.problem"), value: <Link className="text-blue-300 hover:text-blue-200" to={`/problems/${solution.problem}?code=${encodeURIComponent(solution.code)}&language=${encodeURIComponent(solution.language)}`}>{solution.problem}</Link> },
+                                { label: t("solution.labels.language"), value: solution.language },
+                                { label: t("solution.labels.status"), value: <span className={solution.compilationError ? "text-red-400" : "text-green-400"}>{solution.compilationError ? t("solution.status.rejected") : t("solution.status.accepted")}</span> },
+                                { label: t("solution.labels.username"), value: solution.username },
+                                { label: t("solution.labels.date"), value: new Date(+solution.date).toLocaleString() },
+                                { label: t("solution.labels.fileMemory"), value: parseFloat(solution.fileMemory).toFixed(2) + ' kbytes' },
+                            ].map((row) => (
+                                <div className="bg-gray-900 hover:bg-gray-700 rounded-lg p-4 shadow-lg transform transition duration-500 ease-in-out hover:scale-105">
+                                    <h3 className="text-lg font-semibold mb-2">{row.label}</h3>
+                                    <p>{row.value}</p>
+                                </div>
+                            ))}
+                        </div>
                         {!solution.compilationError ? (
                             <div>
                                 <h2 className="text-xl font-semibold mb-4 text-gray-200">{t("solution.summary.title")}</h2>
-                                <Table 
-                                    aria-label="Test case summary"
-                                    className="w-full"
-                                >
-                                    <TableHeader>
-                                        <TableColumn>{t("solution.summary.table.test")}</TableColumn>
-                                        <TableColumn>{t("solution.summary.table.executionTime")}</TableColumn>
-                                        <TableColumn>{t("solution.summary.table.memoryUsed")}</TableColumn>
-                                        <TableColumn>{t("solution.summary.table.score")}</TableColumn>
-                                        <TableColumn>{t("solution.summary.table.status")}</TableColumn>
-                                        <TableColumn>{t("solution.summary.table.testCase")}</TableColumn>
-                                    </TableHeader>
-                                    <TableBody>
-                                        {solution.tests.map((test, index) => (
-                                            <TableRow key={index} className="hover:bg-gray-700 transition-colors duration-200">
-                                                <TableCell>{index + 1}</TableCell>
-                                                <TableCell>{test.executionTime + ' s'}</TableCell>
-                                                <TableCell>{(test.memoryUsed / 1024).toFixed(2) + ' MB'}</TableCell>
-                                                <TableCell>{test.score}</TableCell>
-                                                <TableCell>
-                                                    <span className={`px-2 py-1 rounded ${test.status === 'Accepted' ? 'bg-green-700' : 'bg-red-700'}`}>
-                                                        {test.status}
-                                                    </span>
-                                                </TableCell>
-                                                <TableCell>
-                                                    <Button onClick={() => setSelectedTestCase(test)} size="sm" color="primary" variant="flat">
-                                                        {t("solution.summary.table.viewTestCase")}
-                                                    </Button>
-                                                </TableCell>
-                                            </TableRow>
-                                        ))}
-                                    </TableBody>
-                                </Table>
+                                <div>
+                                    <table className="w-full text-sm text-left text-gray-300 shadow-2xl">
+                                        <thead className="text-xs uppercase bg-gray-700 text-gray-100">
+                                            <tr>
+                                                <th className="px-6 py-4">{t("solution.summary.table.test")}</th>
+                                                <th className="px-6 py-4">{t("solution.summary.table.executionTime")}</th>
+                                                <th className="px-6 py-4">{t("solution.summary.table.memoryUsed")}</th>
+                                                <th className="px-6 py-4">{t("solution.summary.table.score")}</th>
+                                                <th className="px-6 py-4">{t("solution.summary.table.status")}</th>
+                                                <th className="px-6 py-4">{t("solution.summary.table.testCase")}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody className="divide-y divide-gray-700">
+                                            {solution.tests.map((test, index) => (
+                                                <tr key={index} className={`hover:bg-gray-700 transition-colors duration-200 ${index % 2 === 0 ? 'bg-gray-800' : 'bg-gray-900'}`}>
+                                                    <td className="px-6 py-4">{index + 1}</td>
+                                                    <td className="px-6 py-4">{test.executionTime + ' s'}</td>
+                                                    <td className="px-6 py-4">{(test.memoryUsed / 1024).toFixed(2) + ' MB'}</td>
+                                                    <td className="px-6 py-4">{test.score}</td>
+                                                    <td className="px-6 py-4">
+                                                       <Chip variant="flat" color={getStatusColor(test.status)}>
+                                                              {test.status}
+                                                       </Chip>
+                                                    </td>
+                                                    <td className="px-6 py-4">
+                                                        <Button onClick={() => setSelectedTestCase(test)} size="sm" color="primary" variant="flat">
+                                                            {t("solution.summary.table.viewTestCase")}
+                                                        </Button>
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         ) : (
                             <div className="mt-5 bg-red-900/30 p-4 rounded-lg">
@@ -155,10 +161,14 @@ export const Solution = () => {
                         <h2 className="text-xl font-semibold text-white">{t("solution.submittedCode")}</h2>
                     </CardHeader>
                     <Divider />
-                    <CardBody className="p-6">
-                        <pre className="w-full overflow-auto text-gray-300 bg-gray-900 p-4 rounded-lg">
-                            {solution.code}
-                        </pre>
+                    <CardBody className="p-0">
+                        <CodeMirror
+                            value={solution.code}
+                            theme={oneDark}
+                            height="100%"
+                            extensions={[loadLanguage(languages_for_editor[solution.language])]}
+                            readOnly
+                        />
                     </CardBody>
                 </Card>
             </div>
@@ -170,7 +180,7 @@ export const Solution = () => {
                 <ModalContent>
                     {() => (
                         <>
-                            <ModalHeader className="border-b border-gray-700 pb-4">
+                            <ModalHeader className="border-b border-gray-700 pb-4 bg-gray-800">
                                 <h3 className="text-xl font-semibold text-gray-200">{t("solution.modal.testCase")}</h3>
                             </ModalHeader>
                             <ModalBody className="py-6 bg-gray-800 text-gray-300">

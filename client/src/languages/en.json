@@ -305,7 +305,10 @@
       "writeAboutYourself": "Write something about you...",
       "changeBio": "Change Bio",
       "settings": "Settings",
-      "see_solution": "See solution"
+      "see_solution": "See solution",
+      "noSolutions": "No solutions yet!",
+      "profilePicture": "Change profile picture",
+      "uploadPicture": "Upload picture"
     },
     "publishProblem": {
       "title": "Publish a problem",

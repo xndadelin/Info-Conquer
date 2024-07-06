@@ -180,18 +180,23 @@ export const ProblemsSelection = () => {
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 {problems.map((problem) => (
-                    <div  className="flex flex-col p-4 bg-gray-800 border border-gray-700 rounded-lg">
-                        <Link href={`/problems/${problem.category}/none`} className="text-primary-900 font-extrabold text-lg">{t(`problems.categories.${problem.category}`)}</Link>
-                        <ul className="list-disc list-inside space-y-1">
-                            {problem.subcategories.map((subcategory) => (
-                                <li className="text-md">
-                                    <Link href={`/problems/${problem.category}/${subcategory}`} className="text-foreground-900 inline">{t(`problems.subcategories.${subcategory}`)}</Link>
-                                </li>
-                            ))}
-                        </ul>
+                    <div className="flex flex-col p-4 bg-gray-800 border border-gray-700 rounded-lg transform transition duration-500 ease-in-out hover:scale-105">
+                        <Link href={`/problems/${problem.category}/none`} className="text-primary-900 font-extrabold text-lg mb-4">{t(`problems.categories.${problem.category}`)}</Link>
+                        <div className="flex-grow">
+                            <ul className="list-disc list-inside space-y-1">
+                                {problem.subcategories.map((subcategory) => (
+                                    <li className="text-md">
+                                        <Link href={`/problems/${problem.category}/${subcategory}`} className="text-foreground-900 inline">{t(`problems.subcategories.${subcategory}`)}</Link>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                        <div className="mt-4">
+                            <Link href={`/problems/${problem.category}/none`} className="text-primary-900 font-bold text-sm">View all</Link>
+                        </div>
                     </div>
                 ))}
             </div>
-    </div>
+        </div>
     );
 };

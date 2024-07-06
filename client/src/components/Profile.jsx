@@ -6,26 +6,28 @@ import { Button, ButtonGroup, Divider, Textarea } from "@nextui-org/react";
 import { Input } from "@nextui-org/react";
 import { UserContext } from "../context/UserContext";
 import { useContext } from "react";
-import { Avatar, Tabs, Tab, Chip, Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Pagination, Card, CardHeader, CardBody } from "@nextui-org/react";
+import { Avatar, Tabs, Tab, Chip, Pagination, Card, CardHeader, CardBody } from "@nextui-org/react";
 import { NotFound } from "../pages/NotFound";
 import { useTranslation } from 'react-i18next'
 import { getStatusColor } from "../utils/getStatusColor";
-
 const userQuery = gql`
 query GetProfile($username: String){
     getProfile(username: $username){
-        username,
-        createdAt,
-        admin,
+        username
+        createdAt
+        admin
+        profilePicture,
         solutions {
-            problem,
-            score,
-            date,
+            problem
+            score
+            date
             compilationError,
-            id_solution,
+            id_solution
             language
             status
-        },
+            username
+        }
+        bio
         solvedProblems {
             problem
         }
@@ -63,12 +65,26 @@ mutation {
 }`
 
 const getActivity = gql`
-    query getActivity($username: String){
-        getActivity(username: $username) {
-            date
-            message
-        }
+query getActivity($username: String){
+    getActivity(username: $username) {
+        date
+        message
     }
+}
+`
+const updateProfilePicture = gql`
+mutation updateProfilePicture($profilePicture: String){
+    updateProfilePicture(profilePicture: $profilePicture){
+        success
+    }
+}
+`
+const updateBio = gql`
+mutation updateBio($bio: String){
+    updateBio(bio: $bio){
+        success
+    }
+}
 `
 
 export const Profile = () => {
@@ -91,6 +107,7 @@ export const Profile = () => {
     const [confirmPassword, setConfirmPassword] = useState('')
     const [errorPassword, setErrorPassword] = useState('')
     const [pageActivity, setPageActivity] = useState(1)
+    const [profilePicture, setProfilePicture] = useState('')
 
     const { data: dataActivity, loading: loadingActivity } = useQuery(getActivity, {
         variables: {
@@ -147,6 +164,18 @@ export const Profile = () => {
         }
     })
 
+    const [updateProfilePictureMutation, { loading: updateProfilePictureLoading, error: updateProfilePictureError }] = useMutation(updateProfilePicture, {
+        onCompleted: () => {
+            window.location.reload()
+        }
+    })
+
+    const [updateBioMutation, { loading: updateBioLoading, error: updateBioError }] = useMutation(updateBio, {
+        onCompleted: () => {
+            window.location.reload()
+        }
+    })
+    
     if (loading || loadingActivity) return <Loading />
     if (!data || error) return <NotFound />
 
@@ -155,10 +184,13 @@ export const Profile = () => {
     <div className="min-h-screen py-8">
             <div className="container mx-auto px-4">
                 <Card className="mb-8 bg-gray-800">
-                    <CardBody className="flex flex-col md:flex-row items-center gap-6 p-6">
-                        <Avatar 
-                            className="w-24 h-24 text-large"
-                        />
+                    <CardBody className="flex flex-col md:flex-row md:items-start items-center gap-6 p-6">
+                        <div>
+                            <Avatar 
+                                className="w-32 h-32 md:w-48 md:h-48"
+                                src={data.getProfile.profilePicture}
+                            />
+                        </div>
                         <div className="text-center md:text-left">
                             <h1 className="text-3xl font-bold mb-2">{data.getProfile.username}</h1>
                             <p className="text-xl text-gray-400 mb-4">
@@ -181,6 +213,8 @@ export const Profile = () => {
                                     </svg>
                                 </Button>
                             </ButtonGroup>
+                            <p className="text-gray-400 mt-2">Created at: {new Date(+data.getProfile.createdAt).toLocaleString()}</p>
+                            <p className="text-gray-400 mt-2">{t("profile.bio")}: {data.getProfile.bio}</p>
                         </div>
                     </CardBody>
                 </Card>
@@ -222,7 +256,9 @@ export const Profile = () => {
                                     </thead>
                                     <tbody className="divide-y divide-gray-700">
                                         {data.getProfile.solutions.slice((page - 1) * 10, page * 10).map((solution) => (
-                                            <tr className="bg-gray-800 hover:bg-gray-700 transition-colors duration-200">
+                                            <tr className="bg-gray-800 hover:bg-gray-700 transition-colors duration-200" onClick={() => {
+                                                window.location.href = `/solution/${solution.username}/${solution.id_solution}`
+                                            }} >
                                                 <td className="px-6 py-4">
                                                     <Link to={`/problems/${solution.problem}`}>{solution.problem}</Link>
                                                 </td>
@@ -321,7 +357,30 @@ export const Profile = () => {
                                 </CardHeader>
                                 <CardBody className="space-y-4">
                                     <Textarea value={bio} onChange={(e) => setBio(e.target.value)} label={t("profile.writeAboutYourself")} />
-                                    <Button color="primary" variant="flat">{t("profile.changeBio")}</Button>
+                                    <Button onClick={() => {
+                                        updateBioMutation({
+                                            variables: {
+                                                bio
+                                            }
+                                        })
+                                    }} color="primary" variant="flat">{t("profile.changeBio")}</Button>
+                                    {updateBioError && <Chip color="danger">{updateBioError.message}</Chip>}
+                                </CardBody>
+                            </Card>
+                            <Card className="mt-8 p-6 bg-gray-800">
+                                <CardHeader>
+                                    <h2 className="text-2xl font-bold">{t("profile.profilePicture")}</h2>
+                                </CardHeader>
+                                <CardBody className="space-y-4">
+                                    <Input label={t("profile.profilePicture")} value={profilePicture} onChange={(e) => setProfilePicture(e.target.value)} />
+                                    <Button color="primary" variant="flat" onClick={() => updateProfilePictureMutation({
+                                        variables: {
+                                            profilePicture
+                                        }
+                                    }) }>
+                                        {t("profile.uploadPicture")}
+                                    </Button>
+                                    {updateProfilePictureError && <Chip color="danger">{updateProfilePictureError.message}</Chip>}
                                 </CardBody>
                             </Card>
                         </Tab>

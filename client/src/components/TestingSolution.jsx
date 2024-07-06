@@ -43,7 +43,7 @@ export const TestingSolution = ({ onClose, isOpen, loading, tests }) => {
                   </thead>
                   <tbody className="divide-y divide-gray-700">
                     {tests.tests && tests.tests.map((test, index) => (
-                      <tr key={index} className="bg-gray-800 hover:bg-gray-700 transition-colors duration-200">
+                      <tr className="bg-gray-800 hover:bg-gray-700 transition-colors duration-200">
                         <td className="px-6 py-4 font-medium">{index + 1}</td>
                         <td className="px-6 py-4">{test.executionTime} s</td>
                         <td className="px-6 py-4">{parseFloat(test.memoryUsed / 1024).toFixed(3)} MB</td>
@@ -103,7 +103,7 @@ export const TestingSolution = ({ onClose, isOpen, loading, tests }) => {
 
     const compilationError = () => {
         return (
-            <Snippet hideSymbol color="danger"> 
+            <Snippet hideSymbol color="danger" className="w-[100%]"> 
                 <pre className="whitespace-pre-wrap">
                     {tests.compilationError}
                 </pre>
@@ -130,7 +130,7 @@ export const TestingSolution = ({ onClose, isOpen, loading, tests }) => {
             >
                 <ModalContent>
                     <ModalHeader>
-                      <div className="text-2xl font-extrabold text-gray-300 ml-5">
+                      <div className="text-2xl font-extrabold text-gray-300">
                         {t('testingSolution.modalHeader')}
                         <p className="text-sm text-gray-400">User: {tests.username}</p>
                         <p className="text-sm text-gray-400">ID: {tests.id_solution}</p>
@@ -138,11 +138,11 @@ export const TestingSolution = ({ onClose, isOpen, loading, tests }) => {
                         <p className="text-sm text-gray-400">Language: {tests.language}</p>
                       </div>
                     </ModalHeader>
-                    <ModalBody className="rounded-none">
+                    <ModalBody className="rounded-sm p-0">
                         {loading && <div className="min-h-[200px] flex justify-center self-center"><Spinner color="default" /></div>}
                         {tests.compilationError && (
                             <div>
-                                <ModalHeader>{t('testingSolution.compilationError.title')}</ModalHeader>
+                                <p className="text-lg font-semibold mb-3">{t('testingSolution.compilationError.title')}</p>
                                 {compilationError()}
                             </div>
                         )}

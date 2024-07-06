@@ -39,7 +39,7 @@ export const PublishProblem = () => {
     const [languages, setLanguages] = useState([])
     const [itsForContest, setItsForContest] = useState(false)
     const problemMutation = gql`
-        mutation CreateProblem($title: String, $description: String, $requirements: String, $type: String, $tags: [String], $difficulty: String, $category: String, $subcategories: [String], $input: String, $output: String, $tests: [TestInput], $timeExecution: String, $limitMemory: String, $examples: [ExampleInput], $indications: String, $languages: [String], $inputFile: String, $outputFile: String, $restriction: String, $itsForContest: Boolean) {
+        mutation CreateProblem($title: String, $description: String, $requirements: String, $type: String, $tags: [String], $difficulty: String, $category: String, $subcategories: [String], $input: String, $output: String, $tests: [TestInput], $timeExecution: Float, $limitMemory: Float, $examples: [ExampleInput], $indications: String, $languages: [String], $inputFile: String, $outputFile: String, $restriction: String, $itsForContest: Boolean) {
             createProblem(problemInput: {title: $title, description: $description, requirements: $requirements, type: $type, tags: $tags, difficulty: $difficulty, category: $category, subcategories: $subcategories, input: $input, output: $output, tests: $tests, timeExecution: $timeExecution, limitMemory: $limitMemory, examples: $examples, indications: $indications, languages: $languages, inputFile: $inputFile, outputFile: $outputFile, restriction: $restriction, itsForContest: $itsForContest}) {
             success
             error {
@@ -235,7 +235,7 @@ export const PublishProblem = () => {
         }
 
     ]
-    
+
     const onAddTag = () => {
         if (!tags.includes(tag)) {
             setTags([...tags, tag])

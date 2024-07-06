@@ -78,7 +78,7 @@ export const Homepage = () => {
             </div>
 
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
-                <Card as={Link} href={"/problems"} className="bg-green-500 p-5">
+                <Card as={Link} href={"/problems"} className="bg-green-500 p-5 transform transition duration-500 ease-in-out hover:scale-105">
                     <CardHeader className="flex justify-center items-center">
                         <Trophy />
                     </CardHeader>
@@ -87,7 +87,7 @@ export const Homepage = () => {
                         <p className="text-gray-100 text-center">{t('homepage.conquering')}</p>
                     </CardBody>
                 </Card>
-                <Card as={Link} href={"/calendar"} className="bg-yellow-400 p-5">
+                <Card as={Link} href={"/calendar"} className="bg-yellow-400 p-5 transform transition duration-500 ease-in-out hover:scale-105">
                     <CardHeader className="flex justify-center items-center">
                         <Calendar />
                     </CardHeader>
@@ -96,7 +96,7 @@ export const Homepage = () => {
                         <p className="text-gray-100 text-center">{t('homepage.todaysDaily')}</p>
                     </CardBody>
                 </Card>
-                <Card as={Link} href={"/contests"} className="bg-blue-400 p-5">
+                <Card as={Link} href={"/contests"} className="bg-blue-400 p-5 transform transition duration-500 ease-in-out hover:scale-105">
                     <CardHeader className="flex justify-center items-center">
                         <Trophy />
                     </CardHeader>
@@ -105,7 +105,7 @@ export const Homepage = () => {
                         <p className="text-gray-100 text-center">{t('homepage.participateContest')}</p>
                     </CardBody>
                 </Card>
-                <Card as={Link} href={"/articles/publish"} className="bg-red-500 p-5">
+                <Card as={Link} href={"/articles/publish"} className="bg-red-500 p-5 transform transition duration-500 ease-in-out hover:scale-105">
                     <CardHeader className="flex justify-center items-center">
                         <Article />
                     </CardHeader>
@@ -127,9 +127,9 @@ export const Homepage = () => {
 
             <div className="mt-12">
                 <h2 className="text-3xl font-bold text-center mb-6">{t('homepage.newestAnnouncements')}</h2>
-                <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-                    {announcementsData.getAnnouncements.map((announcement, index) => (
-                        <Card className="bg-gray-800" as={Link} href={`/announcement/${encodeURIComponent(announcement.title)}`} key={index}>
+                <div className="grid grid-cols-1 gap-6 md:grid-cols-2 ">
+                    {announcementsData.getAnnouncements.map((announcement) => (
+                        <Card className="bg-gray-800 transform transition duration-500 ease-in-out hover:scale-105" as={Link} href={`/announcement/${encodeURIComponent(announcement.title)}`}>
                             <CardBody>
                                 <h3 className="text-2xl font-bold text-primary-900">{announcement.title}</h3>
                                 <p className="text-gray-400">{t('homepage.announcementBy')}{' '}
@@ -146,7 +146,7 @@ export const Homepage = () => {
 
             <div className="mt-12 rounded-3xl">
                 <h2 className="text-3xl font-bold text-center mb-6">{t('homepage.topProblems')}</h2>
-                <table class="w-full text-sm text-left text-gray-300">
+                <table class="w-full text-sm text-left text-gray-300 shadow-lg">
                     <thead class="text-xs uppercase bg-gray-700 text-gray-100">
                         <tr>
                             <th scope="col" className="px-6 py-4">{t('homepage.title')}</th>
@@ -155,9 +155,9 @@ export const Homepage = () => {
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-700">
-                        {infoData.getHomepageInfo.topProblems.map((problem) => (
-                        <tr class="bg-gray-800 hover:bg-gray-700 transition-colors duration-200">
-                            <td class="px-6 py-4 font-medium">
+                        {infoData.getHomepageInfo.topProblems.map((problem, index) => (
+                        <tr className={`${index % 2 === 0 ? 'bg-gray-800' : 'bg-gray-900'} hover:bg-gray-700 transition-colors`}>
+                            <td className="px-6 py-4 font-medium">
                                 <Link href={`/problem/${encodeURIComponent(problem.title)}`} color="primary">
                                     {problem.title}
                                 </Link>

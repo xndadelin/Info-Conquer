@@ -22,5 +22,7 @@ module.exports = gql`
         authDiscord(code: String): Response
         createReport(title: String, reporter: String, description: String, type: String, problem: String): Response
         getChatbotMessage(prompt: String, problem: String, code: String): message
+        updateProfilePicture(profilePicture: String): Response
+        updateBio(bio: String): Response
     }
 `;  

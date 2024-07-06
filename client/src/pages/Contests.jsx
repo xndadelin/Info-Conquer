@@ -68,7 +68,7 @@ export const Contests = () => {
                         <p className="text-3xl font-extrabold">{headers[index]}</p>
                         <div className="grid grid-cols-3 my-5 gap-5 max-md:grid-cols-2 max-sm:grid-cols-1">
                             {contests.map((contest) => (
-                                <Card className="bg-gray-800">
+                                <Card className="bg-gray-800 transform transition duration-500 ease-in-out hover:scale-105">
                                     <CardHeader className="grid col-span-2">
                                         <Link className="text-3xl font-bold" target="_blank" to={`/contests/view/${contest._id}`}>
                                             {contest.name}
