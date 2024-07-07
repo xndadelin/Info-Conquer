@@ -18,6 +18,8 @@ const { createReport } = require('./mutations/report/createReport');
 const { getChatbotMessage } = require('./mutations/problem/getChatbotMessage');
 const { updateProfilePicture } = require('./mutations/profile/updateProfilePicture');
 const { updateBio } = require('./mutations/profile/updateBio');
+const { forgotPassword } = require('./mutations/auth/forgotPassword');
+const { resetPassword } = require('./mutations/auth/resetPassword');
 
 const { getAnnouncement } = require('./queries/announcement/getAnnouncement');
 const { getAnnouncements } = require('./queries/announcement/getAnnouncements');
@@ -83,7 +85,9 @@ const resolvers = {
     createReport,
     getChatbotMessage,
     updateProfilePicture,
-    updateBio
+    updateBio,
+    forgotPassword,
+    resetPassword
   }
 };
 

@@ -255,10 +255,10 @@ export const Profile = () => {
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-gray-700">
-                                        {data.getProfile.solutions.slice((page - 1) * 10, page * 10).map((solution) => (
-                                            <tr className="bg-gray-800 hover:bg-gray-700 transition-colors duration-200" onClick={() => {
+                                        {data.getProfile.solutions.slice((page - 1) * 10, page * 10).map((solution, index) => (
+                                            <tr onClick={() => {
                                                 window.location.href = `/solution/${solution.username}/${solution.id_solution}`
-                                            }} >
+                                            }} className={`cursor-pointer hover:bg-gray-700 ${index % 2 === 0 ? 'bg-gray-800' : 'bg-gray-900'}`}>
                                                 <td className="px-6 py-4">
                                                     <Link to={`/problems/${solution.problem}`}>{solution.problem}</Link>
                                                 </td>

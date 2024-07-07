@@ -30,6 +30,8 @@ import { Search } from "./components/Search";
 import { AuthDiscord } from "./components/AuthDiscord";
 import { Calendar } from "./pages/Calendar";
 import { Help } from "./components/Help";
+import { ForgotPassword } from "./pages/ForgotPassword";
+import { ResetPassword } from "./components/ResetPassword";
 function App() {
   const {user} = useContext(UserContext)
   if(!user)
@@ -138,6 +140,14 @@ function App() {
           <Route
             path="/daily/:problem_name/:year/:month/:day"
             element={<Problem/>}
+          />
+          <Route
+            path="/forgot-password"
+            element={<ForgotPassword/>}
+          />
+          <Route
+            path="/reset-password/:token"
+            element={<ResetPassword/>}
           />
           <Route
             path="*"

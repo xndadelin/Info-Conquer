@@ -24,5 +24,7 @@ module.exports = gql`
         getChatbotMessage(prompt: String, problem: String, code: String): message
         updateProfilePicture(profilePicture: String): Response
         updateBio(bio: String): Response
+        forgotPassword(email: String): Response
+        resetPassword(password: String, confirmPassword: String, codeForVerification: String): Response
     }
 `;  

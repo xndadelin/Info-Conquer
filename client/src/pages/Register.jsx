@@ -71,8 +71,8 @@ export const Register = () => {
 
     if (user.getUser) window.location.href = '/';
     return (
-        <div className="container mx-auto flex items-center h-[100vh] justify-center">
-            <Card className="p-4 w-[450px] m-4 mb-[100px]">
+        <div className="container mx-auto flex items-center justify-center min-h-[100vh] max-w-[500px]">
+            <Card className="p-4 my-20 bg-gray-800">
                 <CardHeader>
                     <div>
                         <h1 className="text-2xl font-bold">{t('register.header')}</h1>

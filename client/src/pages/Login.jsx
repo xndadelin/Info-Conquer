@@ -4,7 +4,6 @@ import { useState, useRef, useContext } from "react";
 import { gql, useMutation } from "@apollo/client";
 import { UserContext } from "../context/UserContext";
 import { useTurnstile } from "../hooks/useTurnstile";
-import { useNavigate } from "react-router-dom";
 import { NotFound } from "./NotFound";
 import { Discord } from "../utils/Discord";
 import { useTranslation } from 'react-i18next';
@@ -27,7 +26,6 @@ export const Login = () => {
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
     const { user } = useContext(UserContext);
-    const navigate = useNavigate();
     const turnstileRef = useRef(null);
     useTurnstile();
     const [loginMutation, { loading }] = useMutation(LoginMutation, {
@@ -36,7 +34,6 @@ export const Login = () => {
             resetTurnstile();
         },
         onCompleted: () => {
-            navigate(-1);
             window.location.href = '/';
         }
     });
@@ -63,8 +60,8 @@ export const Login = () => {
 
     if (user && user.getUser) return <NotFound />;
     return (
-        <div className="container mx-auto flex items-center h-[100vh] justify-center">
-            <Card className="p-4 w-[450px] m-4 mb-[100px]">
+        <div className="container mx-auto flex items-center min-h-[100vh] justify-center">
+            <Card className="p-4 w-[450px] m-4 mb-[100px] bg-gray-800">
                 <CardHeader>
                     <div>
                         <h1 className="text-2xl font-bold">{t('login.header')}</h1>
