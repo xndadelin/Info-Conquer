@@ -1,7 +1,7 @@
 import { Link, useParams } from 'react-router-dom'
 import { useQuery, gql } from '@apollo/client'
 import { Loading } from './Loading'
-import { TableCell, Table, TableHeader, TableRow, TableColumn, TableBody, Snippet, Button, Select, SelectItem, useDisclosure, Tabs, Tab, Tooltip, Input, Textarea, Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from '@nextui-org/react'
+import {Button, Select, SelectItem, useDisclosure, Tabs, Tab, Tooltip, Textarea } from '@nextui-org/react'
 import { useCallback, useContext, useEffect, useState } from "react";
 import { UserContext } from "../context/UserContext";
 import { useMutation } from '@apollo/client'
@@ -16,12 +16,11 @@ import { useTranslation } from 'react-i18next'
 import { Chip } from '@nextui-org/react'
 import { getStatusColor } from '../utils/getStatusColor'
 import { Card, CardHeader, CardBody } from '@nextui-org/react'
-
 import CodeMirror from '@uiw/react-codemirror';
-
 import { oneDark } from '@codemirror/theme-one-dark';
 import { loadLanguage } from '@uiw/codemirror-extensions-langs'
 import { ProblemDescription } from './ProblemDescription';
+import { motion } from 'framer-motion'
 
 const placeholder = `#include <iostream>
 #include <cstring>
@@ -106,10 +105,10 @@ const languages_for_editor = {
     'Rust': 'rust',
     'PHP': 'php',
 }
+
 export const Problem = () => {
     const { user } = useContext(UserContext)
     const { code: userCode, language: userLanguage } = Object.fromEntries(new URLSearchParams(window.location.search))
-    console.log(userCode, userLanguage)
     const [selected, setSelected] = useState('problem')
     const [page, setPage] = useState(1)
     const { isOpen, onOpenChange } = useDisclosure()
@@ -288,12 +287,13 @@ export const Problem = () => {
     }
     return (
         <div className="container mx-auto px-5 py-5 0 min-h-screen">
-            <Card className="shadow-xl rounded-xl overflow-hidden bg-gray-800 pb-5">
+            <Card className="shadow-xl rounded-xl overflow-auto bg-gray-800 pb-5">
                 <CardHeader className="bg-gray-700 text-white p-6">
                     <h1 className="text-4xl font-bold">#{problem.getProblem.title}</h1>
                 </CardHeader>
                 <CardBody>
                     <Tabs
+                        size='sm'
                         selectedKey={selected}
                         onSelectionChange={setSelected}
                         variant="underlined"
@@ -317,7 +317,7 @@ export const Problem = () => {
                             }
                         >
                             <div className="grid gap-6">
-                                <div className="flex flex-col gap-6 rounded-2xl">
+                                <div className="flex flex-col gap-6 rounded-2xl overflow-auto">
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 bg-gray-900 rounded-lg">
                                         {[
                                             { key: 'creator', icon: '👤', value: problem.getProblem.creator },
@@ -333,19 +333,22 @@ export const Problem = () => {
                                             { key: 'solveRate', icon: '📊', value: `${parseInt(problem.getProblem.successRate)}%` },
                                             { key: 'rating', icon: '⭐', value: problem.getProblem.rating === 0 ? 'NR' : `${parseFloat(problem.getProblem.rating).toFixed(2)} / 5` },
                                         ].map((row) => (
-                                            <div key={row.key} className="bg-gray-800 p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
-                                            <div className="flex items-center mb-2">
-                                                <span className="text-2xl mr-2">{row.icon}</span>
-                                                <h3 className="text-gray-400 font-medium uppercase tracking-wider">
-                                                {t(`problem.${row.key}`)}
-                                                </h3>
-                                            </div>
-                                            <p className="text-gray-200 text-lg">
-                                                {row.key === 'category' ? t(`problems.categories.${row.value}`) :
-                                                row.key === 'subcategory' ? row.value :
-                                                row.value}
-                                            </p>
-                                            </div>
+                                            <motion.div whileHover={{
+                                                scale: 1.02,
+                                                transition: { duration: 0.3 }
+                                            }} key={row.key} className="bg-gray-800 p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+                                                <div className="flex items-center mb-2">
+                                                    <span className="text-2xl mr-2">{row.icon}</span>
+                                                    <h3 className="text-gray-400 font-medium uppercase tracking-wider">
+                                                    {t(`problem.${row.key}`)}
+                                                    </h3>
+                                                </div>
+                                                <p className="text-gray-200 text-lg">
+                                                    {row.key === 'category' ? t(`problems.categories.${row.value}`) :
+                                                    row.key === 'subcategory' ? row.value :
+                                                    row.value}
+                                                </p>
+                                            </motion.div>
                                         ))}
                                     </div>
                                     {user && user.getUser && (
@@ -367,36 +370,18 @@ export const Problem = () => {
                                 </div>
                                 {user?.getUser ? (
                                     <div>
-                                        <div className="flex justify-between items-center bg-[#1e1e1e] rounded-tl-2xl rounded-tr-2xl">
-                                            <Select
-                                                defaultSelectedKeys={[language]}
-                                                onChange={(e) => onChangeLanguage(e.target.value)}
-                                                label={t('problem.selectLanguage')}
-                                                className="w-48"
-                                            >
-                                                {problem.getProblem.languages.map((lang) => (
-                                                    <SelectItem key={lang} value={lang}>{lang}</SelectItem>
-                                                ))}
+                                         <div className="flex flex-wrap justify-between items-center bg-[#1e1e1e] rounded-tl-2xl rounded-tr-2xl p-4">
+                                            <Select defaultSelectedKeys={[language]} onChange={(e) => onChangeLanguage(e.target.value)} label={t('problem.selectLanguage')} className="w-full sm:w-48 mb-2 sm:mb-0">
+                                                {problem.getProblem.languages.map((lang) => (<SelectItem key={lang} value={lang}>{lang}</SelectItem>))}
                                             </Select>
-                                            <div className="flex gap-2">
-                                                <Tooltip size='sm' closeDelay={1000} color='warning' placement="left" content={
-                                                    <div>
-                                                        <p>{t('problem.chatGPT')}</p>
-                                                        <p>{t('problem.chatGPTNote')}</p>
-                                                        <Textarea onKeyDown={(e) => {
-                                                                if (e.key === 'Enter') {
-                                                                    getChatbotMessage()
-                                                                    setPrompt('')
-                                                                }
-                                                            }} endContent={
-                                                                <Button isLoading={loadingBot} disabled={!prompt} color='warning' className='self-end text-2xl' size='sm' variant='flat' onClick={() => getChatbotMessage()}>↑</Button>
-                                                        } onChange={(e) => setPrompt(e.target.value)} value={prompt} label={t('problem.prompt')} />
-                                                    </div>
-                                                }>
-                                                    <Button isLoading={loadingBot} className='mt-2 mb-2 mr-2' color='warning' variant='flat'>🤖</Button>
+
+                                            <div className="flex flex-wrap gap-2 w-full sm:w-auto">
+                                                <Tooltip size="sm" closeDelay={1000} color="warning" placement="left" content={<div><p>{t('problem.chatGPT')}</p><p>{t('problem.chatGPTNote')}</p><Textarea onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); getChatbotMessage(); setPrompt(''); }}} endContent={<Button isLoading={loadingBot} disabled={!prompt} color="warning" className="self-end text-2xl" size="sm" variant="flat" onClick={() => getChatbotMessage()}>↑</Button>} onChange={(e) => setPrompt(e.target.value)} value={prompt} label={t('problem.prompt')} className="w-full" /></div>}>
+                                                <Button isLoading={loadingBot} className="mt-2 mb-2 mr-2" color="warning" variant="flat">🤖</Button>
                                                 </Tooltip>
-                                                <Tooltip color='danger' content={t('problem.runCode')}>
-                                                    <Button className="mt-2 mb-2 mr-2" color='danger' disabled={!language || !code || !user || !user.getUser} variant='flat' onClick={() => { onHandleSubmitSolution(); onOpenChange(); setTests('') }}>{t('problem.submit')}</Button>
+
+                                                <Tooltip color="danger" content={t('problem.runCode')}>
+                                                <Button className="mt-2 mb-2" color="danger" disabled={!language || !code || !user || !user.getUser} variant="flat" onClick={() => { onHandleSubmitSolution(); onOpenChange(); setTests('') }}>{t('problem.submit')}</Button>
                                                 </Tooltip>
                                             </div>
                                         </div>

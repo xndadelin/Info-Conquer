@@ -2,12 +2,16 @@ import { gql, useQuery } from '@apollo/client';
 import { useParams } from 'react-router-dom';
 import { NotFound } from '../pages/NotFound';
 import { Loading } from './Loading';
-import { Button, Spinner, Textarea } from '@nextui-org/react';
+import { Button, Code, Spinner, Textarea } from '@nextui-org/react';
 import { useState, useContext } from 'react';
 import { UserContext } from '../context/UserContext';
 import { useMutation } from '@apollo/client';
 import { Input, Chip } from '@nextui-org/react';
 import { useTranslation } from 'react-i18next';
+import CodeMirror from '@uiw/react-codemirror';
+import { oneDark } from '@codemirror/theme-one-dark';
+import { loadLanguage } from '@uiw/codemirror-extensions-langs'
+import { useCallback } from 'react';
 
 const getArticle = gql`
     query GetArticle($id: String) {
@@ -41,6 +45,10 @@ export const EditArticle = () => {
     const [tags, setTags] = useState([]);
     const [tag, setTag] = useState('');
     const { t } = useTranslation();
+
+    const onChangeCode = useCallback((val) => {
+        setContent(val)
+    })
 
     const onAddTag = () => {
         setTags([...tags, tag]);
@@ -77,10 +85,10 @@ export const EditArticle = () => {
 
     if (loading) return <Loading />;
     if (error) return <NotFound />;
-    if (!content || !title) return <NotFound />;
+    if (!title) return <NotFound />;
 
     return (
-        <div className='container mx-auto py-5 h-screen'>
+        <div className='container mx-auto py-5 min-h-screen'>
             <p className='text-2xl font-bold'>{t('article.edit')} {t('article.edit')}</p>
             <Input
                 variant='flat'
@@ -101,14 +109,17 @@ export const EditArticle = () => {
                     <Chip className='cursor-pointer' key={index} onClick={() => onDeleteTag(tag)}>{tag}</Chip>
                 ))}
             </div>
-            <Textarea
-                minRows={10}
-                maxRows={100}
-                label={t('article.edit')}
-                value={content}
-                onChange={(e) => setContent(e.target.value)}
-                className='mb-5'
-            />
+            
+            <div className='rounded-lg'>
+                <CodeMirror
+                    value={content}
+                    onChange={onChangeCode}
+                    theme={oneDark}
+                    extensions={[loadLanguage('html')]}
+                    height='1000px'
+                />
+            </div>
+
             <div className='flex justify-end gap-5 mt-5'>
                 <Button
                     onClick={handleSave}
@@ -118,6 +129,10 @@ export const EditArticle = () => {
                 >
                     {t('article.edit')}
                 </Button>
+            </div>
+            <div className='mt-5'>
+                <p className='text-3xl font-bold mb-20'>Preview</p>
+                <div dangerouslySetInnerHTML={{ __html: content }}></div>
             </div>
         </div>
     );

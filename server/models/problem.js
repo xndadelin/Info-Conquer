@@ -45,11 +45,11 @@ const problemSchema = new mongoose.Schema({
         }
     },      
     timeExecution: {
-        type: String,
+        type: Number,
         required: true
     },
     limitMemory: {
-        type: String, 
+        type: Number, 
         required: true
     },
     examples: {

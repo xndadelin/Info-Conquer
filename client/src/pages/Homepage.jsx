@@ -53,6 +53,18 @@ export const Homepage = () => {
                 position: 'bottom'
             },
         },
+        scales: {
+            y: {
+                grid: {
+                    color: 'rgba(255, 255, 255, 0.1)',
+                }
+            },
+            x: {
+                grid: {
+                    color: 'rgba(255, 255, 255, 0.1)',
+                }
+            }
+        }
     };
 
     if (loadingAnnouncements || loadingInfo) return <Loading />;
@@ -74,7 +86,7 @@ export const Homepage = () => {
     return (
         <div className="container px-5 mx-auto my-5 mt-20">
             <motion.div 
-                className="text-center mb-10 bg-gradient-to-r from-gray-900 to-gray-800 p-10 rounded-lg shadow-xl"
+                className="text-center mb-10 bg-gradient-to-r from-gray-900 to-gray-700 p-10 rounded-lg shadow-xl"
                 initial={{ opacity: 0, y: -50 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
@@ -125,25 +137,7 @@ export const Homepage = () => {
                 <h2 className="text-3xl font-bold text-center mb-8 text-primary-500">{t('homepage.activityLast7Days')}</h2>
                 {infoData && (
                     <div className="bg-[#181818] p-6 rounded-lg shadow-inner"> 
-                        <Line data={chartData} options={{
-                            ...options,
-                            animation: {
-                                duration: 2000,
-                                easing: 'easeOutQuart'
-                            },
-                            scales: {
-                                y: {
-                                    grid: {
-                                        color: 'rgba(255, 255, 255, 0.1)',
-                                    }
-                                },
-                                x: {
-                                    grid: {
-                                        color: 'rgba(255, 255, 255, 0.1)',
-                                    }
-                                }
-                            }
-                        }} />
+                        <Line data={chartData} options={options}/>
                     </div>
                 )}
             </motion.div>
@@ -173,15 +167,15 @@ export const Homepage = () => {
                 </div>
             </div>
 
+            <h2 className="text-3xl mt-20 font-bold text-center text-primary-500">{t('homepage.topProblems')}</h2>
             <motion.div 
-                className="mt-16 rounded-3xl overflow-hidden shadow-2xl"
+                className="mt-8 rounded-xl overflow-hidden shadow-2xl"
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
             >
-                <h2 className="text-3xl font-bold text-center mb-8 text-primary-500">{t('homepage.topProblems')}</h2>
                 <table className="w-full text-sm text-left text-gray-300">
-                    <thead className="text-xs uppercase bg-gray-700 text-gray-100">
+                    <thead className="text-xs uppercase bg-gray-700">
                         <tr>
                             <th scope="col" className="px-6 py-4">{t('homepage.title')}</th>
                             <th scope="col" className="px-6 py-4">{t('homepage.difficulty')}</th>
@@ -219,6 +213,6 @@ function getDifficultyColor(difficulty) {
         case 'easy': return 'bg-green-500';
         case 'medium': return 'bg-yellow-500';
         case 'hard': return 'bg-red-500';
-        default: return 'bg-gray-500';
+        case 'expert': return 'bg-purple-500';
     }
 }

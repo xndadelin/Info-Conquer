@@ -1,9 +1,12 @@
-import { useContext, useState } from 'react';
+import { useCallback, useContext, useState } from 'react';
 import { NotFound } from './NotFound';
-import { Input, Button, Chip, Textarea } from '@nextui-org/react';
+import { Input, Button, Chip } from '@nextui-org/react';
 import { gql, useMutation } from '@apollo/client';
 import { useTranslation } from 'react-i18next'; 
 import { UserContext } from '../context/UserContext';
+import CodeMirror from '@uiw/react-codemirror';
+import { oneDark } from '@codemirror/theme-one-dark';
+import { loadLanguage } from '@uiw/codemirror-extensions-langs';
 
 export const PublishArticle = () => {
     const { t } = useTranslation(); 
@@ -18,6 +21,10 @@ export const PublishArticle = () => {
         setTags([...tags, tag]);
         setTag('');
     };
+
+    const onChangeCode = useCallback((val) => {
+        setContent(val)
+    })
 
     const onDeleteTag = (tagToDelete) => {
         setTags(tags.filter((tag) => tag !== tagToDelete));
@@ -50,7 +57,7 @@ export const PublishArticle = () => {
     }
 
     return (
-        <div className="container mx-auto p-5 h-screen">
+        <div className="container mx-auto p-5 h-[100%]">
             <div className="flex flex-col gap-5">
                 <p className="text-5xl font-extrabold">{t('publishArticle.title')}</p>
                 <Input variant="flat" onChange={(e) => setTitle(e.target.value)} value={title} label={t('publishArticle.title')} />
@@ -69,13 +76,25 @@ export const PublishArticle = () => {
                         ))}
                 </div>
                 <p className="text-2xl font-bold">{t('publishArticle.content')}</p>
-                <Textarea variant="flat" minRows={10} label={t('publishArticle.content')} value={content} onChange={(e) => setContent(e.target.value)} />
+                <div className='rounded-lg'>
+                    <CodeMirror
+                        value={content}
+                        onChange={onChangeCode}
+                        theme={oneDark}
+                        extensions={[loadLanguage('html')]}
+                        height='1000px'
+                    />
+                </div>
             </div>
             <div className="flex mt-5 justify-between">
                 {error && <Chip color="danger" variant="flat">{error}</Chip>}
                 <Button className="ml-auto" loading={loading} onClick={publishArticle} variant="flat" color="primary">
                     {t('publishArticle.publishButton')}
                 </Button>
+            </div>
+            <div className='mt-5'>
+                <p className='text-3xl font-bold mb-20'>Preview</p>
+                <div dangerouslySetInnerHTML={{ __html: content }}></div>
             </div>
         </div>
     );

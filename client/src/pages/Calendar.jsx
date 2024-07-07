@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { Card, CardBody, CardHeader, Link } from '@nextui-org/react';
-import { gql, useQuery } from '@apollo/client' 
+import { motion } from 'framer-motion';
+import { gql, useQuery } from '@apollo/client';
 import { NotFound } from './NotFound';
 import { Loading } from '../components/Loading';
 import { useTranslation } from 'react-i18next';
@@ -16,7 +16,7 @@ const GET_DAILIES = gql`
 `;
 
 export const Calendar = () => {
-    const { t } = useTranslation(); 
+    const { t } = useTranslation();
     const months = [
         'January', 'February', 'March', 'April', 'May', 'June',
         'July', 'August', 'September', 'October', 'November', 'December'
@@ -56,36 +56,37 @@ export const Calendar = () => {
             <p className="text-3xl font-bold">{`${monthName} ${currentMonth.year}`}</p>
             <div className="grid grid-cols-7 max-md:grid-cols-3 gap-2 mt-4">
                 {Array.from({ length: new Date(currentMonth.year, currentMonth.month).getDay() }).map((_, index) => (
-                    <div className="invisible">
-                        <Card />
-                    </div>
+                    <div key={`empty-${index}`} className="invisible"></div>
                 ))}
                 {days.map((day) => {
                     const key = `${currentMonth.year}-${currentMonth.month + 1}-${day.day}`;
                     const daily = dailiesMap[key];
                     return (
-                        <Card
-                            isDisabled={!day.passed}
-                            as={Link}
-                            href={`/daily/${daily && daily.problem}/${currentMonth.year}/${currentMonth.month + 1}/${day.day}`}
-                            className={`p-2 hover:opacity-75 ${daily?.problem ? daily.solved ? 'bg-green-500 text-black' : 'bg-red-500 text-black hover:opacity-75 ' : 'bg-gray-800'} ${day.day === current.getDate() ? 'bg-yellow-400 text-black' : ''}`}
+                        <motion.div
+                            key={day.day}
+                            className={`p-5 rounded-lg ${daily?.problem ? (daily.solved ? 'bg-green-500 text-black' : 'bg-red-500 text-black hover:opacity-75') : 'bg-gray-800'} ${day.day === current.getDate() ? 'bg-yellow-400 text-black' : ''}`}
+                            onClick={() => window.location.href = `/daily/${daily && daily.problem}/${currentMonth.year}/${currentMonth.month + 1}/${day.day}`}
+                            transition={{ duration: 0.5 }}
+                            whileHover={{ scale: 1.05, rotate:2 }}
                         >
-                            <CardHeader className='flex flex-col items-start'>
-                                <p className="font-bold text-xl">{day.day}</p>
-                                <p className='font-bold'>{Days[new Date(currentMonth.year, currentMonth.month, day.day).getDay()]}</p>
-                            </CardHeader>
-                            <CardBody>
-                                {daily ? (
-                                    <p>{daily.problem}</p>
-                                ) : (
-                                    day.passed ? (
-                                        <p>{t('calendar.noDailyAvailable')}</p>
+                            <div className="w-full h-full">
+                                <div className='flex flex-col items-start'>
+                                    <p className="font-bold text-xl">{day.day}</p>
+                                    <p className='font-bold'>{Days[new Date(currentMonth.year, currentMonth.month, day.day).getDay()]}</p>
+                                </div>
+                                <div className='mt-3'>
+                                    {daily ? (
+                                        <p>{daily.problem}</p>
                                     ) : (
-                                        <p>{t('calendar.noDailyYet')}</p>
-                                    )
-                                )}
-                            </CardBody>
-                        </Card>
+                                        day.passed ? (
+                                            <p>{t('calendar.noDailyAvailable')}</p>
+                                        ) : (
+                                            <p>{t('calendar.noDailyYet')}</p>
+                                        )
+                                    )}
+                                </div>
+                            </div>
+                        </motion.div>
                     );
                 })}
             </div>

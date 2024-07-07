@@ -46,7 +46,8 @@ module.exports = gql`
     }
     type LeaderboardRow {
         username: String,
-        solvedProblems: Int
+        solvedProblems: Int,
+        profilePicture: String
     }
     type SearchResults {
         users: [String],

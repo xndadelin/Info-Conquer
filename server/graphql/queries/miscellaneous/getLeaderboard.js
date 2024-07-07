@@ -6,7 +6,8 @@ module.exports = {
               {
                 $project: {
                   username: 1,
-                  solvedProblems: { $size: "$solvedProblems" }
+                  solvedProblems: { $size: "$solvedProblems" },
+                  profilePicture: 1
                 }
               },
               {

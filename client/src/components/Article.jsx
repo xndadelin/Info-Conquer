@@ -7,9 +7,8 @@ import { useEffect, useState } from 'react'
 import { useContext } from 'react'
 import { UserContext } from '../context/UserContext'
 import { useMutation } from '@apollo/client'
-import Prism from "prismjs"
-import "prismjs/themes/prism-tomorrow.css"
 import { useTranslation } from 'react-i18next';
+
 const getArticle = gql`
     query GetArticle($id: String) {
         getArticle(id: $id) {
@@ -94,9 +93,6 @@ export const Article = () => {
             setTitle(data.getArticle.title)
         }
     })
-    useEffect(() => {
-        Prism.highlightAll()
-    }, [])
     if (loading) return <Loading />
     if (!data) return <NotFound />
     return (
