@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { NotFound } from "./NotFound";
 import { useTranslation } from "react-i18next";
+import { UserContext } from "../context/UserContext";
+import { useContext } from "react";
 
 const GET_CONTESTS = gql`
     query GetContests {
@@ -35,6 +37,7 @@ export const Contests = () => {
     const { data, loading } = useQuery(GET_CONTESTS);
     const [id, setId] = useState('');
     const { t } = useTranslation();
+    const { user } = useContext(UserContext);
     const [joinContestMutation] = useMutation(JOIN_CONTEST, {
         onCompleted: (data) => {
             if (data.joinContest.success) {
@@ -55,11 +58,13 @@ export const Contests = () => {
     const endedContests = data.getContests.filter(contest => contest.ended);
     const upcomingContests = data.getContests.filter(contest => !contest.started);
 
+    const userIsLoggedIn = user && user.getUser ? true : false;
+    
     const headers = [t('contests.ongoing'), t('contests.upcoming'), t('contests.ended')]
     return (
         <div className="container mx-auto mt-20 p-4 h-full">
             <div className="flex flex-col gap-5 text-center">
-                <div className="text-5xl font-extrabold text-red-500">🏆 {t('contests.header')}</div>
+                <div className="text-5xl font-extrabold text-primary-900">🏆 {t('contests.header')}</div>
                 <p className="text-xl text-gray-400 mt-4e">{t('contests.description')}</p>
             </div>
             <div className="container flex flex-col gap-10 mt-20">
@@ -88,22 +93,24 @@ export const Contests = () => {
                                             <p className="text-xl font-bold">{features.languages}:</p>
                                             <ul className="ml-3 list-disc">
                                                 {contest.languages.map((language) => (
-                                                    <li key={language}>{language}</li>
+                                                    <li>{language}</li>
                                                 ))}
                                             </ul>
                                         </div>
                                     </CardBody>
                                     <CardFooter>
-                                        <Button
-                                            isDisabled={contest.hasJoined || index === 0 || index === 2}
-                                            onClick={() => {
-                                                joinContestMutation({ variables: { id: contest._id } });
-                                                setId(contest._id);
-                                            }}
-                                            variant="faded"
-                                        >
-                                            {contest.hasJoined ? features.joined : index === 0 ? features.ongoing : index === 2 ? features.ended : features.join}
-                                        </Button>
+                                        {userIsLoggedIn && (
+                                            <Button
+                                                isDisabled={contest.hasJoined || index === 0 || index === 2}
+                                                onClick={() => {
+                                                    joinContestMutation({ variables: { id: contest._id } });
+                                                    setId(contest._id);
+                                                }}
+                                                variant="faded"
+                                            >
+                                                {contest.hasJoined ? features.joined : index === 0 ? features.ongoing : index === 2 ? features.ended : features.join}
+                                            </Button>
+                                        )}
                                     </CardFooter>
                                 </Card>
                             ))}

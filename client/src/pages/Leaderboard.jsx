@@ -1,6 +1,6 @@
 import { gql, useQuery } from '@apollo/client';
 import { Loading } from '../components/Loading';
-import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from '@nextui-org/react';
+import { Avatar, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from '@nextui-org/react';
 import { useTranslation } from 'react-i18next';
 
 export const Leaderboard = () => {
@@ -11,6 +11,7 @@ export const Leaderboard = () => {
             getLeaderboard {
                 username
                 solvedProblems
+                profilePicture
             }
         }
     `;
@@ -23,7 +24,6 @@ export const Leaderboard = () => {
     const rest = data.getLeaderboard.slice(3);
 
     const heights = ['h-60', 'h-40', 'h-50'];
-
     return (
         <div className="container flex flex-col px-5 mx-auto mt-20 gap-10 mb-[100vh] text-white">
             <div className="text-center mb-10">
@@ -37,6 +37,7 @@ export const Leaderboard = () => {
                     <div className="flex flex-col items-center mb-6 md:mb-0 md:mr-6 transform transition duration-500 ease-in-out hover:scale-105">
                         <div className={`flex flex-col justify-end items-center w-32 ${heights[1]} bg-gray-800 p-5 rounded-t-lg border border-gray-700 shadow-lg relative`}>
                             <div className={`absolute top-0 -mt-5 px-4 py-1 rounded-full bg-gray-800 text-lg text-white font-bold shadow-md`}>#2</div>
+                            <Avatar src={top3.profilePcture} size="xl" className="mt-3" />
                             <div className="text-xl mt-3">{top3[1].username}</div>
                             <div className="text-lg text-gray-400 mt-1">{top3[1].solvedProblems}</div>
                         </div>
@@ -56,6 +57,7 @@ export const Leaderboard = () => {
                     <div className="flex flex-col items-center mb-6 md:mb-0 transform transition duration-500 ease-in-out hover:scale-105">
                         <div className={`flex flex-col justify-end items-center w-32 ${heights[0]} bg-gray-800 p-5 rounded-t-lg border border-gray-700 shadow-lg relative`}>
                             <div className={`absolute top-0 -mt-5 px-4 py-1 rounded-full bg-gray-800 text-lg text-white font-bold shadow-md`}>#1</div>
+                            <Avatar src={top3[0].profilePicture} size="xl" className="mt-3" />
                             <div className="text-xl mt-3">{top3[0].username}</div>
                             <div className="text-lg text-gray-400 mt-1">{top3[0].solvedProblems}</div>
                         </div>
@@ -64,7 +66,7 @@ export const Leaderboard = () => {
                 ) : (
                     <div className="flex flex-col items-center mb-6 md:mb-0 transform transition duration-500 ease-in-out hover:scale-105">
                         <div className={`flex flex-col justify-end items-center w-32 ${heights[0]} bg-gray-800 p-5 rounded-t-lg border border-gray-700 shadow-lg relative`}>
-                            <div className={`absolute top-0 -mt-5 px-4 py-1 rounded-full bg-gray-800 text-lg text-white font-bold shadow-md`}>#1</div>
+                            <div className={`absolute top-0 -mt-5 px-4 py-1 rounded-full bg-gray-800 text-lg text-white font-bold shadow-md`}>#1</div>\
                             <div className="text-xl mt-3">-</div>
                             <div className="text-lg text-gray-400 mt-1">-</div>
                         </div>
@@ -77,6 +79,7 @@ export const Leaderboard = () => {
                     <div className="flex flex-col items-center ml-6 max-md:ml-0 transform transition duration-500 ease-in-out hover:scale-105">
                         <div className={`flex flex-col justify-end items-center w-32 ${heights[2]} bg-gray-800 p-5 rounded-t-lg border border-gray-700 shadow-lg relative`}>
                             <div className={`absolute top-0 -mt-5 px-4 py-1 rounded-full bg-gray-800 text-lg text-white font-bold shadow-md`}>#3</div>
+                            <Avatar src={top3[2].profilePicture} size="xl" className="mt-3" />
                             <div className="text-xl mt-3">{top3[2].username}</div>
                             <div className="text-lg text-gray-400 mt-1">{top3[2].solvedProblems}</div>
                         </div>
