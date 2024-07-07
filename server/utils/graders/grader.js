@@ -17,22 +17,23 @@ const languages = {
         'file': 'main.c'
     },
     'C#': {
-        'compile': 'mcs -out:main.exe main.cs 2> error.txt',
+        'compile': 'dotnet new console -o main && cp main.cs main/Program.cs && cd main && dotnet build -c Release 2> error.txt && cd .. && cp -r main/bin/Release/net8.0/ /var/local/lib/isolate/1/box/program',
         'extension': 'cs',
-        'run': 'mono main.exe',
-        'file': 'main.cs'
+        'run': './program/main',
+        'file': 'main.cs',
     },
     'Java': {
         'compile': 'javac Main.java 2> error.txt',
         'extension': 'java',
-        'run': 'java -cp . Main',
-        'file': 'Main.java'
+        'run': './Main.jar',
+        'file': 'Main.java',
+        'requirement': 'touch MANIFEST.MF && echo "Main-Class: Main \nJVM-Args: -Xmx4g -Xms2g" > MANIFEST.MF && jar cfm Main.jar MANIFEST.MF Main.class && chmod +x Main.jar',
     },
     'Python': {
         'compile': 'python3 -m py_compile main.py 2> error.txt',
         'extension': 'py',
         'run': './main.py',
-        'file': 'main.py', 
+        'file': 'main.py',
         'requirement': 'chmod +x main.py',
         'shebang': '#!/usr/bin/env python3'
     },
@@ -60,8 +61,16 @@ const languages = {
         'compile': 'go build main.go 2> error.txt',
         'extension': 'go',
         'run': './main',
-        'file': 'main.go'
-    }
+        'file': 'main.go',
+    },
+    'PHP': {
+        'compile': 'php -l main.php 2> error.txt',
+        'extension': 'php',
+        'run': './main.php',
+        'file': 'main.php',
+        'shebang': '#!/usr/bin/env php',
+        'requirement': 'chmod +x main.php'
+    },
 }
 const initialize = () => {
     const idSolution = crypto.randomUUID();
@@ -131,10 +140,10 @@ const run = (language, sandboxPath, testCase, inputPath, outputPath, memory, run
     fs.writeFileSync(outputPath, ''); 
     let exitcode = null, exitsig = null, killed = null, max_rss = null, message = null, status = null, time = null;
     try{
-        execSync(`isolate --box-id=1 --mem=${memory} --time=${runtime} --meta=${path.join(sandboxPath, 'box', 'meta.txt')} --stderr=cerr.txt --stdin=input.txt --stdout=output.txt --run -- "${command}"`, {cwd: path.join(sandboxPath, 'box'), env: process.env});
+        execSync(`isolate --box-id=1 --mem=${memory * 1024 * 10} --time=${runtime} --meta=${path.join(sandboxPath, 'box', 'meta.txt')} --stderr=cerr.txt --stdin=input.txt --stdout=output.txt --run -- "${command}"`, {cwd: path.join(sandboxPath, 'box')});
     }catch(error){
         console.log(error); 
-    }  
+    }
     const meta = read_meta(sandboxPath)
     exitcode = meta.exitcode ? parseInt(meta.exitcode) : null;
     exitsig = meta.exitsig ? parseInt(meta.exitsig) : null;
@@ -163,7 +172,7 @@ const grader = (testCases, code, problem, username, language, max_time, max_memo
 
     const {status, message, error} = compile(language, sandboxPath)
     const results = [];
-    check_files(sandboxPath);
+    let stare = null
     const cerr = get_cerr(sandboxPath)
     if(status === 'ERROR'){
         return {
@@ -178,10 +187,11 @@ const grader = (testCases, code, problem, username, language, max_time, max_memo
             success: false,
             id_solution: idSolution,
             date: new Date(),
-            cerr
+            cerr,
+            status: 'CE'
         }
     }else {
-        testCases.forEach((testCase) => {
+        testCases.forEach((testCase, index) => {
             const {output: outputResult, exitcode, exitsig, killed, max_rss, message, status, time, cerr} = run(language, sandboxPath, testCase, input, output, max_memory, max_time);
             if(outputResult.trimEnd() === testCase.output.trimEnd() && time <= max_time && max_rss <= max_memory){
                 results.push({
@@ -215,6 +225,7 @@ const grader = (testCases, code, problem, username, language, max_time, max_memo
                         exitsig,
                         cerr
                     })
+                    if(!stare) stare = `Exitsig ${exitsig} on test ${index + 1}`
                     return ;
                 }
                 if(time > max_time && max_rss > max_memory){
@@ -230,8 +241,9 @@ const grader = (testCases, code, problem, username, language, max_time, max_memo
                         message: 'Time Limit Exceeded and Memory Limit Exceeded',
                         exitcode,
                         exitsig,
-                        cerr
+                        cerr,
                     })
+                    if(!stare) stare = `TLE_MLE on test ${index + 1}`
                     return ;
                 }
                 if(time > max_time || message === "Time limit exceeded"){
@@ -247,8 +259,9 @@ const grader = (testCases, code, problem, username, language, max_time, max_memo
                         message: 'Time Limit Exceeded',
                         exitcode,
                         exitsig,
-                        cerr
+                        cerr,
                     })
+                    if(!stare) stare = `TLE on test ${index + 1}`
                     return ;
                 }
                 if(max_rss > max_memory){
@@ -266,6 +279,7 @@ const grader = (testCases, code, problem, username, language, max_time, max_memo
                         exitsig,
                         cerr
                     })
+                    if(!stare) stare = `MLE on test ${index + 1}`
                     return ;
                 }
                 if(outputResult !== testCase.output){
@@ -283,6 +297,7 @@ const grader = (testCases, code, problem, username, language, max_time, max_memo
                         exitsig,
                         cerr
                     })
+                    if(!stare) stare = `WA on test ${index + 1}`
                     return ;
                 }
             }
@@ -290,6 +305,7 @@ const grader = (testCases, code, problem, username, language, max_time, max_memo
     }
     const success = results.every(test => test.success);
     const score = results.reduce((acc, test) => acc + parseInt(test.score), 0);
+    if(!stare) stare = 'Accepted'
     return {
         username,
         code,
@@ -302,6 +318,7 @@ const grader = (testCases, code, problem, username, language, max_time, max_memo
         compilationError: null,
         success,
         id_solution: idSolution,
+        status: stare
     }
 }
 
