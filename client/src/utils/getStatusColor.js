@@ -1,5 +1,6 @@
 export const getStatusColor = (status) => {
     if(!status) return ''
+    if(status === 'CE') return 'secondary'
     if (status === 'Accepted' || status == 'AC') {
         return 'success'
     }

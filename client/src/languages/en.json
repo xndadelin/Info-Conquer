@@ -308,7 +308,12 @@
       "see_solution": "See solution",
       "noSolutions": "No solutions yet!",
       "profilePicture": "Change profile picture",
-      "uploadPicture": "Upload picture"
+      "uploadPicture": "Upload picture",
+      "problemsSolved": "Problems solved",
+      "totalSubmissions": "Total submissions",
+      "acceptedSolutions": "Accepted solutions",
+      "personalInfo": "Personal Information",
+      "accountInfo": "Account Information"
     },
     "publishProblem": {
       "title": "Publish a problem",
@@ -500,7 +505,11 @@
       "problems": "Problems",
       "articles": "Articles",
       "contests": "Contests",
-      "noResults": "No results found"
+      "noResults": "No results found",
+      "title": "Search results:",
+      "button": "Search",
+      "index": "Index",
+      "placeholder": "Search for problems, articles, contests, etc."
     },
     "errors": {
       "notFound": "Page not found"

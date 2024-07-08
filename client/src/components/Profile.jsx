@@ -16,7 +16,7 @@ query GetProfile($username: String){
         username
         createdAt
         admin
-        profilePicture,
+        profilePicture
         solutions {
             problem
             score
@@ -93,7 +93,6 @@ export const Profile = () => {
 
     const { user: currentUser } = useContext(UserContext)
     const [page, setPage] = useState(1)
-    const [love, setLove] = useState(false)
     const [error, setError] = useState('')
     const [newUsername, setNewUsername] = useState('')
     const [newEmail, setNewEmail] = useState('')
@@ -196,25 +195,26 @@ export const Profile = () => {
                             <p className="text-xl text-gray-400 mb-4">
                                 {data.getProfile.admin === "true" ? t("profile.admin") : t("profile.user")}
                             </p>
-                            <ButtonGroup>
-                                <Button color="primary" variant="flat">
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" viewBox="0 0 512 512">
-                                        <path d="M47.6 300.4L228.3 469.1c7.5 7 17.4 10.9 27.7 10.9s20.2-3.9 27.7-10.9L464.4 300.4c30.4-28.3 47.6-68 47.6-109.5v-5.8c0-69.9-50.5-129.5-119.4-141C347 36.5 300.6 51.4 268 84L256 96 244 84c-32.6-32.6-79-47.5-124.6-39.9C50.5 55.6 0 115.2 0 185.1v5.8c0 41.5 17.2 81.2 47.6 109.5z" />
-                                    </svg>
-                                </Button>
-                                <Button color="secondary">
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" viewBox="0 0 448 512">
-                                        <path d="M64 32C64 14.3 49.7 0 32 0S0 14.3 0 32V64 368 480c0 17.7 14.3 32 32 32s32-14.3 32-32V352l64.3-16.1c41.1-10.3 84.6-5.5 122.5 13.4c44.2 22.1 95.5 24.8 141.7 7.4l34.7-13c12.5-4.7 20.8-16.6 20.8-30V66.1c0-23-24.2-38-44.8-27.7l-9.6 4.8c-46.3 23.2-100.8 23.2-147.1 0c-35.1-17.6-75.4-22-113.5-12.5L64 48V32z" />
-                                    </svg>
-                                </Button>
-                                <Button color="success">
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" viewBox="0 0 448 512">
-                                        <path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z" />
-                                    </svg>
-                                </Button>
-                            </ButtonGroup>
                             <p className="text-gray-400 mt-2">Created at: {new Date(+data.getProfile.createdAt).toLocaleString()}</p>
                             <p className="text-gray-400 mt-2">{t("profile.bio")}: {data.getProfile.bio}</p>
+                            <div className="flex flex-wrap gap-4 mt-4">
+                                <Card className="bg-primary p-4 flex-1 min-w-[120px]">
+                                    <p className="text-2xl font-bold">{data.getProfile.solvedProblems.length}</p>
+                                    <p className="text-sm text-gray-300">{t("profile.problemsSolved")}</p>
+                                </Card>
+                                
+                                <Card className="bg-secondary p-4 flex-1 min-w-[120px]">
+                                    <p className="text-2xl font-bold">{data.getProfile.solutions.length}</p>
+                                    <p className="text-sm text-gray-300">{t("profile.totalSubmissions")}</p>
+                                </Card>
+                                
+                                <Card className="bg-success p-4 flex-1 min-w-[120px]">
+                                    <p className="text-2xl font-bold">
+                                    {data.getProfile.solutions.filter(s => s.status === "Accepted").length}
+                                    </p>
+                                    <p className="text-sm text-gray-300">{t("profile.acceptedSolutions")}</p>
+                                </Card>
+                            </div>
                         </div>
                     </CardBody>
                 </Card>
@@ -308,82 +308,101 @@ export const Profile = () => {
 
                     {seeSettings && (
                         <Tab key="settings" title={t("profile.settings")}>
-                            <Card className="p-6 bg-gray-800">
-                                <CardHeader>
-                                    <h2 className="text-2xl font-bold">{t("profile.changeUsername")}</h2>
-                                </CardHeader>
-                                <CardBody className="space-y-4">
-                                    <Input label={t("profile.username")} value={data.getProfile.username} disabled />
-                                    <Input label={t("profile.newUsername")} onChange={(e) => setNewUsername(e.target.value)} />
-                                    <Button color="primary" variant="flat" onClick={changeUsername} isLoading={changeUsernameLoading}>
-                                        {t("profile.changeUsername")}
-                                    </Button>
-                                    {errorUsername && <Chip color="primary">{errorUsername}</Chip>}
-                                </CardBody>
-                            </Card>
-
-                            <Card className="mt-8 p-6 bg-gray-800">
-                                <CardHeader>
-                                    <h2 className="text-2xl font-bold">{t("profile.changeEmail")}</h2>
-                                </CardHeader>
-                                <CardBody className="space-y-4">
-                                    <Input label={t("profile.email")} onChange={(e) => setEmail(e.target.value)} value={email} />
-                                    <Input label={t("profile.newEmail")} value={newEmail} onChange={(e) => setNewEmail(e.target.value)} />
-                                    <Button color="primary" variant="flat" onClick={changeEmail} isLoading={changeEmailLoading}>
-                                        {t("profile.changeEmail")}
-                                    </Button>
-                                    {errorEmail && <Chip color="primary">{errorEmail}</Chip>}
-                                </CardBody>
-                            </Card>
-
-                            <Card className="mt-8 p-6 bg-gray-800">
-                                <CardHeader>
-                                    <h2 className="text-2xl font-bold">{t("profile.changePassword")}</h2>
-                                </CardHeader>
-                                <CardBody className="space-y-4">
-                                    <Input label={t("profile.currentPassword")} value={currentpass} onChange={(e) => setCurrentPass(e.target.value)} type="password" />
-                                    <Input label={t("profile.newPassword")} value={password} onChange={(e) => setPassword(e.target.value)} type="password" />
-                                    <Input label={t("profile.confirmPassword")} value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} type="password" />
-                                    <Button color="primary" variant="flat" onClick={changePassword} isLoading={changePasswordLoading}>
-                                        {t("profile.changePassword")}
-                                    </Button>
-                                    {errorPassword && <Chip color="primary">{errorPassword}</Chip>}
-                                </CardBody>
-                            </Card>
-
-                            <Card className="mt-8 p-6 bg-gray-800">
-                                <CardHeader>
-                                    <h2 className="text-2xl font-bold">{t("profile.bio")}</h2>
-                                </CardHeader>
-                                <CardBody className="space-y-4">
-                                    <Textarea value={bio} onChange={(e) => setBio(e.target.value)} label={t("profile.writeAboutYourself")} />
-                                    <Button onClick={() => {
-                                        updateBioMutation({
-                                            variables: {
-                                                bio
-                                            }
-                                        })
-                                    }} color="primary" variant="flat">{t("profile.changeBio")}</Button>
-                                    {updateBioError && <Chip color="danger">{updateBioError.message}</Chip>}
-                                </CardBody>
-                            </Card>
-                            <Card className="mt-8 p-6 bg-gray-800">
-                                <CardHeader>
-                                    <h2 className="text-2xl font-bold">{t("profile.profilePicture")}</h2>
-                                </CardHeader>
-                                <CardBody className="space-y-4">
-                                    <Input label={t("profile.profilePicture")} value={profilePicture} onChange={(e) => setProfilePicture(e.target.value)} />
-                                    <Button color="primary" variant="flat" onClick={() => updateProfilePictureMutation({
-                                        variables: {
-                                            profilePicture
-                                        }
-                                    }) }>
+                            <div className="max-w-3xl mx-auto space-y-8">
+                            <h1 className="text-3xl font-bold text-center mb-8">{t("profile.settings")}</h1>
+                            
+                            <Card className="bg-gray-800 shadow-lg">
+                                <CardBody className="p-8">
+                                <h2 className="text-2xl font-semibold mb-6">{t("profile.personalInfo")}</h2>
+                                
+                                <div className="space-y-6">
+                                    <div className="flex items-center space-x-4">
+                                    <Avatar className="h-32 w-32 max-md:h-20 max-md:w-20" src={data.getProfile.profilePicture} />
+                                    <div className="flex-grow">
+                                        <Input 
+                                            label={t("profile.profilePicture")} 
+                                            value={profilePicture} 
+                                            onChange={(e) => setProfilePicture(e.target.value)}
+                                            className="mb-2"
+                                        />
+                                        <Button 
+                                            color="primary" 
+                                            size="sm" 
+                                            onClick={() => updateProfilePictureMutation({ variables: { profilePicture } })}
+                                        >
                                         {t("profile.uploadPicture")}
+                                        </Button>
+                                        {updateProfilePictureError && <Chip color="danger" size="sm" className="mt-2">{updateProfilePictureError.message}</Chip>}
+                                    </div>
+                                    </div>
+                                    
+                                    <Textarea 
+                                        value={bio} 
+                                        onChange={(e) => setBio(e.target.value)} 
+                                        label={t("profile.writeAboutYourself")}
+                                        className="min-h-[100px]"
+                                    />
+                                    <Button 
+                                        onClick={() => updateBioMutation({ variables: { bio } })} 
+                                        color="primary"
+                                    >
+                                    {t("profile.changeBio")}
                                     </Button>
-                                    {updateProfilePictureError && <Chip color="danger">{updateProfilePictureError.message}</Chip>}
+                                    {updateBioError && <Chip color="danger" size="sm">{updateBioError.message}</Chip>}
+                                </div>
                                 </CardBody>
                             </Card>
-                        </Tab>
+                        
+                            <Card className="bg-gray-800 shadow-lg">
+                                <CardBody className="p-8">
+                                <h2 className="text-2xl font-semibold mb-6">{t("profile.accountInfo")}</h2>
+                                
+                                <div className="space-y-6">
+                                    <div>
+                                    <h3 className="text-lg font-medium mb-4">{t("profile.changeUsername")}</h3>
+                                    <div className="space-y-3">
+                                        <Input label={t("profile.username")} value={data.getProfile.username} disabled />
+                                        <Input label={t("profile.newUsername")} onChange={(e) => setNewUsername(e.target.value)} />
+                                        <Button color="primary" onClick={changeUsername} isLoading={changeUsernameLoading}>
+                                            {t("profile.changeUsername")}
+                                        </Button>
+                                        {errorUsername && <Chip color="danger" size="sm">{errorUsername}</Chip>}
+                                    </div>
+                                    </div>
+                        
+                                    <Divider className="my-6" />
+                        
+                                    <div>
+                                    <h3 className="text-lg font-medium mb-4">{t("profile.changeEmail")}</h3>
+                                    <div className="space-y-3">
+                                        <Input label={t("profile.email")} onChange={(e) => setEmail(e.target.value)} value={email} />
+                                        <Input label={t("profile.newEmail")} value={newEmail} onChange={(e) => setNewEmail(e.target.value)} />
+                                        <Button color="primary" onClick={changeEmail} isLoading={changeEmailLoading}>
+                                        {t("profile.changeEmail")}
+                                        </Button>
+                                        {errorEmail && <Chip color="danger" size="sm">{errorEmail}</Chip>}
+                                    </div>
+                                    </div>
+                        
+                                    <Divider className="my-6" />
+                        
+                                    <div>
+                                    <h3 className="text-lg font-medium mb-4">{t("profile.changePassword")}</h3>
+                                    <div className="space-y-3">
+                                        <Input label={t("profile.currentPassword")} value={currentpass} onChange={(e) => setCurrentPass(e.target.value)} type="password" />
+                                        <Input label={t("profile.newPassword")} value={password} onChange={(e) => setPassword(e.target.value)} type="password" />
+                                        <Input label={t("profile.confirmPassword")} value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} type="password" />
+                                        <Button color="primary" onClick={changePassword} isLoading={changePasswordLoading}>
+                                        {t("profile.changePassword")}
+                                        </Button>
+                                        {errorPassword && <Chip color="danger" size="sm">{errorPassword}</Chip>}
+                                    </div>
+                                    </div>
+                                </div>
+                            </CardBody>
+                          </Card>
+                        </div>
+                      </Tab>
                     )}
                 </Tabs>
             </div>

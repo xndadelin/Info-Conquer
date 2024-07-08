@@ -32,6 +32,8 @@ import { Calendar } from "./pages/Calendar";
 import { Help } from "./components/Help";
 import { ForgotPassword } from "./pages/ForgotPassword";
 import { ResetPassword } from "./components/ResetPassword";
+import { PrivacyPolicy } from "./pages/PrivacyPolicy";
+import { SecurityPolicy } from "./pages/SecurityPolicy";
 
 function App() {
   const { user } = useContext(UserContext)
@@ -149,6 +151,14 @@ function App() {
         <Route
           path="/reset-password/:token"
           element={<ResetPassword />}
+        />
+        <Route
+          path="/privacy-policy"
+          element={<PrivacyPolicy />}
+        />
+        <Route
+          path="/security-policy"
+          element={<SecurityPolicy />}
         />
         <Route
           path="*"

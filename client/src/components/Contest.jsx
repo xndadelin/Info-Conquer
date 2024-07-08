@@ -181,7 +181,7 @@ export const Contest = () => {
                                     <tr className={`border-b border-gray-700 hover:bg-gray-700 transition-colors duration-200 ${index % 2 === 0 ? 'bg-gray-800' : 'bg-gray-900'}`} key={index}>
                                         <td className="px-6 py-4">{index + 1 + (page - 1) * participantsPerPage}</td>
                                         <td className="px-6 py-4">
-                                            <Link className="text-blue-400 hover:underline" href={`/${participant.username}`}>
+                                            <Link className="text-blue-400 hover:underline" href={`/profile/${participant.username}`}>
                                                 {participant.username}
                                             </Link>
                                         </td>
