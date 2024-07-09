@@ -29,7 +29,7 @@ export const VerticalTimeline = () => {
     ];
 
     return (
-        <div className="relative mb-20 max-w-full after:content-[''] after:absolute after:w-1 after:bg-gradient-to-b after:from-blue-500 after:to-purple-500 after:top-0 after:bottom-0 after:left-1/2 after:transform after:-translate-x-1/2">
+        <div className="relative mb-20 max-w-full after:content-[''] after:absolute after:w-1 after:bg-gray-800 after:top-0 after:bottom-0 after:left-1/2 after:transform after:-translate-x-1/2">
             {languages.map((lang, index) => (
                 <motion.div 
                     key={lang.name}
@@ -44,7 +44,7 @@ export const VerticalTimeline = () => {
                         transition={{ type: "spring", stiffness: 300 }}
                     >
                         <motion.h1 
-                            className='text-4xl font-bold mb-4 text-gradient bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500'
+                            className='text-4xl font-bold mb-4 text-gradient bg-clip-text text-transparent text-white'
                             variants={scaleIn}
                         >
                             {lang.name}
@@ -63,7 +63,7 @@ export const VerticalTimeline = () => {
                         </motion.div>
                     </motion.div>
                     <motion.div 
-                        className={`absolute top-10 ${index % 2 === 0 ? 'right-0 md:-right-6' : 'left-0 md:-left-6'} w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center text-white font-bold text-xl`}
+                        className={`absolute top-10 ${index % 2 === 0 ? 'right-0 md:-right-6' : 'left-0 md:-left-6'} w-12 h-12 rounded-full bg-gray-700 flex items-center justify-center text-white font-bold text-xl`}
                         initial={{ scale: 0 }}
                         whileInView={{ scale: 1 }}
                         transition={{ delay: 0.5, type: "spring", stiffness: 300 }}

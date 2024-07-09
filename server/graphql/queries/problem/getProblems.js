@@ -8,7 +8,7 @@ module.exports = {
         if (subcategory !== 'none') {
             query.subcategories = { $in: [subcategory] };
         }
-        const problems = await Problem.find(query, {itsForContest: false}).select('title category subcategories difficulty tags type');
+        const problems = await Problem.find(query, {itsForContest: false}).select('title category subcategories difficulty tags type -tests');
         return problems;
     }
 }

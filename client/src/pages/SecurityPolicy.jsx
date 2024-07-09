@@ -3,31 +3,33 @@ export const SecurityPolicy = () => {
         {
             title: "Data Protection",
             content: (
-                <p>We implement industry-standard security measures to protect your personal information from unauthorized access, alteration, disclosure, or destruction.</p>
+               <div>
+                     <p>We take the security of your information seriously and have implemented measures to protect your data from unauthorized access, disclosure, alteration, and destruction.</p>
+                     <p>We collect only the information necessary to provide our services and do not share your data with third parties.</p>
+                     <p>We use industry-standard security practices to safeguard your data, including encryption, access controls, and regular audits.</p>
+                     <p>We store your data on secure servers and take steps to ensure the confidentiality, integrity, and availability of your information.</p>
+               </div>
             )
         },
         {
             title: "Encryption",
             content: (
-                <p>All data transmitted between your device and our servers is encrypted using SSL/TLS protocols to ensure the confidentiality of your information.</p>
+                <div>
+                    <p>All data transmitted between your device and our servers is encrypted using SSL/TLS protocols to ensure the confidentiality of your information.</p>
+                    <p>We store you password using bcrypt, that uses Blowfish cipher algorithm to encrypt your password. This ensures that your password is securely stored and cannot be easily decrypted.</p>
+                </div>
             )
         },
         {
             title: "Access Control",
             content: (
-                <p>We maintain strict access controls to limit employee access to user data. Only authorized personnel who need to access your information to perform their job duties are granted such access.</p>
+                <p>We maintain strict access controls to limit admin access to user data. Only authorized personnel who need to access your information to perform their job duties are granted such access.</p>
             )
         },
         {
             title: "Regular Audits",
             content: (
                 <p>We conduct regular security audits and vulnerability assessments to identify and address potential security risks in our systems.</p>
-            )
-        },
-        {
-            title: "Incident Response",
-            content: (
-                <p>In the event of a security breach, we have a comprehensive incident response plan in place to quickly identify, contain, and mitigate any potential impact on our users.</p>
             )
         },
         {
@@ -50,7 +52,7 @@ export const SecurityPolicy = () => {
                 <p>
                     If you have any questions about our Security Policy or notice any suspicious activity, please contact us immediately at{' '}
                     <a className="text-blue-400 hover:text-blue-300 underline" href="mailto:security@infoconquer.com">
-                        security@infoconquer.com
+                        adelinmihai@gmail.com
                     </a>
                 </p>
             )

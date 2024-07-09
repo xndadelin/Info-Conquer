@@ -32,7 +32,7 @@ export const NavigationBar = () => {
     return (
         <Navbar isBlurred className="bg-transparent" isMenuOpen={isOpen} onMenuOpenChange={setIsOpen}>
             <NavbarContent>
-                <NavbarMenuToggle className="sm:hidden text-white"/>
+                <NavbarMenuToggle className="md:hidden text-white"/>
                 <NavbarBrand>
                     <Link href="/" color="foreground" size="lg" className="font-bold text-white">
                         {t('navbar.brand')}
@@ -40,7 +40,7 @@ export const NavigationBar = () => {
                 </NavbarBrand>
             </NavbarContent>
 
-            <NavbarContent className="hidden sm:flex gap-4" justify="center">
+            <NavbarContent className="hidden md:flex gap-4" justify="center">
                 {[
                     {
                         name: t('navbar.contests'), href: "/contests", icon: (

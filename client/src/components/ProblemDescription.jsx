@@ -11,9 +11,7 @@ const Accordion = ({ title, content, icon }) => {
     const [isOpen, setIsOpen] = useState(true);
 
     return (
-        <motion.div whileHover={{
-            scale: 1.02
-        }} className="mb-6 bg-gray-800 rounded-lg shadow-lg overflow-hidden">
+        <motion.div className="mb-6 bg-gray-800 rounded-lg shadow-lg overflow-hidden">
             <button
                 className="w-full flex items-center justify-between p-4 focus:outline-none"
                 onClick={() => setIsOpen(!isOpen)}

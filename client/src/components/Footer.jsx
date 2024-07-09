@@ -2,20 +2,20 @@ import { Button, Divider, Link } from "@nextui-org/react";
 
 export const Footer = () => {
     return (
-        <footer className="relative flex flex-col items-center p-6 bg-zinc-900 text-white shadow mt-auto">
-            <div className="flex flex-col items-center mb-4">
-                <p className="text-3xl font-bold">&lt;InfoConquer/&gt;</p>
-                <p className="text-gray-400 text-sm">InfoEducatie 2024 project</p>
+        <footer className="relative flex flex-col items-center p-8 bg-gray-800 text-white shadow-lg mt-auto">
+            <div className="flex flex-col items-center mb-6">
+                <p className="text-4xl font-extrabold tracking-wide">&lt;InfoConquer/&gt;</p>
+                <p className="text-gray-400 text-base mt-2">InfoEducatie 2024 project</p>
             </div>
             
-            <Divider className="w-[60px] bg-gray-600 mb-4" />
+            <Divider className="w-[60px] bg-gray-600 mb-6" />
             
-            <div className="flex gap-4">
+            <div className="flex gap-6">
                 <Button
                     as={Link}
                     href="https://github.com/xndadelin/"
                     target="_blank"
-                    className="flex gap-2 items-center p-3"
+                    className="flex gap-2 items-center p-4 rounded-lg bg-gray-700 hover:bg-gray-600 transition duration-300"
                     variant="flat"
                 >
                     <svg fill="white" height={25} width={25} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512">
@@ -27,7 +27,7 @@ export const Footer = () => {
                     as={Link}
                     href="https://github.com/xndadelin/Info-Conquer"
                     target="_blank"
-                    className="flex gap-2 items-center p-3"
+                    className="flex gap-2 items-center p-4 rounded-lg bg-gray-700 hover:bg-gray-600 transition duration-300"
                     variant="flat"
                 >
                     <svg fill="white" height={25} width={25} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512">
@@ -35,6 +35,12 @@ export const Footer = () => {
                     </svg>
                     <p>InfoConquer</p>
                 </Button>
+            </div>
+            
+            <div className="flex gap-4 mt-6">
+                <Link href="/terms" className="text-gray-400 text-sm hover:text-gray-200 transition duration-300">Terms</Link>
+                <Link href="/privacy-policy" className="text-gray-400 text-sm hover:text-gray-200 transition duration-300">Privacy</Link>
+                <Link href="/contact" className="text-gray-400 text-sm hover:text-gray-200 transition duration-300">Contact</Link>
             </div>
         </footer>
     );

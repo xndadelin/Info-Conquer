@@ -1,13 +1,13 @@
 import { Button, Link } from '@nextui-org/react';
-import { CodeEditor } from '../components/CodeEditor';
-import { Background } from '../components/Background';
-import { VerticalTimeline } from '../components/VerticalTimeline';
 import { useTranslation } from 'react-i18next';
 import { code } from '../utils/Codes';
 import { motion } from 'framer-motion';
+import { useState, useEffect } from 'react';
+import { VerticalTimeline } from '../components/VerticalTimeline';
+import { CodeEditor } from '../components/CodeEditor';
 
 export const Landing = () => {
-    const { t } = useTranslation()
+    const { t } = useTranslation();
 
     const fadeInLeft = {
         hidden: { opacity: 0, x: -50 },
@@ -31,102 +31,147 @@ export const Landing = () => {
         { icon: "M512 240c0 114.9-114.6 208-256 208c-37.1 0-72.3-6.4-104.1-17.9c-11.9 8.7-31.3 20.6-54.3 30.6C73.6 471.1 44.7 480 16 480c-6.5 0-12.3-3.9-14.8-9.9c-2.5-6-1.1-12.8 3.4-17.4l0 0 0 0 0 0 0 0 .3-.3c.3-.3 .7-.7 1.3-1.4c1.1-1.2 2.8-3.1 4.9-5.7c4.1-5 9.6-12.4 15.2-21.6c10-16.6 19.5-38.4 21.4-62.9C17.7 326.8 0 285.1 0 240C0 125.1 114.6 32 256 32s256 93.1 256 208z", title: t('why_choose_section.features.3.title'), link: 'http://localhost:3000/articles', linkText: t('why_choose_section.features.3.link_text'), description: t('why_choose_section.features.3.description') },
     ];
 
-    return (
-        <div className='flex flex-col container mx-auto overflow-hidden'>
-            <Background />
-            <div className="grid grid-cols-2 max-md:grid-cols-1 z-2 relative flex-wrap md:mt-[200px] z-2">
-                <motion.div 
-                    className={`flex p-4 flex-col gap-5 max-md:mt-[100px]`}
-                    initial="hidden"
-                    whileInView="visible"
-                    variants={fadeInLeft}
+    const TypingCodeEditor = ({ code, language }) => {
+        const [displayedCode, setDisplayedCode] = useState('');
+        const [currentIndex, setCurrentIndex] = useState(0);
 
-                >
-                    <h1 className="text-6xl text-white font-extrabold leading-tight">
-                        {t('welcome_section.title')}{' '}
-                        <span className="from-[#002E62] to-[#338EF7] cursor-pointer bg-clip-text text-transparent bg-gradient-to-r">
-                            InfoConquer!
-                        </span>{' '}
-                        {t('welcome_section.title2')}
-                    </h1>
-                    <Button as={Link} href='/register' size="lg" color="primary" className="w-fit hover:scale-105 transition-transform">
-                        {t('welcome_section.get_started_button')}
-                    </Button>
-                    <p className='text-xl text-gray-300'>
-                        <span className='from-[#002E62] to-[#338EF7] cursor-pointer bg-clip-text text-transparent bg-gradient-to-r font-bold'>InfoConquer</span>
-                        {' '}{t('welcome_section.description')} 
-                    </p>
-                </motion.div>
-                <motion.div 
-                    initial="hidden"
-                    whileInView="visible"
-                    variants={fadeInRight}
-                >
-                    <CodeEditor language="python" code={code} height={"500px"}/>
-                </motion.div>
-            </div>
-            <motion.div 
-                className="mt-20 z-2 relative"
+        useEffect(() => {
+            if (currentIndex < code.length) {
+                const timeout = setTimeout(() => {
+                    setDisplayedCode(prevCode => prevCode + code[currentIndex]);
+                    setCurrentIndex(currentIndex + 1);
+                }, 1);
+                return () => clearTimeout(timeout);
+            }
+        }, [currentIndex]);
+
+        return (
+            <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5 }}
+            >
+                <CodeEditor language={language} code={displayedCode} />
+            </motion.div>
+        );
+    };
+
+    const FeatureCard = ({ feature, index }) => {
+        return (
+            <motion.div
+                className="p-6 bg-gradient-to-br from-gray-800 to-gray-900 rounded-lg shadow-lg transition-all duration-300 ease-in-out"
                 initial="hidden"
                 whileInView="visible"
-                variants={fadeIn}
+                variants={index % 2 === 0 ? fadeInLeft : fadeInRight}
+                whileHover={{ scale: 1.05 }}
             >
-                <h2 className='text-5xl text-center font-bold mb-12 text-white'>
-                    {t('why_choose_section.title')}
-                </h2>
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="mt-20">
-                        <dl className="space-y-10 md:space-y-0 md:grid md:grid-cols-2 md:gap-x-8 md:gap-y-10 mb-20">
-                            {features.map((feature, index) => (
-                                <motion.div 
-                                    className="relative"
-                                    initial="hidden"
-                                    whileInView="visible"
-                                    variants={index % 2 === 0 ? fadeInLeft : fadeInRight}
-                
-                                    whileHover={{ scale: 1.05 }}
-                                    transition={{ type: "spring", stiffness: 300 }}
-                                >
-                                    <dt>
-                                        <motion.div 
-                                            className="absolute flex items-center justify-center h-12 w-12 rounded-md bg-primary-500 text-white"
-                                            whileHover={{ rotate: 360 }}
-                                            transition={{ duration: 0.5 }}
-                                        >
-                                            <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 640 512">
-                                                <path d={feature.icon} />
-                                            </svg>
-                                        </motion.div>
-                                        <p className="ml-16 text-lg leading-6 font-medium text-white">{feature.title}</p>
-                                    </dt>
-                                    <dd className="mt-2 ml-16 text-base text-gray-400">
-                                        {feature.description}
-                                        <Link 
-                                            href={feature.link}
-                                            className="block mt-2 text-primary-400 hover:text-primary-300 transition-colors"
-                                        >
-                                            {feature.linkText} →
-                                        </Link>
-                                    </dd>
-                                </motion.div>
-                            ))}
-                        </dl>
-                    </div>
+                <motion.div
+                    className="top-4 left-4 flex items-center justify-center h-12 w-12 rounded-full bg-blue-500 text-white"
+                    whileHover={{ rotate: 360, scale: 1.1 }}
+                    transition={{ duration: 0.5 }}
+                >
+                    <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 640 512">
+                        <path d={feature.icon} />
+                    </svg>
+                </motion.div>
+                <div className="ml-16">
+                    <h3 className="text-lg font-medium text-white mb-2">{feature.title}</h3>
+                    <p className="text-base text-gray-300 mb-4">{feature.description}</p>
+                    <Link
+                        href={feature.link}
+                        className="text-blue-400 hover:text-blue-300 transition-colors flex items-center"
+                    >
+                        {feature.linkText}
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        </svg>
+                    </Link>
                 </div>
             </motion.div>
-            <VerticalTimeline />
-            <motion.div 
-                className="mt-20 z-2 relative text-center mb-20"
+        );
+    };
+
+    return (
+        <div className="bg-gray-900 overflow-hidden">
+            <div className="bg-gradient-to-br from-blue-900 pt-32 to-gray-800">
+                <div className="container mx-auto px-4 py-20 sm:py-20 max-sm:pt-0">
+                    <div className="grid grid-cols-2 max-md:grid-cols-1 gap-8">
+                        <motion.div
+                            className="flex flex-col gap-5"
+                            initial="hidden"
+                            whileInView="visible"
+                            variants={fadeInLeft}
+                        >
+                            <h1 className="text-5xl text-white font-extrabold leading-tight max-md:text-4xl">
+                                {t('welcome_section.title')}{' '}
+                                <span className="from-blue-400 to-blue-200 bg-clip-text text-transparent bg-gradient-to-r">
+                                    InfoConquer!
+                                </span>{' '}
+                                {t('welcome_section.title2')}
+                            </h1>
+                            <Button as={Link} href="/register" size="lg" color="primary" className="w-fit hover:scale-105 transition-transform">
+                                {t('welcome_section.get_started_button')}
+                            </Button>
+                            <p className="text-xl text-gray-300">
+                                <span className="from-blue-400 to-blue-200 bg-clip-text text-transparent bg-gradient-to-r font-bold">InfoConquer</span>
+                                {' '}{t('welcome_section.description')}
+                            </p>
+                        </motion.div>
+                        <motion.div
+                            initial="hidden"
+                            whileInView="visible"
+                            variants={fadeInRight}
+                        >
+                            <TypingCodeEditor language="python" code={code} />
+                        </motion.div>
+                    </div>
+                </div>
+            </div>
+
+            <div className="bg-gray-800 py-20">
+                <motion.div
+                    className="container mx-auto px-4"
+                    initial="hidden"
+                    whileInView="visible"
+                    variants={fadeIn}
+                >
+                    <h2 className="text-5xl text-center font-bold mb-12 text-white">
+                        {t('why_choose_section.title')}
+                    </h2>
+                    <div className="grid md:grid-cols-2 gap-8">
+                        {features.map((feature, index) => (
+                            <FeatureCard key={index} feature={feature} index={index} />
+                        ))}
+                    </div>
+                </motion.div>
+            </div>
+
+            <div className="bg-gradient-to-br from-gray-900 to-blue-800 py-20">
+                <div className="container mx-auto px-4">
+                    <VerticalTimeline />
+                </div>
+            </div>
+
+            <motion.div
+                className="py-20"
                 initial="hidden"
                 whileInView="visible"
                 variants={fadeIn}
             >
-                <h2 className="text-6xl font-bold text-white mb-8">
-                    {t('final_call_to_action')}
-                </h2>
-                <Button as={Link} href='/register' size="lg" color="primary" className="hover:scale-105 transition-transform">
-                    {t('welcome_section.get_started_button')}
-                </Button>
+                <div className="container mx-auto px-4 text-center">
+                    <h2 className="text-6xl font-bold text-white mb-8">
+                        {t('final_call_to_action')}
+                    </h2>
+                    <Button
+                        as={Link}
+                        href="/register"
+                        size="lg"
+                        color="warning"
+                        className="hover:scale-105 transition-transform text-lg px-8 py-3"
+                    >
+                        {t('welcome_section.get_started_button')}
+                    </Button>
+                </div>
             </motion.div>
         </div>
     );
