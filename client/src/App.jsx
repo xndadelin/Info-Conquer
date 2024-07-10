@@ -5,28 +5,26 @@ import { Footer } from "./components/Footer";
 import { ProblemsSelection } from "./pages/ProblemsSelection";
 import { Routes, Route } from 'react-router-dom'
 import { PublishProblem } from "./pages/PublishProblem";
-import { Problem } from "./components/Problem";
+import { Problem } from "./pages/Problem";
 import { useContext } from "react";
 import { UserContext } from "./context/UserContext";
-import { Profile } from './components/Profile'
-import { Solution } from "./components/Solution";
-import { Problems } from "./components/Problems"
-import { Loading } from "./components/Loading";
+import { Profile } from './pages/Profile'
+import { Solution } from "./pages/Solution";
+import { Problems } from "./pages/Problems"
 import { PublishArticle } from "./pages/PublishArticle";
 import { Articles } from "./pages/Articles";
-import { Article } from "./components/Article";
-import { NotFound } from "./pages/NotFound";
-import { EditArticle } from "./components/EditArticle";
+import { Article } from "./pages/Article";
+import { EditArticle } from "./pages/EditArticle";
 import { PostAnnouncement } from "./pages/PostAnnouncement";
-import { Announcement } from "./components/Announcement";
+import { Announcement } from "./pages/Announcement";
 import { CreateConstest } from "./pages/CreateContest";
 import { Contests } from "./pages/Contests";
-import { Contest } from "./components/Contest";
+import { Contest } from "./pages/Contest";
 import { Login } from "./pages/Login";
 import { Register } from "./pages/Register";
-import { VerifyEmail } from "./components/VerifyEmail";
+import { VerifyEmail } from "./pages/VerifyEmail";
 import { Leaderboard } from "./pages/Leaderboard";
-import { Search } from "./components/Search";
+import { Search } from "./pages/Search";
 import { AuthDiscord } from "./components/AuthDiscord";
 import { Calendar } from "./pages/Calendar";
 import { Help } from "./components/Help";
@@ -34,6 +32,8 @@ import { ForgotPassword } from "./pages/ForgotPassword";
 import { ResetPassword } from "./components/ResetPassword";
 import { PrivacyPolicy } from "./pages/PrivacyPolicy";
 import { SecurityPolicy } from "./pages/SecurityPolicy";
+import { NotFound } from "./components/NotFound";
+import { Loading } from "./components/Loading";
 
 function App() {
   const { user } = useContext(UserContext)

@@ -5,13 +5,10 @@ import { useNavigate } from "react-router-dom";
 import { Select, SelectItem } from "@nextui-org/react";
 import { useTranslation } from "react-i18next";
 import { UserContext } from "../context/UserContext";
-import { NotFound } from "./NotFound";
-const GET_PROBLEMS = gql`
-    query GetProblems($category: String, $subcategory: String){
-        getProblems(category: $category, subcategory: $subcategory){
-            title
-        }
-    }`   
+import { NotFound } from "../components/NotFound";
+import { CREATE_CONTEST, GET_PROBLEMS_TITLE } from "../utils/Queries";
+
+
 export const CreateConstest = () => {
     const { t } = useTranslation();
     const { user } = useContext(UserContext)
@@ -43,7 +40,7 @@ export const CreateConstest = () => {
     });
     const navigate = useNavigate();
 
-    const { error: errorProblems } = useQuery(GET_PROBLEMS, {
+    const { error: errorProblems } = useQuery(GET_PROBLEMS_TITLE, {
         variables: {
             subcategory: 'none',
             category: ''
@@ -53,15 +50,7 @@ export const CreateConstest = () => {
         }
     });
 
-    const createContestMutation = gql`
-        mutation CreateContest($name: String, $description: String, $startDate: Date, $endDate: Date, $problems: [String], $languages: [String]) {
-            createContest(name: $name, description: $description, startDate: $startDate, endDate: $endDate, problems: $problems, languages: $languages) {
-                success
-            }
-        }
-    `;
-
-    const [createContest, { loading }] = useMutation(createContestMutation, {
+    const [createContest, { loading }] = useMutation(CREATE_CONTEST, {
         onCompleted: (data) => {
             if (data.createContest.success) {
                 navigate('/contests');
@@ -86,8 +75,8 @@ export const CreateConstest = () => {
     };
     if(!user || !user.getUser || !user.getUser.admin) return <NotFound/>
     return (
-        <div className="container mx-auto my-5 mb-[400px] p-5">
-            <p className="text-4xl font-bold">{t('createContest.title')}</p>
+        <main className="container mx-auto my-5 mb-[400px] p-5">
+            <h1 className="text-4xl font-bold">{t('createContest.title')}</h1>
             {error && (
                 <Chip className="mt-5" color="danger" variant="flat">{error}</Chip>
             )}
@@ -123,7 +112,7 @@ export const CreateConstest = () => {
                 </Select>
                 <Button isDisabled={!name || !date.startDate || !date.endDate || !problems || !languages} variant="flat" isLoading={loading} color="primary" onClick={() => createContest()}>{t('createContest.createButton')}</Button>
             </form>
-        </div>
+        </main>
     );
 };
 

@@ -5,18 +5,8 @@ import { gql, useMutation } from "@apollo/client";
 import { UserContext } from "../context/UserContext";
 import { useTurnstile } from "../hooks/useTurnstile";
 import { useTranslation } from 'react-i18next'; 
+import { REGISTER } from "../utils/Queries";
 
-const RegisterMutation = gql`
-mutation Register($username: String!, $email: String!, $password: String!, $confirmPassword: String!, $token: String!) {
-    register(registerInput: {username: $username, password: $password, email: $email, confirmPassword: $confirmPassword, token: $token}) {
-        success
-        error {
-            code
-            message
-        }
-    }
-}
-`;
 
 export const Register = () => {
     const { t } = useTranslation();
@@ -28,7 +18,7 @@ export const Register = () => {
     const turnstileRef = useRef(null);
     const [error, setError] = useState("");
     const { user } = useContext(UserContext);
-    const [registerMutation, { loading }] = useMutation(RegisterMutation, {
+    const [registerMutation, { loading }] = useMutation(REGISTER, {
         onError: (error) => {
             setError(error.message);
             resetTurnstile();
@@ -71,7 +61,7 @@ export const Register = () => {
 
     if (user.getUser) window.location.href = '/';
     return (
-        <div className="container mx-auto flex items-center justify-center min-h-[100vh] max-w-[500px]">
+        <main className="container mx-auto flex items-center justify-center min-h-[100vh] max-w-[500px] p-4">
             <Card className="p-4 my-20 bg-gray-800">
                 <CardHeader>
                     <div>
@@ -81,38 +71,34 @@ export const Register = () => {
                 </CardHeader>
                 <CardBody>
                     <form onSubmit={(e) => handleRegister(e)} className="flex flex-col">
-                        <div className="mb-4">
-                            <Input 
-                                variant="faded" 
-                                value={username} 
-                                label={t('register.username')} 
-                                onChange={(e) => setUsername(e.target.value)} 
-                            />
-                        </div>
-                        <div className="mb-4">
-                            <Input 
-                                variant="faded" 
-                                value={email} 
-                                label={t('register.email')} 
-                                onChange={(e) => setEmail(e.target.value)} 
-                            />
-                        </div>
-                        <div className="mb-4">
-                            <Input 
-                                variant="faded" 
-                                label={t('register.password')} 
-                                type="password" 
-                                onChange={(e) => setPassword(e.target.value)} 
-                            />
-                        </div>
-                        <div className="mb-4">
-                            <Input 
-                                variant="faded" 
-                                label={t('register.confirmPassword')} 
-                                type="password" 
-                                onChange={(e) => setConfirmPassword(e.target.value)} 
-                            />
-                        </div>
+                        <Input 
+                            variant="faded" 
+                            value={username} 
+                            label={t('register.username')} 
+                            onChange={(e) => setUsername(e.target.value)}
+                            className="mb-4" 
+                        />
+                        <Input 
+                            variant="faded" 
+                            value={email} 
+                            label={t('register.email')} 
+                            onChange={(e) => setEmail(e.target.value)} 
+                            className="mb-4" 
+                        />
+                        <Input 
+                            variant="faded" 
+                            label={t('register.password')} 
+                            type="password" 
+                            onChange={(e) => setPassword(e.target.value)}
+                            className="mb-4"  
+                        />
+                        <Input 
+                            variant="faded" 
+                            label={t('register.confirmPassword')} 
+                            type="password" 
+                            onChange={(e) => setConfirmPassword(e.target.value)}
+                            className="mb-4"  
+                        />
                         <div className="mb-4 flex justify-between">
                             <Checkbox color="primary">{t('register.rememberMe')}</Checkbox>
                             <Link href="/forgot-password" color="primary" isBlock>{t('register.forgotPassword')}</Link>
@@ -149,6 +135,6 @@ export const Register = () => {
                     </CardFooter>
                 )}
             </Card>
-        </div>
+        </main>
     );
 };

@@ -3,14 +3,14 @@ import { Button, Divider, Link } from "@nextui-org/react";
 export const Footer = () => {
     return (
         <footer className="relative flex flex-col items-center p-8 bg-gray-800 text-white shadow-lg mt-auto">
-            <div className="flex flex-col items-center mb-6">
+            <section className="flex flex-col items-center mb-6">
                 <p className="text-4xl font-extrabold tracking-wide">&lt;InfoConquer/&gt;</p>
                 <p className="text-gray-400 text-base mt-2">InfoEducatie 2024 project</p>
-            </div>
+            </section>
             
             <Divider className="w-[60px] bg-gray-600 mb-6" />
             
-            <div className="flex gap-6">
+            <section className="flex gap-6">
                 <Button
                     as={Link}
                     href="https://github.com/xndadelin/"
@@ -35,7 +35,7 @@ export const Footer = () => {
                     </svg>
                     <p>InfoConquer</p>
                 </Button>
-            </div>
+            </section>
             
             <div className="flex gap-4 mt-6">
                 <Link href="/terms" className="text-gray-400 text-sm hover:text-gray-200 transition duration-300">Terms</Link>

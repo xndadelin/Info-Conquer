@@ -1,21 +1,16 @@
 import { Button, Input, Spacer, Chip } from "@nextui-org/react"
 import { useState, useContext } from "react"
 import { UserContext } from "../context/UserContext"
-import { NotFound } from "../pages/NotFound"
+import { NotFound } from "./NotFound"
 import { useParams } from "react-router-dom"
-import { gql, useMutation } from "@apollo/client"
-const ResetPasswordMutation = gql`
-    mutation ResetPassword($password: String!, $confirmPassword: String!, $codeForVerification: String!) {
-        resetPassword(password: $password, confirmPassword: $confirmPassword, codeForVerification: $codeForVerification) {
-            success
-        }
-    }
-`
+import { useMutation } from "@apollo/client"
+import { RESET_PASSWORD } from "../utils/Queries"
+
 export const ResetPassword = () => {
     const [password, setPassword] = useState("")
     const [confirmPassword, setConfirmPassword] = useState("")
     const { token } = useParams()
-    const [resetPassword, {loading, error, data}] = useMutation(ResetPasswordMutation, {
+    const [resetPassword, {loading, error, data}] = useMutation(RESET_PASSWORD, {
         variables: {
             password,
             confirmPassword,
@@ -33,11 +28,11 @@ export const ResetPassword = () => {
     const user = useContext(UserContext)
     if (user.getUser) return <NotFound />
     return (
-        <div className="container mx-auto my-20 p-4 max-w-lg min-h-[100vh]">
-            <p className="text-4xl font-bold mb-5 text-center">Reset Password</p>
-            <p className="text-lg text-center mb-8">
+        <main className="container mx-auto my-20 p-4 max-w-lg min-h-[100vh]">
+            <h1 className="text-4xl font-bold mb-5 text-center">Reset Password</h1>
+            <h4 className="text-lg text-center mb-8">
                 Enter your new password below.
-            </p>
+            </h4>
             <form className="flex flex-col items-center">
                 <Input 
                     placeholder="New Password" 
@@ -66,6 +61,6 @@ export const ResetPassword = () => {
                     </Chip>
                 )}
             </form>
-        </div>
+        </main>
     )
 }

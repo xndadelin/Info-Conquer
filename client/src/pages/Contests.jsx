@@ -3,35 +3,12 @@ import { Loading } from '../components/Loading';
 import { Button, Card, CardBody, CardFooter, CardHeader } from "@nextui-org/react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import { NotFound } from "./NotFound";
+import { NotFound } from "../components/NotFound";
 import { useTranslation } from "react-i18next";
 import { UserContext } from "../context/UserContext";
 import { useContext } from "react";
-
-const GET_CONTESTS = gql`
-    query GetContests {
-        getContests {
-            _id
-            description
-            endDate
-            languages
-            name
-            startDate
-            createdBy
-            ended
-            started
-            hasJoined
-        }
-    }
-`;
-
-const JOIN_CONTEST = gql`
-    mutation JoinContest($id: String!) {
-        joinContest(id: $id) {
-            success
-        }
-    }
-`;
+import { GET_CONTESTS, JOIN_CONTEST } from "../utils/Queries";
+import { motion } from "framer-motion";
 
 export const Contests = () => {
     const { data, loading } = useQuery(GET_CONTESTS);
@@ -62,12 +39,22 @@ export const Contests = () => {
     
     const headers = [t('contests.ongoing'), t('contests.upcoming'), t('contests.ended')]
     return (
-        <div className="container mx-auto mt-20 p-4 h-full">
-            <div className="flex flex-col gap-5 text-center">
+        <motion.main 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            className="container mx-auto mt-20 p-4 h-full"
+        >
+            <section className="flex flex-col gap-5 text-center">
                 <div className="text-5xl font-extrabold text-primary-900">🏆 {t('contests.header')}</div>
-                <p className="text-xl text-gray-400 mt-4e">{t('contests.description')}</p>
-            </div>
-            <div className="container flex flex-col gap-10 mt-20">
+                <h3 className="text-xl text-gray-400 mt-4">{t('contests.description')}</h3>
+            </section>
+            <motion.section 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4 }}
+                className="container flex flex-col gap-10 mt-20"
+            >
                 {[[...ongoingContests], [...upcomingContests], [...endedContests]].map((contests, index) => (
                     <div>
                         <p className="text-3xl font-extrabold">{headers[index]}</p>
@@ -81,16 +68,16 @@ export const Contests = () => {
                                         <p className="text-gray-400">{`${features.created_by} ${contest.createdBy}`}</p>
                                     </CardHeader>
                                     <CardBody>
-                                        <p className="text-xl font-bold">{features.description}</p>
-                                        <p dangerouslySetInnerHTML={{
+                                        <h4 className="text-xl font-bold">{features.description}</h4>
+                                        <h4 dangerouslySetInnerHTML={{
                                             __html: `${contest.description.slice(0, 100)}... <a target='_blank' style='color: rgb(51,102,204);' href='/contests/view/${contest._id}'>${features.view_more}</a>`
-                                        }}></p>
-                                        <p className="text-xl font-bold">{features.start_date}:</p>
+                                        }}></h4>
+                                        <h4 className="text-xl font-bold">{features.start_date}:</h4>
                                         {new Date(contest.startDate).toLocaleString()}
-                                        <p className="text-xl font-bold">{features.end_date}:</p>
+                                        <h4 className="text-xl font-bold">{features.end_date}:</h4>
                                         {new Date(contest.endDate).toLocaleString()}
                                         <div className="flex flex-col">
-                                            <p className="text-xl font-bold">{features.languages}:</p>
+                                            <h4 className="text-xl font-bold">{features.languages}:</h4>
                                             <ul className="ml-3 list-disc">
                                                 {contest.languages.map((language) => (
                                                     <li>{language}</li>
@@ -117,7 +104,7 @@ export const Contests = () => {
                         </div>
                     </div>
                 ))}
-            </div>
-        </div>
+            </motion.section>
+        </motion.main>
     );
 };

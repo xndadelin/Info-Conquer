@@ -6,9 +6,11 @@ import { Chip } from "@nextui-org/react";
 import { useMutation, gql } from "@apollo/client";
 import { useContext } from "react";
 import { UserContext } from "../context/UserContext";
-import { NotFound } from "./NotFound";
+import { NotFound } from "../components/NotFound";
 import { DropFile } from "../components/DropFile";
-// I fucked something here and I cant find it out, reverted back to older version
+import { problems } from "./ProblemsSelection";
+import { CREATE_PROBLEM } from "../utils/Queries";
+
 export const PublishProblem = () => {
     const { user } = useContext(UserContext)
     const { isOpen, onOpen, onClose } = useDisclosure()
@@ -37,19 +39,8 @@ export const PublishProblem = () => {
     const [error, setError] = useState('')
     const [languages, setLanguages] = useState([])
     const [itsForContest, setItsForContest] = useState(false)
-    const problemMutation = gql`
-        mutation CreateProblem($title: String, $description: String, $requirements: String, $type: String, $tags: [String], $difficulty: String, $category: String, $subcategories: [String], $input: String, $output: String, $tests: [TestInput], $timeExecution: Float, $limitMemory: Float, $examples: [ExampleInput], $indications: String, $languages: [String], $restriction: String, $itsForContest: Boolean) {
-            createProblem(problemInput: {title: $title, description: $description, requirements: $requirements, type: $type, tags: $tags, difficulty: $difficulty, category: $category, subcategories: $subcategories, input: $input, output: $output, tests: $tests, timeExecution: $timeExecution, limitMemory: $limitMemory, examples: $examples, indications: $indications, languages: $languages, restriction: $restriction, itsForContest: $itsForContest}) {
-            success
-            error {
-                message
-                code
-            }
-            }
-        }
-    `
 
-    const [createProblem] = useMutation(problemMutation, {
+    const [createProblem] = useMutation(CREATE_PROBLEM, {
         onError: (error) => {
             setError(error)
         },
@@ -81,159 +72,6 @@ export const PublishProblem = () => {
             }
         })
     }
-    const problems = [
-        {
-            category: 'Array',
-            subcategories: [
-                'Static Arrays',
-                'Dynamic Arrays',
-                'Bidimensional Arrays',
-                'Subarray ProblemsSelection',
-                'Matrix ProblemsSelection',
-                'Rotation of Arrays',
-                'Sliding Window ProblemsSelection',
-                'Two Pointers Technique',
-                'Prefix Sum ProblemsSelection',
-                'Histogram ProblemsSelection',
-                'Array Partitioning',
-                'Maximum Subarray ProblemsSelection',
-                'Minimum Subarray ProblemsSelection',
-                'Sum Pair ProblemsSelection',
-                'Search in Arrays',
-                'Sorting in Arrays',
-                'Sparse Arrays',
-                'Bit Arrays',
-                'Suffix Arrays'
-            ]
-        },
-        {
-            category: 'Linked List',
-            subcategories: [
-                'Singly Linked Lists',
-                'Doubly Linked Lists',
-                'Circular Linked Lists',
-                'Linked List Operations',
-                'Linked List Manipulation',
-                'Palindromes in Linked Lists',
-                'Intersection and Union of Linked Lists',
-                'Merge and Split Linked Lists',
-                'Advanced Linked List Techniques',
-                'Skip Lists',
-                'XOR Linked Lists',
-                'Unrolled Linked Lists'
-            ]
-        },
-        {
-            category: 'Stack',
-            subcategories: [
-                'Stack Operations',
-                'Stack Implementations',
-                'Expression Evaluation',
-                'Parentheses Matching',
-                'Infix to Postfix Conversion',
-                'Evaluation of Postfix Expressions',
-                'Special Stacks',
-                'Advanced Stack Techniques',
-            ]
-        },
-        {
-            category: 'Queue',
-            subcategories: [
-                'Queue Operations',
-                'Queue Implementations',
-                'Circular Queues',
-                'Priority Queues',
-                'Double-ended Queues (Deque)',
-                'Queue Applications',
-                'BFS (Breadth-First Search) ProblemsSelection',
-                'Sliding Window ProblemsSelection using Queues',
-                'Advanced Queue Techniques',
-            ]
-        },
-        {
-            category: 'Tree',
-            subcategories: [
-                'Binary Trees',
-                'Binary Search Trees (BST)',
-                'AVL Trees',
-                'Heap (Priority Queue) Trees',
-                'Trie (Prefix Tree)',
-                'N-ary Trees',
-                'Segment Trees',
-                'Binary Indexed Trees',
-                'Tree Traversal',
-                'Level Order Traversal (BFS)',
-                'Tree Operations and Manipulation',
-                'Tree ProblemsSelection with Recursion',
-                'Advanced Tree Techniques',
-            ]
-        },
-        {
-            category: 'Graph',
-            subcategories: [
-                'Graph Representation',
-                'Graph Traversal (DFS, BFS)',
-                'Shortest Path Algorithms',
-                'Minimum Spanning Tree',
-                'Topological Sorting',
-                'Graph Connectivity',
-                'Bipartite Graphs',
-                'Eulerian and Hamiltonian Paths',
-                'Graph Coloring',
-                'Flows and Matching',
-                'Network Flow Algorithms',
-                'Cycles and Cycle Detection',
-                'Graph ProblemsSelection with Recursion',
-                'Advanced Graph Techniques',
-            ]
-        },
-        {
-            category: 'String',
-            subcategories: [
-                'String Matching',
-                'String Processing',
-                'String Compression',
-                'String Manipulation',
-                'String Searching',
-                'String Sorting',
-                'String Parsing',
-                'String Algorithms',
-                'String with Recursion',
-                'Advanced String Techniques',
-            ]
-        },
-        {
-            category: 'Advanced Data Structures',
-            subcategories: [
-                'Suffix Array',
-                'Suffix Tree',
-                'Trie',
-                'Segment Tree',
-                'Binary Indexed Tree',
-                'Fenwick Tree',
-                'Disjoint Set',
-                'Sparse Table',
-                'Wavelet Tree',
-                'KD Tree',
-                'Quad Tree',
-                'Octree',
-                'Range Tree',
-                'B-Tree',
-                'R-Tree',
-                'Skip List',
-                'Splay Tree',
-                'Treap',
-                'Tango Tree',
-                'Link-Cut Tree',
-                'Dancing Links',
-                'Scapegoat Tree',
-                'Splay Tree',
-                'Red-Black Tree',
-                'AVL Tree',
-            ]
-        }
-
-    ]
 
     const onAddTag = () => {
         if (!tags.includes(tag)) {
@@ -321,7 +159,7 @@ export const PublishProblem = () => {
     if (!user.getUser || !user.getUser.admin)
         return <NotFound />
     return (
-        <div className="container mx-auto flex flex-col my-10 gap-3 p-4">
+        <main className="container mx-auto flex flex-col my-10 gap-3 p-4">
             <p className="font-bold text-5xl mb-4">Publish a problem</p>
             <Input isRequired label="Title" value={title} onChange={(e) => setTitle(e.target.value)} />
             <Textarea label="Description" value={description} onChange={(e) => setDescription(e.target.value)} />
@@ -400,6 +238,6 @@ export const PublishProblem = () => {
             </Modal>
             <DropFile tests={tests} setTests={setTests} />
             <Button variant="flat" color="primary" onClick={onOpen}>Publish problem</Button>
-        </div>
+        </main>
     )
 }

@@ -1,20 +1,12 @@
-import { gql, useQuery } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import { Loading } from '../components/Loading';
 import { Avatar, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from '@nextui-org/react';
 import { useTranslation } from 'react-i18next';
+import { GET_LEADERBOARD } from '../utils/Queries';
+import { motion } from 'framer-motion';
 
 export const Leaderboard = () => {
     const { t } = useTranslation();
-
-    const GET_LEADERBOARD = gql`
-        query getLeaderboard {
-            getLeaderboard {
-                username
-                solvedProblems
-                profilePicture
-            }
-        }
-    `;
 
     const { data, loading } = useQuery(GET_LEADERBOARD);
 
@@ -25,14 +17,24 @@ export const Leaderboard = () => {
 
     const heights = ['h-60', 'h-40', 'h-50'];
     return (
-        <div className="container flex flex-col px-5 mx-auto mt-20 gap-10 mb-[100vh] text-white">
-            <div className="text-center mb-10">
+        <motion.main
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            className="container flex flex-col px-5 mx-auto mt-20 gap-10 mb-[100vh] text-white"
+        >
+            <section className="text-center mb-10" >
                 <h1 className="text-5xl font-extrabold text-primary-900">{t('leaderboard.header')}</h1>
                 <p className="text-xl text-gray-400 mt-4">{t('leaderboard.description')}</p>
-            </div>
+            </section>
 
 
-            <div className="flex flex-col items-end md:flex-row mx-auto mb-16">
+            <motion.section
+                className="flex flex-col items-end md:flex-row mx-auto mb-16"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4 }}
+            >
                 {top3[1] ? (
                     <div className="flex flex-col items-center mb-6 md:mb-0 md:mr-6 transform transition duration-500 ease-in-out hover:scale-105">
                         <div className={`flex flex-col justify-end items-center w-32 ${heights[1]} bg-gray-800 p-5 rounded-t-lg border border-gray-700 shadow-lg relative`}>
@@ -95,9 +97,14 @@ export const Leaderboard = () => {
                         <div className="text-center mt-3 font-bold">{t('leaderboard.bronze')}</div>
                     </div>
                 )}
-            </div>
+            </motion.section>
             {rest.length > 0 && (
-                <div className="overflow-x-auto">
+                <motion.section
+                    className="overflow-x-auto"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.6 }}
+                >
                     <Table isCompact>
                         <TableHeader className="bg-gray-800 text-gray-300">
                             <TableColumn className="border-b border-gray-700">{t('leaderboard.table.rank')}</TableColumn>
@@ -114,8 +121,8 @@ export const Leaderboard = () => {
                             ))}
                         </TableBody>
                     </Table>
-                </div>
+                </motion.section>
             )}
-        </div>
+        </motion.main>
     );
 };

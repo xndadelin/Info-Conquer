@@ -73,9 +73,9 @@ export const PrivacyPolicy = () => {
     ];
     
     return (
-        <div className="min-h-screen bg-gray-900 text-gray-100 py-12">
+        <main className="min-h-screen bg-gray-900 text-gray-100 py-12">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="max-w-4xl mx-auto">
+                <section className="max-w-4xl mx-auto">
                     <div className="text-center mb-12">
                         <span className="inline-block bg-gray-800 text-gray-400 text-xs font-semibold px-3 py-1 rounded-full mb-4">Last updated: 2024-07-07</span>
                         <h1 className="text-4xl sm:text-5xl font-extrabold mb-4">Privacy Policy</h1>
@@ -88,8 +88,8 @@ export const PrivacyPolicy = () => {
                             <div className="p-6">{section.content}</div>
                         </section>
                     ))}
-                </div>
+                </section>
             </div>
-        </div>
+        </main>
     );
 }

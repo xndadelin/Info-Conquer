@@ -1,18 +1,12 @@
-import { gql, useMutation } from '@apollo/client'
+import { useMutation } from '@apollo/client'
 import { useEffect, useState } from 'react'
 import { Loading } from './Loading'
-const AuthDiscordMutation = gql`
-    mutation AuthDiscord($code: String!) {
-        authDiscord(code: $code) {
-            success
-            message
-        }
-    }
-`
+import { AUTH_DISCORD } from '../utils/Queries'
+
 export const AuthDiscord = () => {
     const code = new URLSearchParams(window.location.search).get('code')
     const [error, setError] = useState("")
-    const [authDiscord, { loading, data }] = useMutation(AuthDiscordMutation, {
+    const [authDiscord, { loading, data }] = useMutation(AUTH_DISCORD, {
         onError: (error) => {
             setError(error.message)
         },

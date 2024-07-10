@@ -1,19 +1,14 @@
 import { useContext } from "react"
 import { UserContext } from "../context/UserContext"
-import { NotFound } from "./NotFound"
+import { NotFound } from "../components/NotFound"
 import { Input, Spacer, Button, Chip } from "@nextui-org/react"
 import { useState } from "react"
-import { gql, useMutation } from "@apollo/client"
-const ForgotPasswordMutation = gql`
-    mutation ForgotPassword($email: String!) {
-        forgotPassword(email: $email) {
-            success
-        }
-    }
-`
+import { useMutation } from "@apollo/client"
+import { FORGOT_PASSWORD } from "../utils/Queries"
+
 export const ForgotPassword = () => {
     const [email, setEmail] = useState("")
-    const [sendEmail, {loading, error, data}] = useMutation(ForgotPasswordMutation, {
+    const [sendEmail, {loading, error, data}] = useMutation(FORGOT_PASSWORD, {
         variables: {
             email
         },
@@ -27,12 +22,12 @@ export const ForgotPassword = () => {
     const user = useContext(UserContext)
     if (user.getUser) return <NotFound />
     return (
-        <div className="container mx-auto my-20 p-4 max-w-lg min-h-[100vh]">
-            <p className="text-4xl font-bold mb-5 text-center">Forgot Password</p>
-            <p className="text-lg text-center mb-8">
+        <main className="container mx-auto my-20 p-4 max-w-lg min-h-[100vh]">
+            <h1 className="text-4xl font-bold mb-5 text-center">Forgot Password</h1>
+            <h4 className="text-lg text-center mb-8">
                 Did you forget your password? No worries! Just enter your email address
                 and we will send you a link to reset your password.
-            </p>
+            </h4>
             <form className="flex flex-col items-center">
                 <Input 
                     placeholder="Email" 
@@ -58,6 +53,6 @@ export const ForgotPassword = () => {
                     </Chip>
                 )}
             </form>
-        </div>
+        </main>
     )
 }

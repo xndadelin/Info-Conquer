@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { c_code, java_code, py_code, cpp_code } from "../utils/Codes";
 import { motion } from "framer-motion";
 
-export const VerticalTimeline = () => {
+const VerticalTimeline = () => {
     const { t } = useTranslation();
 
     const fadeInLeft = {
@@ -29,7 +29,7 @@ export const VerticalTimeline = () => {
     ];
 
     return (
-        <div className="relative mb-20 max-w-full after:content-[''] after:absolute after:w-1 after:bg-gray-800 after:top-0 after:bottom-0 after:left-1/2 after:transform after:-translate-x-1/2">
+        <section className="relative mb-20 max-w-full after:content-[''] after:absolute after:w-1 after:bg-gray-800 after:top-0 after:bottom-0 after:left-1/2 after:transform after:-translate-x-1/2">
             {languages.map((lang, index) => (
                 <motion.div 
                     key={lang.name}
@@ -72,6 +72,8 @@ export const VerticalTimeline = () => {
                     </motion.div>
                 </motion.div>
             ))}
-        </div>
+        </section>
     );
 };
+
+export default VerticalTimeline;

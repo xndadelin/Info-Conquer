@@ -1,5 +1,5 @@
 import { useCallback, useContext, useState } from 'react';
-import { NotFound } from './NotFound';
+import { NotFound } from '../components/NotFound';
 import { Input, Button, Chip } from '@nextui-org/react';
 import { gql, useMutation } from '@apollo/client';
 import { useTranslation } from 'react-i18next'; 
@@ -7,6 +7,7 @@ import { UserContext } from '../context/UserContext';
 import CodeMirror from '@uiw/react-codemirror';
 import { oneDark } from '@codemirror/theme-one-dark';
 import { loadLanguage } from '@uiw/codemirror-extensions-langs';
+import { PUBLISH_ARTICLE } from '../utils/Queries';
 
 export const PublishArticle = () => {
     const { t } = useTranslation(); 
@@ -30,15 +31,7 @@ export const PublishArticle = () => {
         setTags(tags.filter((tag) => tag !== tagToDelete));
     };
 
-    const publishGql = gql`
-        mutation PublishArticle($title: String, $content: String, $tags: [String]) {
-            publishArticle(title: $title, content: $content, tags: $tags) {
-                success
-            }
-        }
-    `;
-
-    const [publishArticle, { loading }] = useMutation(publishGql, {
+    const [publishArticle, { loading }] = useMutation(PUBLISH_ARTICLE, {
         variables: { title, content, tags },
         onError: (error) => {
             setError(error.message);
@@ -57,8 +50,8 @@ export const PublishArticle = () => {
     }
 
     return (
-        <div className="container mx-auto p-5 h-[100%]">
-            <div className="flex flex-col gap-5">
+        <main className="container mx-auto p-5 h-[100%]">
+            <section className="flex flex-col gap-5">
                 <p className="text-5xl font-extrabold">{t('publishArticle.title')}</p>
                 <Input variant="flat" onChange={(e) => setTitle(e.target.value)} value={title} label={t('publishArticle.title')} />
                 <Input
@@ -85,17 +78,17 @@ export const PublishArticle = () => {
                         height='1000px'
                     />
                 </div>
-            </div>
-            <div className="flex mt-5 justify-between">
+            </section>
+            <section className="flex mt-5 justify-between">
                 {error && <Chip color="danger" variant="flat">{error}</Chip>}
                 <Button className="ml-auto" loading={loading} onClick={publishArticle} variant="flat" color="primary">
                     {t('publishArticle.publishButton')}
                 </Button>
-            </div>
-            <div className='mt-5'>
-                <p className='text-3xl font-bold mb-20'>Preview</p>
+            </section>
+            <section className='mt-5'>
+                <h1  className='text-3xl font-bold mb-20'>Preview</h1>
                 <div dangerouslySetInnerHTML={{ __html: content }}></div>
-            </div>
-        </div>
+            </section>
+        </main>
     );
 };

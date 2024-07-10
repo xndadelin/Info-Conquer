@@ -3,40 +3,12 @@ import { gql, useQuery } from "@apollo/client";
 import { Loading } from "../components/Loading";
 import { useState } from "react";
 import { Button, Chip, Link } from "@nextui-org/react";
-import { NotFound } from "../pages/NotFound";
+import { NotFound } from "../components/NotFound";
 import { Error } from "../components/Error";
 import { useTranslation } from 'react-i18next';
 import { Bar } from 'react-chartjs-2';
 import { Chart, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Filler, Legend, BarElement } from 'chart.js';
-
-const GET_CONTEST = gql`
-    query GetContest($id: String) {
-        getContest(id: $id) {
-            description
-            endDate
-            languages
-            name
-            startDate
-            createdBy
-            problems {
-                id
-                category
-                difficulty
-                subcategories
-            }
-            participants {
-                username
-                score
-                problems {
-                    id
-                    score
-                }
-            }
-            started 
-            ended
-        }
-    }
-`;
+import { GET_CONTEST } from "../utils/Queries";
 
 const getColor = (score) => {
     if (score >= 90) return 'bg-green-500';
@@ -141,8 +113,8 @@ export const Contest = () => {
     );
 
     return (
-        <div className="container mx-auto p-5 my-5 bg-gray-900 text-white">
-            <div className="bg-gray-800 rounded-lg shadow-lg p-8 mb-10 transition-all duration-300 hover:shadow-xl">
+        <main className="container mx-auto p-5 my-5 bg-gray-900 text-white">
+            <section className="bg-gray-800 rounded-lg shadow-lg p-8 mb-10 transition-all duration-300 hover:shadow-xl">
                 <h1 className="text-4xl font-bold mb-6 text-blue-400">{data.getContest.name}</h1>
                 <div>
                     <InfoItem  label={t('contest.createdBy')} value={data.getContest.createdBy} />
@@ -156,9 +128,9 @@ export const Contest = () => {
                     <InfoItem  label={t('contest.hasStarted')} value={data.getContest.started ? t('contest.yes') : t('contest.no')} />
                     <InfoItem  label={t('contest.hasEnded')} value={data.getContest.ended ? t('contest.yes') : t('contest.no')} />
                 </div>
-            </div>
+            </section>
 
-            <div className="bg-gray-800 rounded-lg shadow-lg p-6 mb-10 transition-all duration-300 hover:shadow-xl">
+            <section className="bg-gray-800 rounded-lg shadow-lg p-6 mb-10 transition-all duration-300 hover:shadow-xl">
                 <h2 className="text-3xl font-bold mb-6 text-blue-400">{t('contest.leaderboard')}</h2>
                 <div className="overflow-x-auto shadow-2xl rounded-lg">
                     <table className="w-full text-sm text-left">
@@ -205,11 +177,11 @@ export const Contest = () => {
                     <Button isDisabled={page === 1} color="primary" variant="flat" onClick={() => setPage(page - 1)}>Previous</Button>
                     <Button isDisabled={data.getContest.participants.length <= page * participantsPerPage} color="primary" variant="flat" onClick={() => setPage(page + 1)}>Next</Button>
                 </div>
-            </div>
+            </section>
 
             {(data.getContest.started || data.getContest.ended) ? (
                 <>
-                    <div className="bg-gray-800 rounded-lg shadow-lg p-6 mb-10 transition-all duration-300 hover:shadow-xl">
+                    <section className="bg-gray-800 rounded-lg shadow-lg p-6 mb-10 transition-all duration-300 hover:shadow-xl">
                         <h2 className="text-3xl font-bold mb-6 text-blue-400">{t('contest.problems')}</h2>
                         <div className="overflow-x-auto shadow-2xl bg-gray-700 rounded-lg">
                             <table className="w-full text-sm text-left">
@@ -243,19 +215,19 @@ export const Contest = () => {
                                 </tbody>
                             </table>
                         </div>
-                    </div>
-                    <div className="bg-gray-800 rounded-lg shadow-lg p-6 transition-all duration-300 hover:shadow-xl">
+                    </section>
+                    <section className="bg-gray-800 rounded-lg shadow-lg p-6 transition-all duration-300 hover:shadow-xl">
                         <h2 className="text-3xl font-bold mb-6 text-blue-400">{t('contests.solvedPercentage')}</h2>
                         <div className="bg-gray-900 p-5 rounded-lg">
                             <Bar data={barData} options={barConfig.options} />
                         </div>
-                    </div>
+                    </section>
                 </>
             ) : (
-                <div className="text-3xl font-bold text-center py-10">
+                <section className="text-3xl font-bold text-center py-10">
                     {t('contest.noProblemsYet')}
-                </div>
+                </section>
             )}
-        </div>
+        </main>
     );
 };

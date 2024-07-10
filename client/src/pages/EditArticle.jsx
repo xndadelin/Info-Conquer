@@ -1,8 +1,8 @@
-import { gql, useQuery } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import { useParams } from 'react-router-dom';
-import { NotFound } from '../pages/NotFound';
-import { Loading } from './Loading';
-import { Button, Code, Spinner, Textarea } from '@nextui-org/react';
+import { NotFound } from '../components/NotFound';
+import { Loading } from '../components/Loading';
+import { Button, Spinner } from '@nextui-org/react';
 import { useState, useContext } from 'react';
 import { UserContext } from '../context/UserContext';
 import { useMutation } from '@apollo/client';
@@ -12,31 +12,7 @@ import CodeMirror from '@uiw/react-codemirror';
 import { oneDark } from '@codemirror/theme-one-dark';
 import { loadLanguage } from '@uiw/codemirror-extensions-langs'
 import { useCallback } from 'react';
-
-const getArticle = gql`
-    query GetArticle($id: String) {
-        getArticle(id: $id) {
-            content
-            createdAt
-            creator
-            hasDisliked
-            dislikes
-            hasLiked
-            likes
-            title
-            tags
-            updatedAt
-        }
-    }
-`;
-
-const editArticle = gql`
-    mutation EditArticle($id: String, $content: String, $tags: [String], $title: String) {
-        editArticle(id: $id, content: $content, tags: $tags, title: $title) {
-            success
-        }
-    }
-`;
+import { GET_ARTICLE, EDIT_ARTICLE } from '../utils/Queries';
 
 export const EditArticle = () => {
     const { id } = useParams();
@@ -59,7 +35,7 @@ export const EditArticle = () => {
         setTags(tags.filter((i) => i !== tag));
     };
 
-    const { loading } = useQuery(getArticle, {
+    const { loading } = useQuery(GET_ARTICLE, {
         variables: { id },
         onCompleted: (data) => {
             setContent(data.getArticle.content);
@@ -69,7 +45,7 @@ export const EditArticle = () => {
     });
 
     const { user } = useContext(UserContext);
-    const [edit, { loading: loadingSave, error }] = useMutation(editArticle, {
+    const [edit, { loading: loadingSave, error }] = useMutation(EDIT_ARTICLE, {
         variables: { id, content, title, tags },
         onCompleted: (data) => {
             if (data.editArticle.success) {
@@ -88,8 +64,8 @@ export const EditArticle = () => {
     if (!title) return <NotFound />;
 
     return (
-        <div className='container mx-auto py-5 min-h-screen'>
-            <p className='text-2xl font-bold'>{t('article.edit')} {t('article.edit')}</p>
+        <main className='container mx-auto py-5 min-h-screen'>
+            <h1 className='text-2xl font-bold'>{t('article.edit')} {t('article.edit')}</h1>
             <Input
                 variant='flat'
                 className='mt-5'
@@ -104,13 +80,13 @@ export const EditArticle = () => {
                 onChange={(e) => setTag(e.target.value)}
                 className='my-5'
             />
-            <div className="flex flex-wrap gap-2 mb-5">
+            <section className="flex flex-wrap gap-2 mb-5">
                 {tags && tags.map((tag, index) => (
                     <Chip className='cursor-pointer' key={index} onClick={() => onDeleteTag(tag)}>{tag}</Chip>
                 ))}
-            </div>
+            </section>
             
-            <div className='rounded-lg'>
+            <section className='rounded-lg'>
                 <CodeMirror
                     value={content}
                     onChange={onChangeCode}
@@ -118,9 +94,9 @@ export const EditArticle = () => {
                     extensions={[loadLanguage('html')]}
                     height='1000px'
                 />
-            </div>
+            </section>
 
-            <div className='flex justify-end gap-5 mt-5'>
+            <section className='flex justify-end gap-5 mt-5'>
                 <Button
                     onClick={handleSave}
                     endContent={loadingSave ? <Spinner size='sm' color='secondary' /> : ''}
@@ -129,11 +105,12 @@ export const EditArticle = () => {
                 >
                     {t('article.edit')}
                 </Button>
-            </div>
-            <div className='mt-5'>
-                <p className='text-3xl font-bold mb-20'>Preview</p>
+            </section>
+
+            <section className='mt-5'>
+                <h2 className='text-3xl font-bold mb-20'>Preview</h2>
                 <div dangerouslySetInnerHTML={{ __html: content }}></div>
-            </div>
-        </div>
+            </section>
+        </main>
     );
 };

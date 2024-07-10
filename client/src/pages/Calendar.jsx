@@ -1,19 +1,10 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { gql, useQuery } from '@apollo/client';
-import { NotFound } from './NotFound';
+import { NotFound } from '../components/NotFound';
 import { Loading } from '../components/Loading';
 import { useTranslation } from 'react-i18next';
-
-const GET_DAILIES = gql`
-    query GetDailies {
-        getDailies {
-            problem
-            date
-            solved
-        }
-    }
-`;
+import { GET_DAILIES } from '../utils/Queries';
 
 export const Calendar = () => {
     const { t } = useTranslation();
@@ -52,9 +43,9 @@ export const Calendar = () => {
     }, {});
 
     return (
-        <div className="container mx-auto my-5 p-5">
-            <p className="text-3xl font-bold">{`${monthName} ${currentMonth.year}`}</p>
-            <div className="grid grid-cols-7 max-md:grid-cols-3 gap-2 mt-4">
+        <main className="container mx-auto my-5 p-5">
+            <h1 className="text-3xl font-bold">{`${monthName} ${currentMonth.year}`}</h1>
+            <section className="grid grid-cols-7 max-md:grid-cols-3 gap-2 mt-4">
                 {Array.from({ length: new Date(currentMonth.year, currentMonth.month).getDay() }).map((_, index) => (
                     <div key={`empty-${index}`} className="invisible"></div>
                 ))}
@@ -71,8 +62,8 @@ export const Calendar = () => {
                         >
                             <div className="w-full h-full">
                                 <div className='flex flex-col items-start'>
-                                    <p className="font-bold text-xl">{day.day}</p>
-                                    <p className='font-bold'>{Days[new Date(currentMonth.year, currentMonth.month, day.day).getDay()]}</p>
+                                    <h1 className="font-bold text-xl">{day.day}</h1>
+                                    <h3 className='font-bold'>{Days[new Date(currentMonth.year, currentMonth.month, day.day).getDay()]}</h3>
                                 </div>
                                 <div className='mt-3'>
                                     {daily ? (
@@ -89,7 +80,7 @@ export const Calendar = () => {
                         </motion.div>
                     );
                 })}
-            </div>
-        </div>
+            </section>
+        </main>
     );
 };

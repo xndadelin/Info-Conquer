@@ -27,10 +27,10 @@
           "link_url": "http://localhost:3000/problems"
         },
         {
-          "title": "Article publishing",
-          "description": "Share your knowledge with the world by publishing articles on InfoConquer. Our platform is the perfect place to share your insights.",
-          "link_text": "See articles",
-          "link_url": "http://localhost:3000/articles"
+          "title": "Daily problems",
+          "description": "Every day we post a new problem for you to solve. It's a great way to keep your skills sharp!",
+          "link_text": "See calendar",
+          "link_url": "http://localhost:3000/calendar"
         }
       ]
     },
@@ -74,6 +74,7 @@
             "String": "String",
             "Advanced Data Structures": "Advanced Data Structures"
         },
+        "viewAll": "View all problems", 
         "subcategories": {
             "Static Arrays": "Static Arrays",
             "Dynamic Arrays": "Dynamic Arrays",

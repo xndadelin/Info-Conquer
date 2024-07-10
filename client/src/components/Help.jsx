@@ -2,12 +2,12 @@ import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Link } f
 
 export const Help = () => {
     return (
-        <div className="fixed bottom-0 right-0 p-5 z-50">
+        <section className="fixed bottom-0 right-0 p-5 z-50">
             <Dropdown backdrop="blur" radius="sm" className="p-0">
                 <DropdownTrigger>
                     <Button 
                         isIconOnly 
-                        className="rounded-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 transition-all duration-300"
+                        className="rounded-full bg-gradient-to-r from-gray-900 to-gray-700 transition-all duration-300"
                         aria-label="Help"
                     >
                         <svg height={25} fill="white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
@@ -65,6 +65,6 @@ export const Help = () => {
                     </DropdownItem>
                 </DropdownMenu>
             </Dropdown>
-        </div>
+        </section>
     )
 }

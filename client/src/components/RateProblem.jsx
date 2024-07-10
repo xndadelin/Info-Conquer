@@ -3,13 +3,7 @@ import { useState } from 'react';
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button } from '@nextui-org/react';
 import { Star } from '../utils/Star';
 import { useTranslation } from 'react-i18next';
-const rateProblem = gql`
-    mutation rateProblem($id: String!, $rating: Int!) {
-        rateProblem(id: $id, rating: $rating) {
-            success
-        }
-    }
-`;
+import { RATE_PROBLEM } from '../utils/Queries';
 
 export const RateProblem = ({ isOpen, onClose, problem, onOpenChange, setUserHasRated }) => {
     const { t } = useTranslation();
@@ -22,7 +16,7 @@ export const RateProblem = ({ isOpen, onClose, problem, onOpenChange, setUserHas
         'star-5': { hovered: false, selected: false }
     });
 
-    const [rate, { loading }] = useMutation(rateProblem, {
+    const [rate, { loading }] = useMutation(RATE_PROBLEM, {
         onCompleted: () => {
             onClose();
             setUserHasRated(true);
@@ -69,7 +63,7 @@ export const RateProblem = ({ isOpen, onClose, problem, onOpenChange, setUserHas
     };
 
     return (
-        <div className="p-5">
+        <section className="p-5">
             <Modal size="md" onOpenChange={onOpenChange} isOpen={isOpen} onClose={onClose} title={t('rateProblemPage.rateProblemTitle')}>
                 <ModalContent>
                     <ModalHeader>{t('rateProblemPage.rateProblemHeader')}</ModalHeader>
@@ -95,6 +89,6 @@ export const RateProblem = ({ isOpen, onClose, problem, onOpenChange, setUserHas
                     </ModalFooter>
                 </ModalContent>
             </Modal>
-        </div>
+        </section>
     );
 };

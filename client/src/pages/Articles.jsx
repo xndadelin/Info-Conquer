@@ -3,30 +3,19 @@ import { Loading } from '../components/Loading';
 import { Card, CardHeader } from '@nextui-org/react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { GET_ARTICLES } from '../utils/Queries';
 
 export const Articles = () => {
     const { t } = useTranslation(); 
-    const getArticles = gql`
-        query getArticles {
-            getArticles {
-                _id
-                createdAt
-                creator
-                dislikes
-                likes
-                title
-            }
-        }
-    `;
 
-    const { data, loading } = useQuery(getArticles);
+    const { data, loading } = useQuery(GET_ARTICLES);
 
     if (loading) return <Loading />;
 
     return (
-        <div className="container mx-auto p-5 h-screen">
-            <p className="text-5xl font-extrabold">{t('articles.title')}</p>
-            <div className="flex flex-wrap gap-5 mt-5">
+        <main className="container mx-auto p-5 h-screen">
+            <h1 className="text-5xl font-extrabold">{t('articles.title')}</h1>
+            <article className="flex flex-wrap gap-5 mt-5">
                 {data.getArticles.map((article, index) => (
                     <Card key={index} className='w-screen'>
                         <CardHeader className='flex flex-col items-start'>
@@ -36,7 +25,7 @@ export const Articles = () => {
                         </CardHeader>
                     </Card>
                 ))}
-            </div>
-        </div>
+            </article>
+        </main>
     );
 };

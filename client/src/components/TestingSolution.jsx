@@ -26,7 +26,7 @@ export const TestingSolution = ({ onClose, isOpen, loading, tests }) => {
     
     const testsTable = () => {
         return (
-          <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-6 pt-0 pb-8">
+          <section className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-6 pt-0 pb-8">
             <div className="bg-gray-900 shadow-xl rounded-xl overflow-hidden">
               <div className="overflow-x-auto">
                 <table className="w-full text-sm text-left text-gray-300">
@@ -97,7 +97,7 @@ export const TestingSolution = ({ onClose, isOpen, loading, tests }) => {
                 </div>
               </div>
             </div>
-          </div>
+          </section>
         )
       }
 

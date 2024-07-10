@@ -1,42 +1,17 @@
 import { gql, useQuery } from "@apollo/client";
 import { Link, useParams } from "react-router-dom";
 import { Loading } from "./Loading";
-import { Card, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@nextui-org/react";
+import { Card } from "@nextui-org/react";
 import { useTranslation } from "react-i18next";
 import { Chart, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Filler, Legend } from 'chart.js';
 import { Line } from 'react-chartjs-2';
+import { GET_STATS } from "../utils/Queries";
 
-const getStats = gql`
-    query GetProblemStats($id: String) {
-        getProblemStats(id: $id) {
-            bestMemory {
-                language
-                date
-                memory
-                username
-            }
-            firstSubmissions {
-                date
-                language
-                _id
-            }
-            timeExecution {
-                date
-                language
-                timeExecutions
-                username
-            }
-            solves {
-                count
-                date
-            }
-        }
-    }
-`
+
 export const ProblemStats = () => {
     const { id, problem_name } = useParams();
     const { t } = useTranslation()
-    const { loading, data } = useQuery(getStats, {
+    const { loading, data } = useQuery(GET_STATS, {
         variables: {
             id: id || problem_name
         },
@@ -115,17 +90,17 @@ export const ProblemStats = () => {
     
 
     return (
-        <div className="container flex-col">
+        <main className="container flex-col">
             <h1 className="text-3xl font-bold mb-5 mt-5 text-center">{t('problemStatsPage.insightsTitle')}</h1>
 
-            <div className="bg-[#282828] rounded-lg shadow-md p-6 text-white mt-5 mx-auto">
+            <section className="bg-[#282828] rounded-lg shadow-md p-6 text-white mt-5 mx-auto">
                 <div className="bg-[#181818] p-5 rounded-lg">
                     <Line data={chartData} options={options} />
                 </div>
-            </div>
+            </section>
 
             <h1 className="text-3xl font-bold mt-5 text-center">{t('problemStatsPage.firstSubmissionsTitle')}</h1>
-            <div className="grid grid-cols-3 max-md:grid-cols-1 gap-5 mt-5">
+            <section className="grid grid-cols-3 max-md:grid-cols-1 gap-5 mt-5">
                 <Card className="p-7 bg-gray-700">
                     <div className="flex flex-col items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" width={100} fill="yellow" height={100} viewBox="0 0 576 512">
@@ -168,8 +143,8 @@ export const ProblemStats = () => {
                         )}
                     </div>
                 </Card>
-            </div>
-            <div className="grid grid-cols-2 mt-5 max-md:grid-cols-1 gap-3">
+            </section>
+            <section className="grid grid-cols-2 mt-5 max-md:grid-cols-1 gap-3">
                 <div>
                     <h1 className="text-3xl font-bold mt-5 mb-5">{t('problemStatsPage.bestMemoryTitle')}</h1>
                     <table className="w-full text-sm text-gray-300 border-collapse shadow-2xl rounded-tr">
@@ -220,7 +195,7 @@ export const ProblemStats = () => {
                         </tbody>
                     </table>
                 </div>
-            </div>
-        </div>
+            </section>
+        </main>
     )
 }

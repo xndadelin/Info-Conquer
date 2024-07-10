@@ -59,14 +59,14 @@ export const SecurityPolicy = () => {
         }
     ];
     return (
-        <div className="min-h-screen bg-gray-900 text-gray-100 py-12">
+        <main className="min-h-screen bg-gray-900 text-gray-100 py-12">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="max-w-4xl mx-auto">
-                    <div className="text-center mb-12">
+                    <section className="text-center mb-12">
                         <span className="inline-block bg-gray-800 text-gray-400 text-xs font-semibold px-3 py-1 rounded-full mb-4">Last updated: 2024-07-08</span>
                         <h1 className="text-4xl sm:text-5xl font-extrabold mb-4">Security Policy</h1>
                         <p className="text-xl text-gray-400">At InfoConquer, we take the security of your information seriously. This policy outlines our commitment to protecting your data.</p>
-                    </div>
+                    </section>
 
                     {data.map((section, index) => (
                         <section key={index} className="mb-12 bg-gray-800 rounded-lg shadow-lg overflow-hidden">
@@ -76,6 +76,6 @@ export const SecurityPolicy = () => {
                     ))}
                 </div>
             </div>
-        </div>
+        </main>
     );
 }

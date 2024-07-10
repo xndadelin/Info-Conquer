@@ -3,13 +3,14 @@ import { gql, useQuery } from "@apollo/client";
 import { useContext, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Modal, ModalBody, ModalContent, ModalHeader, Button, CardBody, Card, CardHeader, Divider, Chip } from "@nextui-org/react";
-import { NotFound } from "../pages/NotFound";
-import { Loading } from "./Loading";
+import { NotFound } from "../components/NotFound";
+import { Loading } from "../components/Loading";
 import { UserContext } from "../context/UserContext";
 import CodeMirror from '@uiw/react-codemirror';
 import { oneDark } from '@codemirror/theme-one-dark';
 import { loadLanguage } from '@uiw/codemirror-extensions-langs'
 import { getStatusColor } from "../utils/getStatusColor";
+import { GET_SOLUTION } from "../utils/Queries";
 
 const languages_for_editor = {
     'C++': 'cpp',
@@ -29,35 +30,8 @@ export const Solution = () => {
     const { user } = useContext(UserContext);
     const [solution, setSolution] = useState(null);
 
-    const solutionQuery = gql`
-        query GetSolution($id: String){
-            getSolution(id: $id){
-                code
-                compilationError
-                date
-                fileMemory
-                id_solution
-                language
-                problem
-                score
-                success
-                tests {
-                  executionTime
-                  input
-                  memoryUsed
-                  score
-                  output
-                  status
-                  success
-                  expectedOutput
-                  cerr
-                }
-                username
-            }
-        }
-    `;
 
-    const { error, loading } = useQuery(solutionQuery, {
+    const { error, loading } = useQuery(GET_SOLUTION, {
         variables: { id },
         onCompleted: (data) => {
             setSolution(data.getSolution);
@@ -81,8 +55,8 @@ export const Solution = () => {
     }
 
     return (
-        <div className="container mx-auto px-4 py-8 text-gray-300">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <main className="container mx-auto px-4 py-8 text-gray-300">
+            <section className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 <Card className="bg-gray-800 shadow-lg rounded-lg overflow-hidden">
                     <CardHeader className="bg-gray-700 p-6">
                         <h1 className="text-2xl font-bold text-white">
@@ -171,7 +145,7 @@ export const Solution = () => {
                         />
                     </CardBody>
                 </Card>
-            </div>
+            </section>
 
             <Modal 
                 onClose={() => setSelectedTestCase(null)} 
@@ -201,6 +175,6 @@ export const Solution = () => {
                     )}
                 </ModalContent>
             </Modal>
-        </div>
+        </main>
     );
 };

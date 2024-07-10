@@ -4,21 +4,10 @@ import { useState, useRef, useContext } from "react";
 import { gql, useMutation } from "@apollo/client";
 import { UserContext } from "../context/UserContext";
 import { useTurnstile } from "../hooks/useTurnstile";
-import { NotFound } from "./NotFound";
+import { NotFound } from "../components/NotFound";
 import { Discord } from "../utils/Discord";
 import { useTranslation } from 'react-i18next';
-
-const LoginMutation = gql`
-mutation Login($query: String!, $password: String!, $token: String!) {
-    login(loginInput: { query: $query, password: $password, token: $token }) {
-        success
-        error {
-            code
-            message
-        }
-    }
-}
-`;
+import { LOGIN } from "../utils/Queries";
 
 export const Login = () => {
     const { t } = useTranslation(); 
@@ -28,7 +17,7 @@ export const Login = () => {
     const { user } = useContext(UserContext);
     const turnstileRef = useRef(null);
     useTurnstile();
-    const [loginMutation, { loading }] = useMutation(LoginMutation, {
+    const [loginMutation, { loading }] = useMutation(LOGIN, {
         onError: (error) => {
             setError(error.message);
             resetTurnstile();
@@ -60,13 +49,13 @@ export const Login = () => {
 
     if (user && user.getUser) return <NotFound />;
     return (
-        <div className="container mx-auto flex items-center min-h-[100vh] justify-center">
+        <main className="container mx-auto flex items-center min-h-[100vh] justify-center">
             <Card className="p-4 w-[450px] m-4 mb-[100px] bg-gray-800">
                 <CardHeader>
-                    <div>
+                    <section>
                         <h1 className="text-2xl font-bold">{t('login.header')}</h1>
                         <p className="text-gray-500">{t('login.welcome')}</p>
-                    </div>
+                    </section>
                 </CardHeader>
                 <CardBody>
                     <form onSubmit={(e) => handleLogin(e)} className="flex flex-col">
@@ -122,6 +111,6 @@ export const Login = () => {
                     </CardFooter>
                 )}
             </Card>
-        </div>
+        </main>
     );
 };

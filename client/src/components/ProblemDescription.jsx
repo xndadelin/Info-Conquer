@@ -11,7 +11,7 @@ const Accordion = ({ title, content, icon }) => {
     const [isOpen, setIsOpen] = useState(true);
 
     return (
-        <motion.div className="mb-6 bg-gray-800 rounded-lg shadow-lg overflow-hidden">
+        <motion.section className="mb-6 bg-gray-800 rounded-lg shadow-lg overflow-hidden">
             <button
                 className="w-full flex items-center justify-between p-4 focus:outline-none"
                 onClick={() => setIsOpen(!isOpen)}
@@ -40,7 +40,7 @@ const Accordion = ({ title, content, icon }) => {
                     <div className="text-base leading-relaxed text-gray-200" dangerouslySetInnerHTML={{ __html: content }}></div>
                 </div>
             </motion.div>
-        </motion.div>
+        </motion.section>
     );
 };
 

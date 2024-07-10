@@ -1,4 +1,4 @@
-import { useQuery, gql } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { Card, CardBody, CardHeader } from "@nextui-org/react";
 import { Link } from "@nextui-org/react";
 import { Loading } from "../components/Loading";
@@ -11,37 +11,16 @@ import { useTranslation } from "react-i18next";
 import { Chart, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Filler, Legend } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import { motion } from "framer-motion";
+import { GET_ANNOUNCEMENTS, GET_HOMEPAGE_INFO } from "../utils/Queries";
 
 
 export const Homepage = () => {
     const { t } = useTranslation();
     const { user } = useContext(UserContext);
 
-    const { loading: loadingAnnouncements, data: announcementsData } = useQuery(gql`
-        query getAnnouncements {
-            getAnnouncements {
-                title
-                content
-                createdBy
-            }
-        }
-    `);
+    const { loading: loadingAnnouncements, data: announcementsData } = useQuery(GET_ANNOUNCEMENTS)
 
-    const { loading: loadingInfo, data: infoData } = useQuery(gql`
-        query getHomepageInfo {
-            getHomepageInfo {
-                topProblems {
-                    title
-                    difficulty
-                    successRate
-                }
-                lastSeven {
-                    date
-                    count
-                }
-            }
-        }
-    `);
+    const { loading: loadingInfo, data: infoData } = useQuery(GET_HOMEPAGE_INFO)
 
     Chart.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Filler, Legend);
 
@@ -84,9 +63,9 @@ export const Homepage = () => {
 
 
     return (
-        <div className="container px-5 mx-auto my-5 mt-20">
-            <motion.div 
-                className="text-center mb-10 bg-gradient-to-r from-gray-900 to-gray-700 p-10 rounded-lg shadow-xl"
+        <main className="container px-5 mx-auto my-5 mt-20">
+            <motion.section 
+                className="text-center mb-10 bg-gradient-to-r from-gray-900 to-gray-700 p-10 rounded-lg shadow-2xl"
                 initial={{ opacity: 0, y: -50 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
@@ -100,9 +79,9 @@ export const Homepage = () => {
                 >
                     {t('homepage.welcome')}
                 </motion.p>
-            </motion.div>
+            </motion.section>
 
-            <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
+            <section className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
                 {[
                     { title: 'solveProblems', subtitle: 'conquering', icon: Trophy, color: 'green', link: '/problems' },
                     { title: 'dailyProblem', subtitle: 'todaysDaily', icon: Calendar, color: 'yellow', link: '/calendar' },
@@ -126,7 +105,7 @@ export const Homepage = () => {
                         </Card>
                     </motion.div>
                 ))}
-            </div>
+            </section>
 
             <motion.div 
                 className="mt-16 bg-gray-800 p-8 rounded-lg shadow-xl"
@@ -204,7 +183,7 @@ export const Homepage = () => {
                     </tbody>
                 </table>
             </motion.div>
-        </div>
+        </main>
     );
 };
 

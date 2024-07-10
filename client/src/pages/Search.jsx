@@ -1,22 +1,11 @@
 import { useState } from "react";
-import { gql, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { Link, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Tabs, Tab, Pagination, Input, Button } from "@nextui-org/react";
-import { Loading } from "./Loading";
-import { NotFound } from "../pages/NotFound";
-
-const SEARCH_QUERY = gql`
-  query GetSearch($query: String) {
-    getSearch(query: $query) {
-      users
-      problems
-      articles
-      contests
-      totalResults
-    }
-  }
-`;
+import { Loading } from "../components/Loading";
+import { NotFound } from "../components/NotFound";
+import { SEARCH } from "../utils/Queries";
 
 const SearchIcon = () => (
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
@@ -65,7 +54,7 @@ export const Search = () => {
         contests: 1
     });
 
-    const { data, loading, error, refetch } = useQuery(SEARCH_QUERY, {
+    const { data, loading, error, refetch } = useQuery(SEARCH, {
         variables: { query },
     });
 
@@ -78,10 +67,10 @@ export const Search = () => {
 
     if (!data || !data.getSearch || data.getSearch.totalResults === 0) {
         return (
-            <div className="container mx-auto h-screen w-screen my-5 p-3 text-center">
+            <section className="container mx-auto h-screen w-screen my-5 p-3 text-center">
                 <h2 className="text-3xl font-bold mb-4">{t("search.noResults")}</h2>
                 <p className="text-gray-500">{t("search.tryDifferentQuery")}</p>
-            </div>
+            </section>
         );
     }
 
@@ -91,7 +80,7 @@ export const Search = () => {
         const endIndex = startIndex + 10;
 
         return (
-            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
+            <section className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
                 <div className="overflow-x-auto">
                     <table className="w-full text-sm text-left text-gray-700 dark:text-gray-300">
                         <thead className="text-xs uppercase bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300">
@@ -130,13 +119,13 @@ export const Search = () => {
                     showControls
                     loop
                 />
-            </div>
+            </section>
         );
     };
 
     return (
-        <div className="container mx-auto max-w-6xl my-12 px-4">
-            <div className="mb-8">
+        <main className="container mx-auto max-w-6xl my-12 px-4">
+            <section className="mb-8">
                 <h1 className="text-3xl font-bold mb-4">{t("search.title")}</h1>
                 <div className="flex gap-2">
                     <Input
@@ -150,7 +139,7 @@ export const Search = () => {
                         {t("search.button")}
                     </Button>
                 </div>
-            </div>
+            </section>
 
             <Tabs
                 selectedKey={activeTab}
@@ -171,6 +160,6 @@ export const Search = () => {
                     {renderTable(data.getSearch.contests, "contests", "contests")}
                 </Tab>
             </Tabs>
-        </div>
+        </main>
     );
 };

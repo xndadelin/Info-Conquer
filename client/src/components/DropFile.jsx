@@ -66,7 +66,7 @@ export const DropFile = ({ tests, setTests }) => {
   };
 
   const renderDropZone = () => (
-    <div
+    <section
       onDrop={handleDrop}
       onDragOver={(e) => e.preventDefault()}
       className="w-full border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-blue-500 transition-colors duration-300 mb-4"
@@ -77,11 +77,11 @@ export const DropFile = ({ tests, setTests }) => {
       <p className="text-sm text-gray-500">
         Files should be named as "1.in", "1.out", etc.
       </p>
-    </div>
+    </section>
   );
 
   const renderTestCases = () => (
-    <div className="space-y-4 mb-8">
+    <section className="space-y-4 mb-8">
       {tests.length === 0 ? (
         <p className="text-center text-gray-500">
           No test cases added yet. Drop input/output files above.
@@ -102,26 +102,26 @@ export const DropFile = ({ tests, setTests }) => {
       {tests.map(({ number, score, input, output }, index) => (
         <Card key={number} className="shadow-md">
           <CardHeader className="flex justify-between max-md:flex-col gap-5">
-            <div>
-              <p className="text-md font-semibold">Test Case {index + 1}</p>
-              <p className="text-sm text-gray-500">
+            <section>
+              <h3 className="text-md font-semibold">Test Case {index + 1}</h3>
+              <h4 className="text-sm text-gray-500">
                 Score: {score || 'Not set'}
-              </p>
+              </h4>
               <div className="flex gap-2 flex-col mt-1">
                 <div className="flex flex-col">
-                  <p className="text-sm text-gray-500">Input:</p>
+                  <h4 className="text-sm text-gray-500">Input:</h4>
                   <div className="p-2 bg-neutral-800 rounded-lg">
                     <pre className="text-xs whitespace-pre-wrap">{input}</pre>
                   </div>
                 </div>
                 <div className="flex flex-col">
-                  <p className="text-sm text-gray-500">Output:</p>
+                  <h4 className="text-sm text-gray-500">Output:</h4>
                   <div className="p-2 bg-neutral-800 rounded-lg">
                     <pre className="text-xs whitespace-pre-wrap">{output}</pre>
                   </div>
                 </div>
               </div>
-            </div>
+            </section>
             <div className="flex gap-2 mb-auto">
               <Input
                 type="number"
@@ -141,13 +141,13 @@ export const DropFile = ({ tests, setTests }) => {
         </Card>
       ))}
 
-    </div>
+    </section>
   );
 
   return (
-    <div className='mt-5'>
+    <main className='mt-5'>
       {renderDropZone()}
       {renderTestCases()}
-    </div>
+    </main>
   );
 };
