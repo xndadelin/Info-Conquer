@@ -11,9 +11,7 @@ module.exports = {
         }   
         const now = new Date();
         contest.participants.sort((a, b) => b.score - a.score)
-        if(user){
-            const participates = contest.participants.some((participant) => participant.username === user.username)
-        }
+        const participates = user ? contest.participants.some((participant) => participant.username === user.username) : false
         await Promise.all(contest.problems.map(async (problem, index) => {
             const problemData = await Problem.findOne({title: problem})
             if (problemData) {
