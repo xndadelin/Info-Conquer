@@ -1,13 +1,19 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useQuery } from '@apollo/client';
 import { NotFound } from '../components/Miscellaneous/NotFound';
 import { Loading } from '../components/Miscellaneous/Loading';
 import { useTranslation } from 'react-i18next';
 import { GET_DAILIES } from '../utils/Queries';
+import { Error } from '../components/Miscellaneous/Error';
+import { UserContext } from '../context/UserContext';
+import { Link } from 'react-router-dom';
+import { Button } from '@nextui-org/react';
+import { LoginRequired } from '../components/Miscellaneous/LoginRequired';
 
 export const Calendar = () => {
     const { t } = useTranslation();
+    const { user } = useContext(UserContext);
     const months = [
         'January', 'February', 'March', 'April', 'May', 'June',
         'July', 'August', 'September', 'October', 'November', 'December'
@@ -33,6 +39,7 @@ export const Calendar = () => {
     const { data, loading, error } = useQuery(GET_DAILIES);
     if (loading) return <Loading />;
     if (!data || error) return <NotFound />;
+    if(!user.getUser) return <LoginRequired />;
 
     const dailies = data.getDailies;
     const dailiesMap = dailies.reduce((acc, d) => {
@@ -41,6 +48,7 @@ export const Calendar = () => {
         acc[key] = d;
         return acc;
     }, {});
+
 
     return (
         <main className="container mx-auto my-5 p-5">
