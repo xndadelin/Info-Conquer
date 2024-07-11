@@ -1,16 +1,16 @@
 import { Modal, ModalBody, ModalContent, ModalFooter, Button, ModalHeader, Textarea, Input, Chip } from "@nextui-org/react";
-import { Bug } from "../utils/Bug";
+import { Bug } from "../../utils/Bug";
 import { useState } from "react";
 import { useMutation } from "@apollo/client";
 import { useTranslation } from "react-i18next";
-import { REPORT_PROBLEM } from "../utils/Queries";
+import { REPORT_PROBLEM } from "../../utils/Queries";
 
 
 export const ReportProblem = ({ isOpen, onClose, problem, user }) => {
     const { t } = useTranslation();
     const [description, setDescription] = useState("");
     const [title, setTitle] = useState("");
-    const [createReport, { error }] = useMutation(REPORT_PROBLEM, {
+    const [createReport, { error, loading }] = useMutation(REPORT_PROBLEM, {
         onCompleted: () => {
             onClose();
         },
@@ -24,7 +24,7 @@ export const ReportProblem = ({ isOpen, onClose, problem, user }) => {
     });
     return (
         <section>
-            <Modal shadow="lg" placement="center" isOpen={isOpen} onClose={onClose}>
+            <Modal className="bg-gray-800" shadow="lg" placement="center" isOpen={isOpen} onClose={onClose}>
                 <ModalContent>
                     <ModalHeader className="flex align-center gap-3">
                         {t("reportProblemPage.reportProblemTitle")}
@@ -67,12 +67,12 @@ export const ReportProblem = ({ isOpen, onClose, problem, user }) => {
                     <ModalFooter>
                         <Button
                             variant="flat"
-                            color="success"
+                            color="primary"
                             isDisabled={!title || !description}
                             onClick={() => {
-                                onClose();
                                 createReport();
                             }}
+                            isLoading={loading}
                         >
                             {t("reportProblemPage.submitButtonText")}
                         </Button>

@@ -1,9 +1,9 @@
 import { gql, useMutation } from '@apollo/client';
 import { useState } from 'react';
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button } from '@nextui-org/react';
-import { Star } from '../utils/Star';
+import { Star } from '../../utils/Star';
 import { useTranslation } from 'react-i18next';
-import { RATE_PROBLEM } from '../utils/Queries';
+import { RATE_PROBLEM } from '../../utils/Queries';
 
 export const RateProblem = ({ isOpen, onClose, problem, onOpenChange, setUserHasRated }) => {
     const { t } = useTranslation();
@@ -64,7 +64,7 @@ export const RateProblem = ({ isOpen, onClose, problem, onOpenChange, setUserHas
 
     return (
         <section className="p-5">
-            <Modal size="md" onOpenChange={onOpenChange} isOpen={isOpen} onClose={onClose} title={t('rateProblemPage.rateProblemTitle')}>
+            <Modal className="bg-gray-800" size="md" onOpenChange={onOpenChange} isOpen={isOpen} onClose={onClose} title={t('rateProblemPage.rateProblemTitle')}>
                 <ModalContent>
                     <ModalHeader>{t('rateProblemPage.rateProblemHeader')}</ModalHeader>
                     <ModalBody>
@@ -83,7 +83,7 @@ export const RateProblem = ({ isOpen, onClose, problem, onOpenChange, setUserHas
                         </div>
                     </ModalBody>
                     <ModalFooter align="right">
-                        <Button color='danger' variant='flat' onClick={submit} isLoading={loading}>
+                        <Button color='primary' variant='flat' onClick={submit} isLoading={loading}>
                             {t('rateProblemPage.submitButton')}
                         </Button>
                     </ModalFooter>

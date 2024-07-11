@@ -1,13 +1,13 @@
 import { useCallback, useContext, useState } from 'react';
-import { NotFound } from '../components/NotFound';
+import { NotFound } from '../../components/Miscellaneous/NotFound';
 import { Input, Button, Chip } from '@nextui-org/react';
 import { gql, useMutation } from '@apollo/client';
 import { useTranslation } from 'react-i18next'; 
-import { UserContext } from '../context/UserContext';
+import { UserContext } from '../../context/UserContext';
 import CodeMirror from '@uiw/react-codemirror';
 import { oneDark } from '@codemirror/theme-one-dark';
 import { loadLanguage } from '@uiw/codemirror-extensions-langs';
-import { PUBLISH_ARTICLE } from '../utils/Queries';
+import { PUBLISH_ARTICLE } from '../../utils/Queries';
 
 export const PublishArticle = () => {
     const { t } = useTranslation(); 

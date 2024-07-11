@@ -1,9 +1,9 @@
 import { useParams } from "react-router-dom"
-import { gql, useMutation } from "@apollo/client"
+import { useMutation } from "@apollo/client"
 import { useContext, useEffect } from "react"
 import { UserContext } from "../context/UserContext"
 import { useState } from "react"
-import { Loading } from "../components/Loading"
+import { Loading } from "../components/Miscellaneous/Loading"
 import { VERIFY_TOKEN } from "../utils/Queries"
 
 export const VerifyEmail = () => {

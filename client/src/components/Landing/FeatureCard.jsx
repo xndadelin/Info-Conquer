@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Link } from "@nextui-org/react";
-import { fadeInLeft, fadeInRight } from "../utils/Fades";
+import { fadeInLeft, fadeInRight } from "../../utils/Fades";
 
 
 const FeatureCard = ({ feature, index }) => {

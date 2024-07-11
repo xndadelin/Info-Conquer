@@ -1,9 +1,9 @@
 import { gql, useQuery } from '@apollo/client';
-import { Loading } from '../components/Loading';
+import { Loading } from '../../components/Miscellaneous/Loading';
 import { Card, CardHeader } from '@nextui-org/react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { GET_ARTICLES } from '../utils/Queries';
+import { GET_ARTICLES } from '../../utils/Queries';
 
 export const Articles = () => {
     const { t } = useTranslation(); 

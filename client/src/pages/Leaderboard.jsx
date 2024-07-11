@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client';
-import { Loading } from '../components/Loading';
+import { Loading } from '../components/Miscellaneous/Loading';
 import { Avatar, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from '@nextui-org/react';
 import { useTranslation } from 'react-i18next';
 import { GET_LEADERBOARD } from '../utils/Queries';

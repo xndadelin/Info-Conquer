@@ -1,10 +1,10 @@
 import { Button, Input, Spacer, Chip } from "@nextui-org/react"
 import { useState, useContext } from "react"
-import { UserContext } from "../context/UserContext"
-import { NotFound } from "./NotFound"
+import { UserContext } from "../../context/UserContext"
+import { NotFound } from "../Miscellaneous/NotFound"
 import { useParams } from "react-router-dom"
 import { useMutation } from "@apollo/client"
-import { RESET_PASSWORD } from "../utils/Queries"
+import { RESET_PASSWORD } from "../../utils/Queries"
 
 export const ResetPassword = () => {
     const [password, setPassword] = useState("")

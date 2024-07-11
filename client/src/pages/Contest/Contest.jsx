@@ -1,14 +1,14 @@
 import { useParams } from "react-router-dom";
-import { gql, useQuery } from "@apollo/client";
-import { Loading } from "../components/Loading";
+import { useQuery } from "@apollo/client";
+import { Loading } from "../../components/Miscellaneous/Loading";
 import { useState } from "react";
 import { Button, Chip, Link } from "@nextui-org/react";
-import { NotFound } from "../components/NotFound";
-import { Error } from "../components/Error";
+import { NotFound } from "../../components/Miscellaneous/NotFound";
+import { Error } from "../../components/Miscellaneous/Error";
 import { useTranslation } from 'react-i18next';
 import { Bar } from 'react-chartjs-2';
 import { Chart, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Filler, Legend, BarElement } from 'chart.js';
-import { GET_CONTEST } from "../utils/Queries";
+import { GET_CONTEST } from "../../utils/Queries";
 
 const getColor = (score) => {
     if (score >= 90) return 'bg-green-500';

@@ -2,9 +2,9 @@ import { Link, useParams } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { useState } from "react";
 import { Pagination } from "@nextui-org/react";
-import { Loading } from "../components/Loading";
+import { Loading } from "../../components/Miscellaneous/Loading";
 import { useTranslation } from 'react-i18next';
-import { GET_PROBLEMS } from "../utils/Queries";
+import { GET_PROBLEMS } from "../../utils/Queries";
 
 export const Problems = () => {
   const { t } = useTranslation();
@@ -33,7 +33,7 @@ export const Problems = () => {
   return (
     <main className="container mx-auto my-10 p-4">
       <h1 className="text-6xl mb-5">{t('problemsPage.title')}</h1>
-      <section>
+      <section className="overflow-auto">
         <table className="w-full text-sm text-gray-300 border-collapse shadow-2xl rounded-tr">
           <thead className="bg-gray-800">
             <tr>

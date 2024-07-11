@@ -1,11 +1,11 @@
 import { gql, useQuery } from "@apollo/client";
 import { Link, useParams } from "react-router-dom";
-import { Loading } from "./Loading";
+import { Loading } from "../Miscellaneous/Loading";
 import { Card } from "@nextui-org/react";
 import { useTranslation } from "react-i18next";
 import { Chart, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Filler, Legend } from 'chart.js';
 import { Line } from 'react-chartjs-2';
-import { GET_STATS } from "../utils/Queries";
+import { GET_STATS } from "../../utils/Queries";
 
 
 export const ProblemStats = () => {

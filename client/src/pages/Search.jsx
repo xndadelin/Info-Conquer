@@ -3,8 +3,8 @@ import { useQuery } from "@apollo/client";
 import { Link, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Tabs, Tab, Pagination, Input, Button } from "@nextui-org/react";
-import { Loading } from "../components/Loading";
-import { NotFound } from "../components/NotFound";
+import { Loading } from "../components/Miscellaneous/Loading";
+import { NotFound } from "../components/Miscellaneous/NotFound";
 import { SEARCH } from "../utils/Queries";
 
 const SearchIcon = () => (

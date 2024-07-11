@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { gql, useQuery } from '@apollo/client';
-import { NotFound } from '../components/NotFound';
-import { Loading } from '../components/Loading';
+import { useQuery } from '@apollo/client';
+import { NotFound } from '../components/Miscellaneous/NotFound';
+import { Loading } from '../components/Miscellaneous/Loading';
 import { useTranslation } from 'react-i18next';
 import { GET_DAILIES } from '../utils/Queries';
 

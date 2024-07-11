@@ -4,9 +4,9 @@ import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Select, SelectItem } from "@nextui-org/react";
 import { useTranslation } from "react-i18next";
-import { UserContext } from "../context/UserContext";
-import { NotFound } from "../components/NotFound";
-import { CREATE_CONTEST, GET_PROBLEMS_TITLE } from "../utils/Queries";
+import { UserContext } from "../../context/UserContext";
+import { NotFound } from "../../components/Miscellaneous/NotFound";
+import { CREATE_CONTEST, GET_PROBLEMS_TITLE } from "../../utils/Queries";
 
 
 export const CreateConstest = () => {

@@ -2,7 +2,7 @@ import  { Chip } from "@nextui-org/react"
 import { Pagination } from "@nextui-org/react"
 import { Link } from "react-router-dom"
 import { useTranslation } from "react-i18next"
-import { getStatusColor } from "../utils/getStatusColor"
+import { getStatusColor } from "../../utils/getStatusColor"
 
 export const SubmissionsTable = ({ submissions, page, setPage }) => {
     

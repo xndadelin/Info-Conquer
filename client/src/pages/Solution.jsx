@@ -1,11 +1,10 @@
-import { useParams, Link, useNavigate } from "react-router-dom";
-import { gql, useQuery } from "@apollo/client";
-import { useContext, useEffect, useState } from "react";
+import { useParams, Link } from "react-router-dom";
+import { useQuery } from "@apollo/client";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Modal, ModalBody, ModalContent, ModalHeader, Button, CardBody, Card, CardHeader, Divider, Chip } from "@nextui-org/react";
-import { NotFound } from "../components/NotFound";
-import { Loading } from "../components/Loading";
-import { UserContext } from "../context/UserContext";
+import { NotFound } from "../components/Miscellaneous/NotFound";
+import { Loading } from "../components/Miscellaneous/Loading";
 import CodeMirror from '@uiw/react-codemirror';
 import { oneDark } from '@codemirror/theme-one-dark';
 import { loadLanguage } from '@uiw/codemirror-extensions-langs'
@@ -24,33 +23,24 @@ const languages_for_editor = {
 }
 
 export const Solution = () => {
-    const { id, username } = useParams();
+    const { id } = useParams();
     const { t } = useTranslation();
     const [selectedTestCase, setSelectedTestCase] = useState(null);
-    const { user } = useContext(UserContext);
     const [solution, setSolution] = useState(null);
 
 
-    const { error, loading } = useQuery(GET_SOLUTION, {
+    const { error, loading, data } = useQuery(GET_SOLUTION, {
         variables: { id },
         onCompleted: (data) => {
             setSolution(data.getSolution);
         }
     });
 
-    const navigate = useNavigate();
-
-    useEffect(() => {
-        if (!loading && (error || !user || !user.getUser || !solution || (user.getUser.username !== username && !user.getUser.admin))) {
-            navigate(-1);
-        }
-    }, [user, username, navigate]);
-
-    if (loading) {
+    if (loading || !solution) {
         return <Loading />;
     }
 
-    if (error || !user || !user.getUser || !solution) {
+    if (!data.getSolution || error || !data) {
         return <NotFound />;
     }
 

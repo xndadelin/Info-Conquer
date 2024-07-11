@@ -1,6 +1,6 @@
 import { useContext } from "react"
 import { UserContext } from "../context/UserContext"
-import { NotFound } from "../components/NotFound"
+import { NotFound } from "../components/Miscellaneous/NotFound"
 import { Input, Spacer, Button, Chip } from "@nextui-org/react"
 import { useState } from "react"
 import { useMutation } from "@apollo/client"

@@ -1,13 +1,13 @@
 import { gql, useQuery, useMutation } from "@apollo/client";
-import { Loading } from '../components/Loading';
+import { Loading } from '../../components/Miscellaneous/Loading';
 import { Button, Card, CardBody, CardFooter, CardHeader } from "@nextui-org/react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import { NotFound } from "../components/NotFound";
+import { NotFound } from "../../components/Miscellaneous/NotFound";
 import { useTranslation } from "react-i18next";
-import { UserContext } from "../context/UserContext";
+import { UserContext } from "../../context/UserContext";
 import { useContext } from "react";
-import { GET_CONTESTS, JOIN_CONTEST } from "../utils/Queries";
+import { GET_CONTESTS, JOIN_CONTEST } from "../../utils/Queries";
 import { motion } from "framer-motion";
 
 export const Contests = () => {

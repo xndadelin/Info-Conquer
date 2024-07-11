@@ -1,10 +1,10 @@
 import { useQuery } from '@apollo/client';
 import { useParams } from 'react-router-dom';
-import { NotFound } from '../components/NotFound';
-import { Loading } from '../components/Loading';
+import { NotFound } from '../../components/Miscellaneous/NotFound';
+import { Loading } from '../../components/Miscellaneous/Loading';
 import { Button, Spinner } from '@nextui-org/react';
 import { useState, useContext } from 'react';
-import { UserContext } from '../context/UserContext';
+import { UserContext } from '../../context/UserContext';
 import { useMutation } from '@apollo/client';
 import { Input, Chip } from '@nextui-org/react';
 import { useTranslation } from 'react-i18next';
@@ -12,7 +12,7 @@ import CodeMirror from '@uiw/react-codemirror';
 import { oneDark } from '@codemirror/theme-one-dark';
 import { loadLanguage } from '@uiw/codemirror-extensions-langs'
 import { useCallback } from 'react';
-import { GET_ARTICLE, EDIT_ARTICLE } from '../utils/Queries';
+import { GET_ARTICLE, EDIT_ARTICLE } from '../../utils/Queries';
 
 export const EditArticle = () => {
     const { id } = useParams();

@@ -1,7 +1,7 @@
 import { useMutation } from '@apollo/client'
 import { useEffect, useState } from 'react'
-import { Loading } from './Loading'
-import { AUTH_DISCORD } from '../utils/Queries'
+import { Loading } from '../Miscellaneous/Loading'
+import { AUTH_DISCORD } from '../../utils/Queries'
 
 export const AuthDiscord = () => {
     const code = new URLSearchParams(window.location.search).get('code')
@@ -26,6 +26,7 @@ export const AuthDiscord = () => {
         }
     }, [code])
     if (loading) return <Loading />
+    
     if (error) return (
         <div className='container h-screen mx-auto'></div>
     )

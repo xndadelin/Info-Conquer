@@ -1,7 +1,7 @@
 import { useQuery } from '@apollo/client';
 import { Link, useParams } from 'react-router-dom';
-import { Loading } from '../components/Loading';
-import { NotFound } from '../components/NotFound';
+import { Loading } from '../components/Miscellaneous/Loading';
+import { NotFound } from '../components/Miscellaneous/NotFound';
 import { useTranslation } from 'react-i18next';
 import { GET_ANNOUNCEMENT } from '../utils/Queries';
 

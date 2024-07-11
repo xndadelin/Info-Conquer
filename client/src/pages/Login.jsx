@@ -4,7 +4,7 @@ import { useState, useRef, useContext } from "react";
 import { gql, useMutation } from "@apollo/client";
 import { UserContext } from "../context/UserContext";
 import { useTurnstile } from "../hooks/useTurnstile";
-import { NotFound } from "../components/NotFound";
+import { NotFound } from "../components/Miscellaneous/NotFound";
 import { Discord } from "../utils/Discord";
 import { useTranslation } from 'react-i18next';
 import { LOGIN } from "../utils/Queries";

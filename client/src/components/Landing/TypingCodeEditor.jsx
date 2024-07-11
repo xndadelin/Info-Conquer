@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { CodeEditor } from './CodeEditor';
+import { CodeEditor } from '../Miscellaneous/CodeEditor';
 
-const TypingCodeEditor = ({ code, language }) => {
+const TypingCodeEditor = ({ code, language, file }) => {
     const [displayedCode, setDisplayedCode] = useState('');
     const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -22,7 +22,7 @@ const TypingCodeEditor = ({ code, language }) => {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
         >
-            <CodeEditor language={language} code={displayedCode} />
+            <CodeEditor file={file} language={language} code={displayedCode} />
         </motion.section>
     );
 };

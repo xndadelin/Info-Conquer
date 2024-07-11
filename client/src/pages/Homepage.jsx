@@ -1,7 +1,7 @@
 import { useQuery } from "@apollo/client";
 import { Card, CardBody, CardHeader } from "@nextui-org/react";
 import { Link } from "@nextui-org/react";
-import { Loading } from "../components/Loading";
+import { Loading } from "../components/Miscellaneous/Loading";
 import { UserContext } from "../context/UserContext";
 import { useContext } from "react";
 import { Calendar } from "../utils/Calendar";

@@ -1,24 +1,24 @@
 import { useParams } from 'react-router-dom'
 import { useQuery } from '@apollo/client'
-import { Loading } from '../components/Loading'
+import { Loading } from '../../components/Miscellaneous/Loading'
 import {Button, useDisclosure, Tabs, Tab } from '@nextui-org/react'
 import { useCallback, useContext, useState } from "react";
-import { UserContext } from "../context/UserContext";
+import { UserContext } from "../../context/UserContext";
 import { useMutation } from '@apollo/client'
-import { TestingSolution } from '../components/TestingSolution'
-import { NotFound } from "../components/NotFound";
-import { getTemplate } from '../utils/getLanguageTemplate'
-import { ProblemStats } from '../components/ProblemStats'
-import { RateProblem } from '../components/RateProblem'
-import { ReportProblem } from '../components/ReportProblem'
+import { TestingSolution } from '../../components/Problem/TestingSolution'
+import { NotFound } from "../../components/Miscellaneous/NotFound";
+import { getTemplate } from '../../utils/getLanguageTemplate'
+import { ProblemStats } from '../../components/Problem/ProblemStats'
+import { RateProblem } from '../../components/Problem/RateProblem'
+import { ReportProblem } from '../../components/Problem/ReportProblem'
 import { useTranslation } from 'react-i18next'
 import { Card, CardHeader, CardBody } from '@nextui-org/react'
-import { ProblemDescription } from '../components/ProblemDescription';
-import { GET_PROBLEM, GET_SUBMISSIONS, GET_CHATBOT_RESPONSE, SUBMIT_SOLUTION } from '../utils/Queries';
-import { ProblemInfo } from '../components/ProblemInfo';
-import { ProblemEditor } from '../components/ProblemEditor';
-import { SubmissionsTable } from '../components/SubmissionsTable';
-import { UserSolutionsTable } from '../components/UserSolutionsTable';
+import { ProblemDescription } from '../../components/Problem/ProblemDescription';
+import { GET_PROBLEM, GET_SUBMISSIONS, GET_CHATBOT_RESPONSE, SUBMIT_SOLUTION } from '../../utils/Queries';
+import { ProblemInfo } from '../../components/Problem/ProblemInfo';
+import { ProblemEditor } from '../../components/Problem/ProblemEditor';
+import { SubmissionsTable } from '../../components/Problem/SubmissionsTable';
+import { UserSolutionsTable } from '../../components/Problem/UserSolutionsTable';
 
 export const Problem = () => {
     const { user } = useContext(UserContext)

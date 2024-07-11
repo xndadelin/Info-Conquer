@@ -15,7 +15,7 @@ export const Settings = ({ t, data, setProfilePicture, profilePicture, updatePro
                             <div className="flex-grow">
                                 <Input
                                     label={t("profile.profilePicture")}
-                                    value={data.getProfile.profilePicture}
+                                    value={profilePicture}
                                     onChange={(e) => setProfilePicture(e.target.value)}
                                     className="mb-2"
                                 />

@@ -21,10 +21,10 @@
           "link_url": "//put here the docs"
         },
         {
-          "title": "Variety of problems",
-          "description": "InfoConquer is your gateway to the exciting world of programming. Immerse yourself in a diverse range of problems.",
-          "link_text": "See problems",
-          "link_url": "http://localhost:3000/problems"
+          "title": "Contests",
+          "description": "Participate in contests with other users and compete to see who is the best programmer! You have a live leaderboard to see your progress and the progress of other users.",
+          "link_text": "See contests",
+          "link_url": "http://localhost:3000/contests"
         },
         {
           "title": "Daily problems",

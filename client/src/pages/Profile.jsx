@@ -1,16 +1,16 @@
 import { useParams } from "react-router-dom"
 import { useQuery, useMutation } from "@apollo/client";
 import { useState } from "react";
-import { Loading } from "../components/Loading";
+import { Loading } from "../components/Miscellaneous/Loading";
 import { UserContext } from "../context/UserContext";
 import { useContext } from "react";
 import { Avatar, Tabs, Tab, Card, CardBody } from "@nextui-org/react";
-import { NotFound } from "../components/NotFound";
+import { NotFound } from "../components/Miscellaneous/NotFound";
 import { useTranslation } from 'react-i18next'
 import { getStatusColor } from "../utils/getStatusColor";
 import { CHANGE_PASSWORD, GET_ACTIVITY, UPDATE_EMAIL, UPDATE_PROFILE_PICTURE, UPDATE_USERNAME, UPDATE_BIO, GET_USER, LOGOUT, GET_PROFILE } from "../utils/Queries";
-import { Settings } from "../components/Settings";
-import { ProfileInfo } from "../components/ProfileInfo";
+import { Settings } from "../components/Settings/Settings";
+import { ProfileInfo } from "../components/Problem/ProfileInfo";
 
 
 export const Profile = () => {
@@ -103,7 +103,6 @@ export const Profile = () => {
 
     if (loading || loadingActivity) return <Loading />
     if (!data || error) return <NotFound />
-
     const seeSettings = currentUser && currentUser.getUser && currentUser.getUser.username === username
     return (
         <main className="min-h-screen py-8">
@@ -119,7 +118,7 @@ export const Profile = () => {
                         <sectio className="text-center md:text-left">
                             <h1 className="text-3xl font-bold mb-2">{data.getProfile.username}</h1>
                             <p className="text-xl text-gray-400 mb-4">
-                                {data.getProfile.admin === "true" ? t("profile.admin") : t("profile.user")}
+                                {data.getProfile.admin ? t("profile.admin") : t("profile.user")}
                             </p>
                             <p className="text-gray-400 mt-2">Created at: {new Date(+data.getProfile.createdAt).toLocaleString()}</p>
                             <p className="text-gray-400 mt-2">{t("profile.bio")}: {data.getProfile.bio}</p>
@@ -183,6 +182,8 @@ export const Profile = () => {
                                 updateBioError={updateBioError}
                                 updateProfilePictureMutation={updateProfilePictureMutation}
                                 updateProfilePictureError={updateProfilePictureError}
+                                setProfilePicture={setProfilePicture}
+                                profilePicture={profilePicture}
                             />
                         </Tab>
                     )}
