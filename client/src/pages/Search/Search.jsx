@@ -98,7 +98,7 @@ export const Search = () => {
                                     <td className="px-6 py-4 whitespace-nowrap">{startIndex + index + 1}</td>
                                     <td className="px-6 py-4 whitespace-nowrap">
                                         <Link
-                                            className="text-blue-600 dark:text-blue-400 hover:underline"
+                                            className="text-blue-600 hover:underline"
                                             to={`/${page}/${item}`}
                                         >
                                             {item}

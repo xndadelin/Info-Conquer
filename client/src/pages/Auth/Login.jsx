@@ -1,5 +1,5 @@
 import { Button, Card, CardBody, CardFooter, CardHeader, Checkbox, Chip, Divider, Input } from "@nextui-org/react";
-import { Link } from "@nextui-org/react";
+import { Link } from "react-router-dom";
 import { useState, useRef, useContext } from "react";
 import { useMutation } from "@apollo/client";
 import { UserContext } from "../../context/UserContext";
@@ -76,7 +76,7 @@ export const Login = () => {
                         </div>
                         <div className="mb-4 flex justify-between">
                             <Checkbox color="primary">{t('login.rememberMe')}</Checkbox>
-                            <Link href="/forgot-password" color="primary" isBlock>{t('login.forgotPassword')}</Link>
+                            <Link className="hover:underline" to="/forgot-password" color="primary">{t('login.forgotPassword')}</Link>
                         </div>
                         <div className="mb-4 self-center cf-turnstile" ref={turnstileRef} data-sitekey={process.env.REACT_APP_SITE_KEY}>
                         </div>
@@ -93,13 +93,13 @@ export const Login = () => {
                         <Divider className="mt-4 mx-auto w-[40px] p-0.5 rounded-lg" />
                         <Link 
                             className="self-center mt-2 flex gap-2 bg-[#5865F2] rounded-md p-2" 
-                            href={`${process.env.REACT_APP_DISCORD_REDIRECT}`} 
+                            to={`${process.env.REACT_APP_DISCORD_REDIRECT}`} 
                             color="foreground"
                         >
                             <Discord className="w-6 h-6 mr-2 inline-block" />
                             {t('login.loginWithDiscord')}
                         </Link>
-                        <Link className="self-center mt-2" href="/register" color="foreground" isBlock>{t('login.register')}</Link>
+                        <Link className="self-center mt-4 hover:underline" to="/register" color="foreground">{t('login.register')}</Link>
                     </form>
                 </CardBody>
                 

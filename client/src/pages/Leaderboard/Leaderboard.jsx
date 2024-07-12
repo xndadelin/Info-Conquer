@@ -121,7 +121,7 @@ export const Leaderboard = () => {
                                 <tr key={user.id} className='bg-gray-800 border-b border-gray-700'>
                                     <td className='p-3'>{index + 4}</td>
                                     <td className='p-3'>
-                                        <Link to={`/profile/${user.usermae}`} className='flex items-center gap-2 text-blue-600 hover:underline hover:text-blue-400'>
+                                        <Link to={`/profile/${user.username}`} className='flex items-center gap-2 text-blue-600 hover:underline hover:text-blue-400'>
                                             {user.username}
                                         </Link>
                                     </td>

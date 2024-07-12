@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
-import { Link } from '@nextui-org/react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 
 export const problems = [
     {
@@ -199,7 +199,7 @@ export const ProblemsSelection = () => {
                         whileHover={{ scale: 1.05, boxShadow: "0px 10px 30px -5px rgba(0, 0, 0, 0.3)" }}
                         className="flex flex-col p-6 bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl shadow-lg overflow-hidden"
                     >
-                        <Link href={`/problems/${problem.category}/none`} className="text-3xl font-bold text-primary-400 mb-4 hover:text-primary-300 transition-colors">
+                        <Link to={`/problems/${problem.category}/none`} className="text-3xl font-bold text-primary-400 mb-4 hover:text-primary-300 transition-colors">
                             {t(`problems.categories.${problem.category}`)}
                         </Link>
                         <div className="flex-grow">
@@ -207,7 +207,7 @@ export const ProblemsSelection = () => {
                                 {problem.subcategories.map((subcategory) => (
                                     <li key={subcategory} className="flex items-center space-x-2">
                                         <span className="text-secondary-400">•</span>
-                                        <Link href={`/problems/${problem.category}/${subcategory}`} className="text-gray-300 hover:text-white transition-colors">
+                                        <Link to={`/problems/${problem.category}/${subcategory}`} className="text-gray-300 hover:text-white transition-colors">
                                             {t(`problems.subcategories.${subcategory}`)}
                                         </Link>
                                     </li>
@@ -216,7 +216,7 @@ export const ProblemsSelection = () => {
                         </div>
                         <div className="mt-6">
                             <Link 
-                                href={`/problems/${problem.category}/none`}
+                                to={`/problems/${problem.category}/none`}
                                 className="inline-block px-4 py-2 bg-primary-600 text-white font-semibold rounded-lg hover:bg-primary-500 transition-colors"
                             >
                                 {t('problems.viewAll')}

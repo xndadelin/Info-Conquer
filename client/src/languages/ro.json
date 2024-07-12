@@ -24,13 +24,13 @@
         {
           "title": "Concursuri",
           "description": "InfoConquer este poarta ta de acces către lumea fascinantă a programării. Imersați-vă într-o gamă diversă de probleme.",
-          "link_text": "Vezi problemele",
-          "link_url": "http://localhost:3000/problems"
+          "link_text": "Vezi concursurile",
+          "link_url": "http://localhost:3000/contests"
         },
         {
           "title": "Probleme zilnice",
           "description": "În fiecare zi postăm o nouă problemă pe care să o rezolvați. Este o modalitate excelentă de a vă menține abilitățile ascuțite!",
-          "link_text": "Vezi articolele",
+          "link_text": "Vezi calendarul",
           "link_url": "http://localhost:3000/calendar"
         }
       ]

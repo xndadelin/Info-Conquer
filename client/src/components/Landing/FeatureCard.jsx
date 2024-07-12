@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Link } from "@nextui-org/react";
+import { Link } from "react-router-dom";
 import { fadeInLeft, fadeInRight } from "../../utils/Fades";
 
 
@@ -34,13 +34,13 @@ const FeatureCard = ({ feature, index }) => {
                     {feature.description}
                 </h5>
                 <Link
-                    href={feature.link}
+                    to={feature.link}
                     className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-cyan-500 to-blue-500 text-white font-semibold rounded-lg shadow-md hover:from-cyan-600 hover:to-blue-600 transition-all duration-300 group"
                 >
                     <span>{feature.linkText}</span>
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        className="h-5 w-5 ml-2 group-hover:translate-x-1 transition-transform"
+                        className="h-5 w-5 mt-1 ml-2 group-hover:translate-x-1 transition-transform"
                         fill="none"
                         viewBox="0 0 32 32"
                         stroke="currentColor"

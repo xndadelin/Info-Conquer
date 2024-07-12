@@ -1,4 +1,4 @@
-import { gql, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { Link, useParams } from "react-router-dom";
 import { Loading } from "../Miscellaneous/Loading";
 import { Card } from "@nextui-org/react";

@@ -1,6 +1,5 @@
 import { useQuery } from "@apollo/client";
 import { Card, CardBody, CardHeader } from "@nextui-org/react";
-import { Link } from "@nextui-org/react";
 import { Loading } from "../../components/Miscellaneous/Loading";
 import { UserContext } from "../../context/UserContext";
 import { useContext } from "react";
@@ -12,7 +11,7 @@ import { Chart, CategoryScale, LinearScale, PointElement, LineElement, Title, To
 import { Line } from 'react-chartjs-2';
 import { motion } from "framer-motion";
 import { GET_ANNOUNCEMENTS, GET_HOMEPAGE_INFO } from "../../utils/Queries";
-
+import { Link } from "react-router-dom";
 
 export const Homepage = () => {
     const { t } = useTranslation();
@@ -92,17 +91,19 @@ export const Homepage = () => {
                         whileHover={{ scale: 1.05, rotate: 2 }}
                         whileTap={{ scale: 0.95 }}
                     >
-                        <Card as={Link} href={item.link} className={`bg-${item.color}-500 p-6 rounded-xl shadow-lg transition-all duration-300 hover:shadow-2xl`}>
-                            <CardHeader className="flex justify-center items-center">
-                                <motion.div whileHover={{ rotate: 360 }} transition={{ duration: 0.5 }}>
-                                    <item.icon className="w-16 h-16" />
-                                </motion.div>
-                            </CardHeader>
-                            <CardBody>
-                                <h2 className="text-2xl font-bold text-center mb-2">{t(`homepage.${item.title}`)}</h2>
-                                <p className="text-gray-100 text-center">{t(`homepage.${item.subtitle}`)}</p>
-                            </CardBody>
-                        </Card>
+                        <Link to={item.link}>
+                            <Card className={`bg-${item.color}-500 p-6 rounded-xl shadow-lg transition-all duration-300 hover:shadow-2xl`}>
+                                <CardHeader className="flex justify-center items-center">
+                                    <motion.div whileHover={{ rotate: 360 }} transition={{ duration: 0.5 }}>
+                                        <item.icon className="w-16 h-16" />
+                                    </motion.div>
+                                </CardHeader>
+                                <CardBody>
+                                    <h2 className="text-2xl font-bold text-center mb-2">{t(`homepage.${item.title}`)}</h2>
+                                    <p className="text-gray-100 text-center">{t(`homepage.${item.subtitle}`)}</p>
+                                </CardBody>
+                            </Card>
+                        </Link>
                     </motion.div>
                 ))}
             </section>
@@ -130,17 +131,19 @@ export const Homepage = () => {
                             whileHover={{ scale: 1.03 }}
                             whileTap={{ scale: 0.98 }}
                         >
-                            <Card className="bg-gray-800 shadow-lg hover:shadow-2xl transition-all duration-300" as={Link} href={`/announcement/${encodeURIComponent(announcement.title)}`}>
-                                <CardBody className="p-6">
-                                    <h3 className="text-2xl font-bold text-primary-500 mb-2">{announcement.title}</h3>
-                                    <p className="text-gray-400 mb-4">{t('homepage.announcementBy')}{' '}
-                                        <Link href={`/profile/${announcement.createdBy}`} color="primary">
-                                            {announcement.createdBy}
-                                        </Link>
-                                    </p>
-                                    <div className="text-white" dangerouslySetInnerHTML={{ __html: `${announcement.content.slice(0, 500)}... <a class="text-primary-500 hover:underline" href='/announcement/${encodeURIComponent(announcement.title)}'>${t('homepage.seeMore')}</a>` }}></div>
-                                </CardBody>
-                            </Card>
+                            <Link to={`/announcement/${announcement.title}`}>
+                                <Card className="bg-gray-800 shadow-lg hover:shadow-2xl transition-all duration-300">
+                                    <CardBody className="p-6">
+                                        <h3 className="text-2xl font-bold text-primary-500 mb-2">{announcement.title}</h3>
+                                        <p className="text-gray-400 mb-4">{t('homepage.announcementBy')}{' '}
+                                            <Link to={`/profile/${announcement.createdBy}`} color="primary">
+                                                {announcement.createdBy}
+                                            </Link>
+                                        </p>
+                                        <div className="text-white" dangerouslySetInnerHTML={{ __html: `${announcement.content.slice(0, 500)}... <a class="text-primary-500 hover:underline" href='/announcement/${encodeURIComponent(announcement.title)}'>${t('homepage.seeMore')}</a>` }}></div>
+                                    </CardBody>
+                                </Card>
+                            </Link>
                         </motion.div>
                     ))}
                 </div>
@@ -169,7 +172,7 @@ export const Homepage = () => {
                             whileHover={{ scale: 1.02 }}
                         >
                             <td className="px-6 py-4 font-medium">
-                                <Link href={`/problem/${encodeURIComponent(problem.title)}`} color="primary" className="hover:underline">
+                                <Link to={`/problem/${encodeURIComponent(problem.title)}`} color="primary" className="hover:underline">
                                     {problem.title}
                                 </Link>
                             </td>

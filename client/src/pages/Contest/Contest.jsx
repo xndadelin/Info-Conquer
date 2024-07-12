@@ -2,13 +2,14 @@ import { useParams } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { Loading } from "../../components/Miscellaneous/Loading";
 import { useState } from "react";
-import { Button, Chip, Link } from "@nextui-org/react";
+import { Button, Chip } from "@nextui-org/react";
 import { NotFound } from "../../components/Miscellaneous/NotFound";
 import { Error } from "../../components/Miscellaneous/Error";
 import { useTranslation } from 'react-i18next';
 import { Bar } from 'react-chartjs-2';
 import { Chart, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Filler, Legend, BarElement } from 'chart.js';
 import { GET_CONTEST } from "../../utils/Queries";
+import { Link } from "react-router-dom";
 
 const getColor = (score) => {
     if (score >= 90) return 'bg-green-500';
@@ -153,7 +154,7 @@ export const Contest = () => {
                                     <tr className={`border-b border-gray-700 hover:bg-gray-700 transition-colors duration-200 ${index % 2 === 0 ? 'bg-gray-800' : 'bg-gray-900'}`} key={index}>
                                         <td className="px-6 py-4">{index + 1 + (page - 1) * participantsPerPage}</td>
                                         <td className="px-6 py-4">
-                                            <Link className="text-blue-400 hover:underline" href={`/profile/${participant.username}`}>
+                                            <Link className="text-blue-400 hover:underline" to={`/profile/${participant.username}`}>
                                                 {participant.username}
                                             </Link>
                                         </td>
@@ -199,7 +200,7 @@ export const Contest = () => {
                                         <tr className={`border-b border-gray-700 hover:bg-gray-700 transition-colors duration-200 ${index % 2 === 0 ? 'bg-gray-800' : 'bg-gray-900'}`} key={index}>
                                             <td className="px-6 py-4">{index + 1}</td>
                                             <td className="px-6 py-4">
-                                                <Link className="text-blue-400 hover:underline" href={`/contests/${id}/${problem.id}`}>
+                                                <Link className="text-blue-400 hover:underline" to={`/contests/${id}/${problem.id}`}>
                                                     {problem.id}
                                                 </Link>
                                             </td>

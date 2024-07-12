@@ -1,14 +1,11 @@
 import { useTranslation } from "react-i18next"
-import { Link, NavbarItem } from "@nextui-org/react"
+import { NavbarItem } from "@nextui-org/react"
 import { SearchBar } from "../Miscellaneous/SearchBar"
+import { Link } from "react-router-dom"
 
 export const NavbarContent = () => {
 
     const { t } = useTranslation()
-
-    const isActive = (href) => {
-        return window.location.pathname === href;
-    }
 
     const navbarContent = [
         {
@@ -34,23 +31,22 @@ export const NavbarContent = () => {
         },
     ]
 
-    return <>
+    return <div className="flex gap-5 items-center justify-between mx-auto">
         {navbarContent.map((item) => (
             <NavbarItem key={item.href}>
                 <Link
-                    isBlock
-                    color={isActive(item.href) ? "primary" : "foreground"}
-                    href={item.href}
-                    className={`flex items-center space-x-1 text-white transition-colors ${isActive(item.href) ? "font-extrabold" : ""
-                        }`}
+                    to={item.href}
+                    className="hover:font-extrabold"
                 >
-                    {item.icon}
-                    <span>{item.name}</span>
+                    <div className="flex gap-1">
+                        {item.icon}
+                        <span>{item.name}</span>
+                    </div>
                 </Link>
             </NavbarItem>
         ))}
         <NavbarItem>
             <SearchBar />
         </NavbarItem>
-    </>
+    </div>
 }

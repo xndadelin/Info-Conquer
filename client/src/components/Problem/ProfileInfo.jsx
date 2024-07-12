@@ -1,5 +1,6 @@
 import { Card, CardBody, CardHeader, Chip, Pagination } from "@nextui-org/react"
 import { Link } from "react-router-dom"
+
 export const ProfileInfo = ({ t, data, page, setPage, getStatusColor, dataActivity, setPageActivity, pageActivity }) => {
     return (
         <>

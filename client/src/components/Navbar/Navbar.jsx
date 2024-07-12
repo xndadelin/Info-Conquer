@@ -1,5 +1,5 @@
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenuToggle, NavbarMenu, NavbarMenuItem, Button } from "@nextui-org/react";
-import { Link } from "@nextui-org/react";
+import { Link } from "react-router-dom";
 import { useState, useContext } from "react";
 import { useTranslation } from 'react-i18next';
 import { UserContext } from "../../context/UserContext";
@@ -19,31 +19,28 @@ export const NavigationBar = () => {
 
     return (
         <Navbar isBlurred className="bg-transparent" isMenuOpen={isOpen} onMenuOpenChange={setIsOpen}>
-            <NavbarContent>
+            <NavbarContent justify="start">
                 <NavbarMenuToggle className="md:hidden text-white" />
                 <NavbarBrand>
-                    <Link href="/" color="foreground" size="lg" className="font-bold text-white">
+                    <Link to="/" color="foreground" size="lg" className="font-bold text-white">
                         {t('navbar.brand')}
                     </Link>
                 </NavbarBrand>
             </NavbarContent>
 
-            <NavbarContent className="hidden md:flex gap-4" justify="center">
+            <NavbarContent className="hidden md:flex" justify="center">
                 <NavbarCont />
             </NavbarContent>
 
             {!user || !user.getUser ? (
                 <NavbarContent justify="end">
                     <NavbarItem>
-                        <Button
-                            as={Link}
-                            href="/login"
-                            variant="flat"
-                            color="primary"
-                            className="font-semibold"
+                        <Link 
+                            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-300"
+                            to="/login"
                         >
-                            {t('navbar.login')}
-                        </Button>
+                        {t('navbar.login')}
+                    </Link>
                     </NavbarItem>
                 </NavbarContent>
             ) : (

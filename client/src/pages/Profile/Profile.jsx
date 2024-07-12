@@ -104,6 +104,7 @@ export const Profile = () => {
     if (loading || loadingActivity) return <Loading />
     if (!data || error) return <NotFound />
     const seeSettings = currentUser && currentUser.getUser && currentUser.getUser.username === username
+    
     return (
         <main className="min-h-screen py-8">
             <div className="container mx-auto px-4">
