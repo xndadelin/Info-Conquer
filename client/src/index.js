@@ -9,11 +9,9 @@ import { BrowserRouter } from 'react-router-dom';
 import { UserProvider } from './context/UserContext';
 import { I18nextProvider } from 'react-i18next'
 import i18n from './i18n';
-import ScrollTop from './utils/ScrollTop';
 const app = createRoot(document.getElementById('root'));
 app.render(
   <BrowserRouter>
-                <ScrollTop />
     <ApolloProvider client={client}>
       <React.StrictMode>
         <NextUIProvider>

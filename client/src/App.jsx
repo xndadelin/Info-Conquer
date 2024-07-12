@@ -35,15 +35,16 @@ import { SecurityPolicy } from "./pages/Policies/SecurityPolicy";
 import { NotFound } from "./components/Miscellaneous/NotFound";
 import { Loading } from "./components/Miscellaneous/Loading";
 import ScrollTop from "./utils/ScrollTop";
-
 function App() {
   const { user } = useContext(UserContext)
-  if (!user)
-    return <Loading />
+
+  if (!user) return <Loading />
+
   return (
     <div className="flex flex-col min-h-screen">
       <NavigationBar />
       <Help />
+      <ScrollTop />
       <Routes>
         <Route
           path="/"
