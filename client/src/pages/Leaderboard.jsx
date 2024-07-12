@@ -1,15 +1,18 @@
 import { useQuery } from '@apollo/client';
 import { Loading } from '../components/Miscellaneous/Loading';
-import { Avatar, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from '@nextui-org/react';
+import { Avatar, Pagination } from '@nextui-org/react';
 import { useTranslation } from 'react-i18next';
 import { GET_LEADERBOARD } from '../utils/Queries';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
+import { useState } from 'react';
 
 export const Leaderboard = () => {
     const { t } = useTranslation();
+    const [page, setPage] = useState(1);
 
     const { data, loading } = useQuery(GET_LEADERBOARD);
-
+    
     if (loading) return <Loading />;
 
     const top3 = data.getLeaderboard.slice(0, 3);
@@ -100,27 +103,41 @@ export const Leaderboard = () => {
             </motion.section>
             {rest.length > 0 && (
                 <motion.section
-                    className="overflow-x-auto"
+                    className="overflow-x-auto overflow-y-hidden rounded-md"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.6 }}
                 >
-                    <Table isCompact>
-                        <TableHeader className="bg-gray-800 text-gray-300">
-                            <TableColumn className="border-b border-gray-700">{t('leaderboard.table.rank')}</TableColumn>
-                            <TableColumn className="border-b border-gray-700">{t('leaderboard.table.username')}</TableColumn>
-                            <TableColumn className="border-b border-gray-700">{t('leaderboard.table.solvedProblems')}</TableColumn>
-                        </TableHeader>
-                        <TableBody>
-                            {rest.map((user, index) => (
-                                <TableRow key={index} className="hover:bg-[#292929]">
-                                    <TableCell className="border-b border-gray-700">{index + 4}</TableCell>
-                                    <TableCell className="border-b border-gray-700">{user.username}</TableCell>
-                                    <TableCell className="border-b border-gray-700">{user.solvedProblems}</TableCell>
-                                </TableRow>
+                    <table className='w-full text-sm text-gray-300 border-collapse shadow-2xl'>
+                        <thead>
+                            <tr className='bg-gray-800 border-b border-gray-700'>
+                                <th className='p-3 text-left'>{t('leaderboard.table.rank')}</th>
+                                <th className='p-3 text-left'>{t('leaderboard.table.username')}</th>
+                                <th className='p-3 text-left'>{t('leaderboard.table.solvedProblems')}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {rest.slice((page - 1) * 20, page * 20).map((user, index) => (
+                                <tr key={user.id} className='bg-gray-800 border-b border-gray-700'>
+                                    <td className='p-3'>{index + 4}</td>
+                                    <td className='p-3'>
+                                        <Link to={`/profile/${user.usermae}`} className='flex items-center gap-2 text-blue-600 hover:underline hover:text-blue-400'>
+                                            {user.username}
+                                        </Link>
+                                    </td>
+                                    <td className='p-3'>{user.solvedProblems}</td>
+                                </tr>
                             ))}
-                        </TableBody>
-                    </Table>
+                        </tbody>
+                    </table>
+                    <Pagination
+                        total={Math.ceil(rest.length / 20)}
+                        page={page}
+                        onChange={setPage}
+                        className='mt-5 mr-0'
+                        showControls
+                        loop
+                    />
                 </motion.section>
             )}
         </motion.main>

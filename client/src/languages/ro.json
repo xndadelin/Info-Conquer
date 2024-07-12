@@ -3,7 +3,8 @@
       "title": "🚀 Bun venit pe ",
       "title2": "Hub-ul tău suprem pentru rezolvarea problemelor de algoritmica!",
       "description": " este dedicat tuturor celor care doresc să învețe programare prin rezolvarea problemelor, participarea la concursuri cu alți utilizatori, abordarea provocărilor și problemelor. După aceea, poți crea un articol cu propriile soluții!",
-      "get_started_button": "Începe acum prin crearea unui cont!"
+      "get_started_button": "Începe acum prin crearea unui cont!",
+      "learn_more_button": "Află mai multe"
     },
     "why_choose_section": {
       "title": "De ce să alegi InfoConquer?",
@@ -192,7 +193,8 @@
       "table": {
         "top": "Top",
         "username": "Nume de utilizator",
-        "solvedProblems": "Probleme rezolvate"
+        "solvedProblems": "Probleme rezolvate",
+        "rank": "Rang"
       },
       "gold": "Aur",
       "silver": "Argint",
@@ -227,7 +229,7 @@
       "rememberMe": "Ține-mă minte",
       "forgotPassword": "Ați uitat parola?",
       "loginButton": "Autentificare",
-      "loginWithDiscord": "Autentificare cu Discord",
+      "loginWithDiscord": "Continuă cu Discord",
       "register": "Nu aveți cont? Înregistrați-vă!"
     },
     "register": {

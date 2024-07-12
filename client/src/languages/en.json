@@ -3,7 +3,8 @@
       "title": "🚀 Welcome to ",
       "title2": "Your ultimate hub for problem-solving!",
       "description": " is dedicated to everyone who wants to learn programming by solving problems, participating in contests with other users, tackling challenges and problems. You can after create an article with your own solutions!",
-      "get_started_button": "Get started by creating an account!"
+      "get_started_button": "Get started by creating an account!",
+      "learn_more_button": "Learn more"
     },
     "why_choose_section": {
       "title": "Why choose InfoConquer?",
@@ -200,7 +201,8 @@
       "table": {
         "top": "Top",
         "username": "Username",
-        "solvedProblems": "Solved problems"
+        "solvedProblems": "Solved problems",
+        "rank": "Rank"
       },
       "gold": "Gold",
       "silver": "Silver",
@@ -235,7 +237,7 @@
       "rememberMe": "Remember me",
       "forgotPassword": "Forgot password?",
       "loginButton": "Login",
-      "loginWithDiscord": "Login with Discord",
+      "loginWithDiscord": "Continue with Discord",
       "register": "Don't have an account? Register!"
     },
     "register": {

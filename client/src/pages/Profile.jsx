@@ -115,7 +115,7 @@ export const Profile = () => {
                                 src={data.getProfile.profilePicture}
                             />
                         </section>
-                        <sectio className="text-center md:text-left">
+                        <section className="text-center md:text-left">
                             <h1 className="text-3xl font-bold mb-2">{data.getProfile.username}</h1>
                             <p className="text-xl text-gray-400 mb-4">
                                 {data.getProfile.admin ? t("profile.admin") : t("profile.user")}
@@ -140,7 +140,7 @@ export const Profile = () => {
                                     <p className="text-sm text-gray-300">{t("profile.acceptedSolutions")}</p>
                                 </Card>
                             </div>
-                        </sectio>
+                        </section>
                     </CardBody>
                 </Card>
 

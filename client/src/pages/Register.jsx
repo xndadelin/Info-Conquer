@@ -6,6 +6,7 @@ import { UserContext } from "../context/UserContext";
 import { useTurnstile } from "../hooks/useTurnstile";
 import { useTranslation } from 'react-i18next'; 
 import { REGISTER } from "../utils/Queries";
+import { Discord } from "../utils/Discord";
 
 
 export const Register = () => {
@@ -115,6 +116,14 @@ export const Register = () => {
                             {t('register.registerButton')}
                         </Button>
                         <Divider className="mt-4 mx-auto w-[40px] p-0.5 rounded-lg"/>
+                        <Link 
+                            className="self-center mt-2 flex gap-2 bg-[#5865F2] rounded-md p-2" 
+                            href={`${process.env.REACT_APP_DISCORD_REDIRECT}`} 
+                            color="foreground"
+                        >
+                            <Discord className="w-6 h-6 mr-2 inline-block" />
+                            {t('login.loginWithDiscord')}
+                        </Link>
                         <Link className="self-center mt-2" href="/login" color="foreground" isBlock>
                             {t('register.login')}
                         </Link>

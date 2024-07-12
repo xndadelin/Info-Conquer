@@ -43,7 +43,7 @@ export const Landing = () => {
                                     {t('welcome_section.get_started_button')}
                                 </Button>
                                 <Button as={Link} href='#features' size="lg" color='secondary' className="hover:scale-105 transition-transform text-lg px-8 py-3">
-                                    See Features
+                                    {t('welcome_section.learn_more_button')}
                                 </Button>
                             </div>
 
