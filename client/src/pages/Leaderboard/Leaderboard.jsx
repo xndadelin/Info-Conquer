@@ -1,8 +1,8 @@
 import { useQuery } from '@apollo/client';
-import { Loading } from '../components/Miscellaneous/Loading';
+import { Loading } from '../../components/Miscellaneous/Loading';
 import { Avatar, Pagination } from '@nextui-org/react';
 import { useTranslation } from 'react-i18next';
-import { GET_LEADERBOARD } from '../utils/Queries';
+import { GET_LEADERBOARD } from '../../utils/Queries';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';

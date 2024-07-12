@@ -1,11 +1,11 @@
 import { Button, Link } from '@nextui-org/react';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
-import { fadeIn, fadeInLeft, fadeInRight } from '../utils/Fades';
-import { code } from '../utils/Codes';
-import FeatureCard from '../components/Landing/FeatureCard';
-import TypingCodeEditor from '../components/Landing/TypingCodeEditor';
-import VerticalTimeline from '../components/Landing/VerticalTimeline';
+import { fadeIn, fadeInLeft, fadeInRight } from '../../utils/Fades';
+import { code } from '../../utils/Codes';
+import FeatureCard from '../../components/Landing/FeatureCard';
+import TypingCodeEditor from '../../components/Landing/TypingCodeEditor';
+import VerticalTimeline from '../../components/Landing/VerticalTimeline';
 
 export const Landing = () => {
     const { t } = useTranslation();

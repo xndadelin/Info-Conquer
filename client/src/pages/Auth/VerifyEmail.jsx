@@ -1,10 +1,10 @@
 import { useParams } from "react-router-dom"
 import { useMutation } from "@apollo/client"
 import { useContext, useEffect } from "react"
-import { UserContext } from "../context/UserContext"
+import { UserContext } from "../../context/UserContext"
 import { useState } from "react"
-import { Loading } from "../components/Miscellaneous/Loading"
-import { VERIFY_TOKEN } from "../utils/Queries"
+import { Loading } from "../../components/Miscellaneous/Loading"
+import { VERIFY_TOKEN } from "../../utils/Queries"
 
 export const VerifyEmail = () => {
     const { user } = useContext(UserContext)

@@ -1,10 +1,10 @@
 import { useContext, useState } from 'react';
 import { Button, Chip, Input, Textarea } from '@nextui-org/react';
-import { gql, useMutation } from '@apollo/client';
-import { UserContext } from '../context/UserContext';
-import { NotFound } from '../components/Miscellaneous/NotFound';
+import { useMutation } from '@apollo/client';
+import { UserContext } from '../../context/UserContext';
+import { NotFound } from '../../components/Miscellaneous/NotFound';
 import { useTranslation } from 'react-i18next';
-import { POST_ANNOUNCEMENT } from '../utils/Queries';
+import { POST_ANNOUNCEMENT } from '../../utils/Queries';
 
 export const PostAnnouncement = () => {
     const { t } = useTranslation();

@@ -5,11 +5,11 @@ import { Select, SelectItem } from "@nextui-org/react";
 import { Chip } from "@nextui-org/react";
 import { useMutation } from "@apollo/client";
 import { useContext } from "react";
-import { UserContext } from "../context/UserContext";
-import { NotFound } from "../components/Miscellaneous/NotFound";
-import { DropFile } from "../components/Problem/DropFile";
-import { problems } from "./Problems/ProblemsSelection";
-import { CREATE_PROBLEM } from "../utils/Queries";
+import { UserContext } from "../../context/UserContext";
+import { NotFound } from "../../components/Miscellaneous/NotFound";
+import { DropFile } from "../../components/Problem/DropFile";
+import { problems } from "./ProblemsSelection";
+import { CREATE_PROBLEM } from "../../utils/Queries";
 
 export const PublishProblem = () => {
     const { user } = useContext(UserContext)

@@ -3,13 +3,13 @@ import { useQuery } from "@apollo/client";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Modal, ModalBody, ModalContent, ModalHeader, Button, CardBody, Card, CardHeader, Divider, Chip } from "@nextui-org/react";
-import { NotFound } from "../components/Miscellaneous/NotFound";
-import { Loading } from "../components/Miscellaneous/Loading";
+import { NotFound } from "../../components/Miscellaneous/NotFound";
+import { Loading } from "../../components/Miscellaneous/Loading";
 import CodeMirror from '@uiw/react-codemirror';
 import { oneDark } from '@codemirror/theme-one-dark';
 import { loadLanguage } from '@uiw/codemirror-extensions-langs'
-import { getStatusColor } from "../utils/getStatusColor";
-import { GET_SOLUTION } from "../utils/Queries";
+import { getStatusColor } from "../../utils/getStatusColor";
+import { GET_SOLUTION } from "../../utils/Queries";
 
 const languages_for_editor = {
     'C++': 'cpp',

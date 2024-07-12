@@ -1,10 +1,10 @@
 import { useContext } from "react"
-import { UserContext } from "../context/UserContext"
-import { NotFound } from "../components/Miscellaneous/NotFound"
+import { UserContext } from "../../context/UserContext"
+import { NotFound } from "../../components/Miscellaneous/NotFound"
 import { Input, Spacer, Button, Chip } from "@nextui-org/react"
 import { useState } from "react"
 import { useMutation } from "@apollo/client"
-import { FORGOT_PASSWORD } from "../utils/Queries"
+import { FORGOT_PASSWORD } from "../../utils/Queries"
 
 export const ForgotPassword = () => {
     const [email, setEmail] = useState("")

@@ -1,16 +1,16 @@
 import { useParams } from "react-router-dom"
 import { useQuery, useMutation } from "@apollo/client";
 import { useState } from "react";
-import { Loading } from "../components/Miscellaneous/Loading";
-import { UserContext } from "../context/UserContext";
+import { Loading } from "../../components/Miscellaneous/Loading";
+import { UserContext } from "../../context/UserContext";
 import { useContext } from "react";
 import { Avatar, Tabs, Tab, Card, CardBody } from "@nextui-org/react";
-import { NotFound } from "../components/Miscellaneous/NotFound";
+import { NotFound } from "../../components/Miscellaneous/NotFound";
 import { useTranslation } from 'react-i18next'
-import { getStatusColor } from "../utils/getStatusColor";
-import { CHANGE_PASSWORD, GET_ACTIVITY, UPDATE_EMAIL, UPDATE_PROFILE_PICTURE, UPDATE_USERNAME, UPDATE_BIO, GET_USER, LOGOUT, GET_PROFILE } from "../utils/Queries";
-import { Settings } from "../components/Settings/Settings";
-import { ProfileInfo } from "../components/Problem/ProfileInfo";
+import { getStatusColor } from "../../utils/getStatusColor";
+import { CHANGE_PASSWORD, GET_ACTIVITY, UPDATE_EMAIL, UPDATE_PROFILE_PICTURE, UPDATE_USERNAME, UPDATE_BIO, GET_USER, LOGOUT, GET_PROFILE } from "../../utils/Queries";
+import { Settings } from "../../components/Settings/Settings";
+import { ProfileInfo } from "../../components/Problem/ProfileInfo";
 
 
 export const Profile = () => {

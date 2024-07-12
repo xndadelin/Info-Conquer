@@ -2,11 +2,11 @@ import { Button, Card, CardBody, CardFooter, CardHeader, Checkbox, Chip, Divider
 import { Link } from "@nextui-org/react";
 import { useState, useRef, useContext } from "react";
 import { gql, useMutation } from "@apollo/client";
-import { UserContext } from "../context/UserContext";
-import { useTurnstile } from "../hooks/useTurnstile";
+import { UserContext } from "../../context/UserContext";
+import { useTurnstile } from "../../hooks/useTurnstile";
 import { useTranslation } from 'react-i18next'; 
-import { REGISTER } from "../utils/Queries";
-import { Discord } from "../utils/Discord";
+import { REGISTER } from "../../utils/Queries";
+import { Discord } from "../../utils/Discord";
 
 
 export const Register = () => {

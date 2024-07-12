@@ -3,9 +3,9 @@ import { useQuery } from "@apollo/client";
 import { Link, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Tabs, Tab, Pagination, Input, Button } from "@nextui-org/react";
-import { Loading } from "../components/Miscellaneous/Loading";
-import { NotFound } from "../components/Miscellaneous/NotFound";
-import { SEARCH } from "../utils/Queries";
+import { Loading } from "../../components/Miscellaneous/Loading";
+import { NotFound } from "../../components/Miscellaneous/NotFound";
+import { SEARCH } from "../../utils/Queries";
 
 const SearchIcon = () => (
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
