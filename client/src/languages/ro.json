@@ -21,16 +21,16 @@
           "link_url": "//pune aici documentația"
         },
         {
-          "title": "Varietate de probleme",
+          "title": "Concursuri",
           "description": "InfoConquer este poarta ta de acces către lumea fascinantă a programării. Imersați-vă într-o gamă diversă de probleme.",
           "link_text": "Vezi problemele",
           "link_url": "http://localhost:3000/problems"
         },
         {
-          "title": "Publicarea articolelor",
-          "description": "Împărtășește-ți cunoștințele cu lumea prin publicarea articolelor pe InfoConquer. Platforma noastră este locul perfect pentru a împărtăși perspectivele tale.",
+          "title": "Probleme zilnice",
+          "description": "În fiecare zi postăm o nouă problemă pe care să o rezolvați. Este o modalitate excelentă de a vă menține abilitățile ascuțite!",
           "link_text": "Vezi articolele",
-          "link_url": "http://localhost:3000/articles"
+          "link_url": "http://localhost:3000/calendar"
         }
       ]
     },
@@ -489,7 +489,8 @@
       "problems": "Probleme",
       "articles": "Articole",
       "contests": "Concursuri",
-      "noResults": "Niciun rezultat găsit"
+      "noResults": "Niciun rezultat găsit",
+      "tryDifferentQuery": "Încearcă o căutare diferită"
     },
     "errors": {
       "notFound": "Pagina nu a fost găsită"

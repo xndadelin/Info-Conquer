@@ -67,7 +67,7 @@ export const Search = () => {
 
     if (!data || !data.getSearch || data.getSearch.totalResults === 0) {
         return (
-            <section className="container mx-auto h-screen w-screen my-5 p-3 text-center">
+            <section className="container mx-auto h-screen w-screen p-3 text-center flex flex-col justify-center">
                 <h2 className="text-3xl font-bold mb-4">{t("search.noResults")}</h2>
                 <p className="text-gray-500">{t("search.tryDifferentQuery")}</p>
             </section>

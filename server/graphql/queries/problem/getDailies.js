@@ -4,7 +4,7 @@ const { getUser } = require('../../../utils/getUser')
 module.exports = {
     async getDailies(_, {}, context) {
         const user = await getUser(context)
-        if(!user) throw new ApolloError('You have to be logged in order to access the dailies!')
+        if(!user) return null
         const dailies = await Daily.find({})
         for(const daily of dailies){
             const solved = daily.solvers.includes(user.username)

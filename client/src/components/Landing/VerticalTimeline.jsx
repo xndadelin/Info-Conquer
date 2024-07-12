@@ -1,28 +1,16 @@
 import { CodeEditor } from "../Miscellaneous/CodeEditor";
-import { useTranslation } from "react-i18next";
 import { c_code, java_code, py_code, cpp_code } from "../../utils/Codes";
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
+import {fadeInLeft, fadeInRight, scaleIn} from "../../utils/Fades";
 
 
 const VerticalTimeline = () => {
 
-    const fadeInLeft = {
-        hidden: { opacity: 0, x: -100 },
-        visible: { opacity: 1, x: 0, transition: { duration: 0.8, ease: "easeOut" } }
-    };
-
-    const fadeInRight = {
-        hidden: { opacity: 0, x: 100 },
-        visible: { opacity: 1, x: 0, transition: { duration: 0.8, ease: "easeOut" } }
-    };
-
-    const scaleIn = {
-        hidden: { scale: 0.8, opacity: 0 },
-        visible: { scale: 1, opacity: 1, transition: { duration: 0.1 } }
-    };
+    const { t } = useTranslation();
 
     const languages = [
-        {file: 'main.c', name: 'C', code: c_code, variant: fadeInLeft, language: 'c', description: 'C is a general-purpose, procedural computer programming language supporting structured programming, lexical variable scope, and recursion, with a static type system.' },
+        {file: 'main.c', name: 'C', code: c_code, variant: fadeInLeft, language: 'c', description: t() },
         {file: 'main.cpp', name: 'C++', code: cpp_code, variant: fadeInRight, language: 'cpp', description: 'C++ is a general-purpose programming language created by Bjarne Stroustrup as an extension of the C programming language, or "C with Classes".' },
         {file: 'main.py', name: 'Python', code: py_code, variant: fadeInLeft, language: 'python', description: 'Python is an interpreted high-level general-purpose programming language. Python\'s design philosophy emphasizes code readability with its notable use of significant indentation.' },
         {file: 'main.java', name: 'Java', code: java_code, variant: fadeInRight, language: 'java', description: 'Java is a class-based, object-oriented programming language that is designed to have as few implementation dependencies as possible.' }

@@ -12,25 +12,25 @@
           "title": "Integrated OpenAI Helper",
           "description": "Enjoy the benefits of our integrated OpenAI ChatGPT feedback. At request, you can get a feedback on your code from ChatGPT anytime you want.",
           "link_text": "OpenAI Platform",
-          "link_url": "//put here the docs"
+          "link_url": "https://platform.openai.com/"
         },
         {
           "title": "Code judger integrated",
           "description": "Our integrated code judger will help you test your code against a variety of test cases. You can also see the time and memory consumption of your code, as well as the output and the expected output to point out your mistakes.",
           "link_text": "See how I have done it",
-          "link_url": "//put here the docs"
+          "link_url": "https://github.com/xndadelin/Info-Conquer"
         },
         {
           "title": "Contests",
-          "description": "Participate in contests with other users and compete to see who is the best programmer! You have a live leaderboard to see your progress and the progress of other users.",
-          "link_text": "See contests",
-          "link_url": "http://localhost:3000/contests"
+          "description": "Participă la concursuri cu alți utilizatori și concurează pentru a vedea cine este cel mai bun programator! Aveți un clasament live pentru a vedea progresul dvs. și progresul altor utilizatori.",
+          "link_text": "Vezi concursurile",
+          "link_url": "https:://infoconquer.net/contests"
         },
         {
           "title": "Daily problems",
           "description": "Every day we post a new problem for you to solve. It's a great way to keep your skills sharp!",
           "link_text": "See calendar",
-          "link_url": "http://localhost:3000/calendar"
+          "link_url": "https://infoconquer.net/calendar"
         }
       ]
     },
@@ -510,7 +510,8 @@
       "title": "Search results:",
       "button": "Search",
       "index": "Index",
-      "placeholder": "Search for problems, articles, contests, etc."
+      "placeholder": "Search for problems, articles, contests, etc.",
+      "tryDifferentQuery": "Try a different query"
     },
     "errors": {
       "notFound": "Page not found"
