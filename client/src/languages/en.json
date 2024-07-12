@@ -23,7 +23,7 @@
         },
         {
           "title": "Contests",
-          "description": "Participă la concursuri cu alți utilizatori și concurează pentru a vedea cine este cel mai bun programator! Aveți un clasament live pentru a vedea progresul dvs. și progresul altor utilizatori.",
+          "description": "Participate in contests with other users and compete to see who is the best programmer! You have a live leaderboard to see your progress. and the progress of other users.",
           "link_text": "Vezi concursurile",
           "link_url": "https:://infoconquer.net/contests"
         },
@@ -40,7 +40,8 @@
       "c": "C is a general-purpose, procedural computer programming language supporting structural programming, lexical variable scope, and recursion, with a static type system.",
       "cpp": "C++ is a general-purpose programming language created as an extension of the C programming language, or 'C with Classes'.",
       "py": "Python is an interpreted, high-level, general-purpose programming language.",
-      "java": "Java is a class-based, object-oriented programming language that is designed to have as few implementation dependencies as possible."
+      "java": "Java is a class-based, object-oriented programming language that is designed to have as few implementation dependencies as possible.",
+      "meta": "Programming languages"
     },
     "contests": {
       "header": "Contests",

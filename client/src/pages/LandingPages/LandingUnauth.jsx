@@ -81,7 +81,7 @@ export const Landing = () => {
             <div className="bg-gradient-to-br from-gray-900 to-blue-800 py-20">
                 <div className="container mx-auto px-4">
                     <p className="text-5xl text-center font-bold text-white mb-12">
-                        Languages
+                       {t('languages.meta')}
                     </p>
                     <VerticalTimeline />
                 </div>

@@ -40,7 +40,8 @@
       "c": "C este un limbaj de programare de uz general, procedural, care sprijină programarea structurală, scoping-ul variabilelor lexicale și recursivitatea, având un sistem de tip static.",
       "cpp": "C++ este un limbaj de programare de uz general creat ca o extensie a limbajului de programare C, sau 'C cu Clase'.",
       "py": "Python este un limbaj de programare interpretat, de nivel înalt, de uz general.",
-      "java": "Java este un limbaj de programare orientat pe obiecte, bazat pe clase, conceput pentru a avea cât mai puține dependențe de implementare posibil."
+      "java": "Java este un limbaj de programare orientat pe obiecte, bazat pe clase, conceput pentru a avea cât mai puține dependențe de implementare posibil.",
+      "meta": "Limbaje de programare"
     },
     "contests": {
       "header": "Concursuri",

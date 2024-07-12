@@ -10,10 +10,10 @@ const VerticalTimeline = () => {
     const { t } = useTranslation();
 
     const languages = [
-        {file: 'main.c', name: 'C', code: c_code, variant: fadeInLeft, language: 'c', description: t() },
-        {file: 'main.cpp', name: 'C++', code: cpp_code, variant: fadeInRight, language: 'cpp', description: 'C++ is a general-purpose programming language created by Bjarne Stroustrup as an extension of the C programming language, or "C with Classes".' },
-        {file: 'main.py', name: 'Python', code: py_code, variant: fadeInLeft, language: 'python', description: 'Python is an interpreted high-level general-purpose programming language. Python\'s design philosophy emphasizes code readability with its notable use of significant indentation.' },
-        {file: 'main.java', name: 'Java', code: java_code, variant: fadeInRight, language: 'java', description: 'Java is a class-based, object-oriented programming language that is designed to have as few implementation dependencies as possible.' }
+        {file: 'main.c', name: 'C', code: c_code, variant: fadeInLeft, language: 'c', description: t('languages.c') },
+        {file: 'main.cpp', name: 'C++', code: cpp_code, variant: fadeInRight, language: 'cpp', description: t('languages.coo') },
+        {file: 'main.py', name: 'Python', code: py_code, variant: fadeInLeft, language: 'python', description: t('languages.python') },
+        {file: 'main.java', name: 'Java', code: java_code, variant: fadeInRight, language: 'java', description: t('languages.java') }
     ];
 
     return (
