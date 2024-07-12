@@ -95,13 +95,20 @@ export const ProblemEditor = ({ user, problem, language, code, onChangeLanguage,
 
     return user?.getUser ? (
         <main>
-            <section className="flex flex-wrap justify-between items-center bg-[#1e1e1e] rounded-tl-2xl rounded-tr-2xl p-4">
-                <Select defaultSelectedKeys={[language]} onChange={(e) => onChangeLanguage(e.target.value)} label={t('problem.selectLanguage')} className="sm:w-48 mb-2 sm:mb-0">
+            <section className="flex flex-wrap justify-between items-center bg-[#1e1e1e] rounded-tl-2xl rounded-tr-2xl">
+                <Select 
+                    defaultSelectedKeys={[language]} 
+                    onChange={(e) => onChangeLanguage(e.target.value)} 
+                    label={t('problem.selectLanguage')} 
+                    className="sm:w-48 mb-2 sm:mb-0"
+                >
                     {problem.getProblem.languages.map((lang) => (<SelectItem key={lang} value={lang}>{lang}</SelectItem>))}
                 </Select>
 
                 <div className="flex flex-wrap gap-2 w-full sm:w-auto">
-                    <Tooltip size="sm" closeDelay={1000} color="warning" placement="left" content={<div><p>{t('problem.chatGPT')}</p><p>{t('problem.chatGPTNote')}</p><Textarea onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); getChatbotMessage(); setPrompt(''); } }} endContent={<Button isLoading={loadingBot} disabled={!prompt} color="warning" className="self-end text-2xl" size="sm" variant="flat" onClick={() => getChatbotMessage()}>↑</Button>} onChange={(e) => setPrompt(e.target.value)} value={prompt} label={t('problem.prompt')} className="w-full" /></div>}>
+                    <Tooltip 
+                        size="sm" 
+                        closeDelay={1000} color="warning" placement="left" content={<div><p>{t('problem.chatGPT')}</p><p>{t('problem.chatGPTNote')}</p><Textarea onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); getChatbotMessage(); setPrompt(''); } }} endContent={<Button isLoading={loadingBot} disabled={!prompt} color="warning" className="self-end text-2xl" size="sm" variant="flat" onClick={() => getChatbotMessage()}>↑</Button>} onChange={(e) => setPrompt(e.target.value)} value={prompt} label={t('problem.prompt')} className="w-full" /></div>}>
                         <Button isLoading={loadingBot} className="mt-2 mb-2 mr-2" color="warning" variant="flat">🤖</Button>
                     </Tooltip>
 
@@ -117,6 +124,7 @@ export const ProblemEditor = ({ user, problem, language, code, onChangeLanguage,
                     extensions={[loadLanguage(languages_for_editor[language] || 'markdown')]}
                     onChange={onChangeCode}
                     height="700px"
+                    className='max-w-full'
                 />
             </section>
         </main>

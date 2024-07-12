@@ -69,6 +69,7 @@ body{
 }
 .cm-editor{
     background-color: #1e1e1e;
+    max-width: calc(100vw - 70px);
 }
 .cm-gutter {
     background-color: #1e1e1e;
