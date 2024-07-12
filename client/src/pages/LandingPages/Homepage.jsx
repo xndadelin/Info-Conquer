@@ -172,7 +172,7 @@ export const Homepage = () => {
                             whileHover={{ scale: 1.02 }}
                         >
                             <td className="px-6 py-4 font-medium">
-                                <Link to={`/problem/${encodeURIComponent(problem.title)}`} color="primary" className="hover:underline">
+                                <Link to={`/problems/${encodeURIComponent(problem.title)}`} color="primary" className="hover:underline">
                                     {problem.title}
                                 </Link>
                             </td>
