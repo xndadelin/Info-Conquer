@@ -118,16 +118,16 @@ export const Contest = () => {
             <section className="bg-gray-800 rounded-lg shadow-lg p-8 mb-10 transition-all duration-300 hover:shadow-xl">
                 <h1 className="text-4xl font-bold mb-6 text-blue-400">{data.getContest.name}</h1>
                 <div>
-                    <InfoItem  label={t('contest.createdBy')} value={data.getContest.createdBy} />
-                    <InfoItem  label={t('contest.startDate')} value={new Date(data.getContest.startDate).toLocaleString()} />
-                    <InfoItem  label={t('contest.endDate')} value={new Date(data.getContest.endDate).toLocaleString()} />
-                    <InfoItem   label="Duration" value={`${(Math.abs(new Date(data.getContest.endDate) - new Date(data.getContest.startDate)) / (1000 * 60 * 60)).toFixed(2)} hours`} />
-                    <InfoItem  label={t('contest.languages')} value={data.getContest.languages.join(", ")} />
-                    <InfoItem  label={t('contest.description')} value={data.getContest.description} />
-                    <InfoItem  label={t('contest.problems')} value={data.getContest.problems.length ? data.getContest.problems.map(problem => problem.id).join(", ") : 'Soon'} />
-                    <InfoItem  label={t('contest.participants')} value={data.getContest.participants.length} />
-                    <InfoItem  label={t('contest.hasStarted')} value={data.getContest.started ? t('contest.yes') : t('contest.no')} />
-                    <InfoItem  label={t('contest.hasEnded')} value={data.getContest.ended ? t('contest.yes') : t('contest.no')} />
+                    <InfoItem label={t('contest.createdBy')} value={data.getContest.createdBy} />
+                    <InfoItem label={t('contest.startDate')} value={new Date(data.getContest.startDate).toLocaleString()} />
+                    <InfoItem label={t('contest.endDate')} value={new Date(data.getContest.endDate).toLocaleString()} />
+                    <InfoItem label="Duration" value={`${(Math.abs(new Date(data.getContest.endDate) - new Date(data.getContest.startDate)) / (1000 * 60 * 60)).toFixed(2)} hours`} />
+                    <InfoItem label={t('contest.languages')} value={data.getContest.languages.join(", ")} />
+                    <InfoItem label={t('contest.description')} value={data.getContest.description} />
+                    <InfoItem label={t('contest.problems')} value={data.getContest.problems.length ? data.getContest.problems.map(problem => problem.id).join(", ") : 'Soon'} />
+                    <InfoItem label={t('contest.participants')} value={data.getContest.participants.length} />
+                    <InfoItem label={t('contest.hasStarted')} value={data.getContest.started ? t('contest.yes') : t('contest.no')} />
+                    <InfoItem label={t('contest.hasEnded')} value={data.getContest.ended ? t('contest.yes') : t('contest.no')} />
                 </div>
             </section>
 

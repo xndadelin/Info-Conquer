@@ -1,4 +1,4 @@
-import { Button, Link } from '@nextui-org/react';
+import { Button } from '@nextui-org/react';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { fadeIn, fadeInLeft, fadeInRight } from '../../utils/Fades';
@@ -6,6 +6,7 @@ import { code } from '../../utils/Codes';
 import FeatureCard from '../../components/Landing/FeatureCard';
 import TypingCodeEditor from '../../components/Landing/TypingCodeEditor';
 import VerticalTimeline from '../../components/Landing/VerticalTimeline';
+import { Link } from 'react-router-dom';
 
 export const Landing = () => {
     const { t } = useTranslation();
@@ -34,17 +35,23 @@ export const Landing = () => {
                                 </span>{' '}
                                 {t('welcome_section.title2')}
                             </h1>
+                            
                             <p className="text-xl text-gray-300 mt-4">
                                 <span className="from-blue-400 to-blue-200 bg-clip-text text-transparent bg-gradient-to-r font-bold">InfoConquer</span>
-                                {' '}{t('welcome_section.description')}
+                                {t('welcome_section.description')}
                             </p>
-                            <div className='flex gap-5'>
-                                <Button as={Link} href="/register" size="lg" color='primary' className="hover:scale-105 transition-transform text-lg px-8 py-3">
-                                    {t('welcome_section.get_started_button')}
-                                </Button>
-                                <Button as={Link} href='#features' size="lg" color='secondary' className="hover:scale-105 transition-transform text-lg px-8 py-3">
-                                    {t('welcome_section.learn_more_button')}
-                                </Button>
+
+                            <div className='flex gap-5 max-md:flex-col'>
+                                <Link to="/register">
+                                    <Button color="primary" className="hover:scale-105 transition-transform text-lg px-8 py-6 max-sm:text-sm max-sm:font-extrabold">
+                                        {t('welcome_section.get_started_button')}
+                                    </Button>
+                                </Link>
+                                <Link to="#features">
+                                    <Button color="warning" className="hover:scale-105 transition-transform text-lg px-8 py-6 max-sm:text-sm max-sm:font-extrabold">
+                                        {t('welcome_section.learn_more_button')}
+                                    </Button>
+                                </Link>
                             </div>
 
                         </motion.div>
@@ -100,9 +107,9 @@ export const Landing = () => {
                     <Button
                         as={Link}
                         href="/register"
-                        size="lg"
+                        size='lg'
                         color="warning"
-                        className="hover:scale-105 transition-transform text-lg px-8 py-3"
+                        className="hover:scale-105 transition-transform text-lg px-8 py-3 max-sm:text-sm"
                     >
                         {t('welcome_section.get_started_button')}
                     </Button>

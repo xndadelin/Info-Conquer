@@ -132,6 +132,7 @@ export const Solution = () => {
                             height="100%"
                             extensions={[loadLanguage(languages_for_editor[solution.language])]}
                             readOnly
+                            id="code-mirror-editor"
                         />
                     </CardBody>
                 </Card>

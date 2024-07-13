@@ -57,7 +57,7 @@ body{
 }
 .cm-content > div,
 .cm-content span {
-    font-family: monospace;
+    font-family: monospace !important;
     font-size: 16px;
 }
 .cm-lineNumbers > div {
@@ -77,4 +77,7 @@ body{
 .cm-theme {
     height: 100%;
     font-family: monospace;
+}
+#code-mirror-editor > .cm-editor {
+    max-width: 100% !important;
 }

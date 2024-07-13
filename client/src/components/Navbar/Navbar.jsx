@@ -1,4 +1,4 @@
-import { Navbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenuToggle, NavbarMenu, NavbarMenuItem, Button } from "@nextui-org/react";
+import { Navbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenuToggle, NavbarMenu, NavbarMenuItem } from "@nextui-org/react";
 import { Link } from "react-router-dom";
 import { useState, useContext } from "react";
 import { useTranslation } from 'react-i18next';
@@ -35,9 +35,12 @@ export const NavigationBar = () => {
             {!user || !user.getUser ? (
                 <NavbarContent justify="end">
                     <NavbarItem>
-                        <Button color="primary">
-                            <Link to="/login">{t('navbar.login')}</Link>
-                        </Button>
+                        <Link
+                            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-300"
+                            to="/login"
+                        >
+                            {t('navbar.login')}
+                        </Link>
                     </NavbarItem>
                 </NavbarContent>
             ) : (

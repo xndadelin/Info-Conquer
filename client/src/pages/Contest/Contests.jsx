@@ -1,4 +1,4 @@
-import { gql, useQuery, useMutation } from "@apollo/client";
+import { useQuery, useMutation } from "@apollo/client";
 import { Loading } from '../../components/Miscellaneous/Loading';
 import { Button, Card, CardBody, CardFooter, CardHeader } from "@nextui-org/react";
 import { Link } from "react-router-dom";
@@ -78,7 +78,7 @@ export const Contests = () => {
                                         {new Date(contest.endDate).toLocaleString()}
                                         <div className="flex flex-col">
                                             <h4 className="text-xl font-bold">{features.languages}:</h4>
-                                            <ul className="ml-3 list-disc">
+                                            <ul className="ml-3 list-disc list-inside">
                                                 {contest.languages.map((language) => (
                                                     <li>{language}</li>
                                                 ))}

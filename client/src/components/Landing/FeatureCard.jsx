@@ -14,8 +14,6 @@ const FeatureCard = ({ feature, index }) => {
         >
             <motion.div
                 className="absolute -top-12 -right-12 w-40 h-40 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full opacity-20 group-hover:scale-150 transition-transform duration-500"
-                whileHover={{ rotate: 360 }}
-                transition={{ duration: 0.5, repeat: Infinity, ease: "linear" }}
             />
             <motion.div
                 className="relative z-10 flex items-center justify-center h-16 w-16 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-500 text-white shadow-lg"

@@ -3,7 +3,7 @@
       "title": "🚀 Bun venit pe ",
       "title2": "Hub-ul tău suprem pentru rezolvarea problemelor de algoritmica!",
       "description": " este dedicat tuturor celor care doresc să învețe programare prin rezolvarea problemelor, participarea la concursuri cu alți utilizatori, abordarea provocărilor și problemelor. După aceea, poți crea un articol cu propriile soluții!",
-      "get_started_button": "Începe acum prin crearea unui cont!",
+      "get_started_button": "Începe acum!",
       "learn_more_button": "Află mai multe"
     },
     "why_choose_section": {
@@ -25,13 +25,13 @@
           "title": "Concursuri",
           "description": "InfoConquer este poarta ta de acces către lumea fascinantă a programării. Imersați-vă într-o gamă diversă de probleme.",
           "link_text": "Vezi concursurile",
-          "link_url": "http://localhost:3000/contests"
+          "link_url": "https://infoconquer.net/contests"
         },
         {
           "title": "Probleme zilnice",
           "description": "În fiecare zi postăm o nouă problemă pe care să o rezolvați. Este o modalitate excelentă de a vă menține abilitățile ascuțite!",
           "link_text": "Vezi calendarul",
-          "link_url": "http://localhost:3000/calendar"
+          "link_url": "https://infoconquer.net/calendar"
         }
       ]
     },

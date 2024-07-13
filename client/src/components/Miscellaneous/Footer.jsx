@@ -1,4 +1,4 @@
-import { Button, Divider } from "@nextui-org/react";
+import { Divider } from "@nextui-org/react";
 import { Link } from "react-router-dom";
 
 export const Footer = () => {
@@ -37,9 +37,9 @@ export const Footer = () => {
             </section>
             
             <div className="flex gap-4 mt-6">
-                <Link href="/terms" className="text-gray-400 text-sm hover:text-gray-200 transition duration-300">Terms</Link>
-                <Link href="/privacy-policy" className="text-gray-400 text-sm hover:text-gray-200 transition duration-300">Privacy</Link>
-                <Link href="/contact" className="text-gray-400 text-sm hover:text-gray-200 transition duration-300">Contact</Link>
+                <Link to="/terms" className="text-gray-400 text-sm hover:text-gray-200 transition duration-300">Terms</Link>
+                <Link to="/privacy-policy" className="text-gray-400 text-sm hover:text-gray-200 transition duration-300">Privacy</Link>
+                <Link to="/contact" className="text-gray-400 text-sm hover:text-gray-200 transition duration-300">Contact</Link>
             </div>
         </footer>
     );

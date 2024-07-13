@@ -11,8 +11,8 @@ const VerticalTimeline = () => {
 
     const languages = [
         {file: 'main.c', name: 'C', code: c_code, variant: fadeInLeft, language: 'c', description: t('languages.c') },
-        {file: 'main.cpp', name: 'C++', code: cpp_code, variant: fadeInRight, language: 'cpp', description: t('languages.coo') },
-        {file: 'main.py', name: 'Python', code: py_code, variant: fadeInLeft, language: 'python', description: t('languages.python') },
+        {file: 'main.cpp', name: 'C++', code: cpp_code, variant: fadeInRight, language: 'cpp', description: t('languages.cpp') },
+        {file: 'main.py', name: 'Python', code: py_code, variant: fadeInLeft, language: 'python', description: t('languages.py') },
         {file: 'main.java', name: 'Java', code: java_code, variant: fadeInRight, language: 'java', description: t('languages.java') }
     ];
 
@@ -21,7 +21,7 @@ const VerticalTimeline = () => {
             {languages.map((lang, index) => (
                 <motion.div 
                     key={lang.name}
-                    className={`container relative w-full md:w-1/2 p-6 mb-12 z-10 ${index % 2 === 0 ? 'md:pr-12 md:left-0' : 'md:pl-12 md:left-1/2'}`}
+                    className={`container relative w-full p-1 md:w-1/2 mb-12 z-10 ${index % 2 === 0 ? 'md:pr-12 md:left-0' : 'md:pl-12 md:left-1/2'}`}
                     initial="hidden"
                     whileInView="visible"
                     variants={lang.variant}

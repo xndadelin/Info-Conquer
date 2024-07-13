@@ -3,7 +3,7 @@
       "title": "🚀 Welcome to ",
       "title2": "Your ultimate hub for problem-solving!",
       "description": " is dedicated to everyone who wants to learn programming by solving problems, participating in contests with other users, tackling challenges and problems. You can after create an article with your own solutions!",
-      "get_started_button": "Get started by creating an account!",
+      "get_started_button": "Get started!",
       "learn_more_button": "Learn more"
     },
     "why_choose_section": {
@@ -25,7 +25,7 @@
           "title": "Contests",
           "description": "Participate in contests with other users and compete to see who is the best programmer! You have a live leaderboard to see your progress. and the progress of other users.",
           "link_text": "See contests",
-          "link_url": "https:://infoconquer.net/contests"
+          "link_url": "https://infoconquer.net/contests"
         },
         {
           "title": "Daily problems",

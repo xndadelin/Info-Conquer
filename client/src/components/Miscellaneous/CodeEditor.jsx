@@ -29,6 +29,7 @@ export const CodeEditor = ({ language, code, file }) => {
           value={code}
           theme={oneDark}
           className="text-sm"
+          id='code-mirror-editor'
         />
       </div>
       <footer className="h-[30px] bg-gray-800 flex items-center justify-between px-4">
