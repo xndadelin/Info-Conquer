@@ -113,7 +113,7 @@ export const ProblemEditor = ({ user, problem, language, code, onChangeLanguage,
                     </Tooltip>
 
                     <Tooltip color="danger" content={t('problem.runCode')}>
-                        <Button className="mt-2 mb-2" color="danger" disabled={!language || !code || !user || !user.getUser} variant="flat" onClick={() => { onHandleSubmitSolution(); onOpenChange(); setTests('') }}>{t('problem.submit')}</Button>
+                        <Button className="mt-2 mr-2 mb-2" color="danger" disabled={!language || !code || !user || !user.getUser} variant="flat" onClick={() => { onHandleSubmitSolution(); onOpenChange(); setTests('') }}>{t('problem.submit')}</Button>
                     </Tooltip>
                 </div>
             </section>
