@@ -67,9 +67,8 @@ export const Article = () => {
     if (loading) return <Loading />
     if (!data) return <NotFound />
     return (
-        <main className='container mx-auto py-10'>
-            <Link to="#main-content" className="sr-only focus:not-sr-only">Skip to main content</Link>
-            <article className='flex flex-col p-3'>
+        <main className='container mx-auto py-10' id="announcement">
+            <section className='flex flex-col p-3'>
                 <header className='flex justify-between flex-wrap gap-3'>
                     <div>
                         <h1 className="text-5xl font-extrabold">{title}</h1>
@@ -112,12 +111,8 @@ export const Article = () => {
                         )}
                     </div>
                 </header>
-                <div
-                    id="main-content"
-                    className="mt-5"
-                    dangerouslySetInnerHTML={{ __html: content }}
-                ></div>
-            </article>
+            </section>
+            <article className="mt-5" dangerouslySetInnerHTML={{ __html: content }}></article>
         </main>
     )
 }

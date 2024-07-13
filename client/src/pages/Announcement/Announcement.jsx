@@ -26,13 +26,13 @@ export const Announcement = () => {
             <header>
                 <h1 className="text-3xl font-bold">{data.getAnnouncement.title}</h1>
             </header>
-            <section className="text-slate">
-                <p>{t('announcement.announcedBy')}</p>
+            <section className="text-slate flex gap-1">
+                <p>{t('announcement.announcedBy')}</p> 
                 <Link to={`/profile/${data.getAnnouncement.createdBy}`} className="text-default-500">
                     {data.getAnnouncement.createdBy}
                 </Link>
             </section>
-            <article className='mt-5' dangerouslySetInnerHTML={{ __html: data.getAnnouncement.content }}></article>
+            <article className='mt-5 whitespace-break-spaces' dangerouslySetInnerHTML={{ __html: data.getAnnouncement.content }}></article>
         </main>
     );
 };
