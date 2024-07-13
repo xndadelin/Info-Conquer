@@ -1,8 +1,11 @@
 const User = require('../../../models/user')
-const {ApolloError} = require('apollo-server-express')
+
 module.exports = {
-      async getLeaderboard(_, {}, context){
+      async getLeaderboard(_, {}){
           const users = await User.aggregate([
+              {
+                $match: { verified: true }
+              },
               {
                 $project: {
                   username: 1,

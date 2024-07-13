@@ -164,3 +164,48 @@ body{
   font-weight: 100;
   font-style: normal;
 }
+pre > code > span {
+    font-family: monospace;
+    font-size: 16px;
+}
+pre > code {
+    font-family: monospace !important;
+    font-size: 16px !important;
+}
+
+#announcement > article > h1 {
+  @apply text-4xl font-bold;
+}
+
+#announcement > article > h2 {
+  @apply text-3xl font-semibold;
+}
+#announcement > article a {
+  @apply text-blue-500 hover:underline;
+}
+
+#announcement > article > ul,
+#announcement > article > ol {
+  @apply list-disc list-inside;
+}
+
+#announcement > article > blockquote {
+  @apply border-l-4 border-gray-300 pl-4 italic text-gray-600;
+}
+
+#announcement > article > img {
+  @apply max-w-full h-auto;
+}
+
+#announcement > article > table {
+  @apply w-full table-auto;
+}
+
+#announcement > article > table > thead > tr > th,
+#announcement > article > table > tbody > tr > td {
+  @apply border px-4 py-2 text-left;
+}
+
+#announcement > article > pre {
+  @apply bg-gray-800 text-white p-4 rounded max-w-fit;
+}

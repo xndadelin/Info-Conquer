@@ -4,19 +4,25 @@ import { Loading } from '../../components/Miscellaneous/Loading';
 import { NotFound } from '../../components/Miscellaneous/NotFound';
 import { useTranslation } from 'react-i18next';
 import { GET_ANNOUNCEMENT } from '../../utils/Queries';
-
+import Prism from 'prismjs';
+import 'prismjs/themes/prism-tomorrow.min.css';
+import { useEffect } from 'react';
 export const Announcement = () => {
     const { title } = useParams();
     const { data, error, loading } = useQuery(GET_ANNOUNCEMENT, {
         variables: { title }
     });
     const { t } = useTranslation();
-
+    
+    useEffect(() => {
+        Prism.highlightAll();
+    })
+    
     if (loading) return <Loading />;
     if (error) return <NotFound />;
 
     return (
-        <main className="container mx-auto py-10">
+        <main id='announcement' className="container mx-auto py-10 overflow-auto p-5">
             <header>
                 <h1 className="text-3xl font-bold">{data.getAnnouncement.title}</h1>
             </header>

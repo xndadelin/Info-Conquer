@@ -8,11 +8,9 @@ import { UserContext } from '../../context/UserContext';
 import { useMutation } from '@apollo/client';
 import { Input, Chip } from '@nextui-org/react';
 import { useTranslation } from 'react-i18next';
-import CodeMirror from '@uiw/react-codemirror';
-import { oneDark } from '@codemirror/theme-one-dark';
-import { loadLanguage } from '@uiw/codemirror-extensions-langs'
 import { useCallback } from 'react';
 import { GET_ARTICLE, EDIT_ARTICLE } from '../../utils/Queries';
+import { Editor } from '@tinymce/tinymce-react';
 
 export const EditArticle = () => {
     const { id } = useParams();
@@ -22,9 +20,6 @@ export const EditArticle = () => {
     const [tag, setTag] = useState('');
     const { t } = useTranslation();
 
-    const onChangeCode = useCallback((val) => {
-        setContent(val)
-    })
 
     const onAddTag = () => {
         setTags([...tags, tag]);
@@ -86,15 +81,17 @@ export const EditArticle = () => {
                 ))}
             </section>
             
-            <section className='rounded-lg'>
-                <CodeMirror
-                    value={content}
-                    onChange={onChangeCode}
-                    theme={oneDark}
-                    extensions={[loadLanguage('html')]}
-                    height='1000px'
-                />
-            </section>
+            <Editor
+                apiKey={process.env.REACT_APP_TINY_MCE_API_KEY}
+                init={{
+                    plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount linkchecker',
+                    toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
+                    skin: 'oxide-dark',
+                    content_css: 'dark',
+                    height: 700,
+                }}
+                  onEditorChange={(content) => setContent(content)}
+            />
 
             <section className='flex justify-end gap-5 mt-5'>
                 <Button

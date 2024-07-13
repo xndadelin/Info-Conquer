@@ -1,13 +1,13 @@
-import { useCallback, useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { NotFound } from '../../components/Miscellaneous/NotFound';
 import { Input, Button, Chip } from '@nextui-org/react';
-import { gql, useMutation } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import { useTranslation } from 'react-i18next'; 
 import { UserContext } from '../../context/UserContext';
-import CodeMirror from '@uiw/react-codemirror';
-import { oneDark } from '@codemirror/theme-one-dark';
-import { loadLanguage } from '@uiw/codemirror-extensions-langs';
 import { PUBLISH_ARTICLE } from '../../utils/Queries';
+import { Editor } from '@tinymce/tinymce-react' 
+import Prism from 'prismjs';
+import 'prismjs/themes/prism-tomorrow.min.css';
 
 export const PublishArticle = () => {
     const { t } = useTranslation(); 
@@ -23,9 +23,9 @@ export const PublishArticle = () => {
         setTag('');
     };
 
-    const onChangeCode = useCallback((val) => {
-        setContent(val)
-    })
+    useEffect(() => {
+        Prism.highlightAll();
+    }, []);
 
     const onDeleteTag = (tagToDelete) => {
         setTags(tags.filter((tag) => tag !== tagToDelete));
@@ -69,15 +69,17 @@ export const PublishArticle = () => {
                         ))}
                 </div>
                 <p className="text-2xl font-bold">{t('publishArticle.content')}</p>
-                <div className='rounded-lg'>
-                    <CodeMirror
-                        value={content}
-                        onChange={onChangeCode}
-                        theme={oneDark}
-                        extensions={[loadLanguage('html')]}
-                        height='1000px'
-                    />
-                </div>
+                <Editor
+                    apiKey={process.env.REACT_APP_TINY_MCE_API_KEY}
+                    init={{
+                        plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount linkchecker',
+                        toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
+                        skin: 'oxide-dark',
+                        content_css: 'dark',
+                        height: 700,
+                    }}
+                    onEditorChange={(content) => setContent(content)}
+                />
             </section>
             <section className="flex mt-5 justify-between">
                 {error && <Chip color="danger" variant="flat">{error}</Chip>}
@@ -85,9 +87,9 @@ export const PublishArticle = () => {
                     {t('publishArticle.publishButton')}
                 </Button>
             </section>
-            <section className='mt-5'>
+            <section id='announcement' className='mt-5'>
                 <h1  className='text-3xl font-bold mb-20'>Preview</h1>
-                <div dangerouslySetInnerHTML={{ __html: content }}></div>
+                <article className='space-y-2 overflow-auto' dangerouslySetInnerHTML={{ __html: content }}></article>
             </section>
         </main>
     );
