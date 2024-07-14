@@ -1,6 +1,4 @@
-# 🚀 InfoConquer
-
-![Homepage Infoconquer](./pictures/pic1.png)
+![Logo](./pictures/pic2.png)
 
 > InfoConquer este un website destinat programatorilor, fie că sunt începători sau avansați. Utilizatorii pot rezolva probleme de algoritmică, primind feedback bazat pe testele încărcate de pe platformă. Problemele variază de la structuri de date fundamentale la teorii avansate ale grafurilor. Totodată, ei pot participa la concursuri de algoritmică împreună cu alți participanți și pot să-și mențînă o serie de rezolvare a problemelor în fiecare zi prin accesarea calendarului de pe platformă, care oferă o problema zilnică.
 
