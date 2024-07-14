@@ -88,20 +88,6 @@ Instalează depedentele necesare pentru server:
 ```bash
 npm install
 ```
-Navighează către directorul client:
-```bash
-cd ../client
-```
-Configurează variabilele de mediu, adăugându-le în fișierul .env:
-- `REACT_APP_SERVER`: URL-ul serverului GraphQL local pentru aplicația React (default este http://localhost:8080/graphql`).
-- `REACT_APP_SITE_KEY`: Cheia de site reCAPTCHA pentru integrarea cu Cloudflare Turnstile reCAPTCHA.
-- `REACT_APP_DISCORD_REDIRECT`: URL-ul de redirecționare pentru autentificarea cu Discord în aplicația React.
-- `REACT_APP_TINY_MCE_API_KEY`: Cheia API pentru TinyMCE, utilizată pentru integrarea cu editorul de text TinyMCE.
-
-Instalează depedentele necesare pentru frontend:
-```bash
-npm install
-```
 Configurează variabilele de mediu, adăugându-le în fișierul .env:
 - `MONGO_DB_CONN`: Conexiunea pentru bază de date MongoDB.
 - `SECRET`: Cheia secretă pentru semnarea token-urilor.
@@ -117,6 +103,20 @@ Configurează variabilele de mediu, adăugându-le în fișierul .env:
 - `DISCORD_REDIRECT_URI`: URI-ul de redirecționare pentru OAuth cu Discord.
 - `DISCORD_CLIENT_SECRET`: Cheia secretă a clientului Discord pentru autentificare OAuth.
 
+Navighează către directorul client:
+```bash
+cd ../client
+```
+Configurează variabilele de mediu, adăugându-le în fișierul .env:
+- `REACT_APP_SERVER`: URL-ul serverului GraphQL local pentru aplicația React (default este http://localhost:8080/graphql`).
+- `REACT_APP_SITE_KEY`: Cheia de site reCAPTCHA pentru integrarea cu Cloudflare Turnstile reCAPTCHA.
+- `REACT_APP_DISCORD_REDIRECT`: URL-ul de redirecționare pentru autentificarea cu Discord în aplicația React.
+- `REACT_APP_TINY_MCE_API_KEY`: Cheia API pentru TinyMCE, utilizată pentru integrarea cu editorul de text TinyMCE.
+
+Instalează depedentele necesare pentru frontend:
+```bash
+npm install
+```
 # 🏃 Utilizare
 Pornire server:
 ```bash
