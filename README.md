@@ -43,9 +43,7 @@ Așadar, printre funcționalitățile proiectului regăsim:
 - 📣 Funcționalitate de creare și publicare de anunțuri
 - 👍 Cititorul are opțiunea de a aprecia / dezaprecia articolul
 
-# 💻 Tehnologii
-
-## 🖧 Backend
+# 🖧 Backend
 În cadrul proiectului, am decis să construiesc un server bazat pe un [Node.js](https://nodejs.org/en) framework, [express](http://expressjs.com/).
 
 - 🔗 Pentru comunicarea dintre client și server, am folosit [GraphQL](https://graphql.org/), un limbaj de interogare pentru API-uri, ce are la bază graful de date și expune un singur endpoint: /graphql, prin care sunt trimise toate mutațiile și interogările.
@@ -53,7 +51,7 @@ Așadar, printre funcționalitățile proiectului regăsim:
 - 🗄️ Ca bază de date am ales [MongoDB](https://www.mongodb.com/), datorită structurii sale orientată pe documente, care îmi oferă flexibilitate. Serviciul destinat pentru a lucra cu datele din baza de date și a o hosta este [MongoDB Atlas](https://www.mongodb.com/atlas), un serviciu cloud integral.
 - 🛡️ Pentru a crea un mediu izolat față de sistemul gazdă, cu scopul de a preveni codul malițios trimis de un utilizator să nu afecteze sistemul gazdă, am decis să folosesc [GitHub - ioi/isolate](https://github.com/ioi/isolate), un sandbox construit pentru a rula programe care nu sunt sigure. Isolate se caracterizează printr-un mediul cu access limitat, prevenind afectarea sistemului gazdă. [Documentație - isolate](www.ucw.cz/moe/isolate.1.html)
 
-## 🎨 Frontend
+# 🎨 Frontend
 Pentru construirea interfețelor de utilizator, am folosit librăria React, facilitând crearea de componente reutilizabile.
 
 - 🖌️ Stilizarea interfeței de utilizator a fost făcută cu [Tailwind CSS](https://tailwindcss.com/), împreună cu [Next UI](https://nextui.org/), o librărie de componente moderne.
@@ -119,7 +117,7 @@ Configurează variabilele de mediu, adăugându-le în fișierul .env:
 - `DISCORD_REDIRECT_URI`: URI-ul de redirecționare pentru OAuth cu Discord.
 - `DISCORD_CLIENT_SECRET`: Cheia secretă a clientului Discord pentru autentificare OAuth.
 
-### Utilizare
+# 🏃 Utilizare
 Pornire server:
 ```bash
 cd server
