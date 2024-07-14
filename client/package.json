@@ -14,9 +14,6 @@
     "@nextui-org/system": "^2.0.15",
     "@nextui-org/theme": "^2.1.17",
     "@react-aria/i18n": "^3.11.0",
-    "@testing-library/jest-dom": "^5.17.0",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
     "@tinymce/tinymce-react": "^5.1.1",
     "@uiw/codemirror-extensions-langs": "^4.23.0",
     "@uiw/react-codemirror": "^4.21.9",
@@ -58,6 +55,7 @@
     ]
   },
   "devDependencies": {
+    "cypress": "^13.13.0",
     "i18next-scanner": "^4.5.0",
     "tailwindcss": "^3.4.1"
   }
