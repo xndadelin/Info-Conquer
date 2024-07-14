@@ -8,7 +8,8 @@ import { ApolloProvider } from '@apollo/client';
 import { BrowserRouter } from 'react-router-dom';
 import { UserProvider } from './context/UserContext';
 import { I18nextProvider } from 'react-i18next'
-import i18n from './i18n';
+import i18n from './languages/i18n';
+
 const app = createRoot(document.getElementById('root'));
 app.render(
   <BrowserRouter>

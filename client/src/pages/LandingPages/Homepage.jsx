@@ -132,7 +132,7 @@ export const Homepage = () => {
                             whileTap={{ scale: 0.98 }}
                         >
                             <Link to={`/announcement/${announcement.title}`}>
-                                <Card className="bg-gray-800 shadow-lg hover:shadow-2xl transition-all duration-300">
+                                <Card className="bg-gray-800 shadow-lg hover:shadow-2xl transition-all duration-300 h-full">
                                     <CardBody className="p-6">
                                         <h3 className="text-2xl font-bold text-primary-500 mb-2">{announcement.title}</h3>
                                         <p className="text-gray-400 mb-4">{t('homepage.announcementBy')}{' '}

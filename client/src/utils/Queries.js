@@ -21,6 +21,7 @@ export const GET_ARTICLE = gql`
             title
             tags
             updatedAt
+            excerpt
         }
     }
 `
@@ -370,9 +371,8 @@ query getArticles {
         _id
         createdAt
         creator
-        dislikes
-        likes
         title
+        excerpt
     }
 }
 `;
@@ -480,8 +480,8 @@ mutation postAnnouncement($title: String, $content: String) {
 }
 `
 export const PUBLISH_ARTICLE = gql`
-mutation PublishArticle($title: String, $content: String, $tags: [String]) {
-    publishArticle(title: $title, content: $content, tags: $tags) {
+mutation PublishArticle($title: String, $content: String, $tags: [String], $type: String, $excerpt: String) {
+    publishArticle(title: $title, content: $content, tags: $tags, type: $type, excerpt: $excerpt) {
         success
     }
 }
@@ -508,3 +508,10 @@ mutation Register($username: String!, $email: String!, $password: String!, $conf
     }
 }
 `;
+export const GET_EDITOR_AI_RESPONSE = gql`
+mutation GetResponseEditorAi($userPrompt: String, $content: String) {
+    getResponseEditorAi(userPrompt: $userPrompt, content: $content) {
+        response
+    }
+}
+`

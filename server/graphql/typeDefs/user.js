@@ -69,4 +69,9 @@ module.exports = gql`
         date: String,
         message: String
     }
+
+    type EditorAiResponse {
+        response: String
+    }
+
 `;

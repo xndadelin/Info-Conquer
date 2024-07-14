@@ -276,7 +276,8 @@
       "successRate": "Success rate"
     },
     "articles": {
-      "title": "Articles",
+      "title": "📑 Articles",
+      "subtitle": "Here you can see all the articles published by the users of this platform. You can read them and learn from them!",
       "by": "By",
       "on": "On"
     },
@@ -354,11 +355,16 @@
       "close": "Close"
     },
     "publishArticle": {
-      "title": "Publish an article",
-      "tags": "Tags",
-      "addTag": "Add",
-      "content": "Content",
-      "publishButton": "Publish"
+        "title": "Publish article",
+        "enterTitle": "Enter title",
+        "tags": "Tags",
+        "addTag": "Add tag",
+        "content": "Content",
+        "preview": "Preview",
+        "previous": "Previous",
+        "next": "Next",
+        "publish": "Publish",
+        "excerpt": "Excerpt"
     },
     "createContest": {
       "title": "Create contest",
@@ -371,10 +377,13 @@
       "createButton": "Create contest"
     },
     "postAnnouncement": {
-      "title": "Post an announcement!",
-      "titleLabel": "Title",
-      "contentLabel": "Content",
-      "postButton": "Post"
+      "title": "Post announcement",
+      "enterTitle": "Enter announcement title",
+      "content": "Announcement content",
+      "preview": "Preview",
+      "previous": "Previous",
+      "next": "Next",
+      "post": "Post announcement"
     },
     "notFound": {
       "title": "The page you tried to access does not exist.",
@@ -571,6 +580,16 @@
       "compilationError": {
         "title": "Compilation Error"
       }
+    },
+    "textEditor": {
+      "ai_assistant": "AI Assistant",
+      "enter_prompt": "Enter your prompt to get AI-generated content",
+      "textarea_label": "Prompt",
+      "textarea_placeholder": "Type your prompt here...",
+      "context": "Use current content as context",
+      "context_content": "This will use the existing editor content to provide context for the AI",
+      "cancel": "Cancel",
+      "generate": "Generate content"     
     }    
 }
   

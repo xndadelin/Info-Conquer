@@ -268,7 +268,8 @@
       "successRate": "Rata de succes"
     },
     "articles": {
-      "title": "Articole",
+      "title": "📑 Articole",
+      "subtitle": "Aici poți citi articolele publicate de alți utilizatori!",
       "by": "De către",
       "on": "La"
     },
@@ -339,10 +340,15 @@
     },
     "publishArticle": {
       "title": "Publică un articol",
+      "enterTitle": "Introdu titlul",
       "tags": "Etichete",
-      "addTag": "Adaugă",
+      "addTag": "Adaugă etichetă",
       "content": "Conținut",
-      "publishButton": "Publică"
+      "preview": "Previzualizare",
+      "previous": "Anterior",
+      "next": "Următor",
+      "publish": "Publică",
+      "excerpt": "Fragment"
     },
     "createContest": {
       "title": "Creează concurs",
@@ -355,10 +361,13 @@
       "createButton": "Creează concurs"
     },
     "postAnnouncement": {
-      "title": "Postează un anunț!",
-      "titleLabel": "Titlu",
-      "contentLabel": "Conținut",
-      "postButton": "Postează"
+      "title": "Postează un anunț",
+      "enterTitle": "Introdu titlul anunțului",
+      "content": "Conținutul anunțului",
+      "preview": "Previzualizare",
+      "previous": "Anterior",
+      "next": "Următor",
+      "post": "Postează Anunțul"
     },
     "notFound": {
       "title": "Pagina pe care ai încercat să o accesezi nu există.",
@@ -550,5 +559,16 @@
       "compilationError": {
         "title": "Eroare de compilare"
       }
+    },
+    "textEditor": {
+      "ai_assistant": "Asistent AI",
+      "enter_prompt": "Introduceți promptul pentru a obține conținut generat de AI",
+      "textarea_label": "Prompt",
+      "textarea_placeholder": "Scrieți promptul aici...",
+      "context": "Utilizați conținutul curent ca context",
+      "context_content": "Acest lucru va utiliza conținutul existent din editor pentru a oferi context pentru AI",
+      "cancel": "Anulează",
+      "generate": "Generați conținut"
     }
+    
 }

@@ -6,7 +6,7 @@ import { code } from '../../utils/Codes';
 import FeatureCard from '../../components/Landing/FeatureCard';
 import VerticalTimeline from '../../components/Landing/VerticalTimeline';
 import { Link } from 'react-router-dom';
-import { CodeEditor } from '../../components/Miscellaneous/CodeEditor';
+import { CodeEditor } from '../../components/Editors/CodeEditor';
 
 export const Landing = () => {
     const { t } = useTranslation();

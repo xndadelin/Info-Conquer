@@ -14,7 +14,6 @@ import { Problems } from "./pages/Problems/Problems"
 import { PublishArticle } from "./pages/Article/PublishArticle";
 import { Articles } from "./pages/Article/Articles";
 import { Article } from "./pages/Article/Article";
-import { EditArticle } from "./pages/Article/EditArticle";
 import { PostAnnouncement } from "./pages/Announcement/PostAnnouncement";
 import { Announcement } from "./pages/Announcement/Announcement";
 import { CreateConstest } from "./pages/Contest/CreateContest";
@@ -35,6 +34,7 @@ import { SecurityPolicy } from "./pages/Policies/SecurityPolicy";
 import { NotFound } from "./components/Miscellaneous/NotFound";
 import { Loading } from "./components/Miscellaneous/Loading";
 import ScrollTop from "./utils/ScrollTop";
+
 function App() {
   const { user } = useContext(UserContext)
 
@@ -84,7 +84,7 @@ function App() {
         />
         <Route
           path="/articles/publish"
-          element={<PublishArticle />}
+          element={<PublishArticle type={'publish'} />}
         />
         <Route
           path="/articles"
@@ -96,7 +96,7 @@ function App() {
         />
         <Route
           path="/articles/edit/:id"
-          element={<EditArticle />}
+          element={<PublishArticle type={'update'} />}
         />
         <Route
           path="/post-announcement"

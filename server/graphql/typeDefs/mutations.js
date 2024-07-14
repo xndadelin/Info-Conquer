@@ -7,10 +7,9 @@ module.exports = gql`
         logout: Response
         createProblem(problemInput: CreateProblemInput) : Response
         submitSolution(solutionInput: SolutionInput): Solution
-        publishArticle(title: String, content: String, tags: [String]): Response
+        publishArticle(title: String, content: String, tags: [String], type: String, excerpt: String): Response
         likeArticle(id: String): Response
         dislikeArticle(id: String): Response
-        editArticle(id: String, content: String, tags: [String], title: String): Response
         postAnnouncement(title: String, content: String): Response
         createContest(name: String, description: String, startDate: Date, endDate: Date, problems: [String], languages: [String]): Response
         joinContest(id: String): Response
@@ -26,5 +25,6 @@ module.exports = gql`
         updateBio(bio: String): Response
         forgotPassword(email: String): Response
         resetPassword(password: String, confirmPassword: String, codeForVerification: String): Response
+        getResponseEditorAi(userPrompt: String, content: String): EditorAiResponse
     }
 `;  

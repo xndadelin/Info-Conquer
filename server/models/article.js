@@ -20,6 +20,12 @@ const ArticleSchema = new mongoose.Schema(
     dislikes: {
       type: Array,
     },
+    tags: {
+      type: Array,
+    },
+    excerpt: {
+      type: String,
+    },
   },
   { timestamps: true },
 );

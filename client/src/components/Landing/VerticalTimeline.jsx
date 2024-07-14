@@ -1,8 +1,8 @@
-import { CodeEditor } from "../Miscellaneous/CodeEditor";
+import { CodeEditor } from "../Editors/CodeEditor";
 import { c_code, java_code, py_code, cpp_code } from "../../utils/Codes";
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
-import {fadeInLeft, fadeInRight, scaleIn} from "../../utils/Fades";
+import { fadeInLeft, fadeInRight, scaleIn } from "../../utils/Fades";
 
 
 const VerticalTimeline = () => {

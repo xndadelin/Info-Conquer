@@ -13,25 +13,32 @@ module.exports = {
         if(!problem) throw new ApolloError('Problem is null')
         const problema = await Problem.findOne({title: problem})
         if(!problema) throw new ApolloError('This problem does not exist')
+
         const buildPrompt = 
-        `Description: ${problema.description},
-        Requirements: ${problema.requirements},
-        Input: ${problema.input},
-        Output: ${problema.output},
-        Time Execution: ${problema.timeExecution},
-        Limit Memory: ${problema.limitMemory},
-        Code: ${code},
-        I need help with this problem. 
-        Based on the code above, please respond to the following prompt:
-        ${prompt}, and provide me with just the code. Comment the code with the changes you made. Just the code, perhaps explanations, but comment them in the code.
-        If you have any other additional information, please just comment it in the code. Respond to the prompt above with only the code you wrote. Remember that
-        you must not add print statements or any other output statements (like : "Enter a number!"). It will be considered as a wrong answer.
-        If there any syntax errors (like semicolon errors), logical errors, time performance errors, or memory errors, please fix them and explain why you made the changes you made by commenting in the code.
-        Keep in mind that the input its not given as arguments, but you have to read it from the standard input. The output must be written to the standard output.`
+        `Problem Description: ${problema.description}
+        Requirements: ${problema.requirements}
+        Input Format: ${problema.input}
+        Output Format: ${problema.output}
+        Time Execution Limit: ${problema.timeExecution}
+        Memory Limit: ${problema.limitMemory}
+        Initial Code Provided:
+        ${code}
+    
+        I need assistance with solving this problem. Please address the following prompt based on the provided code:
+        ${prompt}
+    
+        Your response should include only the modified code. Ensure to comment on any changes made. Avoid adding print statements or any additional output statements, as they will be considered incorrect answers.
+    
+        If there are syntax errors, logical errors, or issues related to time or memory performance, please correct them and provide explanations within the code.
+    
+        Note that input is not provided as function arguments but should be read from standard input, and output should be written to standard output.
+        `;
+            
         const completion = await client.chat.completions.create({
             messages: [{ role: "system", content: buildPrompt    }],
             model: "gpt-4",
         });
+
         const response = completion.choices[0].message.content
         if(response.includes('```')){
             let codeResponse = response.split('```')[1]

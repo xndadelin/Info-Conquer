@@ -13,5 +13,6 @@ module.exports = gql`
         hasDisliked: Boolean
         tags: [String]
         updatedAt: String
+        excerpt: String
     }
 `

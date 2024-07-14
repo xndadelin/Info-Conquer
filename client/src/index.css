@@ -41,126 +41,126 @@ body{
 }
 @font-face {
   font-family: 'Poppins';
-  src: url('./Poppins/Poppins-BlackItalic.ttf') format('truetype');
+  src: url('./fonts/Poppins-BlackItalic.ttf') format('truetype');
   font-weight: 900;
   font-style: italic;
 }
 
 @font-face {
   font-family: 'Poppins';
-  src: url('./Poppins/Poppins-Black.ttf') format('truetype');
+  src: url('./fonts/Poppins-Black.ttf') format('truetype');
   font-weight: 900;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Poppins';
-  src: url('./Poppins/Poppins-BoldItalic.ttf') format('truetype');
+  src: url('./fonts/Poppins-BoldItalic.ttf') format('truetype');
   font-weight: bold;
   font-style: italic;
 }
 
 @font-face {
   font-family: 'Poppins';
-  src: url('./Poppins/Poppins-Bold.ttf') format('truetype');
+  src: url('./fonts/Poppins-Bold.ttf') format('truetype');
   font-weight: bold;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Poppins';
-  src: url('./Poppins/Poppins-ExtraBoldItalic.ttf') format('truetype');
+  src: url('./fonts/Poppins-ExtraBoldItalic.ttf') format('truetype');
   font-weight: 800;
   font-style: italic;
 }
 
 @font-face {
   font-family: 'Poppins';
-  src: url('./Poppins/Poppins-ExtraBold.ttf') format('truetype');
+  src: url('./fonts/Poppins-ExtraBold.ttf') format('truetype');
   font-weight: 800;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Poppins';
-  src: url('./Poppins/Poppins-ExtraLightItalic.ttf') format('truetype');
+  src: url('./fonts/Poppins-ExtraLightItalic.ttf') format('truetype');
   font-weight: 200;
   font-style: italic;
 }
 
 @font-face {
   font-family: 'Poppins';
-  src: url('./Poppins/Poppins-ExtraLight.ttf') format('truetype');
+  src: url('./fonts/Poppins-ExtraLight.ttf') format('truetype');
   font-weight: 200;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Poppins';
-  src: url('./Poppins/Poppins-Italic.ttf') format('truetype');
+  src: url('./fonts/Poppins-Italic.ttf') format('truetype');
   font-weight: normal;
   font-style: italic;
 }
 
 @font-face {
   font-family: 'Poppins';
-  src: url('./Poppins/Poppins-LightItalic.ttf') format('truetype');
+  src: url('./fonts/Poppins-LightItalic.ttf') format('truetype');
   font-weight: 300;
   font-style: italic;
 }
 
 @font-face {
   font-family: 'Poppins';
-  src: url('./Poppins/Poppins-Light.ttf') format('truetype');
+  src: url('./fonts/Poppins-Light.ttf') format('truetype');
   font-weight: 300;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Poppins';
-  src: url('./Poppins/Poppins-MediumItalic.ttf') format('truetype');
+  src: url('./fonts/Poppins-MediumItalic.ttf') format('truetype');
   font-weight: 500;
   font-style: italic;
 }
 
 @font-face {
   font-family: 'Poppins';
-  src: url('./Poppins/Poppins-Medium.ttf') format('truetype');
+  src: url('./fonts/Poppins-Medium.ttf') format('truetype');
   font-weight: 500;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Poppins';
-  src: url('./Poppins/Poppins-Regular.ttf') format('truetype');
+  src: url('./fonts/Poppins-Regular.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Poppins';
-  src: url('./Poppins/Poppins-SemiBoldItalic.ttf') format('truetype');
+  src: url('./fonts/Poppins-SemiBoldItalic.ttf') format('truetype');
   font-weight: 600;
   font-style: italic;
 }
 
 @font-face {
   font-family: 'Poppins';
-  src: url('./Poppins/Poppins-SemiBold.ttf') format('truetype');
+  src: url('./fonts/Poppins-SemiBold.ttf') format('truetype');
   font-weight: 600;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Poppins';
-  src: url('./Poppins/Poppins-ThinItalic.ttf') format('truetype');
+  src: url('./fonts/Poppins-ThinItalic.ttf') format('truetype');
   font-weight: 100;
   font-style: italic;
 }
 
 @font-face {
   font-family: 'Poppins';
-  src: url('./Poppins/Poppins-Thin.ttf') format('truetype');
+  src: url('./fonts/Poppins-Thin.ttf') format('truetype');
   font-weight: 100;
   font-style: normal;
 }
@@ -173,39 +173,60 @@ pre > code {
     font-size: 16px !important;
 }
 
-#announcement > article > h1 {
+#announcement > article {
+  @apply space-y-2;
+}
+
+#announcement > article h1 {
   @apply text-4xl font-bold;
 }
 
-#announcement > article > h2 {
+#announcement > article h2 {
   @apply text-3xl font-semibold;
 }
+
+#announcement > article h3 {
+  @apply text-2xl font-semibold;
+}
+
+#announcement > article h4 {
+  @apply text-xl font-semibold;
+}
+
+#announcement > article h5 {
+  @apply text-lg font-semibold;
+}
+
+#announcement > article h6 {
+  @apply text-base font-semibold;
+}
+
 #announcement > article a {
   @apply text-blue-500 hover:underline;
 }
 
-#announcement > article > ul,
-#announcement > article > ol {
+#announcement > article ul,
+#announcement > article ol {
   @apply list-disc list-inside;
 }
 
-#announcement > article > blockquote {
+#announcement > article blockquote {
   @apply border-l-4 border-gray-300 pl-4 italic text-gray-600;
 }
 
-#announcement > article > img {
+#announcement > article img {
   @apply max-w-full h-auto;
 }
 
-#announcement > article > table {
+#announcement > article table {
   @apply w-full table-auto;
 }
 
-#announcement > article > table > thead > tr > th,
-#announcement > article > table > tbody > tr > td {
+#announcement > article table thead tr th,
+#announcement > article table tbody tr td {
   @apply border px-4 py-2 text-left;
 }
 
-#announcement > article > pre {
+#announcement > article pre {
   @apply bg-gray-800 text-white p-4 rounded max-w-fit;
 }

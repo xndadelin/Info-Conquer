@@ -12,6 +12,7 @@ import { DISLIKE_ARTICLE, LIKE_ARTICLE, GET_ARTICLE } from '../../utils/Queries'
 
 export const Article = () => {
     const { id } = useParams()
+    
     const [like] = useMutation(LIKE_ARTICLE, {
         variables: {
             id
@@ -28,6 +29,7 @@ export const Article = () => {
             //do nothing for now
         }
     })
+
     const [dislike] = useMutation(DISLIKE_ARTICLE, {
         variables: {
             id
@@ -44,6 +46,7 @@ export const Article = () => {
             //do nothing for now
         }
     })
+
     const { user } = useContext(UserContext)
     const [likes, setLikes] = useState(0)
     const [dislikes, setDislikes] = useState(0)
@@ -52,6 +55,7 @@ export const Article = () => {
     const [content, setContent] = useState('')
     const [title, setTitle] = useState('')
     const { t } = useTranslation()
+
     const { data, loading } = useQuery(GET_ARTICLE, {
         variables: {
             id
@@ -64,10 +68,12 @@ export const Article = () => {
             setTitle(data.getArticle.title)
         }
     })
+
     if (loading) return <Loading />
     if (!data) return <NotFound />
+
     return (
-        <main className='container mx-auto py-10' id="announcement">
+        <main className='container mx-auto py-10 p-5' id="announcement">
             <section className='flex flex-col p-3'>
                 <header className='flex justify-between flex-wrap gap-3'>
                     <div>
@@ -75,12 +81,11 @@ export const Article = () => {
                         <p className="text-lg">{t('article.by')} {data.getArticle.creator}</p>
                         <p className="text-lg">{t('article.on')} {new Date(+data.getArticle.createdAt).toLocaleString()}</p>
                     </div>
-                    <div className="flex flex-col gap-2" role="group" aria-label="Article actions">
+                    <div className="flex flex-col gap-2" role="group">
                         {user.getUser && (
                             <div className='flex gap-5'>
                                 <Button
                                     onClick={like}
-                                    aria-label={`Like article (${likes} likes)`}
                                     variant='flat'
                                     color='success'
                                     disabled={!user.getUser || disabledLike}
@@ -89,7 +94,6 @@ export const Article = () => {
                                 </Button>
                                 <Button
                                     onClick={dislike}
-                                    aria-label={`Dislike article (${dislikes} dislikes)`}
                                     variant='flat'
                                     color='danger'
                                     disabled={!user.getUser || disabledDislike}
@@ -100,7 +104,6 @@ export const Article = () => {
                         )}
                         {user.getUser && user.getUser.admin && (
                             <Link
-                                aria-label='Edit article'
                                 target='_blank'
                                 to={`/articles/edit/${id}`}
                             >
@@ -112,7 +115,7 @@ export const Article = () => {
                     </div>
                 </header>
             </section>
-            <article className="mt-5" dangerouslySetInnerHTML={{ __html: content }}></article>
+            <article id='announcement' className="mt-5 p-3" dangerouslySetInnerHTML={{ __html: content }}></article>
         </main>
     )
 }

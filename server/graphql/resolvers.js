@@ -1,6 +1,5 @@
 const { postAnnouncement } = require('./mutations/announcement/postAnnouncement');
 const { dislikeArticle } = require('./mutations/article/dislikeArticle');
-const { editArticle } = require('./mutations/article/editArticle');
 const { likeArticle } = require('./mutations/article/likeArticle');
 const { publishArticle } = require('./mutations/article/publishArticle');
 const { authDiscord } = require('./mutations/auth/authDiscord');
@@ -20,6 +19,7 @@ const { updateProfilePicture } = require('./mutations/profile/updateProfilePictu
 const { updateBio } = require('./mutations/profile/updateBio');
 const { forgotPassword } = require('./mutations/auth/forgotPassword');
 const { resetPassword } = require('./mutations/auth/resetPassword');
+const { getResponseEditorAi } = require('./mutations/editor/getResponseEditorAi');
 
 const { getAnnouncement } = require('./queries/announcement/getAnnouncement');
 const { getAnnouncements } = require('./queries/announcement/getAnnouncements');
@@ -40,6 +40,7 @@ const { getActivity } = require('./queries/user/getActivity');
 const { getProfile } = require('./queries/user/getProfile');
 const { getUsers } = require('./queries/user/getUsers');
 const { getUser } = require('./queries/user/getUser')
+
 
 const resolvers = {
   Query: {
@@ -66,7 +67,6 @@ const resolvers = {
   Mutation: {
     postAnnouncement,
     dislikeArticle,
-    editArticle,
     likeArticle,
     publishArticle,
     authDiscord,
@@ -87,7 +87,8 @@ const resolvers = {
     updateProfilePicture,
     updateBio,
     forgotPassword,
-    resetPassword
+    resetPassword,
+    getResponseEditorAi
   }
 };
 

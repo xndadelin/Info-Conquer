@@ -1,59 +1,128 @@
-import { useContext, useState } from 'react';
-import { Button, Chip, Input } from '@nextui-org/react';
-import { useMutation } from '@apollo/client';
-import { UserContext } from '../../context/UserContext';
+import { useContext, useEffect, useState } from 'react';
 import { NotFound } from '../../components/Miscellaneous/NotFound';
+import { Input, Button, Chip, useDisclosure } from '@nextui-org/react';
+import { useMutation } from '@apollo/client';
 import { useTranslation } from 'react-i18next';
+import { UserContext } from '../../context/UserContext';
 import { POST_ANNOUNCEMENT } from '../../utils/Queries';
-import { Editor } from '@tinymce/tinymce-react' 
+import Prism from 'prismjs';
+import 'prismjs/themes/prism-tomorrow.min.css';
+import { TextEditor } from '../../components/Editors/TextEditor';
+import { Progress } from '@nextui-org/react';
 
 export const PostAnnouncement = () => {
     const { t } = useTranslation();
 
-    const { user } = useContext(UserContext);
-    const [content, setContent] = useState('');
     const [title, setTitle] = useState('');
-    const [isError, setIsError] = useState(false);
-    const [postAnnouncement, { error }] = useMutation(POST_ANNOUNCEMENT, {
+    const [content, setContent] = useState('');
+    const [error, setError] = useState('');
+    const [step, setStep] = useState(0);
+    const [prompt, setPrompt] = useState({
+        userPrompt: '',
+        content: ''
+    });
+
+    const { isOpen, onClose, onOpen } = useDisclosure();
+
+    useEffect(() => {
+        Prism.highlightAll();
+    }, []);
+
+    const [postAnnouncement, { loading }] = useMutation(POST_ANNOUNCEMENT, {
+        variables: { title, content },
+        onError: (error) => {
+            setError(error.message);
+        },
         onCompleted: (data) => {
             if (data.postAnnouncement.success) {
                 window.location.href = `/announcement/${title}`;
-                setContent('');
-                setTitle('');
             }
-        },
-        onError: () => {
-            setIsError(true);
         }
     });
+
+    const { user } = useContext(UserContext);
 
     if (!user || !user.getUser || !user.getUser.admin) {
         return <NotFound />;
     }
 
+    const steps = [
+        {
+            title: t('postAnnouncement.title'),
+            icon: '📝',
+            content: (
+                <Input
+                    variant="bordered"
+                    onChange={(e) => setTitle(e.target.value)}
+                    value={title}
+                    label={t('postAnnouncement.enterTitle')}
+                    className='mt-5'
+                />
+            ),
+            disabled: title === ''
+        },
+        {
+            title: t('postAnnouncement.content'),
+            icon: '✍️',
+            content: (
+                <div className='mt-5 w-full'>
+                    <TextEditor
+                        content={content}
+                        setContent={setContent}
+                        prompt={prompt}
+                        setPrompt={setPrompt}
+                        setError={setError}
+                        onOpen={onOpen}
+                        isOpen={isOpen}
+                        onClose={onClose}
+                    />
+                </div>
+            ),
+            disabled: content === ''
+        },
+        {
+            title: t('postAnnouncement.preview'),
+            icon: '👁️',
+            content: (
+                <div className="border border-gray-700 p-5 mt-5 overflow-auto rounded-lg bg-gray-900">
+                    <h1 className="text-3xl font-bold mb-4">{title}</h1>
+                    <article id="announcement" dangerouslySetInnerHTML={{ __html: content }}></article>
+                </div>
+            ),
+            disabled: content === '',
+            error
+        }
+    ];
+
     return (
-        <main className="container mx-auto py-10 p-5">
-            <p className="text-3xl font-bold mb-5">{t('postAnnouncement.title')}</p>
-            {isError && error && (
-                <Chip className="mb-5" color="danger" variant="flat">
-                    {error.message}
-                </Chip>
-            )}
-            <Input className="mb-5" label={t('postAnnouncement.titleLabel')} value={title} onChange={(e) => setTitle(e.target.value)} />
-            <Editor
-                apiKey={process.env.REACT_APP_TINY_MCE_API_KEY}
-                init={{
-                    plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount linkchecker',
-                    toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
-                    skin: 'oxide-dark',
-                    content_css: 'dark',
-                    height: 700,
-                }}
-                  onEditorChange={(content) => setContent(content)}
-            />
-            <div className="flex justify-end">
-                <Button color="primary" variant="flat" className="mt-5" onClick={() => { postAnnouncement({ variables: { title, content } }) }}>{t('postAnnouncement.postButton')}</Button>
-            </div>
+        <main className="container mx-auto p-5 py-20 min-h-screen">
+            <section className='bg-gray-800 rounded-xl p-8 flex flex-col shadow-lg'>
+                <h1 className="text-4xl font-bold mb-8 text-center text-white">{t('postAnnouncement.title')}</h1>
+                <Progress value={(step + 1) * 33.33} className="mb-8" color="primary" />
+                <div className="flex-grow">
+                    <h2 className="text-2xl font-bold mb-4 flex items-center">
+                        <span className="mr-2">{steps[step].icon}</span>
+                        {steps[step].title} 
+                    </h2>
+                    {steps[step].content}
+                </div>
+                <div className='flex justify-between mt-10'>
+                    <Button color='primary' variant='bordered' onClick={() => setStep(step - 1)} isDisabled={step === 0}>
+                        {t('postAnnouncement.previous')}
+                    </Button>
+                    {step === 2 ? (
+                        <div>
+                            <Button variant='solid' color='success' onClick={postAnnouncement} isDisabled={loading} isLoading={loading}>
+                                {t('postAnnouncement.post')}
+                            </Button>
+                        </div>
+                    ) : (
+                        <Button variant='solid' color='primary' onClick={() => setStep(step + 1)} isDisabled={steps[step].disabled}>
+                            {t('postAnnouncement.next')}
+                        </Button>
+                    )}
+                </div>
+            </section>
         </main>
     );
 };
