@@ -58,7 +58,7 @@ const languages = {
         'file': 'main.rs'
     },
     'Go': {
-        'compile': 'go build main.go 2> error.txt',
+        'compile': "go build main.go 2> error.txt && go mod init main",
         'extension': 'go',
         'run': './main',
         'file': 'main.go',
