@@ -27,7 +27,6 @@ describe('Login Page', () => {
     });
 
     it('shows error message with invalid credentials and doing recaptha', () => {
-        cy.get('.cf-turnstile').invoke('attr', 'data-sitekey', '1x00000000000000000000AA').should('have.attr', 'data-sitekey', '1x00000000000000000000AA');
         cy.wait(3000)
         cy.get('input[aria-label="Username or email"]').type('invalid_user');
         cy.get('input[aria-label="Password"]').type('invalid_password');
@@ -54,12 +53,7 @@ describe('Login Page', () => {
     });
 
     it('redirects to home page on successful login', () => {
-        cy.get('.cf-turnstile').invoke('attr', 'data-sitekey', '1x00000000000000000000AA').should('have.attr', 'data-sitekey', '1x00000000000000000000AA');
-        cy.wait(3000)
-        cy.get('input[aria-label="Username or email"]').type('xnd.adelin');
-        cy.get('input[aria-label="Password"]').type(password)
-        cy.get('button[type="submit"]').click();
-        cy.url().should('eq', 'http://localhost:3000/');
+        cy.login("xnd.adelin", password);
     });
 
 });

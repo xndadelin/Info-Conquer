@@ -1,0 +1,48 @@
+{
+    "data": {
+        "getProblem": {
+            "title": "Sum00",
+            "creator": "sofian.adelin",
+            "description": "",
+            "requirements": "Output the sum of the first n natural numbers.",
+            "tags": [
+                "Noob"
+            ],
+            "category": "Array",
+            "difficulty": "Easy",
+            "subcategories": [
+                "Static Arrays"
+            ],
+            "input": "Read the number n.",
+            "output": "Output the sum of the first n natural numbers.",
+            "timeExecution": 1,
+            "limitMemory": 64000,
+            "examples": [
+                {
+                    "input": "2",
+                    "explanation": null,
+                    "output": "3",
+                    "__typename": "Example"
+                }
+            ],
+            "indications": "",
+            "languages": [
+                "C++",
+                "C#",
+                "C",
+                "Java",
+                "Python",
+                "Javascript",
+                "Rust",
+                "Go",
+                "PHP"
+            ],
+            "restriction": null,
+            "successRate": 16.22103386809269,
+            "userHasRated": true,
+            "rating": 5,
+            "contest": null,
+            "__typename": "Problem"
+        }
+    }
+}

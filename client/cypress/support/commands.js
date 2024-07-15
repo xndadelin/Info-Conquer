@@ -23,3 +23,14 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+Cypress.Commands.add('login', (username, password) => {
+    cy.session([username, password], () => {
+        cy.visit('http://localhost:3000/login');
+        cy.get('input[aria-label="Username or email"]').type(username);
+        cy.get('input[aria-label=Password]').type(password);
+        cy.wait(3000);
+        cy.get('button[type="submit"]').click();
+        cy.get('p').should('contain', 'Welcome to <InfoConquer/>!')
+    })
+})

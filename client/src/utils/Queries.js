@@ -120,13 +120,12 @@ query GetProblem($title: String!, $contest: String, $daily: Date) {
 }
 `
 export const SUBMIT_SOLUTION = gql`
-mutation ($solutionInput: SolutionInput) {
+mutation Submit($solutionInput: SolutionInput) {
     submitSolution(solutionInput: $solutionInput) {
         username
         code
         language
         problem
-        io
         score
         tests {
             success

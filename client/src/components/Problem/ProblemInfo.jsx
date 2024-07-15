@@ -17,7 +17,7 @@ export const ProblemInfo = ({ problem }) => {
             </div>
         },
         { key: 'timeLimit', icon: '⏱️', value: `${problem.timeExecution} s` },
-        { key: 'memoryLimit', icon: '💾', value: `${Math.ceil(problem.limitMemory / 1024)} MB` },
+        { key: 'memoryLimit', icon: '💾', value: `${(problem.limitMemory / 1024)} MB` },
         { key: 'solveRate', icon: '📊', value: `${parseInt(problem.successRate)}%` },
         { key: 'rating', icon: '⭐', value: problem.rating === 0 ? 'NR' : `${parseFloat(problem.rating).toFixed(2)} / 5` },
     ]

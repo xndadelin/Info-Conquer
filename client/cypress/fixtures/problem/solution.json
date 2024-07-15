@@ -1,0 +1,84 @@
+{
+    "data": {
+        "submitSolution": {
+            "username": "xndadelin",
+            "code": "#include <iostream>\n\nint main(){\n    std::cout << \"Hello world!\";\n    return 0;\n}",
+            "language": "C++",
+            "problem": "Sum00",
+            "score": 0,
+            "tests": [
+                {
+                    "success": false,
+                    "status": "WA",
+                    "memoryUsed": 3584,
+                    "executionTime": 0.004,
+                    "score": 0,
+                    "input": "5",
+                    "output": "Hello world!",
+                    "message": "Wrong Answer",
+                    "exitcode": 0,
+                    "exitsig": null,
+                    "__typename": "TestCase"
+                },
+                {
+                    "success": false,
+                    "status": "WA",
+                    "memoryUsed": 3712,
+                    "executionTime": 0.004,
+                    "score": 0,
+                    "input": "10",
+                    "output": "Hello world!",
+                    "message": "Wrong Answer",
+                    "exitcode": 0,
+                    "exitsig": null,
+                    "__typename": "TestCase"
+                },
+                {
+                    "success": false,
+                    "status": "WA",
+                    "memoryUsed": 3712,
+                    "executionTime": 0.003,
+                    "score": 0,
+                    "input": "20",
+                    "output": "Hello world!",
+                    "message": "Wrong Answer",
+                    "exitcode": 0,
+                    "exitsig": null,
+                    "__typename": "TestCase"
+                },
+                {
+                    "success": false,
+                    "status": "WA",
+                    "memoryUsed": 3584,
+                    "executionTime": 0.004,
+                    "score": 0,
+                    "input": "1000",
+                    "output": "Hello world!",
+                    "message": "Wrong Answer",
+                    "exitcode": 0,
+                    "exitsig": null,
+                    "__typename": "TestCase"
+                },
+                {
+                    "success": false,
+                    "status": "WA",
+                    "memoryUsed": 3712,
+                    "executionTime": 0.004,
+                    "score": 0,
+                    "input": "123",
+                    "output": "Hello world!",
+                    "message": "Wrong Answer",
+                    "exitcode": 0,
+                    "exitsig": null,
+                    "__typename": "TestCase"
+                }
+            ],
+            "date": "1721069898884",
+            "fileMemory": "0.0791015625",
+            "compilationError": null,
+            "success": false,
+            "id_solution": "d9ef1fb3-55ec-42a0-8170-517015143270",
+            "__typename": "Solution"
+        }
+    }
+}

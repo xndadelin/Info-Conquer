@@ -1,6 +1,6 @@
 describe('Register Page', () => {
     beforeEach(() => {
-        cy.visit('http://localhost:3000/register');
+        cy.visit('/register');
     });
 
     it('displays the registration form', () => {
