@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { GET_DAILIES } from '../../utils/Queries';
 import { UserContext } from '../../context/UserContext';
 import { LoginRequired } from '../../components/Miscellaneous/LoginRequired';
+import { Link } from 'react-router-dom';
 
 export const Calendar = () => {
     const { t } = useTranslation();
@@ -36,7 +37,7 @@ export const Calendar = () => {
     const { data, loading, error } = useQuery(GET_DAILIES);
     if (loading) return <Loading />;
     if (!data || error) return <NotFound />;
-    if(!user.getUser) return <LoginRequired />;
+    if (!user.getUser) return <LoginRequired />;
 
     const dailies = data.getDailies;
     const dailiesMap = dailies.reduce((acc, d) => {
@@ -58,31 +59,32 @@ export const Calendar = () => {
                     const key = `${currentMonth.year}-${currentMonth.month + 1}-${day.day}`;
                     const daily = dailiesMap[key];
                     return (
-                        <motion.div
-                            key={day.day}
-                            className={`p-5 rounded-lg ${daily?.problem ? (daily.solved ? 'bg-green-500 text-black' : 'bg-red-500 text-black hover:opacity-75') : 'bg-gray-800'} ${day.day === current.getDate() ? 'bg-yellow-400 text-black' : ''}`}
-                            onClick={() => window.location.href = `/daily/${daily && daily.problem}/${currentMonth.year}/${currentMonth.month + 1}/${day.day}`}
-                            transition={{ duration: 0.5 }}
-                            whileHover={{ scale: 1.05, rotate:2 }}
-                        >
-                            <div className="w-full h-full">
-                                <div className='flex flex-col items-start'>
-                                    <h1 className="font-bold text-xl">{day.day}</h1>
-                                    <h3 className='font-bold'>{Days[new Date(currentMonth.year, currentMonth.month, day.day).getDay()]}</h3>
-                                </div>
-                                <div className='mt-3'>
-                                    {daily ? (
-                                        <p>{daily.problem}</p>
-                                    ) : (
-                                        day.passed ? (
-                                            <p>{t('calendar.noDailyAvailable')}</p>
+                        <Link to={`/daily/${daily && daily.problem}/${currentMonth.year}/${currentMonth.month + 1}/${day.day}`}>
+                            <motion.div
+                                key={day.day}
+                                className={`p-5 rounded-lg ${daily?.problem ? (daily.solved ? 'bg-green-500 text-black' : 'bg-red-500 text-black hover:opacity-75') : 'bg-gray-800'} ${day.day === current.getDate() ? 'bg-yellow-400 text-black' : ''}`}
+                                transition={{ duration: 0.5 }}
+                                whileHover={{ scale: 1.05, rotate: 2 }}
+                            >
+                                <div className="w-full h-full">
+                                    <div className='flex flex-col items-start'>
+                                        <h1 className="font-bold text-xl">{day.day}</h1>
+                                        <h3 className='font-bold'>{Days[new Date(currentMonth.year, currentMonth.month, day.day).getDay()]}</h3>
+                                    </div>
+                                    <div className='mt-3'>
+                                        {daily ? (
+                                            <p>{daily.problem}</p>
                                         ) : (
-                                            <p>{t('calendar.noDailyYet')}</p>
-                                        )
-                                    )}
+                                            day.passed ? (
+                                                <p>{t('calendar.noDailyAvailable')}</p>
+                                            ) : (
+                                                <p>{t('calendar.noDailyYet')}</p>
+                                            )
+                                        )}
+                                    </div>
                                 </div>
-                            </div>
-                        </motion.div>
+                            </motion.div>
+                        </Link>
                     );
                 })}
             </section>

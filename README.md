@@ -14,6 +14,8 @@ Așadar, printre funcționalitățile proiectului regăsim:
 - 💻 Editor de cod integrat [CodeMirror](https://uiwjs.github.io/react-codemirror/)
 - 📊 Statisticile problemei (grafic cu numărul de rezolvări în ultimele 7 zile, primele submisii acceptate, cele mai bune soluții în ceea ce privește timpul și memoria)
 
+![problem](./pictures/gif1.gif)
+
 ### ℹ️ Judecător de cod integrat
 - 🤖 Evaluează automat soluțiile trimise de utilizatori, oferind feedback instantaneu și detaliat pe baza testelor predefinite
 - 🛡️ Folosește un sandbox securizat, similar cu cel utilizat la IOI (Internațional Olympiad în Informatics)
@@ -23,14 +25,20 @@ Așadar, printre funcționalitățile proiectului regăsim:
 - 🎲 Propune o problemă aleatorie în fiecare zi
 - 🏆 Încurajează utilizatorii să-și mențină seria de rezolvare, conservând o activitate mai considerabilă
 
+![daily](./pictures/gif2.gif)
+
 ### 🤖 Asistent OpenAI integrat
 - 🧠 Încorporat în editorul de cod
 - 💡 Ajută utilizatorii să primească feedback asupra codului lor, menționând ce poate să optimizeze, ce să schimbe și să-i ajute să rezolve problema
 - 🔧 Folosește modelul GPT-4 de la [OpenAI](https://openai.com/)
 
+![ai](./pictures/gif3.gif)
+
 ### 🏆 Concursuri de algoritmică
 - 🌐 Platforma poate găzdui concursuri pentru toți utilizatorii, indiferent de nivel
 - 📊 Pagina concursului include clasament în timp real, detaliile concursului și un grafic privind solvabilitatea problemelor
+
+![contest](./pictures/gif4.gif)
 
 ### 👤 Profil de utilizator
 - 📌 Informații generale despre utilizator (avatar, nume, status, dată creării)
@@ -38,10 +46,14 @@ Așadar, printre funcționalitățile proiectului regăsim:
 - 📅 Vizualizare activitate
 - ⚙️ Setări de profil (editare poză de profil, email, username, parolă, biografie)
 
+![profile](./pictures/gif5.gif)
+
 ### 📖 Postarea de articole și anunțuri
 - 📑 Utilizatorii admini au posibilitatea de a posta articole și anunțuri, cu ajutorul editorului de text TinyMCE, la care am adăugat un add-on unde utilizatorii pot cere asistență de la Inteligența Artificială
 - 📣 Funcționalitate de creare și publicare de anunțuri
 - 👍 Cititorul are opțiunea de a aprecia / dezaprecia articolul
+
+![article](./pictures/gif6.gif)
 
 # 🖧 Backend
 În cadrul proiectului, am decis să construiesc un server bazat pe un [Node.js](https://nodejs.org/en) framework, [express](http://expressjs.com/).
