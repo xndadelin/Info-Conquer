@@ -35,7 +35,10 @@ export const ProblemInfo = ({ problem }) => {
                             {t(`problem.${row.key}`)}
                         </h3>
                     </div>
-                    <h3 className="text-gray-200 text-lg">
+                    <h3 
+                        className="text-gray-200 text-lg"
+                        data-cy={`problem_${row.key}`}
+                    >
                         {row.key === 'category' ? t(`problems.categories.${row.value}`) :
                             row.key === 'subcategory' ? row.value : row.value}
                     </h3>

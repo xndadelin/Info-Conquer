@@ -1,0 +1,202 @@
+{
+    "data": {
+        "getProblemStats": {
+            "bestMemory": [
+                {
+                    "language": "C++",
+                    "date": "1720288688714",
+                    "memory": 3635.2,
+                    "username": "xndadelin",
+                    "__typename": "bestMemory"
+                },
+                {
+                    "language": "C++",
+                    "date": "1720288610096",
+                    "memory": 3660.8,
+                    "username": "xndadelin",
+                    "__typename": "bestMemory"
+                },
+                {
+                    "language": "C++",
+                    "date": "1720288666347",
+                    "memory": 3660.8,
+                    "username": "xndadelin",
+                    "__typename": "bestMemory"
+                },
+                {
+                    "language": "C++",
+                    "date": "1720288673076",
+                    "memory": 3660.8,
+                    "username": "xndadelin",
+                    "__typename": "bestMemory"
+                },
+                {
+                    "language": "C++",
+                    "date": "1720288691034",
+                    "memory": 3660.8,
+                    "username": "xndadelin",
+                    "__typename": "bestMemory"
+                },
+                {
+                    "language": "C++",
+                    "date": "1720288617950",
+                    "memory": 3686.4,
+                    "username": "xndadelin",
+                    "__typename": "bestMemory"
+                },
+                {
+                    "language": "C++",
+                    "date": "1720288636720",
+                    "memory": 3686.4,
+                    "username": "xndadelin",
+                    "__typename": "bestMemory"
+                },
+                {
+                    "language": "C++",
+                    "date": "1720288668786",
+                    "memory": 3686.4,
+                    "username": "xndadelin",
+                    "__typename": "bestMemory"
+                },
+                {
+                    "language": "C++",
+                    "date": "1720288671069",
+                    "memory": 3686.4,
+                    "username": "xndadelin",
+                    "__typename": "bestMemory"
+                },
+                {
+                    "language": "C++",
+                    "date": "1720288693358",
+                    "memory": 3686.4,
+                    "username": "xndadelin",
+                    "__typename": "bestMemory"
+                }
+            ],
+            "firstSubmissions": [
+                {
+                    "date": "1720288610096",
+                    "language": "C++",
+                    "_id": "xndadelin",
+                    "__typename": "firstSubmissions"
+                },
+                {
+                    "date": "1721069868670",
+                    "language": "C++",
+                    "_id": "xnd.adelin",
+                    "__typename": "firstSubmissions"
+                }
+            ],
+            "timeExecution": [
+                {
+                    "date": "1720288610096",
+                    "language": "C++",
+                    "timeExecutions": 0.001,
+                    "username": "xndadelin",
+                    "__typename": "timeExecution"
+                },
+                {
+                    "date": "1720288617950",
+                    "language": "C++",
+                    "timeExecutions": 0.001,
+                    "username": "xndadelin",
+                    "__typename": "timeExecution"
+                },
+                {
+                    "date": "1720288668786",
+                    "language": "C++",
+                    "timeExecutions": 0.001,
+                    "username": "xndadelin",
+                    "__typename": "timeExecution"
+                },
+                {
+                    "date": "1720288666347",
+                    "language": "C++",
+                    "timeExecutions": 0.0012000000000000001,
+                    "username": "xndadelin",
+                    "__typename": "timeExecution"
+                },
+                {
+                    "date": "1720288673076",
+                    "language": "C++",
+                    "timeExecutions": 0.0012000000000000001,
+                    "username": "xndadelin",
+                    "__typename": "timeExecution"
+                },
+                {
+                    "date": "1720288688714",
+                    "language": "C++",
+                    "timeExecutions": 0.0012000000000000001,
+                    "username": "xndadelin",
+                    "__typename": "timeExecution"
+                },
+                {
+                    "date": "1720288636720",
+                    "language": "C++",
+                    "timeExecutions": 0.0014,
+                    "username": "xndadelin",
+                    "__typename": "timeExecution"
+                },
+                {
+                    "date": "1720288691034",
+                    "language": "C++",
+                    "timeExecutions": 0.0016,
+                    "username": "xndadelin",
+                    "__typename": "timeExecution"
+                },
+                {
+                    "date": "1720288693358",
+                    "language": "C++",
+                    "timeExecutions": 0.0018000000000000002,
+                    "username": "xndadelin",
+                    "__typename": "timeExecution"
+                },
+                {
+                    "date": "1720288671069",
+                    "language": "C++",
+                    "timeExecutions": 0.002,
+                    "username": "xndadelin",
+                    "__typename": "timeExecution"
+                }
+            ],
+            "solves": [
+                {
+                    "count": 2,
+                    "date": "1721203500347",
+                    "__typename": "solve"
+                },
+                {
+                    "count": 2,
+                    "date": "1721077200000",
+                    "__typename": "solve"
+                },
+                {
+                    "count": 1,
+                    "date": "1720990800000",
+                    "__typename": "solve"
+                },
+                {
+                    "count": 1,
+                    "date": "1720904400000",
+                    "__typename": "solve"
+                },
+                {
+                    "count": 1,
+                    "date": "1720818000000",
+                    "__typename": "solve"
+                },
+                {
+                    "count": 1,
+                    "date": "1720731600000",
+                    "__typename": "solve"
+                },
+                {
+                    "count": 1,
+                    "date": "1720645200000",
+                    "__typename": "solve"
+                }
+            ],
+            "__typename": "Stats"
+        }
+    }
+}

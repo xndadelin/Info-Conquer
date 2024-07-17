@@ -37,7 +37,11 @@ const Accordion = ({ title, content, icon }) => {
                 className="overflow-hidden"
             >
                 <div className="p-4 bg-gray-700">
-                    <div className="text-base leading-relaxed text-gray-200" dangerouslySetInnerHTML={{ __html: content }}></div>
+                    <div 
+                        className="text-base leading-relaxed text-gray-200" 
+                        dangerouslySetInnerHTML={{ __html: content }}
+                        data-cy="problem_description"
+                    ></div>
                 </div>
             </motion.div>
         </motion.section>
@@ -90,23 +94,41 @@ export const ProblemDescription = ({ problem, t }) => {
                                         <AccordionIcon icon="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5" />
                                         {t('problem.input')}
                                     </h4>
-                                    <pre className="p-3 bg-gray-900 rounded-md text-gray-200 overflow-x-auto">{example.input}</pre>
+                                    <pre 
+                                        className="p-3 bg-gray-900 rounded-md text-gray-200 overflow-x-auto"
+                                        data-cy="example_input_content"
+                                    >
+                                        {example.input}
+                                    </pre>
                                 </div>
                                 <div className="space-y-2">
                                     <h4 className="font-semibold text-gray-100 flex items-center">
                                         <AccordionIcon icon="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 0 1 .865-.501 48.172 48.172 0 0 0 3.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z" />
                                         {t('problem.output')}
                                     </h4>
-                                    <pre className="p-3 bg-gray-900 rounded-md text-gray-200 overflow-x-auto">{example.output}</pre>
+                                    <pre 
+                                        className="p-3 bg-gray-900 rounded-md text-gray-200 overflow-x-auto"
+                                        data-cy="example_output_content"
+                                    >
+                                        {example.output}
+                                    </pre>
                                 </div>
                             </div>
                             {example.explanation && (
                                 <div className="mt-4">
-                                    <h4 className="font-semibold text-gray-100 flex items-center">
+                                    <h4 
+                                        className="font-semibold text-gray-100 flex items-center"
+                                        data-cy="example_explanation"
+                                    >
                                         <AccordionIcon icon="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
                                         {t('problem.explanation')}
                                     </h4>
-                                    <pre className="p-3 bg-gray-900 rounded-md text-gray-200 mt-2 overflow-x-auto" dangerouslySetInnerHTML={{ __html: example.explanation }}></pre>
+                                    <pre 
+                                        className="p-3 bg-gray-900 rounded-md text-gray-200 mt-2 overflow-x-auto" 
+                                        dangerouslySetInnerHTML={{ __html: example.explanation }}
+                                        data-cy="example_explanation"
+                                    >
+                                    </pre>
                                 </div>
                             )}
                         </div>

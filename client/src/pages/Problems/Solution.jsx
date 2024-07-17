@@ -100,7 +100,7 @@ export const Solution = () => {
                                                        </Chip>
                                                     </td>
                                                     <td className="px-6 py-4">
-                                                        <Button onClick={() => setSelectedTestCase(test)} size="sm" color="primary" variant="flat">
+                                                        <Button onClick={() => setSelectedTestCase(test)} size="sm" color="primary" variant="solid">
                                                             {t("solution.summary.table.viewTestCase")}
                                                         </Button>
                                                     </td>

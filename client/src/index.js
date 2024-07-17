@@ -1,6 +1,7 @@
 import React from 'react';
 import {createRoot} from 'react-dom/client'
-import './index.css';
+import '../src/styles/index.css';
+import '../src/styles/build.css'
 import App from './App';
 import { NextUIProvider } from "@nextui-org/react";
 import client from './apolloclient';

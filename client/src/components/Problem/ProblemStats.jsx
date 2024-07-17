@@ -144,8 +144,8 @@ export const ProblemStats = () => {
                     </div>
                 </Card>
             </section>
-            <section className="grid grid-cols-2 mt-5 max-md:grid-cols-1 gap-3">
-                <div>
+            <section className="grid grid-cols-1 mt-5 gap-3">
+                <div className="overflow-auto">
                     <h1 className="text-3xl font-bold mt-5 mb-5">{t('problemStatsPage.bestMemoryTitle')}</h1>
                     <table className="w-full text-sm text-gray-300 border-collapse shadow-2xl rounded-tr">
                         <thead className="bg-gray-600">
@@ -170,7 +170,7 @@ export const ProblemStats = () => {
                         </tbody>
                     </table>
                 </div>
-                <div>
+                <div className="overflow-auto">
                     <h1 className="text-3xl font-bold mt-5 mb-5">{t('problemStatsPage.timeExecutionsTitle')}</h1>
                     <table className="w-full text-sm text-gray-300 border-collapse shadow-2xl rounded-tr">
                         <thead className="bg-gray-600">

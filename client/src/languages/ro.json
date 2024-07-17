@@ -446,7 +446,8 @@
       "accepted": "Acceptat",
       "rejected": "Respins",
       "all_submissions": "Toate submisiile",
-      "ur_submissions": "Submisiile tale"
+      "ur_submissions": "Submisiile tale",
+      "seeSolution": "Vezi soluția"
     },
     "problemsPage": {
       "title": "Probleme",

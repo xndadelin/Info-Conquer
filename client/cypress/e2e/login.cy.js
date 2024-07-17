@@ -1,6 +1,5 @@
-const password = '';
-
-// to do, environment variables for cypress
+const password = Cypress.env('password');
+const username = Cypress.env('username');
 
 describe('Login Page', () => {
     beforeEach(() => {
@@ -22,8 +21,7 @@ describe('Login Page', () => {
         cy.get('input[aria-label="Username or email"]').type('invalid_user');
         cy.get('input[aria-label="Password"]').type('invalid_password');
         cy.get('button[type="submit"]').click();
-
-        cy.get('span').should('contain', 'Invalid captcha');
+        cy.get('span').should('contain', 'Invalid captcha')
     });
 
     it('shows error message with invalid credentials and doing recaptha', () => {
@@ -53,7 +51,9 @@ describe('Login Page', () => {
     });
 
     it('redirects to home page on successful login', () => {
-        cy.login("xnd.adelin", password);
-    });
+        cy.login();
+        cy.visit('/')
+        cy.get('p').should('contain', 'Welcome to <InfoConquer/>!');
+    })
 
 });

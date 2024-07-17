@@ -66,7 +66,7 @@ export const Problem = () => {
         },
         variables: {
             prompt,
-            problem: id,
+            problem: id || problem_name,
             code
         }
     })

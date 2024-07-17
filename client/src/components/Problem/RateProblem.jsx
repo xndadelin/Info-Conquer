@@ -1,7 +1,7 @@
 import { useMutation } from '@apollo/client';
 import { useState } from 'react';
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button } from '@nextui-org/react';
-import { Star } from '../../utils/Star';
+import { Star } from '../../assets/svgs/Star';
 import { useTranslation } from 'react-i18next';
 import { RATE_PROBLEM } from '../../utils/Queries';
 

@@ -462,7 +462,8 @@
       "accepted": "Accepted",
       "rejected": "Rejected",
       "all_submissions": "All submissions",
-      "ur_submissions": "Your submissions"
+      "ur_submissions": "Your submissions",
+      "seeSolution": "See solution"
     },
     "problemsPage": {
       "title": "Problems",

@@ -61,7 +61,7 @@ export const TestingSolution = ({ onClose, isOpen, loading, tests }) => {
         </div>
 
         <div className="mt-8 space-y-6">
-          {tests.score === "100" ? (
+          {tests.score === 100 ? (
             <div className="bg-green-900 text-green-100 rounded-lg p-4 shadow-md">
               <div className="flex items-center">
                 <svg className="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">

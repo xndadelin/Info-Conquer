@@ -3,9 +3,9 @@ import { Card, CardBody, CardHeader } from "@nextui-org/react";
 import { Loading } from "../../components/Miscellaneous/Loading";
 import { UserContext } from "../../context/UserContext";
 import { useContext } from "react";
-import { Calendar } from "../../utils/Calendar";
-import { Trophy } from "../../utils/Trophy";
-import { Article } from "../../utils/Article"
+import { Calendar } from "../../assets/svgs/Calendar";
+import { Trophy } from "../../assets/svgs/Trophy";
+import { Article } from "../../assets/svgs/Article"
 import { useTranslation } from "react-i18next";
 import { Chart, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Filler, Legend } from 'chart.js';
 import { Line } from 'react-chartjs-2';

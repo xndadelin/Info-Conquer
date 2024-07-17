@@ -1,5 +1,5 @@
 import { Modal, ModalBody, ModalContent, ModalFooter, Button, ModalHeader, Textarea, Input, Chip } from "@nextui-org/react";
-import { Bug } from "../../utils/Bug";
+import { Bug } from "../../assets/svgs/Bug";
 import { useState } from "react";
 import { useMutation } from "@apollo/client";
 import { useTranslation } from "react-i18next";

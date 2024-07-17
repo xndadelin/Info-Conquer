@@ -3,6 +3,8 @@ import { useTranslation } from 'react-i18next';
 import CodeMirror from '@uiw/react-codemirror';
 import { oneDark } from '@codemirror/theme-one-dark';
 import { loadLanguage } from '@uiw/codemirror-extensions-langs';
+import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure } from '@nextui-org/react';
+
 
 const placeholder = `#include <iostream>
 #include <cstring>
@@ -93,27 +95,87 @@ export const ProblemEditor = ({ user, problem, language, code, onChangeLanguage,
 
     const { t } = useTranslation();
 
+    const { isOpen, onOpen, onClose } = useDisclosure();
+
     return user?.getUser ? (
         <main>
             <section className="flex flex-wrap justify-between items-center bg-[#1e1e1e] rounded-tl-2xl rounded-tr-2xl">
-                <Select 
-                    defaultSelectedKeys={[language]} 
-                    onChange={(e) => onChangeLanguage(e.target.value)} 
-                    label={t('problem.selectLanguage')} 
+                <Select
+                    defaultSelectedKeys={[language]}
+                    onChange={(e) => onChangeLanguage(e.target.value)}
+                    label={t('problem.selectLanguage')}
                     className="sm:w-48 mb-2 sm:mb-0"
+                    data-cy="problem_languages"
                 >
                     {problem.getProblem.languages.map((lang) => (<SelectItem key={lang} value={lang}>{lang}</SelectItem>))}
                 </Select>
 
                 <div className="flex flex-wrap gap-2 w-full sm:w-auto">
-                    <Tooltip 
-                        size="sm" 
-                        closeDelay={1000} color="warning" placement="left" content={<div><p>{t('problem.chatGPT')}</p><p>{t('problem.chatGPTNote')}</p><Textarea onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); getChatbotMessage(); setPrompt(''); } }} endContent={<Button isLoading={loadingBot} disabled={!prompt} color="warning" className="self-end text-2xl" size="sm" variant="flat" onClick={() => getChatbotMessage()}>↑</Button>} onChange={(e) => setPrompt(e.target.value)} value={prompt} label={t('problem.prompt')} className="w-full" /></div>}>
-                        <Button isLoading={loadingBot} className="mt-2 mb-2 mr-2" color="warning" variant="flat">🤖</Button>
-                    </Tooltip>
+                    <Button
+                        onClick={onOpen}
+                        className="mt-2 mb-2 mr-2"
+                        color="warning"
+                        variant="flat"
+                        data-cy="problem_chatbot_button"
+                        isLoading={loadingBot}
+                    >
+                        🤖 Get help from AI!
+                    </Button>
 
-                    <Tooltip color="danger" content={t('problem.runCode')}>
-                        <Button className="mt-2 mr-2 mb-2" color="danger" disabled={!language || !code || !user || !user.getUser} variant="flat" onClick={() => { onHandleSubmitSolution(); onOpenChange(); setTests('') }}>{t('problem.submit')}</Button>
+                    <Modal 
+                        isOpen={isOpen} 
+                        onClose={onClose} 
+                        size="2xl"
+                        className='bg-gray-800'
+                        backdrop='blur'
+                    >
+                        <ModalContent>
+                            <ModalHeader>Chat with AI</ModalHeader>
+                            <ModalBody>
+                                <p>Ask the AI assistant for help with your problem.</p>
+                                <Textarea
+                                    value={prompt}
+                                    onChange={(e) => setPrompt(e.target.value)}
+                                    placeholder="Type your question here..."
+                                    className="w-full mt-2"
+                                    classNames={{
+                                        inputWrapper: 'bg-gray-900 focus:bg-gray-900 hover:bg-gray-800',
+                                    }}
+                                    data-cy="problem_chatbot_prompt"
+                                    onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); getChatbotMessage(); setPrompt(''); onClose(); } }}
+                                />
+                            </ModalBody>
+                            <ModalFooter>
+                                <Button color="danger" variant="flat" onClick={onClose}>
+                                    Close
+                                </Button>
+                                <Button
+                                    color="warning"
+                                    onClick={() => { getChatbotMessage(); setPrompt(''); onClose(); }}
+                                    isLoading={loadingBot}
+                                    isDisabled={!prompt}
+                                    data-cy="problem_chatbot_send"
+                                >
+                                    Send
+                                </Button>
+                            </ModalFooter>
+                        </ModalContent>
+                    </Modal>
+
+
+                    <Tooltip
+                        color="danger"
+                        content={t('problem.runCode')}
+                    >
+                        <Button
+                            className="mt-2 mr-2 mb-2"
+                            color="danger"
+                            disabled={!language || !code || !user || !user.getUser}
+                            variant="flat" onClick={() => { onHandleSubmitSolution(); onOpenChange(); setTests('') }}
+                            data-cy="problem_submit"
+                        >
+                            {t('problem.submit')}
+                        </Button>
                     </Tooltip>
                 </div>
             </section>
@@ -125,6 +187,7 @@ export const ProblemEditor = ({ user, problem, language, code, onChangeLanguage,
                     onChange={onChangeCode}
                     height="700px"
                     className='max-w-full'
+                    data-cy="problem_editor_logged"
                 />
             </section>
         </main>
@@ -137,6 +200,7 @@ export const ProblemEditor = ({ user, problem, language, code, onChangeLanguage,
                 className="rounded-md overflow-hidden blur-sm"
                 readOnly
                 height="100%"
+                data-cy="problem_editor_not_logged"
             />
         </section>
     );

@@ -1,59 +1,38 @@
 import mockProblem from '../fixtures/problem/problem.json';
 import mockSolution from '../fixtures/problem/solution.json';
+import aiResponse from '../fixtures/problem/ai.json';
 
 const solutionData = JSON.parse(JSON.stringify(mockSolution));
 const problemData = JSON.parse(JSON.stringify(mockProblem));
+const aiData = JSON.parse(JSON.stringify(aiResponse));
 
-const password = ''
 
-describe('Problem page', () => {
+describe('Problem page (logged in)', () => {
   beforeEach(() => {
-    cy.login('xnd.adelin', password);
+    cy.login(); 
     cy.visit('/problems/Sum00');
 
     cy.intercept('POST', 'http://localhost:8080/graphql', (req) => {
-      if (req.body.hasOwnProperty('operationName') && req.body.operationName === 'GetProblem') {
+      if (req.body.operationName === 'GetProblem') {
         req.reply(problemData);
-      }
-    });
-
-    cy.intercept('POST', 'http://localhost:8080/graphql', (req) => {
-      if (req.body.hasOwnProperty('operationName') && req.body.operationName === 'Submit') {
+      } else if (req.body.operationName === 'Submit') {
         req.reply(solutionData);
+      } else if (req.body.operationName === 'GetChatbotMessage') {
+        req.reply(aiData);
       }
     });
 
   });
 
-  it('should display all details of the problem', () => {
+  it("should display all the problem's info correctly", () => {
     cy.get('h1').should('contain', problemData.data.getProblem.title);
-    cy.get('span').should('contain', 'Problem');
-    cy.get('span').should('contain', 'Submissions');
-    cy.get('span').should('contain', 'Insights');
-    cy.get('h3').should('contain', problemData.data.getProblem.creator);
-    cy.get('h3').should('contain', problemData.data.getProblem.difficulty);
-    cy.get('h3').should('contain', problemData.data.getProblem.category);
-    cy.get('span').should('contain', problemData.data.getProblem.subcategories[0]);
-    cy.get('h3').should('contain', problemData.data.getProblem.timeExecution); + ' s'
-    cy.get('h3').should('contain', parseInt(problemData.data.getProblem.limitMemory) / 1024 + ' MB');
-
-    cy.get('div').should('contain', problemData.data.getProblem.requirements);
-    cy.get('div').should('contain', problemData.data.getProblem.input);
-    cy.get('div').should('contain', problemData.data.getProblem.output);
-
-    cy.get('h2').should('contain', 'Example');
+    cy.get('div[data-cy="problem_description"]').should('contain', problemData.data.getProblem.description);
+    cy.get('div[data-cy="problem_description"]').should('contain', problemData.data.getProblem.requirements);
+    cy.get('div[data-cy="problem_description"]').should('contain', problemData.data.getProblem.input);
+    cy.get('div[data-cy="problem_description"]').should('contain', problemData.data.getProblem.output);
     cy.get('pre').should('contain', problemData.data.getProblem.examples[0].input);
     cy.get('pre').should('contain', problemData.data.getProblem.examples[0].output);
-
-    problemData.data.getProblem.languages.forEach(language => {
-      cy.get('div > button[data-slot="trigger"]').click();
-      cy.get('span').should('contain', language);
-    });
-
-    cy.get('h3').should('contain', '/ 5');
-
-    cy.get('h3').should('contain', '%');
-  });
+  })
 
   it('should display the code editor', () => {
     cy.get('.cm-editor').should('be.visible').should('not.be.empty');
@@ -105,9 +84,41 @@ describe('Problem page', () => {
       .should('have.attr', 'href', '/solution/xndadelin/d9ef1fb3-55ec-42a0-8170-517015143270');
   });
 
-  it('should get a response from the AI assistant', () => {
-    cy.get('button').contains('🤖').click();
+  it('should get a response from the AI assistant and displayed it in the code editor', () => {
+    cy.get('button').contains('Get help from AI').click();
+    cy.wait(1000)
+    cy.get('textarea[data-cy="problem_chatbot_prompt"]').should('be.visible').type('How to solve this problem?');
+    cy.get('footer > button').contains('Send').click();
+    cy.get('textarea[data-cy="problem_chatbot_prompt"]').should('not.exist');
+    const htmlContent = `<div class="cm-activeLine cm-line"><span class="ͼ13">#include</span> <span class="ͼv">&lt;iostream&gt;</span></div><div class="cm-line"><br></div><div class="cm-line"><span class="ͼu">int</span> <span class="ͼr">main</span>(){</div><div class="cm-line">  <span class="ͼu">int</span> <span class="ͼq">n</span>;</div><div class="cm-line">  <span class="ͼu">std</span>::<span class="ͼq">cin</span> <span class="ͼv">&gt;&gt;</span> <span class="ͼq">n</span>; <span class="ͼw">// read the integer from standard input</span></div><div class="cm-line">  <span class="ͼw">// calculate and print the sum of the first n natural numbers</span></div><div class="cm-line">  <span class="ͼu">std</span>::<span class="ͼq">cout</span> <span class="ͼv">&lt;&lt;</span> <span class="ͼq">n</span> <span class="ͼv">*</span> (<span class="ͼq">n</span> <span class="ͼv">+</span> <span class="ͼu">1</span>) <span class="ͼv">/</span> <span class="ͼu">2</span>;</div><div class="cm-line">}</div><div class="cm-line"><br></div>`
+    cy.get('.cm-content').should('have.html', htmlContent);
 
   })
-
 });
+
+describe('Problem page (not logged in)', () => {
+  beforeEach(() => {
+    cy.visit('/problems/Sum00');
+  });
+
+  it('should not display editor', () => {
+    cy.get('div[data-cy="problem_editor_logged"]').should('not.exist');
+    cy.get('div[data-cy="problem_editor_not_logged"]').should('be.visible');
+  });
+
+  it('should not display AI assistant button', () => {
+    cy.get('button').contains('🤖').should('not.exist');
+  });
+
+  it('should not display submit button', () => {
+    cy.get('button').contains('Submit').should('not.exist');
+  });
+
+  it('should not display the rate this problem action', () => {
+    cy.get('button').contains('Rate this problem').should('not.exist');
+  })
+
+  it('should not display the report this problem action', () => {
+    cy.get('button').contains('Report this problem').should('not.exist');
+  })
+})

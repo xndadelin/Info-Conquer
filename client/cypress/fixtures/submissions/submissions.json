@@ -1,0 +1,953 @@
+{
+    "data": {
+        "getSubmissions": {
+            "allSolutions": [
+                {
+                    "status": "Accepted",
+                    "date": "1720288610096",
+                    "language": "C++",
+                    "problem": "Sum00",
+                    "score": 100,
+                    "username": "xndadelin",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "Accepted",
+                    "date": "1720288617950",
+                    "language": "C++",
+                    "problem": "Sum00",
+                    "score": 100,
+                    "username": "xndadelin",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "Accepted",
+                    "date": "1720288636720",
+                    "language": "C++",
+                    "problem": "Sum00",
+                    "score": 100,
+                    "username": "xndadelin",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "Accepted",
+                    "date": "1720288666347",
+                    "language": "C++",
+                    "problem": "Sum00",
+                    "score": 100,
+                    "username": "xndadelin",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "Accepted",
+                    "date": "1720288668786",
+                    "language": "C++",
+                    "problem": "Sum00",
+                    "score": 100,
+                    "username": "xndadelin",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "Accepted",
+                    "date": "1720288671069",
+                    "language": "C++",
+                    "problem": "Sum00",
+                    "score": 100,
+                    "username": "xndadelin",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "Accepted",
+                    "date": "1720288673076",
+                    "language": "C++",
+                    "problem": "Sum00",
+                    "score": 100,
+                    "username": "xndadelin",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "Accepted",
+                    "date": "1720288688714",
+                    "language": "C++",
+                    "problem": "Sum00",
+                    "score": 100,
+                    "username": "xndadelin",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "Accepted",
+                    "date": "1720288691034",
+                    "language": "C++",
+                    "problem": "Sum00",
+                    "score": 100,
+                    "username": "xndadelin",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "Accepted",
+                    "date": "1720288693358",
+                    "language": "C++",
+                    "problem": "Sum00",
+                    "score": 100,
+                    "username": "xndadelin",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "Accepted",
+                    "date": "1720288712470",
+                    "language": "C++",
+                    "problem": "Sum00",
+                    "score": 100,
+                    "username": "xndadelin",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "Accepted",
+                    "date": "1720288748320",
+                    "language": "C++",
+                    "problem": "Sum00",
+                    "score": 100,
+                    "username": "xndadelin",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "CE",
+                    "date": "1720293472598",
+                    "language": "C++",
+                    "problem": "Sum00",
+                    "score": 0,
+                    "username": "xndadelin",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "WA on test 1",
+                    "date": "1720293627001",
+                    "language": "Rust",
+                    "problem": "Sum00",
+                    "score": 0,
+                    "username": "xndadelin",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "CE",
+                    "date": "1720293632537",
+                    "language": "Rust",
+                    "problem": "Sum00",
+                    "score": 0,
+                    "username": "xndadelin",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "WA on test 1",
+                    "date": "1720293637617",
+                    "language": "Rust",
+                    "problem": "Sum00",
+                    "score": 0,
+                    "username": "xndadelin",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "CE",
+                    "date": "1720293644151",
+                    "language": "Go",
+                    "problem": "Sum00",
+                    "score": 0,
+                    "username": "xndadelin",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "WA on test 1",
+                    "date": "1720293652023",
+                    "language": "Go",
+                    "problem": "Sum00",
+                    "score": 0,
+                    "username": "xndadelin",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "WA on test 1",
+                    "date": "1720293658802",
+                    "language": "Python",
+                    "problem": "Sum00",
+                    "score": 0,
+                    "username": "xndadelin",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "WA on test 1",
+                    "date": "1720293685817",
+                    "language": "Python",
+                    "problem": "Sum00",
+                    "score": 0,
+                    "username": "xndadelin",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "Accepted",
+                    "date": "1720293878095",
+                    "language": "Python",
+                    "problem": "Sum00",
+                    "score": 100,
+                    "username": "xndadelin",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "WA on test 1",
+                    "date": "1720296341000",
+                    "language": "C++",
+                    "problem": "Sum00",
+                    "score": 0,
+                    "username": "xndadelin",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "Accepted",
+                    "date": "1720371143223",
+                    "language": "C++",
+                    "problem": "Sum00",
+                    "score": 100,
+                    "username": "xndadelin",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "WA on test 1",
+                    "date": "1720373795464",
+                    "language": "C++",
+                    "problem": "Sum00",
+                    "score": 0,
+                    "username": "xndadelin",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "WA on test 1",
+                    "date": "1720374307254",
+                    "language": "C#",
+                    "problem": "Sum00",
+                    "score": 0,
+                    "username": "xndadelin",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "WA on test 1",
+                    "date": "1720374312551",
+                    "language": "Rust",
+                    "problem": "Sum00",
+                    "score": 0,
+                    "username": "xndadelin",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "WA on test 1",
+                    "date": "1720530001172",
+                    "language": "C++",
+                    "problem": "Sum00",
+                    "score": 0,
+                    "username": "xndadelin",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "CE",
+                    "date": "1720633225560",
+                    "language": "C++",
+                    "problem": "Sum00",
+                    "score": 0,
+                    "username": "xndadelin",
+                    "__typename": "Submission"
+                }
+            ],
+            "userSolutions": [
+                {
+                    "status": "Accepted",
+                    "date": "1720288610096",
+                    "language": "C++",
+                    "problem": "Sum00",
+                    "score": 100,
+                    "username": "xndadelin",
+                    "_id": "d26ebc6b-30ba-47bf-a4cd-70deaeb2bd0e",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "Accepted",
+                    "date": "1720288617950",
+                    "language": "C++",
+                    "problem": "Sum00",
+                    "score": 100,
+                    "username": "xndadelin",
+                    "_id": "4cc6198b-8a53-46f2-9034-25e498758eca",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "Accepted",
+                    "date": "1720288636720",
+                    "language": "C++",
+                    "problem": "Sum00",
+                    "score": 100,
+                    "username": "xndadelin",
+                    "_id": "15911304-4500-40f4-8fba-eec681f1ae36",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "Accepted",
+                    "date": "1720288666347",
+                    "language": "C++",
+                    "problem": "Sum00",
+                    "score": 100,
+                    "username": "xndadelin",
+                    "_id": "f0500e39-ab36-4ca0-8714-50205cb1b2b0",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "Accepted",
+                    "date": "1720288668786",
+                    "language": "C++",
+                    "problem": "Sum00",
+                    "score": 100,
+                    "username": "xndadelin",
+                    "_id": "0e18126a-c837-4386-8be2-1647610ab7b2",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "Accepted",
+                    "date": "1720288671069",
+                    "language": "C++",
+                    "problem": "Sum00",
+                    "score": 100,
+                    "username": "xndadelin",
+                    "_id": "6cd4ff20-1fd8-48ec-84fa-fdd083af0007",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "Accepted",
+                    "date": "1720288673076",
+                    "language": "C++",
+                    "problem": "Sum00",
+                    "score": 100,
+                    "username": "xndadelin",
+                    "_id": "1846788c-5623-4b06-a71e-ff604374018f",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "Accepted",
+                    "date": "1720288688714",
+                    "language": "C++",
+                    "problem": "Sum00",
+                    "score": 100,
+                    "username": "xndadelin",
+                    "_id": "221ad6b8-3f86-4d29-959f-5d8bafdf1bd0",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "Accepted",
+                    "date": "1720288691034",
+                    "language": "C++",
+                    "problem": "Sum00",
+                    "score": 100,
+                    "username": "xndadelin",
+                    "_id": "e7999420-5468-4d13-b185-ee8831960246",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "Accepted",
+                    "date": "1720288693358",
+                    "language": "C++",
+                    "problem": "Sum00",
+                    "score": 100,
+                    "username": "xndadelin",
+                    "_id": "48897679-c796-4719-996e-a0235d1d2fc4",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "Accepted",
+                    "date": "1720288712470",
+                    "language": "C++",
+                    "problem": "Sum00",
+                    "score": 100,
+                    "username": "xndadelin",
+                    "_id": "7f4d86b5-cd35-4c25-8599-ee02599f5fef",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "Accepted",
+                    "date": "1720288748320",
+                    "language": "C++",
+                    "problem": "Sum00",
+                    "score": 100,
+                    "username": "xndadelin",
+                    "_id": "7197b709-5420-4d16-b6bd-b3e9604bf88c",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "WA on test 1",
+                    "date": "1720293170317",
+                    "language": "C++",
+                    "problem": "Sum00",
+                    "score": 0,
+                    "username": "xndadelin",
+                    "_id": "18324e16-4109-4f71-92b9-48522acc1c76",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "CE",
+                    "date": "1720293472598",
+                    "language": "C++",
+                    "problem": "Sum00",
+                    "score": 0,
+                    "username": "xndadelin",
+                    "_id": "9653a2f6-ecc7-405e-81ed-3ac803aed686",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "WA on test 1",
+                    "date": "1720293627001",
+                    "language": "Rust",
+                    "problem": "Sum00",
+                    "score": 0,
+                    "username": "xndadelin",
+                    "_id": "9faab63c-53be-4cf3-afef-e9dc1f0893e6",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "CE",
+                    "date": "1720293632537",
+                    "language": "Rust",
+                    "problem": "Sum00",
+                    "score": 0,
+                    "username": "xndadelin",
+                    "_id": "807f86cc-19ab-4011-a805-32251f02afaa",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "WA on test 1",
+                    "date": "1720293637617",
+                    "language": "Rust",
+                    "problem": "Sum00",
+                    "score": 0,
+                    "username": "xndadelin",
+                    "_id": "bafed4e1-1d56-479e-8978-5ee24dd5ce13",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "CE",
+                    "date": "1720293644151",
+                    "language": "Go",
+                    "problem": "Sum00",
+                    "score": 0,
+                    "username": "xndadelin",
+                    "_id": "11d48b4e-7f53-4252-acbd-96ee166bffac",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "WA on test 1",
+                    "date": "1720293652023",
+                    "language": "Go",
+                    "problem": "Sum00",
+                    "score": 0,
+                    "username": "xndadelin",
+                    "_id": "db2abb50-cc31-41cf-acc8-f90c1dee7a4a",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "WA on test 1",
+                    "date": "1720293658802",
+                    "language": "Python",
+                    "problem": "Sum00",
+                    "score": 0,
+                    "username": "xndadelin",
+                    "_id": "46213949-37ff-4c4e-9f6f-69323059ad9b",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "WA on test 1",
+                    "date": "1720293685817",
+                    "language": "Python",
+                    "problem": "Sum00",
+                    "score": 0,
+                    "username": "xndadelin",
+                    "_id": "d2731ed5-98db-4c5e-a5c5-66fc3e087e46",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "Accepted",
+                    "date": "1720293878095",
+                    "language": "Python",
+                    "problem": "Sum00",
+                    "score": 100,
+                    "username": "xndadelin",
+                    "_id": "f7ab2051-e671-4c3a-bcfb-0d1211306ba2",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "WA on test 1",
+                    "date": "1720296341000",
+                    "language": "C++",
+                    "problem": "Sum00",
+                    "score": 0,
+                    "username": "xndadelin",
+                    "_id": "a3f17103-c313-40ea-9757-e7d2bf98d533",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "Accepted",
+                    "date": "1720371143223",
+                    "language": "C++",
+                    "problem": "Sum00",
+                    "score": 100,
+                    "username": "xndadelin",
+                    "_id": "708fade0-bdfd-44f9-851a-a75215ae7ff8",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "WA on test 1",
+                    "date": "1720373795464",
+                    "language": "C++",
+                    "problem": "Sum00",
+                    "score": 0,
+                    "username": "xndadelin",
+                    "_id": "16667c2d-f91d-4520-b7dd-c68b1dd068ad",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "WA on test 1",
+                    "date": "1720374307254",
+                    "language": "C#",
+                    "problem": "Sum00",
+                    "score": 0,
+                    "username": "xndadelin",
+                    "_id": "f22e7fb1-0204-42f2-ad11-8335c952ee23",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "WA on test 1",
+                    "date": "1720374312551",
+                    "language": "Rust",
+                    "problem": "Sum00",
+                    "score": 0,
+                    "username": "xndadelin",
+                    "_id": "45cbb5a3-55dc-4c53-a4c0-a41b77b59203",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "WA on test 1",
+                    "date": "1720530001172",
+                    "language": "C++",
+                    "problem": "Sum00",
+                    "score": 0,
+                    "username": "xndadelin",
+                    "_id": "79e30997-b17e-442e-9990-c8e6855948dc",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "CE",
+                    "date": "1720633225560",
+                    "language": "C++",
+                    "problem": "Sum00",
+                    "score": 0,
+                    "username": "xndadelin",
+                    "_id": "69561966-569a-4aca-8540-934d3a937929",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "CE",
+                    "date": "1720633248200",
+                    "language": "C++",
+                    "problem": "Sum00",
+                    "score": 0,
+                    "username": "xndadelin",
+                    "_id": "1890cc2c-672c-45b8-abf1-710ef879a202",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "CE",
+                    "date": "1720634458744",
+                    "language": "C++",
+                    "problem": "Sum00",
+                    "score": 0,
+                    "username": "xndadelin",
+                    "_id": "66cfe4e1-e073-4f96-8dfd-61da2ad5f7c6",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "CE",
+                    "date": "1720634461198",
+                    "language": "C++",
+                    "problem": "Sum00",
+                    "score": 0,
+                    "username": "xndadelin",
+                    "_id": "b5b19df8-b24b-4687-a4b2-3c1fc9ad774c",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "WA on test 1",
+                    "date": "1720686893210",
+                    "language": "Python",
+                    "problem": "Sum00",
+                    "score": 0,
+                    "username": "xndadelin",
+                    "_id": "dde20780-9fdf-4ebc-b6c4-57e4f69e400f",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "WA on test 1",
+                    "date": "1720687885676",
+                    "language": "C++",
+                    "problem": "Sum00",
+                    "score": 0,
+                    "username": "xndadelin",
+                    "_id": "c8c7a9ae-c783-45af-a1b5-cb08c8df18ab",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "WA on test 1",
+                    "date": "1720713983894",
+                    "language": "C++",
+                    "problem": "Sum00",
+                    "score": 0,
+                    "username": "xndadelin",
+                    "_id": "8472c5ba-9538-4827-a201-d2c295fef871",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "WA on test 1",
+                    "date": "1720714000427",
+                    "language": "C++",
+                    "problem": "Sum00",
+                    "score": 0,
+                    "username": "xndadelin",
+                    "_id": "cce0cb38-2bc2-4b5f-bbee-60136184d40c",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "WA on test 1",
+                    "date": "1720714010413",
+                    "language": "C++",
+                    "problem": "Sum00",
+                    "score": 0,
+                    "username": "xndadelin",
+                    "_id": "23c5d2f6-1003-4662-bf02-a78eef6128e9",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "WA on test 1",
+                    "date": "1720812538144",
+                    "language": "C",
+                    "problem": "Sum00",
+                    "score": 0,
+                    "username": "xndadelin",
+                    "_id": "757978bc-098e-420c-af23-a3c5c778b260",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "WA on test 1",
+                    "date": "1720812597913",
+                    "language": "C",
+                    "problem": "Sum00",
+                    "score": 0,
+                    "username": "xndadelin",
+                    "_id": "3d66f9f2-a274-4aa3-87e7-c18cbd42a077",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "WA on test 1",
+                    "date": "1720818507048",
+                    "language": "C++",
+                    "problem": "Sum00",
+                    "score": 0,
+                    "username": "xndadelin",
+                    "_id": "08e71427-6be6-4b11-a751-ed0fa00041a9",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "WA on test 1",
+                    "date": "1720818518012",
+                    "language": "C++",
+                    "problem": "Sum00",
+                    "score": 0,
+                    "username": "xndadelin",
+                    "_id": "53d28e51-f985-491d-9c15-b5ffc1925b13",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "WA on test 1",
+                    "date": "1720853378159",
+                    "language": "Go",
+                    "problem": "Sum00",
+                    "score": 0,
+                    "username": "xndadelin",
+                    "_id": "df65541b-efc9-433b-bc11-05c53cb29ac5",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "WA on test 1",
+                    "date": "1720853487648",
+                    "language": "Go",
+                    "problem": "Sum00",
+                    "score": 0,
+                    "username": "xndadelin",
+                    "_id": "be4e291a-42b5-4512-a6d7-d72044164eca",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "WA on test 1",
+                    "date": "1720853519595",
+                    "language": "C++",
+                    "problem": "Sum00",
+                    "score": 0,
+                    "username": "xndadelin",
+                    "_id": "2e303efa-25c0-4bbc-a88c-264b60405e90",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "WA on test 1",
+                    "date": "1720853523948",
+                    "language": "C++",
+                    "problem": "Sum00",
+                    "score": 0,
+                    "username": "xndadelin",
+                    "_id": "250d01cd-7cae-4080-86c1-89fc471ee1fe",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "WA on test 1",
+                    "date": "1720853596974",
+                    "language": "Go",
+                    "problem": "Sum00",
+                    "score": 0,
+                    "username": "xndadelin",
+                    "_id": "4fa3fd49-5bb2-46bc-a5df-37a0051d8264",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "WA on test 1",
+                    "date": "1720853601746",
+                    "language": "Go",
+                    "problem": "Sum00",
+                    "score": 0,
+                    "username": "xndadelin",
+                    "_id": "9970364b-578b-4dc7-875a-8bcb0ec1e230",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "WA on test 1",
+                    "date": "1720853762634",
+                    "language": "C++",
+                    "problem": "Sum00",
+                    "score": 0,
+                    "username": "xndadelin",
+                    "_id": "46f8652b-161f-4292-80d2-08e87c7124b1",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "WA on test 1",
+                    "date": "1720853780388",
+                    "language": "Go",
+                    "problem": "Sum00",
+                    "score": 0,
+                    "username": "xndadelin",
+                    "_id": "1e7b2105-5d70-4a3c-9589-82ffcc3f4fa1",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "WA on test 1",
+                    "date": "1720853877872",
+                    "language": "C",
+                    "problem": "Sum00",
+                    "score": 0,
+                    "username": "xndadelin",
+                    "_id": "381c7c62-62f7-4b15-ab16-7843fa282dfd",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "Accepted",
+                    "date": "1720962951946",
+                    "language": "C++",
+                    "problem": "Sum00",
+                    "score": 100,
+                    "username": "xndadelin",
+                    "_id": "179c29e3-b799-468a-af59-0e70e09f0d93",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "WA on test 1",
+                    "date": "1721027736309",
+                    "language": "C++",
+                    "problem": "Sum00",
+                    "score": 0,
+                    "username": "xndadelin",
+                    "_id": "fbbd3e7a-10f1-496d-8601-cbb1f1094604",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "WA on test 1",
+                    "date": "1721067023273",
+                    "language": "C++",
+                    "problem": "Sum00",
+                    "score": 0,
+                    "username": "xndadelin",
+                    "_id": "e3cc68aa-0b58-453d-a81f-c63d83598ff9",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "WA on test 1",
+                    "date": "1721067033204",
+                    "language": "C++",
+                    "problem": "Sum00",
+                    "score": 0,
+                    "username": "xndadelin",
+                    "_id": "da2426c6-7efe-4b46-8e12-705c8f71692c",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "WA on test 1",
+                    "date": "1721067112648",
+                    "language": "C++",
+                    "problem": "Sum00",
+                    "score": 0,
+                    "username": "xndadelin",
+                    "_id": "a54c8acf-bf98-4366-a014-8b0f9cae9285",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "WA on test 1",
+                    "date": "1721067212940",
+                    "language": "C++",
+                    "problem": "Sum00",
+                    "score": 0,
+                    "username": "xndadelin",
+                    "_id": "fbb0d867-2038-48e5-be83-1a04d62071c2",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "Accepted",
+                    "date": "1721067234261",
+                    "language": "C++",
+                    "problem": "Sum00",
+                    "score": 100,
+                    "username": "xndadelin",
+                    "_id": "8a6c2bde-b0d8-4749-aa9e-3c6a43951e58",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "Accepted",
+                    "date": "1721067285125",
+                    "language": "C++",
+                    "problem": "Sum00",
+                    "score": 100,
+                    "username": "xndadelin",
+                    "_id": "ab8105e3-9c2d-4f7c-ab01-4cf1bbbfbab7",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "Accepted",
+                    "date": "1721067288660",
+                    "language": "C++",
+                    "problem": "Sum00",
+                    "score": 100,
+                    "username": "xndadelin",
+                    "_id": "32a3b592-f796-492b-8c13-e809ca16ba7a",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "Accepted",
+                    "date": "1721067330409",
+                    "language": "C++",
+                    "problem": "Sum00",
+                    "score": 100,
+                    "username": "xndadelin",
+                    "_id": "35775578-a781-4a2b-bdf9-34d963a4f2ed",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "Accepted",
+                    "date": "1721067344896",
+                    "language": "C++",
+                    "problem": "Sum00",
+                    "score": 100,
+                    "username": "xndadelin",
+                    "_id": "d12443c0-b209-428c-a4f2-4efcd497caec",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "WA on test 1",
+                    "date": "1721069816615",
+                    "language": "C++",
+                    "problem": "Sum00",
+                    "score": 0,
+                    "username": "xndadelin",
+                    "_id": "1e4d25a1-3b4a-4b1b-932b-553e8c475b07",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "WA on test 1",
+                    "date": "1721069888962",
+                    "language": "C++",
+                    "problem": "Sum00",
+                    "score": 0,
+                    "username": "xndadelin",
+                    "_id": "2bc596ed-96f5-4b14-bccb-50e4bf6bb1ef",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "WA on test 1",
+                    "date": "1721069898884",
+                    "language": "C++",
+                    "problem": "Sum00",
+                    "score": 0,
+                    "username": "xndadelin",
+                    "_id": "d9ef1fb3-55ec-42a0-8170-517015143270",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "WA on test 1",
+                    "date": "1721070270248",
+                    "language": "C++",
+                    "problem": "Sum00",
+                    "score": 0,
+                    "username": "xndadelin",
+                    "_id": "33b7fea9-0a8f-4de9-9202-7817a2a26a5f",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "WA on test 1",
+                    "date": "1721070279752",
+                    "language": "C++",
+                    "problem": "Sum00",
+                    "score": 0,
+                    "username": "xndadelin",
+                    "_id": "6d3250a3-f2f8-40c0-a8e8-a30d614cd018",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "WA on test 1",
+                    "date": "1721070284445",
+                    "language": "C++",
+                    "problem": "Sum00",
+                    "score": 0,
+                    "username": "xndadelin",
+                    "_id": "944baf88-f628-41af-baf9-cd5e388bb26b",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "WA on test 1",
+                    "date": "1721136663531",
+                    "language": "C++",
+                    "problem": "Sum00",
+                    "score": 0,
+                    "username": "xndadelin",
+                    "_id": "b86fa6f4-c042-4c0f-9695-ce71276a9fcb",
+                    "__typename": "Submission"
+                },
+                {
+                    "status": "Accepted",
+                    "date": "1721136685795",
+                    "language": "C++",
+                    "problem": "Sum00",
+                    "score": 100,
+                    "username": "xndadelin",
+                    "_id": "b97d0539-03ec-4818-9178-3c1c5d09f277",
+                    "__typename": "Submission"
+                }
+            ],
+            "__typename": "Submissions"
+        }
+    }
+}

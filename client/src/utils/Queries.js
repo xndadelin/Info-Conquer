@@ -354,7 +354,7 @@ mutation verifyEmail($token: String){
 }
 `
 export const GET_USER = gql`
-query{
+query GetUser{
     getUser {
         username,
         createdAt,

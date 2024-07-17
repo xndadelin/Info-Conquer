@@ -6,7 +6,7 @@ import { UserContext } from "../../context/UserContext";
 import { useTurnstile } from "../../hooks/useTurnstile";
 import { useTranslation } from 'react-i18next'; 
 import { REGISTER } from "../../utils/Queries";
-import { Discord } from "../../utils/Discord";
+import { Discord } from "../../assets/svgs/Discord";
 
 
 export const Register = () => {

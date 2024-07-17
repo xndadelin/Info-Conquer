@@ -1,0 +1,8 @@
+{
+    "data": {
+        "getChatbotMessage": {
+            "message": "#include <iostream>\n\nint main(){\n  int n;\n  std::cin >> n; // read the integer from standard input\n  // calculate and print the sum of the first n natural numbers\n  std::cout << n * (n + 1) / 2;\n}\n",
+            "__typename": "message"
+        }
+    }
+}
