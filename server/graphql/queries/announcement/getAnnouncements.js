@@ -1,5 +1,4 @@
 const Announcement = require('../../../models/announcements')
-const {ApolloError} = require('apollo-server-express')
 
 module.exports = {
     async getAnnouncements(_, {}){

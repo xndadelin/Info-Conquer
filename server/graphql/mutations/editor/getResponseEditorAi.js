@@ -1,6 +1,9 @@
 const { getUser } = require("../../../utils/getUser")
 const openai = require('openai');
-const client = new openai(process.env.OPENAI_API_KEY);
+require('dotenv').config();
+const client = new openai({
+    apiKey: process.env.OPENAI_API_KEY,
+});
 
 module.exports = {
     async getResponseEditorAi(_, {userPrompt, content}, context){

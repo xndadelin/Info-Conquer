@@ -43,7 +43,7 @@ export const Leaderboard = () => {
                         <div className={`flex flex-col justify-end items-center w-32 ${heights[1]} bg-gray-800 p-5 rounded-t-lg border border-gray-700 shadow-lg relative`}>
                             <div className={`absolute top-0 -mt-5 px-4 py-1 rounded-full bg-gray-800 text-lg text-white font-bold shadow-md`}>#2</div>
                             <Avatar src={top3.profilePcture} size="xl" className="mt-3" />
-                            <div className="text-xl mt-3">{top3[1].username}</div>
+                            <div className="text-xl mt-3" data-cy="top2" >{top3[1].username}</div>
                             <div className="text-lg text-gray-400 mt-1">{top3[1].solvedProblems}</div>
                         </div>
                         <div className="text-center mt-3 font-bold">{t('leaderboard.silver')}</div>
@@ -63,7 +63,7 @@ export const Leaderboard = () => {
                         <div className={`flex flex-col justify-end items-center w-32 ${heights[0]} bg-gray-800 p-5 rounded-t-lg border border-gray-700 shadow-lg relative`}>
                             <div className={`absolute top-0 -mt-5 px-4 py-1 rounded-full bg-gray-800 text-lg text-white font-bold shadow-md`}>#1</div>
                             <Avatar src={top3[0].profilePicture} size="xl" className="mt-3" />
-                            <div className="text-xl mt-3">{top3[0].username}</div>
+                            <div className="text-xl mt-3" data-cy="top1" >{top3[0].username}</div>
                             <div className="text-lg text-gray-400 mt-1">{top3[0].solvedProblems}</div>
                         </div>
                         <div className="text-center mt-3 font-bold">{t('leaderboard.gold')}</div>
@@ -85,7 +85,7 @@ export const Leaderboard = () => {
                         <div className={`flex flex-col justify-end items-center w-32 ${heights[2]} bg-gray-800 p-5 rounded-t-lg border border-gray-700 shadow-lg relative`}>
                             <div className={`absolute top-0 -mt-5 px-4 py-1 rounded-full bg-gray-800 text-lg text-white font-bold shadow-md`}>#3</div>
                             <Avatar src={top3[2].profilePicture} size="xl" className="mt-3" />
-                            <div className="text-xl mt-3">{top3[2].username}</div>
+                            <div className="text-xl mt-3" data-cy="top3">{top3[2].username}</div>
                             <div className="text-lg text-gray-400 mt-1">{top3[2].solvedProblems}</div>
                         </div>
                         <div className="text-center mt-3 font-bold">{t('leaderboard.bronze')}</div>

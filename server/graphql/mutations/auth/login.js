@@ -16,23 +16,15 @@ module.exports = {
         if(!user.verified){
             throw new ApolloError('This account is not verified. Register again and verify your email address.')
         }
-        if(user){
+        if(user && user.password){
             const matchPassword = await bcrypt.compare(password, user.password)
             if(!matchPassword){
                 throw new ApolloError('Invalid credentials. Please submit again with the correct credentials.');
             }else{
                 const token = generateToken(user)
                 const refreshToken = generateRefreshToken(user);
-                context.res.cookie('token', token, {
-                    httpOnly: true, 
-                    secure: true,
-                    sameSite: 'None'
-                })
-                context.res.cookie('refreshToken', refreshToken, {
-                    httpOnly: true, 
-                    secure: true,
-                    sameSite: 'None'
-                })
+                context.res.cookie('token', token)
+                context.res.cookie('refreshToken', refreshToken)
                 return {
                     success: true, 
                 }

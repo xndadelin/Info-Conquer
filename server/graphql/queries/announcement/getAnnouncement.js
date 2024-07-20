@@ -1,5 +1,6 @@
 const Announcement = require('../../../models/announcements')
 const {ApolloError} = require('apollo-server-express')
+
 module.exports = {
     async getAnnouncement(_, {title}){
         const announcement = await Announcement.findOne({title})

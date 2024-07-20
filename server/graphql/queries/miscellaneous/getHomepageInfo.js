@@ -1,6 +1,6 @@
 const Problem = require('../../../models/problem')
 const User = require('../../../models/user')
-const {ApolloError} = require('apollo-server-express')
+
 const { getUser } = require('../../../utils/getUser')
 module.exports = {
     async getHomepageInfo(_, {}, context){

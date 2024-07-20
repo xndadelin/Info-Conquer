@@ -55,7 +55,10 @@ export const AuthDropdown = ({ user }) => {
     return (
         <NavbarContent justify="end">
             <NavbarItem>
-                <Dropdown className="bg-gray-900">
+                <Dropdown 
+                    className="bg-gray-900"
+                    data-cy="auth-dropdown"
+                >
                     <DropdownTrigger>
                         <Avatar
                             isBordered

@@ -24,11 +24,11 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
-const password = '';
+const password = 'F3ae1hpf1fbn!';
 
 Cypress.Commands.add('login', () => {
     cy.session('login', () => {
-        cy.visit('http://localhost:3000/login');
+        cy.visit('/login');
         cy.get('input[aria-label="Username or email"]').type("xnd.adelin");
         cy.get('input[aria-label=Password]').type(password);
         cy.wait(3000);

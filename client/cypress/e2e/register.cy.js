@@ -17,18 +17,16 @@ describe('Register Page', () => {
     });
 
     it('invalid email', () => {
+        cy.wait(3000);
         cy.get('input[aria-label="Username"]').type('new_user');
         cy.get('input[aria-label="Email"]').type('invalid_email');
         cy.get('input[aria-label="Password"]').type('password123');
         cy.get('input[aria-label="Confirm password"]').type('password123');
         cy.get('button[type="submit"]').click();
-
         cy.get('span').should('contain', 'Invalid email');
     });
 
     it('shows error messages after completing recaptcha', () => {
-
-        cy.get('.cf-turnstile').invoke('attr', 'data-sitekey', '1x00000000000000000000AA');
         cy.wait(3000);
         cy.get('input[aria-label="Username"]').type('new_user');
         cy.get('input[aria-label="Email"]').type('invalid_email');
@@ -40,7 +38,6 @@ describe('Register Page', () => {
     });
 
     it('password not strong enough', () => {
-        cy.get('.cf-turnstile').invoke('attr', 'data-sitekey', '1x00000000000000000000AA');
         cy.wait(3000);
         cy.get('input[aria-label="Username"]').type('new_user');
         cy.get('input[aria-label="Email"]').type('valid_email@example.com');
