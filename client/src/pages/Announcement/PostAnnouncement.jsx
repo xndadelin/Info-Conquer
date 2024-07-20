@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import { NotFound } from '../../components/Miscellaneous/NotFound';
-import { Input, Button, Chip, useDisclosure } from '@nextui-org/react';
+import { Input, Button, useDisclosure } from '@nextui-org/react';
 import { useMutation } from '@apollo/client';
 import { useTranslation } from 'react-i18next';
 import { UserContext } from '../../context/UserContext';

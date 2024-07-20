@@ -4,8 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "start": "nodemon index.js"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "testMatch": [
+      "**/tests/**/*.test.js"
+    ],
+    "verbose": true
   },
   "keywords": [],
   "author": "",
@@ -13,6 +20,8 @@
   "dependencies": {
     "apollo-server": "^3.13.0",
     "apollo-server-express": "^3.13.0",
+    "apollo-server-testing": "^2.25.3",
+    "assert": "^2.1.0",
     "bcrypt": "^5.1.1",
     "body-parser": "^1.20.2",
     "child_process": "^1.0.2",
@@ -22,12 +31,15 @@
     "dotenv": "^16.4.1",
     "express": "^4.18.2",
     "fs": "^0.0.1-security",
-    "graphql": "^16.8.1",
+    "graphql": "^16.9.0",
     "jsdom": "^24.1.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.1.1",
     "nodemailer": "^6.9.13",
     "nodemon": "^3.1.0",
     "openai": "^4.47.1"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
   }
 }

@@ -16,18 +16,21 @@ const contestSchema = new mongoose.Schema({
         type: Date,
         required: true
     },
-    problems: {
-        type: Array,
-        required: true
-    },
+    problems: [{
+        id: String,
+        category: String,
+        difficulty: String,
+        subcategories: [String]
+    }],
     languages: {
-        type: Array,
+        type: [String],
         required: true
     },
     createdBy: {
         type: String,
         required: true
-    },participants: [{
+    },
+    participants: [{
         username: String,
         score: Number,
         problems: [{
@@ -35,10 +38,6 @@ const contestSchema = new mongoose.Schema({
             score: Number,
         }]
     }],
-    submissions: {
-        type: Array,
-        required: true
-    },
     started: {
         type: Boolean,
         default: false
@@ -47,5 +46,6 @@ const contestSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     }
-}, {timestamps: true})
-module.exports = new mongoose.model('contest', contestSchema)
+}, { timestamps: true })
+
+module.exports = mongoose.model('Contest', contestSchema)

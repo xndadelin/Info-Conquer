@@ -19,7 +19,7 @@ export const Announcement = () => {
     })
     
     if (loading) return <Loading />;
-    if (error) return <NotFound />;
+    if (error || !data.getAnnouncement) return <NotFound />;
 
     return (
         <main id='announcement' className="container mx-auto py-10 overflow-auto p-5">

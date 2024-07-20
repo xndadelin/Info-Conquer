@@ -1,6 +1,7 @@
 const User = require('../../../models/user')
 const { generateToken, generateRefreshToken } = require('../../../utils/getUser') 
 const {ApolloError} = require('apollo-server-express')
+
 module.exports = {
     async authDiscord(_, {code}, context){
         const client_id = process.env.DISCORD_CLIENT_ID

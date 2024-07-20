@@ -1,5 +1,8 @@
 const openai = require('openai');
-const client = new openai(process.env.OPENAI_API_KEY);
+require('dotenv').config();
+const client = new openai({
+    apiKey: process.env.OPENAI_API_KEY,
+});
 const { getUser } = require('../../../utils/getUser')
 const {ApolloError} = require('apollo-server-express')
 const Problem = require('../../../models/problem')

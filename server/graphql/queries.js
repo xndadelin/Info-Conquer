@@ -497,7 +497,7 @@ mutation CreateProblem($title: String, $description: String, $requirements: Stri
 }
 `
 export const REGISTER = gql`
-mutation Register($username: String!, $email: String!, $password: String!, $confirmPassword: String!, $token: String) {
+mutation Register($username: String!, $email: String!, $password: String!, $confirmPassword: String!, $token: String!) {
     register(registerInput: {username: $username, password: $password, email: $email, confirmPassword: $confirmPassword, token: $token}) {
         success
         error {

@@ -18,6 +18,7 @@ const getUser = async(context) => {
             return null;
         }
 
+
         const verified = jwt.verify(token, process.env.SECRET);
         if(verified.username){
             const username = verified.username
@@ -29,16 +30,8 @@ const getUser = async(context) => {
                     const newToken = generateToken(refreshVerified)
                     const newRefreshToken = generateRefreshToken(refreshVerified)
 
-                    context.res.cookie('token', newToken, {
-                        httpOnly: true, 
-                        secure: true,
-                        sameSite: 'Strict'
-                    })
-                    context.res.cookie('refreshToken', newRefreshToken, {
-                        httpOnly: true, 
-                        secure: true,
-                        sameSite: 'Strict'
-                    })
+                    context.res.cookie('token', newToken)
+                    context.res.cookie('refreshToken', newRefreshToken)
 
                     const refreshedUser = await User.findOne({username: refreshVerified.username, verified: true})
                     return refreshedUser

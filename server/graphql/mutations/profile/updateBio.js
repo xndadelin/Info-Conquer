@@ -2,7 +2,6 @@ const {getUser} = require('../../../utils/getUser');
 
 module.exports = {
     async updateBio(_, {bio}, context) {
-        console.log(bio);
         if(!bio) {
             throw new Error('Bio cannot be empty');
         }
