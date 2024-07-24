@@ -1,6 +1,9 @@
-import { Card, CardHeader, Button, Input } from '@nextui-org/react';
+import { Card, CardHeader, Button, Input, Spinner } from '@nextui-org/react';
+import { useState } from 'react';
 
 export const DropFile = ({ tests, setTests }) => {
+
+  const [loading, setLoading] = useState(false);
 
   const readFileContent = (file) => {
     return new Promise((resolve, reject) => {
@@ -12,6 +15,7 @@ export const DropFile = ({ tests, setTests }) => {
   };
 
   const handleDrop = async (e) => {
+    setLoading(true);
     e.preventDefault();
     const droppedFiles = Array.from(e.dataTransfer.files);
 
@@ -33,6 +37,7 @@ export const DropFile = ({ tests, setTests }) => {
 
     await Promise.all(filePromises);
     setTests(newTestCases);
+    setLoading(false);
   };
 
   const handleDelete = (number) => {
@@ -59,7 +64,7 @@ export const DropFile = ({ tests, setTests }) => {
 
     const updatedTests = tests.map((tc) => ({
       ...tc,
-      score: equalScore
+      score: Number(equalScore)
     }));
 
     setTests(updatedTests);
@@ -71,7 +76,7 @@ export const DropFile = ({ tests, setTests }) => {
       onDragOver={(e) => e.preventDefault()}
       className="w-full border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-blue-500 transition-colors duration-300 mb-4"
     >
-      <p className="text-2xl font-bold text-gray-700 mb-2">
+      <p className="text-2xl font-bold mb-2">
         Drop input/output files here
       </p>
       <p className="text-sm text-gray-500">
@@ -100,7 +105,7 @@ export const DropFile = ({ tests, setTests }) => {
       )}
 
       {tests.map(({ number, score, input, output }, index) => (
-        <Card key={number} className="shadow-md">
+        <Card key={number} className="shadow-md bg-gray-800">
           <CardHeader className="flex justify-between max-md:flex-col gap-5">
             <section>
               <h3 className="text-md font-semibold">Test Case {index + 1}</h3>
@@ -110,13 +115,13 @@ export const DropFile = ({ tests, setTests }) => {
               <div className="flex gap-2 flex-col mt-1">
                 <div className="flex flex-col">
                   <h4 className="text-sm text-gray-500">Input:</h4>
-                  <div className="p-2 bg-neutral-800 rounded-lg">
+                  <div className="p-2 bg-gray-600 rounded-lg">
                     <pre className="text-xs whitespace-pre-wrap">{input}</pre>
                   </div>
                 </div>
                 <div className="flex flex-col">
                   <h4 className="text-sm text-gray-500">Output:</h4>
-                  <div className="p-2 bg-neutral-800 rounded-lg">
+                  <div className="p-2 bg-gray-600 rounded-lg">
                     <pre className="text-xs whitespace-pre-wrap">{output}</pre>
                   </div>
                 </div>
@@ -140,9 +145,18 @@ export const DropFile = ({ tests, setTests }) => {
           </CardHeader>
         </Card>
       ))}
-
     </section>
   );
+
+  if (loading) {
+    return (
+      <main className="flex justify-center items-center h-screen">
+        <p className="text-2xl font-bold">
+          <Spinner title='Loading' />
+        </p>
+      </main>
+    );
+  }
 
   return (
     <main className='mt-5'>

@@ -11,12 +11,12 @@ module.exports = {
         }   
         const now = new Date();
         contest.participants.sort((a, b) => b.score - a.score)
-        const participates = user ? contest.participants.some((participant) => participant.username === user.username) : false
+        const participates = user && contest.participants.find((participant) => participant.username === user.username)
+        
         await Promise.all(contest.problems.map(async (problem, index) => {
             const problemData = await Problem.findOne({title: problem})
             if (problemData) {
                 contest.problems[index] = {
-                    ...problem,
                     id: problemData.title,
                     category: problemData.category,
                     difficulty: problemData.difficulty,
@@ -25,14 +25,27 @@ module.exports = {
             }
         }))
 
-        if(now > contest.startDate && now < contest.endDate || now > contest.endDate ){
-            return contest
-        }else if(now < contest.startDate && !participates){
-            contest.problems = []
-            return contest
-        }else if(now < contest.startDate && participates){
-            contest.problems = []
-            return contest
+
+        if(participates){
+            if(!contest.started && !contest.ended){
+                contest.problems = []
+                return contest  
+            }
+            if(contest.started){
+                return contest
+            }
+        }else {
+            if(!contest.started && !contest.ended){
+                contest.problems = []
+                return contest  
+            }
+            if(contest.started && !contest.ended){
+                contest.problems = [];
+                return contest
+            }
+            if(contest.ended){
+                return contest
+            }
         }
     }
 }

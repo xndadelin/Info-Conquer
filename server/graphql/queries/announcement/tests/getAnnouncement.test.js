@@ -43,6 +43,7 @@ it('should return an announcement', async () => {
         createdBy: data.createdBy,
         content: data.content,
     });
+    
     await newAnnouncement.save();
 
     const response = await testServer.executeOperation({

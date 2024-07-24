@@ -113,6 +113,9 @@ export const Contest = () => {
         </div>
     );
 
+
+    const problemsExists = data.getContest.problems.every(problem => problem.id !== null);
+
     return (
         <main className="container mx-auto p-5 my-5 bg-gray-900 text-white">
             <section className="bg-gray-800 rounded-lg shadow-lg p-8 mb-10 transition-all duration-300 hover:shadow-xl">
@@ -139,7 +142,7 @@ export const Contest = () => {
                             <tr>
                                 <th className="px-6 py-4" scope="col">Rank</th>
                                 <th className="px-6 py-4" scope="col">Username</th>
-                                {data.getContest.problems.map((problem, index) => (
+                                {data?.getContest?.problems.map((problem, index) => (
                                     <th className="px-6 py-4" key={index} scope="col">{problem.id}</th>
                                 ))}
                                 {data?.getContest?.problems.length > 0 && (
@@ -180,7 +183,7 @@ export const Contest = () => {
                 </div>
             </section>
 
-            {(data.getContest.started || data.getContest.ended) ? (
+            {((data.getContest.started || data.getContest.ended) && problemsExists) ? (
                 <>
                     <section className="bg-gray-800 rounded-lg shadow-lg p-6 mb-10 transition-all duration-300 hover:shadow-xl">
                         <h2 className="text-3xl font-bold mb-6 text-blue-400">{t('contest.problems')}</h2>
@@ -226,7 +229,7 @@ export const Contest = () => {
                 </>
             ) : (
                 <section className="text-3xl font-bold text-center py-10">
-                    {t('contest.noProblemsYet')}
+                    You have to be a participant to see the problems and the solved percentage.
                 </section>
             )}
         </main>

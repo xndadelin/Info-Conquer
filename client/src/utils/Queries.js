@@ -72,6 +72,7 @@ query GetContest($id: String) {
         }
         started 
         ended
+        hasJoined
     }
 }
 `;

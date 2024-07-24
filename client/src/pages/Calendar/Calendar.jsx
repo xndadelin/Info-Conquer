@@ -49,7 +49,7 @@ export const Calendar = () => {
 
 
     return (
-        <main className="container mx-auto my-5 p-5">
+        <main className="container mx-auto my-5 p-5 min-h-screen">
             <h1 className="text-3xl font-bold">{`${monthName} ${currentMonth.year}`}</h1>
             <section className="grid grid-cols-7 max-md:grid-cols-3 gap-2 mt-4">
                 {Array.from({ length: new Date(currentMonth.year, currentMonth.month).getDay() }).map((_, index) => (
@@ -59,7 +59,10 @@ export const Calendar = () => {
                     const key = `${currentMonth.year}-${currentMonth.month + 1}-${day.day}`;
                     const daily = dailiesMap[key];
                     return (
-                        <Link to={`/daily/${daily && daily.problem}/${currentMonth.year}/${currentMonth.month + 1}/${day.day}`}>
+                        <Link 
+                            className='w-full h-full'
+                            to={`/daily/${daily && daily.problem}/${currentMonth.year}/${currentMonth.month + 1}/${day.day}`}
+                        >
                             <motion.div
                                 key={day.day}
                                 className={`p-5 rounded-lg ${daily?.problem ? (daily.solved ? 'bg-green-500 text-black' : 'bg-red-500 text-black hover:opacity-75') : 'bg-gray-800'} ${day.day === current.getDate() ? 'bg-yellow-400 text-black' : ''}`}

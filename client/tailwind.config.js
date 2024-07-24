@@ -7,5 +7,10 @@ module.exports = {
   },
   darkMode: "class",
   plugins: [nextui()],
+  content: [
+    './public/index.html',
+    './src/**/*.{js,jsx}'
+  ]
+
 }
 

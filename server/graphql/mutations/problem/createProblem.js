@@ -3,16 +3,25 @@ const { JSDOM } = require('jsdom');
 const window = new JSDOM('').window;
 const DOMPurify = createDOMPurify(window);
 const Problem = require('../../../models/problem')
-const { getUser } = require('../../../utils/getUser') 
-const {ApolloError} = require('apollo-server-express')
+const { getUser } = require('../../../utils/getUser')
+const { ApolloError } = require('apollo-server-express')
 module.exports = {
-    async createProblem(_, {problemInput: {title, description, requirements, type, tags, difficulty, category, subcategories, input, output, tests, timeExecution, limitMemory, examples, indications, languages, restriction, itsForContest}}, context){
-        const problemsExists = await Problem.findOne({title});
+    async createProblem(_, { problemInput: { title, description, requirements, type, tags, difficulty, category, subcategories, input, output, tests, timeExecution, limitMemory, examples, indications, languages, restriction, itsForContest } }, context) {
+        const problemsExists = await Problem.findOne({ title });
         const creator = await getUser(context)
-        if(problemsExists){
+
+        if (!creator || !creator.username || !creator.verified) {
+            throw new ApolloError('nice try, but you have to be logged in and verified to create a problem')
+        }
+
+        if (!creator.admin) {
+            throw new ApolloError('nice try, but you have to be an admin to create a problem')
+        }
+
+        if (problemsExists) {
             throw new ApolloError('Problem exists')
-        }else{
-            if(!creator || !creator.admin || !creator.verified || !creator.username ||  !title || !requirements || !tags || !difficulty || !category || !subcategories || !input || !output || !tests || !timeExecution || !limitMemory || !languages){
+        } else {
+            if (!title || !requirements || !tags || !difficulty || !category || !subcategories || !input || !output || !tests || !timeExecution || !limitMemory || !languages) {
                 throw new ApolloError('You have to fill all the fields')
             }
             description = DOMPurify.sanitize(description);
@@ -27,7 +36,7 @@ module.exports = {
                 }
             })
             restriction = DOMPurify.sanitize(restriction);
-            const problem =  new Problem({creator: creator.username, title, description, requirements, type, tags, difficulty, category, subcategories, input, output, tests, timeExecution, limitMemory, examples, indications, languages, restriction, itsForContest})
+            const problem = new Problem({ creator: creator.username, title, description, requirements, type, tags, difficulty, category, subcategories, input, output, tests, timeExecution, limitMemory, examples, indications, languages, restriction, itsForContest })
             await problem.save()
             return {
                 success: true

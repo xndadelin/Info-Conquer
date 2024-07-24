@@ -75,12 +75,12 @@ const languages = {
 const initialize = () => {
     const idSolution = crypto.randomUUID();
     const received_time = new Date();
-    return {idSolution, received_time};
+    return { idSolution, received_time };
 }
 
 const populate_sandbox = (sandboxPath, code, file, language) => {
     let file_content = code;
-    if(languages[language].shebang){
+    if (languages[language].shebang) {
         file_content = languages[language].shebang + '\n' + code;
     }
     fs.writeFileSync(path.join(sandboxPath, 'box', file), file_content);
@@ -88,15 +88,15 @@ const populate_sandbox = (sandboxPath, code, file, language) => {
 
 const compile = (language, sandboxPath) => {
     const command = languages[language].compile;
-    try{
-        execSync(command, {cwd: path.join(sandboxPath, 'box')});
+    try {
+        execSync(command, { cwd: path.join(sandboxPath, 'box') });
         const requirement = languages[language].requirement;
-        if(requirement){
-            execSync(requirement, {cwd: path.join(sandboxPath, 'box')});
+        if (requirement) {
+            execSync(requirement, { cwd: path.join(sandboxPath, 'box') });
         }
-        return {status: 'OK', message: 'The code was successfully compiled.'};
-    }catch(e){
-        return {status: 'ERROR', message: 'The code could not be compiled.', error: check_error(sandboxPath)};
+        return { status: 'OK', message: 'The code was successfully compiled.' };
+    } catch (e) {
+        return { status: 'ERROR', message: 'The code could not be compiled.', error: check_error(sandboxPath) };
     }
 }
 
@@ -119,10 +119,12 @@ const prepare_sandbox = (language, code) => {
     const input = path.join(sandboxPath, 'box', 'input.txt');
     const output = path.join(sandboxPath, 'box', 'output.txt');
     const meta = path.join(sandboxPath, 'box', 'meta.txt');
+
     fs.writeFileSync(path.join(sandboxPath, 'box', 'error.txt'), '');
     fs.writeFileSync(path.join(sandboxPath, 'box', 'cerr.txt'), '');
     fs.writeFileSync(path.join(sandboxPath, 'box', file), code);
-    return {sandboxPath, input, output, meta};
+    
+    return { sandboxPath, input, output, meta };
 }
 const read_meta = (sandboxPath) => {
     const meta = fs.readFileSync(path.join(sandboxPath, 'box', 'meta.txt')).toString();
@@ -136,45 +138,59 @@ const read_meta = (sandboxPath) => {
 }
 const run = (language, sandboxPath, testCase, inputPath, outputPath, memory, runtime) => {
     const command = languages[language].run;
+    
     fs.writeFileSync(inputPath, testCase.input);
-    fs.writeFileSync(outputPath, ''); 
+    fs.writeFileSync(outputPath, '');
     let exitcode = null, exitsig = null, killed = null, max_rss = null, message = null, status = null, time = null;
-    try{
-        execSync(`isolate --box-id=1 --mem=${memory * 1024 * 10} --time=${runtime} --meta=${path.join(sandboxPath, 'box', 'meta.txt')} --stderr=cerr.txt --stdin=input.txt --stdout=output.txt --run -- "${command}"`, {cwd: path.join(sandboxPath, 'box')});
-    }catch(error){
-        console.log(error); 
+    
+    try {
+        execSync(`isolate --box-id=1 --wait --mem=${memory} --time=${runtime} --meta=${path.join(sandboxPath, 'box', 'meta.txt')} --stderr=cerr.txt --stdin=input.txt --stdout=output.txt --run -- "${command}"`, { cwd: path.join(sandboxPath, 'box') });
+    } catch (error) {
+        return {
+            username,
+            code,
+            problem,
+            language,
+            score: 0,
+            tests: [],
+            fileMemory: get_file_size(sandboxPath, languages[language].file),
+            date: new Date(),
+            compilationError: null,
+            success: false,
+            id_solution: idSolution,
+            status: 'ERROR' 
+        }
     }
+
     const meta = read_meta(sandboxPath)
+    
     exitcode = meta.exitcode ? parseInt(meta.exitcode) : null;
     exitsig = meta.exitsig ? parseInt(meta.exitsig) : null;
-    killed = meta.killed ? meta.killed : null;
+    killed = meta.killed ?? null;
     max_rss = meta['max-rss'] ? parseInt(meta['max-rss']) : null;
-    message = meta.message ? meta.message : null;
-    status = meta.status ? meta.status : null;
+    message = meta.message ?? null;
+    status = meta.status ?? null;
     time = meta.time ? parseFloat(meta.time) : null;
+    
+    
     const output = fs.readFileSync(outputPath).toString();
     const cerr = fs.readFileSync(path.join(sandboxPath, 'box', 'cerr.txt')).toString()
-    return {output, exitcode, exitsig, killed, max_rss, message, status, time, cerr};
-
-}
-
-const check_files = (sandboxPath) => {
-    const files = fs.readdirSync(path.join(sandboxPath, 'box'));
-    console.log(files)
+    
+    return { output, exitcode, exitsig, killed, max_rss, message, status, time, cerr };
 }
 
 const grader = (testCases, code, problem, username, language, max_time, max_memory) => {
     max_time = parseFloat(max_time);
     max_memory = parseFloat(max_memory);
-    const {idSolution, received_time} = initialize();
-    const {sandboxPath, input, output, meta} = prepare_sandbox(language, code);
+    const { idSolution, received_time } = initialize();
+    const { sandboxPath, input, output, meta } = prepare_sandbox(language, code);
     populate_sandbox(sandboxPath, code, languages[language].file, language);
 
-    const {status, message, error} = compile(language, sandboxPath)
+    const { status, message, error } = compile(language, sandboxPath)
     const results = [];
     let stare = null
     const cerr = get_cerr(sandboxPath)
-    if(status === 'ERROR'){
+    if (status === 'ERROR') {
         return {
             username,
             code,
@@ -190,10 +206,10 @@ const grader = (testCases, code, problem, username, language, max_time, max_memo
             cerr,
             status: 'CE'
         }
-    }else {
+    } else {
         testCases.forEach((testCase, index) => {
-            const {output: outputResult, exitcode, exitsig, killed, max_rss, message, status, time, cerr} = run(language, sandboxPath, testCase, input, output, max_memory, max_time);
-            if(outputResult.trimEnd() === testCase.output.trimEnd() && time <= max_time && max_rss <= max_memory){
+            const { output: outputResult, exitcode, exitsig, killed, max_rss, message, status, time, cerr } = run(language, sandboxPath, testCase, input, output, max_memory, max_time);
+            if (outputResult.trimEnd() === testCase.output.trimEnd() && time <= max_time && max_rss <= max_memory) {
                 results.push({
                     status: 'AC',
                     success: true,
@@ -208,9 +224,9 @@ const grader = (testCases, code, problem, username, language, max_time, max_memo
                     message: 'OK',
                     cerr
                 })
-                return ;
-            }else {
-                if(exitsig) {
+                return;
+            } else {
+                if (exitsig) {
                     results.push({
                         status,
                         success: false,
@@ -225,10 +241,10 @@ const grader = (testCases, code, problem, username, language, max_time, max_memo
                         exitsig,
                         cerr
                     })
-                    if(!stare) stare = `Exitsig ${exitsig} on test ${index + 1}`
-                    return ;
+                    if (!stare) stare = `Exitsig ${exitsig} on test ${index + 1}`
+                    return;
                 }
-                if(time > max_time && max_rss > max_memory){
+                if (time > max_time && max_rss > max_memory) {
                     results.push({
                         status: 'TLE_MLE',
                         success: false,
@@ -243,10 +259,10 @@ const grader = (testCases, code, problem, username, language, max_time, max_memo
                         exitsig,
                         cerr,
                     })
-                    if(!stare) stare = `TLE_MLE on test ${index + 1}`
-                    return ;
+                    if (!stare) stare = `TLE_MLE on test ${index + 1}`
+                    return;
                 }
-                if(time > max_time || message === "Time limit exceeded"){
+                if (time > max_time || message === "Time limit exceeded") {
                     results.push({
                         status,
                         success: false,
@@ -261,10 +277,10 @@ const grader = (testCases, code, problem, username, language, max_time, max_memo
                         exitsig,
                         cerr,
                     })
-                    if(!stare) stare = `TLE on test ${index + 1}`
-                    return ;
+                    if (!stare) stare = `TLE on test ${index + 1}`
+                    return;
                 }
-                if(max_rss > max_memory){
+                if (max_rss > max_memory) {
                     results.push({
                         status,
                         success: false,
@@ -279,10 +295,10 @@ const grader = (testCases, code, problem, username, language, max_time, max_memo
                         exitsig,
                         cerr
                     })
-                    if(!stare) stare = `MLE on test ${index + 1}`
-                    return ;
+                    if (!stare) stare = `MLE on test ${index + 1}`
+                    return;
                 }
-                if(outputResult !== testCase.output){
+                if (outputResult !== testCase.output) {
                     results.push({
                         status: 'WA',
                         success: false,
@@ -297,15 +313,18 @@ const grader = (testCases, code, problem, username, language, max_time, max_memo
                         exitsig,
                         cerr
                     })
-                    if(!stare) stare = `WA on test ${index + 1}`
-                    return ;
+                    if (!stare) stare = `WA on test ${index + 1}`
+                    return;
                 }
             }
         })
     }
+
+    execSync(`isolate --box-id=1 --cleanup`, { cwd: path.join(sandboxPath, 'box') });
+
     const success = results.every(test => test.success);
     const score = results.reduce((acc, test) => acc + parseInt(test.score), 0);
-    if(!stare) stare = 'Accepted'
+    if (!stare) stare = 'Accepted'
     return {
         username,
         code,

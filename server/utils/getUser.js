@@ -1,13 +1,15 @@
 const cookie = require('cookie');
 const jwt = require('jsonwebtoken')
 const User = require('../models/user')
+
 const generateToken = (user) => {
-    return jwt.sign({ username: user.username, admin: user.admin }, process.env.SECRET, { expiresIn: '1h' });
+    return jwt.sign({ username: user.username, admin: user.admin }, process.env.SECRET, { expiresIn: '15m' });
 };
   
 const generateRefreshToken = (user) => {
-    return jwt.sign({ username: user.username, admin: user.admin }, process.env.SECRET_REFRESH, { expiresIn: '24h' });
+    return jwt.sign({ username: user.username, admin: user.admin }, process.env.SECRET_REFRESH, { expiresIn: '7d' });
 };
+
 const getUser = async(context) => {
     try{
         const cookies =  cookie.parse(context.req.headers.cookie) || ''
@@ -73,5 +75,4 @@ module.exports = {
     getUser,
     generateRefreshToken,
     generateToken
-    
 }

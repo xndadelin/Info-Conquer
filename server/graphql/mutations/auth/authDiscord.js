@@ -1,6 +1,7 @@
 const User = require('../../../models/user')
 const { generateToken, generateRefreshToken } = require('../../../utils/getUser') 
 const {ApolloError} = require('apollo-server-express')
+const crypto = require('crypto')
 
 module.exports = {
     async authDiscord(_, {code}, context){
@@ -42,13 +43,21 @@ module.exports = {
             context.res.cookie('token', token, {
                 httpOnly: true, 
                 secure: true,
-                sameSite: 'None'
+                sameSite: 'None',
+                expires: new Date(Date.now() + 15 * 60 * 1000)
             })
             context.res.cookie('refreshToken', refreshToken, {
                 httpOnly: true, 
                 secure: true,
-                sameSite: 'None'
+                sameSite: 'None',
+                expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
             })
+            const csrfToken = crypto.randomBytes(32).toString('hex');
+            context.res.cookie('csrfToken', csrfToken, {
+                secure: true, 
+                sameSite: 'Strict',
+                expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
+            });
             return {
                 success: true,
             }

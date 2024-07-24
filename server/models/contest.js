@@ -16,12 +16,10 @@ const contestSchema = new mongoose.Schema({
         type: Date,
         required: true
     },
-    problems: [{
-        id: String,
-        category: String,
-        difficulty: String,
-        subcategories: [String]
-    }],
+    problems: {
+        type: Array,
+        required: true
+    },
     languages: {
         type: [String],
         required: true

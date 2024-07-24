@@ -217,7 +217,7 @@ export const ProblemsSelection = () => {
                         <div className="mt-6">
                             <Link 
                                 to={`/problems/${problem.category}/none`}
-                                className="inline-block px-4 py-2 bg-primary-600 text-white font-semibold rounded-lg hover:bg-primary-500 transition-colors"
+                                className="inline-block px-4 py-2 bg-gray-900 text-white font-semibold rounded-lg hover:bg-gray-700 transition-colors"
                             >
                                 {t('problems.viewAll')}
                             </Link>
