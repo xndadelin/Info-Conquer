@@ -7,6 +7,10 @@ const bodyParser = require('body-parser');
 require('dotenv').config();
 app.use(bodyParser.json({ limit: '1024mb' }));
 app.use(bodyParser.urlencoded({ extended: true, limit: '1024mb' }));
+app.use('/graphql', (req, res, next) => {
+    csrfProtection(req, res, next);
+})
+const  csrfProtection  = require('./utils/csrf');
 async function startServer() {
     const apolloServer = new ApolloServer({
         typeDefs: require('./graphql/typeDefs'),
@@ -32,7 +36,7 @@ async function startServer() {
 
     apolloServer.applyMiddleware({
         app,
-        cors: false
+        cors: false,
     });
 
     app.listen(8080, () => {
@@ -46,6 +50,7 @@ async function startServer() {
 startServer();
 
 /*
+const express = require('express')
 
 const app = express()
 const mongoose = require('mongoose')
