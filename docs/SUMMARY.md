@@ -1,8 +1,14 @@
 # Table of contents
 
+## INTRODUCERE
+
+* [💡 Prezentarea proiectului](README.md)
+* [🧘‍♂️ Motivația și importanța proiectului](introducere/motivatia-si-importanta-proiectului.md)
+* [🔭 Scopul și obiectivul proiectului](introducere/scopul-si-obiectivul-proiectului.md)
+
 ## Proiectare si dezvoltare
 
-* [📁 Structura proiectului](README.md)
+* [📁 Structura proiectului](<README (1).md>)
 * [👨‍💼 Arhitectura și tehnologiile folosite](proiectare-si-dezvoltare/arhitectura-si-tehnologiile-folosite.md)
 * [🤘 Frontend](proiectare-si-dezvoltare/frontend.md)
 * [🖥️ Backend](proiectare-si-dezvoltare/backend.md)
@@ -26,7 +32,3 @@
   * [🔐 JWT](proiectare-si-dezvoltare/securitate/jwt.md)
 * [⚡ Evaluarea perfomantei - raportul Lighthouse](proiectare-si-dezvoltare/evaluarea-perfomantei-raportul-lighthouse.md)
 * [💻 GraphQL API](proiectare-si-dezvoltare/graphql-api.md)
-
-***
-
-* [Page](page.md)

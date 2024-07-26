@@ -6,7 +6,7 @@ description: >-
 
 # 💻 GraphQL API
 
-GraphQL este un limbaj de interogare pentru API-uri, bazat pe un grafic de date și care utilizează un singur endpoint, /graphql, pentru a gestiona toate mutațiile și interogările. În acest proiect, am folosit Apollo Server pentru a construi și a gestiona serverul GraphQL.&#x20;
+GraphQL este un limbaj de interogare pentru API-uri, bazat pe un grafic de date și care utilizează un singur endpoint, `/graphql`, pentru a gestiona toate mutațiile și interogările. În acest proiect, am folosit Apollo Server pentru a construi și a gestiona serverul GraphQL.&#x20;
 
 Apollo Server facilitează integrarea cu diverse surse de date și oferă funcționalități avansate pentru gestionarea cererilor GraphQL, inclusiv suport pentru schema de tipuri, resolvers și optimizări ale performanței. Prin intermediul Apollo Server, am implementat un API GraphQL robust și scalabil, care răspunde eficient cererilor și asigură o interacțiune flexibilă cu datele.
 
