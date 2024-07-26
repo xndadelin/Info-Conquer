@@ -5,6 +5,7 @@ const { getUser } = require('../../../utils/getUser')
 module.exports = {
     async getHomepageInfo(_, {}, context){
         const user = await getUser(context)
+        if(!user) return null;
         const problems = (await Problem.find({}).sort({acceptedSolutions: -1}).limit(5))
         const dates = []
         const today = new Date()
