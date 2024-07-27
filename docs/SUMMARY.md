@@ -14,14 +14,7 @@
 * [🖥️ Backend](proiectare-si-dezvoltare/backend.md)
 * [🎋 Baza de date](proiectare-si-dezvoltare/baza-de-date.md)
 * [☁️ Deployment si testing](proiectare-si-dezvoltare/deployment-si-testing.md)
-* [✨ Functionalitati](proiectare-si-dezvoltare/functionalitati/README.md)
-  * [🔓 Autentificarea cu email si OAuth Discord](proiectare-si-dezvoltare/functionalitati/autentificarea-cu-email-si-oauth-discord.md)
-  * [📘 Vizualizarea și rezolvarea de probleme](proiectare-si-dezvoltare/functionalitati/vizualizarea-si-rezolvarea-de-probleme.md)
-  * [ℹ️ Judecător de cod integrat](proiectare-si-dezvoltare/functionalitati/judecator-de-cod-integrat.md)
-  * [📅 Calendar cu probleme zilnice](proiectare-si-dezvoltare/functionalitati/calendar-cu-probleme-zilnice.md)
-  * [🏆 Concursuri de algoritmică](proiectare-si-dezvoltare/functionalitati/concursuri-de-algoritmica.md)
-  * [👤 Profil de utilizator](proiectare-si-dezvoltare/functionalitati/profil-de-utilizator.md)
-  * [📃 Postarea de articole și anunțuri](proiectare-si-dezvoltare/functionalitati/postarea-de-articole-si-anunturi.md)
+* [✨ Functionalitati](proiectare-si-dezvoltare/functionalitati.md)
 * [🛡️ Securitate](proiectare-si-dezvoltare/securitate.md)
 * [⚡ Evaluarea perfomantei - raportul Lighthouse](proiectare-si-dezvoltare/evaluarea-perfomantei-raportul-lighthouse.md)
 
@@ -41,3 +34,13 @@
 * [🔐 JWT](securitate/jwt.md)
 * [🔑 Hashing parole](securitate/hashing-parole.md)
 * [⌛ Sandboxing](securitate/sandboxing.md)
+
+## FUNCTIONALITATI
+
+* [🔓 Autentificarea cu email si OAuth Discord](functionalitati/autentificarea-cu-email-si-oauth-discord.md)
+* [📘 Vizualizarea și rezolvarea de probleme](functionalitati/vizualizarea-si-rezolvarea-de-probleme.md)
+* [ℹ️ Judecător de cod integrat](functionalitati/judecator-de-cod-integrat.md)
+* [📃 Postarea de articole și anunțuri](functionalitati/postarea-de-articole-si-anunturi.md)
+* [🏆 Concursuri de algoritmică](functionalitati/concursuri-de-algoritmica.md)
+* [📅 Calendar cu probleme zilnice](functionalitati/calendar-cu-probleme-zilnice.md)
+* [👤 Profil de utilizator](functionalitati/profil-de-utilizator.md)
