@@ -53,10 +53,12 @@ beforeAll(async () => {
         useNewUrlParser: true,
         useUnifiedTopology: true,
     });
+    await Contest.deleteMany({});
 });
 
 afterAll(async () => {
     await testServer.stop();
+    await Contest.deleteMany({});
     await mongoose.disconnect();
 });
 

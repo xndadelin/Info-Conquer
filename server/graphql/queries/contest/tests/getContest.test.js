@@ -55,6 +55,12 @@ beforeAll(async () => {
         useNewUrlParser: true,
         useUnifiedTopology: true,
     });
+    await Contest.deleteMany({});
+    const newContest = new Contest({
+        ...contests[0],
+        _id: new ObjectId(ids[0]),
+    });
+    await newContest.save();
 });
 
 afterAll(async () => {
@@ -63,12 +69,6 @@ afterAll(async () => {
 });
 
 it('should return a contest', async () => {
-    const newContest = new Contest({
-        ...contests[0],
-        _id: new ObjectId(ids[0]),
-    });
-    await newContest.save();
-
     const response = await testServer.executeOperation({
         query: GET_CONTEST,
         variables: { id: ids[0] },

@@ -58,4 +58,6 @@ it('should return an array of articles', async () => {
     expect(response.data.getArticles[0].creator).toBeDefined();
     expect(response.data.getArticles[0].title).toBeDefined();
     expect(response.data.getArticles[0].excerpt).toBeDefined();
+
+    await Article.deleteMany({});
 });

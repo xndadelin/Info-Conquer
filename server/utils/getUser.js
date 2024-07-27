@@ -19,8 +19,6 @@ const getUser = async(context) => {
         if(!token && !refreshtoken){
             return null;
         }
-
-
         const verified = jwt.verify(token, process.env.SECRET);
         if(verified.username){
             const username = verified.username

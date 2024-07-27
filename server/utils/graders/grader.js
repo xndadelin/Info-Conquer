@@ -136,7 +136,7 @@ const read_meta = (sandboxPath) => {
     })
     return metaObject;
 }
-const run = (language, sandboxPath, testCase, inputPath, outputPath, memory, runtime) => {
+const run = (language, sandboxPath, testCase, inputPath, outputPath, memory, runtime, username, code, problem, idSolution) => {
     const command = languages[language].run;
     
     fs.writeFileSync(inputPath, testCase.input);
@@ -144,25 +144,12 @@ const run = (language, sandboxPath, testCase, inputPath, outputPath, memory, run
     let exitcode = null, exitsig = null, killed = null, max_rss = null, message = null, status = null, time = null;
     
     try {
-        execSync(`isolate --box-id=1 --wait --mem=${memory} --time=${runtime} --meta=${path.join(sandboxPath, 'box', 'meta.txt')} --stderr=cerr.txt --stdin=input.txt --stdout=output.txt --run -- "${command}"`, { cwd: path.join(sandboxPath, 'box') });
+        execSync(`isolate --box-id=1 --mem=${memory} --time=${runtime} --meta=${path.join(sandboxPath, 'box', 'meta.txt')} --stderr=cerr.txt --stdin=input.txt --stdout=output.txt --run -- "${command}"`, { cwd: path.join(sandboxPath, 'box') });
     } catch (error) {
-        return {
-            username,
-            code,
-            problem,
-            language,
-            score: 0,
-            tests: [],
-            fileMemory: get_file_size(sandboxPath, languages[language].file),
-            date: new Date(),
-            compilationError: null,
-            success: false,
-            id_solution: idSolution,
-            status: 'ERROR' 
-        }
+        // do nothing, it's handled below
     }
-
     const meta = read_meta(sandboxPath)
+
     
     exitcode = meta.exitcode ? parseInt(meta.exitcode) : null;
     exitsig = meta.exitsig ? parseInt(meta.exitsig) : null;
@@ -172,10 +159,9 @@ const run = (language, sandboxPath, testCase, inputPath, outputPath, memory, run
     status = meta.status ?? null;
     time = meta.time ? parseFloat(meta.time) : null;
     
-    
     const output = fs.readFileSync(outputPath).toString();
     const cerr = fs.readFileSync(path.join(sandboxPath, 'box', 'cerr.txt')).toString()
-    
+    console.log(time, max_rss)
     return { output, exitcode, exitsig, killed, max_rss, message, status, time, cerr };
 }
 
@@ -208,8 +194,9 @@ const grader = (testCases, code, problem, username, language, max_time, max_memo
         }
     } else {
         testCases.forEach((testCase, index) => {
-            const { output: outputResult, exitcode, exitsig, killed, max_rss, message, status, time, cerr } = run(language, sandboxPath, testCase, input, output, max_memory, max_time);
-            if (outputResult.trimEnd() === testCase.output.trimEnd() && time <= max_time && max_rss <= max_memory) {
+            const { output: outputResult, exitcode, exitsig, killed, max_rss, message, status, time, cerr } = run(language, sandboxPath, testCase, input, output, max_memory, max_time, username, code, problem, idSolution);
+            console.log(time, max_rss) 
+            if (outputResult && outputResult.trimEnd() === testCase.output.trimEnd() && time <= max_time && max_rss <= max_memory) {
                 results.push({
                     status: 'AC',
                     success: true,
@@ -320,11 +307,11 @@ const grader = (testCases, code, problem, username, language, max_time, max_memo
         })
     }
 
-    execSync(`isolate --box-id=1 --cleanup`, { cwd: path.join(sandboxPath, 'box') });
-
     const success = results.every(test => test.success);
     const score = results.reduce((acc, test) => acc + parseInt(test.score), 0);
     if (!stare) stare = 'Accepted'
+    const fileMemory = get_file_size(sandboxPath, languages[language].file);
+    execSync(`isolate --box-id=1 --cleanup`, { cwd: path.join(sandboxPath, 'box') });
     return {
         username,
         code,
@@ -332,13 +319,14 @@ const grader = (testCases, code, problem, username, language, max_time, max_memo
         language,
         score,
         tests: results,
-        fileMemory: get_file_size(sandboxPath, languages[language].file),
+        fileMemory,
         date: new Date(),
         compilationError: null,
         success,
         id_solution: idSolution,
         status: stare
     }
+
 }
 
 module.exports = { grader };
