@@ -6,7 +6,7 @@ import { AUTH_DISCORD } from '../../utils/Queries'
 export const AuthDiscord = () => {
     const code = new URLSearchParams(window.location.search).get('code')
     const [error, setError] = useState("")
-    const [authDiscord, { loading, data }] = useMutation(AUTH_DISCORD, {
+    const [authDiscord, { loading }] = useMutation(AUTH_DISCORD, {
         onError: (error) => {
             setError(error.message)
         },
@@ -24,7 +24,7 @@ export const AuthDiscord = () => {
                 }
             })
         }
-    }, [code])
+    }, [code, authDiscord])
     if (loading) return <Loading />
     
     if (error) return (

@@ -10,7 +10,8 @@ export const ResetPassword = () => {
     const [password, setPassword] = useState("")
     const [confirmPassword, setConfirmPassword] = useState("")
     const { token } = useParams()
-    const [resetPassword, {loading, error, data}] = useMutation(RESET_PASSWORD, {
+    const [error, setError] = useState("")
+    const [resetPassword, {loading}] = useMutation(RESET_PASSWORD, {
         variables: {
             password,
             confirmPassword,
@@ -22,7 +23,7 @@ export const ResetPassword = () => {
             window.location.href = "/"
         },
         onError: (error) => {
-            console.log(error)
+            setError(error)
         }
     })
     const user = useContext(UserContext)

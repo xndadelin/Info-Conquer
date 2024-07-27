@@ -196,5 +196,6 @@ function getDifficultyColor(difficulty) {
         case 'medium': return 'bg-yellow-500';
         case 'hard': return 'bg-red-500';
         case 'expert': return 'bg-purple-500';
+        default: return 'bg-gray-500';
     }
 }

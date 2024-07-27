@@ -3,7 +3,7 @@ import { Landing } from './pages/LandingPages/LandingUnauth'
 import { Homepage } from "./pages/LandingPages/Homepage";
 import { Footer } from "./components/Miscellaneous/Footer";
 import { ProblemsSelection } from "./pages/Problems/ProblemsSelection";
-import { Routes, Route, Router } from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom'
 import { PublishProblem } from "./pages/Problems/PublishProblem";
 import { Problem } from "./pages/Problems/Problem";
 import { useContext } from "react";

@@ -1,4 +1,4 @@
-import { Modal, ModalBody, ModalContent, ModalHeader, Spinner, Chip, Snippet, Divider } from "@nextui-org/react"
+import { Modal, ModalBody, ModalContent, ModalHeader, Spinner, Chip, Snippet } from "@nextui-org/react"
 import { useContext } from "react"
 import { UserContext } from '../../context/UserContext'
 import { useTranslation } from "react-i18next";
@@ -9,7 +9,7 @@ export const TestingSolution = ({ onClose, isOpen, loading, tests }) => {
   const { t } = useTranslation();
   const user = useContext(UserContext);
 
-  if (!loading && !tests || !user) return null;
+  if ((!loading && !tests) || !user) return null;
 
   const getColor = (score) => {
     if (score >= 90) return 'bg-green-500';

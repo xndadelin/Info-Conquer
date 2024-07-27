@@ -1,5 +1,5 @@
 import { Button, Chip, DateRangePicker, Input, Textarea } from "@nextui-org/react";
-import { gql, useMutation, useQuery } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Select, SelectItem } from "@nextui-org/react";
@@ -7,6 +7,7 @@ import { useTranslation } from "react-i18next";
 import { UserContext } from "../../context/UserContext";
 import { NotFound } from "../../components/Miscellaneous/NotFound";
 import { CREATE_CONTEST, GET_PROBLEMS_TITLE } from "../../utils/Queries";
+import { Loading } from "../../components/Miscellaneous/Loading";
 
 
 export const CreateConstest = () => {
@@ -40,7 +41,7 @@ export const CreateConstest = () => {
     });
     const navigate = useNavigate();
 
-    const { error: errorProblems } = useQuery(GET_PROBLEMS_TITLE, {
+    const { loading: problemsLoading } = useQuery(GET_PROBLEMS_TITLE, {
         variables: {
             subcategory: 'none',
             category: ''
@@ -74,6 +75,7 @@ export const CreateConstest = () => {
         setLanguages(languages);
     };
     if(!user || !user.getUser || !user.getUser.admin) return <NotFound/>
+    if (problemsLoading) return <Loading />
     return (
         <main className="container mx-auto my-5 mb-[400px] p-5">
             <h1 className="text-4xl font-bold">{t('createContest.title')}</h1>

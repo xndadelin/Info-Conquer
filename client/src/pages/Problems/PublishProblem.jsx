@@ -1,5 +1,5 @@
 import { useState, useContext } from "react";
-import { Button, Checkbox, Divider, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Snippet, useDisclosure } from "@nextui-org/react";
+import { Button, Checkbox, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure } from "@nextui-org/react";
 import { Textarea, Select, SelectItem, Chip } from "@nextui-org/react";
 import { useMutation } from "@apollo/client";
 import { UserContext } from "../../context/UserContext";
@@ -33,10 +33,6 @@ export const PublishProblem = () => {
     const { user } = useContext(UserContext)
     const { isOpen, onOpen, onClose } = useDisclosure()
     const difficulties = [{ value: 'Easy' }, { value: 'Medium' }, { value: 'Hard' }, { value: 'Challenging' }, { value: 'Expert' }];
-    const languagesDef = [
-        { value: 'JavaScript' }, { value: 'Python' }, { value: 'Java' }, { value: 'C#' },
-        { value: 'C++' }, { value: 'TypeScript' }, { value: 'Rust' }, { value: 'PHP' }, { value: 'C' }
-    ];
     const [title, setTitle] = useState('')
     const [requirement, setRequirements] = useState('')
     const [description, setDescription] = useState('')
@@ -145,12 +141,6 @@ export const PublishProblem = () => {
         const subcategories = subcategory.target.value.split(",")
         setSubcategories(subcategories)
     }
-
-    const handleLanguagesChange = (language) => {
-        const languages = language.target.value.split(",")
-        setLanguages(languages)
-    }
-
 
     const Subcategories = (category) => {
         const index = problems.findIndex(problem => problem.category === category)

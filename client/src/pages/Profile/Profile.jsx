@@ -8,7 +8,7 @@ import { Avatar, Tabs, Tab, Card, CardBody } from "@nextui-org/react";
 import { NotFound } from "../../components/Miscellaneous/NotFound";
 import { useTranslation } from 'react-i18next'
 import { getStatusColor } from "../../utils/getStatusColor";
-import { CHANGE_PASSWORD, GET_ACTIVITY, UPDATE_EMAIL, UPDATE_PROFILE_PICTURE, UPDATE_USERNAME, UPDATE_BIO, GET_USER, LOGOUT, GET_PROFILE } from "../../utils/Queries";
+import { CHANGE_PASSWORD, GET_ACTIVITY, UPDATE_EMAIL, UPDATE_PROFILE_PICTURE, UPDATE_USERNAME, UPDATE_BIO, LOGOUT, GET_PROFILE } from "../../utils/Queries";
 import { Settings } from "../../components/Settings/Settings";
 import { ProfileInfo } from "../../components/Problem/ProfileInfo";
 

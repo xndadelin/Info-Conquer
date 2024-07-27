@@ -1,7 +1,7 @@
 import { Button, Card, CardBody, CardFooter, CardHeader, Checkbox, Chip, Divider, Input } from "@nextui-org/react";
 import { Link } from "@nextui-org/react";
 import { useState, useRef, useContext } from "react";
-import { gql, useMutation } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import { UserContext } from "../../context/UserContext";
 import { useTurnstile } from "../../hooks/useTurnstile";
 import { useTranslation } from 'react-i18next'; 
