@@ -8,7 +8,7 @@ description: >-
 
 JWT este un standard deschis care permite transmiterea sigură a informațiilor între părți sub formă de token-uri criptate.
 
-După autentificare, serverul generează un JWT care conține informații despre utilizator, precum ID-ul și rolul. Token-ul este semnat cu o cheie secretă pentru a asigura autenticitatea.
+După autentificare, serverul generează un JWT care conține informații despre utilizator. Token-ul este semnat cu o cheie secretă pentru a asigura autenticitatea.
 
 La fiecare cerere ulterioară, clientul trimite JWT-ul în antetul cererii. Serverul verifică token-ul pentru a confirma că este valid și că utilizatorul are accesul necesar.
 
