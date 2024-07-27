@@ -1,50 +1,63 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 * {
-    font-family: 'Poppins', sans-serif;
-    scroll-behavior: smooth;
+  font-family: 'Poppins', sans-serif;
+  scroll-behavior: smooth;
 }
-.star-hovered{
-    fill: yellow;
+
+.star-hovered {
+  fill: yellow;
 }
+
 .background {
-    z-index: -1;
+  z-index: -1;
 }
-body{
-    background-color: rgb(17 24 39);
+
+body {
+  background-color: rgb(17 24 39);
 }
-.cm-content > div,
+
+.cm-content>div,
 .cm-content span {
-    font-family: monospace !important;
-    font-size: 16px;
+  font-family: monospace !important;
+  font-size: 16px;
 }
-.cm-lineNumbers > div {
-    font-family: monospace;
-    font-size: large;
+
+.cm-lineNumbers>div {
+  font-family: monospace;
+  font-size: large;
 }
+
 .cm-gutterElement {
-    font-size: 0px;
+  font-size: 0px;
 }
-.cm-editor{
-    background-color: #1e1e1e;
-    max-width: calc(100vw - 70px);
+
+.cm-editor {
+  background-color: #1e1e1e;
+  max-width: calc(100vw - 70px);
 }
+
 .cm-gutter {
-    background-color: #1e1e1e;
+  background-color: #1e1e1e;
 }
+
 .cm-theme {
-    height: 100%;
-    font-family: monospace;
+  height: 100%;
+  font-family: monospace;
 }
-#code-mirror-editor > .cm-editor {
-    max-width: 100% !important;
+
+#code-mirror-editor>.cm-editor {
+  max-width: 100% !important;
 }
+
 @font-face {
   font-family: 'Poppins';
   src: url('../assets/fonts//Poppins-BlackItalic.ttf') format('truetype');
   font-weight: 900;
   font-style: italic;
+  font-display: swap;
 }
 
 @font-face {
@@ -52,6 +65,7 @@ body{
   src: url('../assets/fonts//Poppins-Black.ttf') format('truetype');
   font-weight: 900;
   font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
@@ -59,6 +73,7 @@ body{
   src: url('../assets/fonts//Poppins-BoldItalic.ttf') format('truetype');
   font-weight: bold;
   font-style: italic;
+  font-display: swap;
 }
 
 @font-face {
@@ -66,6 +81,7 @@ body{
   src: url('../assets/fonts//Poppins-Bold.ttf') format('truetype');
   font-weight: bold;
   font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
@@ -73,6 +89,7 @@ body{
   src: url('../assets/fonts//Poppins-ExtraBoldItalic.ttf') format('truetype');
   font-weight: 800;
   font-style: italic;
+  font-display: swap;
 }
 
 @font-face {
@@ -80,6 +97,7 @@ body{
   src: url('../assets/fonts//Poppins-ExtraBold.ttf') format('truetype');
   font-weight: 800;
   font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
@@ -87,6 +105,7 @@ body{
   src: url('../assets/fonts//Poppins-ExtraLightItalic.ttf') format('truetype');
   font-weight: 200;
   font-style: italic;
+  font-display: swap;
 }
 
 @font-face {
@@ -94,6 +113,7 @@ body{
   src: url('../assets/fonts//Poppins-ExtraLight.ttf') format('truetype');
   font-weight: 200;
   font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
@@ -101,6 +121,7 @@ body{
   src: url('../assets/fonts//Poppins-Italic.ttf') format('truetype');
   font-weight: normal;
   font-style: italic;
+  font-display: swap;
 }
 
 @font-face {
@@ -108,6 +129,7 @@ body{
   src: url('../assets/fonts//Poppins-LightItalic.ttf') format('truetype');
   font-weight: 300;
   font-style: italic;
+  font-display: swap;
 }
 
 @font-face {
@@ -115,6 +137,7 @@ body{
   src: url('../assets/fonts//Poppins-Light.ttf') format('truetype');
   font-weight: 300;
   font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
@@ -122,6 +145,7 @@ body{
   src: url('../assets/fonts//Poppins-MediumItalic.ttf') format('truetype');
   font-weight: 500;
   font-style: italic;
+  font-display: swap;
 }
 
 @font-face {
@@ -129,6 +153,7 @@ body{
   src: url('../assets/fonts//Poppins-Medium.ttf') format('truetype');
   font-weight: 500;
   font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
@@ -136,6 +161,7 @@ body{
   src: url('../assets/fonts//Poppins-Regular.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
@@ -143,6 +169,7 @@ body{
   src: url('../assets/fonts//Poppins-SemiBoldItalic.ttf') format('truetype');
   font-weight: 600;
   font-style: italic;
+  font-display: swap;
 }
 
 @font-face {
@@ -150,6 +177,7 @@ body{
   src: url('../assets/fonts//Poppins-SemiBold.ttf') format('truetype');
   font-weight: 600;
   font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
@@ -157,6 +185,7 @@ body{
   src: url('../assets/fonts//Poppins-ThinItalic.ttf') format('truetype');
   font-weight: 100;
   font-style: italic;
+  font-display: swap;
 }
 
 @font-face {
@@ -164,70 +193,15 @@ body{
   src: url('../assets/fonts//Poppins-Thin.ttf') format('truetype');
   font-weight: 100;
   font-style: normal;
-}
-pre > code > span {
-    font-family: monospace;
-    font-size: 16px;
-}
-pre > code {
-    font-family: monospace !important;
-    font-size: 16px !important;
+  font-display: swap;
 }
 
-#announcement > article {
-  @apply space-y-2;
+pre>code>span {
+  font-family: monospace;
+  font-size: 16px;
 }
 
-#announcement > article h1 {
-  @apply text-4xl font-bold;
-}
-
-#announcement > article h2 {
-  @apply text-3xl font-semibold;
-}
-
-#announcement > article h3 {
-  @apply text-2xl font-semibold;
-}
-
-#announcement > article h4 {
-  @apply text-xl font-semibold;
-}
-
-#announcement > article h5 {
-  @apply text-lg font-semibold;
-}
-
-#announcement > article h6 {
-  @apply text-base font-semibold;
-}
-
-#announcement > article a {
-  @apply text-blue-500 hover:underline;
-}
-
-#announcement > article ul,
-#announcement > article ol {
-  @apply list-disc list-inside;
-}
-
-#announcement > article blockquote {
-  @apply border-l-4 border-gray-300 pl-4 italic text-gray-600;
-}
-
-#announcement > article img {
-  @apply max-w-full h-auto;
-}
-
-#announcement > article table {
-  @apply w-full table-auto;
-}
-
-#announcement > article table thead tr th,
-#announcement > article table tbody tr td {
-  @apply border px-4 py-2 text-left;
-}
-
-#announcement > article pre {
-  @apply bg-gray-800 text-white p-4 rounded max-w-fit;
+pre>code {
+  font-family: monospace !important;
+  font-size: 16px !important;
 }
