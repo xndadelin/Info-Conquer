@@ -56,15 +56,12 @@ beforeAll(async () => {
         useUnifiedTopology: true,
     });
     await Contest.deleteMany({});
-    const newContest = new Contest({
-        ...contests[0],
-        _id: new ObjectId(ids[0]),
-    });
-    await newContest.save();
+    await Contest.create(contests[0]);
 });
 
 afterAll(async () => {
     await testServer.stop();
+    await Contest.deleteMany({});
     await mongoose.disconnect();
 });
 
@@ -85,6 +82,4 @@ it('should return a contest', async () => {
         started: contests[0].started,
         ended: contests[0].ended,
     });
-
-    await Contest.deleteMany({});
 });

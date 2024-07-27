@@ -8,7 +8,7 @@ const ids = ["668537eca619549fa25c3220", "6685353b2dcdb5d125e25b4d", "6676e36a79
 const contests = [
     {
         _id: new ObjectId(ids[0]),
-        description: "Test1",
+        description: "Test11",
         endDate: new Date("2024-07-02T07:00:00.000Z"),
         languages: ["JavaScript", "Python", "Java", "C#", "C++", "TypeScript", "Rust", "PHP", "C"],
         name: "Test1",
@@ -19,7 +19,7 @@ const contests = [
     },
     {
         _id: new ObjectId(ids[1]),
-        description: "Test2",
+        description: "Test22",
         endDate: new Date("2024-08-02T07:00:00.000Z"),
         languages: ["JavaScript", "Python"],
         name: "Test2",
@@ -54,6 +54,7 @@ beforeAll(async () => {
         useUnifiedTopology: true,
     });
     await Contest.deleteMany({});
+    await Contest.insertMany(contests);
 });
 
 afterAll(async () => {
@@ -63,7 +64,6 @@ afterAll(async () => {
 });
 
 it('should return all contests', async () => {
-    await Contest.insertMany(contests);
 
     const response = await testServer.executeOperation({
         query: GET_CONTESTS,
@@ -86,6 +86,4 @@ it('should return all contests', async () => {
             });
         }
     });
-
-    await Contest.deleteMany({});
 });

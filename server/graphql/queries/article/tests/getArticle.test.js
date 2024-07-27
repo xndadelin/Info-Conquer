@@ -25,7 +25,9 @@ const data = {
     content: '<p>asdasd</p>',
     creator: 'xndadelin',
     excerpt: 'asdsdasd',
-    _id: '6693e2282de4816a589caa7d'
+    _id: '6693e2282de4816a589caa7d',
+    likes: [],
+    dislikes: [],
 };
 
 beforeAll(async () => {
@@ -34,14 +36,8 @@ beforeAll(async () => {
         useNewUrlParser: true,
         useUnifiedTopology: true,
     });
-    const newArticle = new Article({
-        title: data.title,
-        content: data.content,
-        creator: data.creator,
-        excerpt: data.excerpt,
-        _id: data._id
-    });
-    await newArticle.save();
+    await Article.deleteMany({});
+    await Article.create(data);
 });
 
 afterAll(async () => {

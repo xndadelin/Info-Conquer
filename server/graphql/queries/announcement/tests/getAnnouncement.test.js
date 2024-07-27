@@ -28,24 +28,17 @@ beforeAll(async () => {
         useNewUrlParser: true,
         useUnifiedTopology: true,
     });
+    await Announcement.deleteMany({});
+    await Announcement.create(data);
 });
 
 afterAll(async () => {
-    await Announcement.deleteOne({ title: data.title });
-    
+    await Announcement.deleteMany({});
     await testServer.stop();
     await mongoose.disconnect();
 });
 
 it('should return an announcement', async () => {
-    const newAnnouncement = new Announcement({
-        title: data.title,
-        createdBy: data.createdBy,
-        content: data.content,
-    });
-    
-    await newAnnouncement.save();
-
     const response = await testServer.executeOperation({
         query: GET_ANNOUNCEMENT,
         variables: { title: 'ANNOUNCEMENT TEST' },

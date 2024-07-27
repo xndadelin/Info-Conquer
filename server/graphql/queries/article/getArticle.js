@@ -5,8 +5,8 @@ module.exports = {
         const user = await getUser(context);
         const article = await Article.findOne({_id: id})
         if(user){
-            article.hasLiked = article.likes.includes(user.username)
-            article.hasDisliked = article.dislikes.includes(user.username)
+            article.hasLiked = article.likes?.includes(user.username)
+            article.hasDisliked = article.dislikes?.includes(user.username)
         }
         return article
     }

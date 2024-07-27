@@ -17,14 +17,8 @@ beforeAll(async () => {
         useNewUrlParser: true,
         useUnifiedTopology: true,
     });
-});
+    await Announcement.deleteMany({});
 
-afterAll(async () => {
-    await testServer.stop();
-    await mongoose.disconnect();
-});
-
-it('should return an array of announcements', async () => {
     const announcementsData = [
         {
             title: 'Announcement 1',
@@ -39,7 +33,15 @@ it('should return an array of announcements', async () => {
     ];
 
     await Announcement.insertMany(announcementsData);
+});
 
+afterAll(async () => {
+    await testServer.stop();
+    await Announcement.deleteMany({});
+    await mongoose.disconnect();
+});
+
+it('should return an array of announcements', async () => {
     const response = await testServer.executeOperation({
         query: GET_ANNOUNCEMENTS,
     });

@@ -6,9 +6,11 @@ module.exports = {
     async getContest(_, {id}, context){
         const user = await getUser(context)
         const contest = await Contest.findOne({_id: id})
+
         if(!contest){
             throw new ApolloError('This contest does not exist')
-        }   
+        } 
+          
         contest.participants.sort((a, b) => b.score - a.score)
         const participates = user && contest.participants.find((participant) => participant.username === user.username)
         
