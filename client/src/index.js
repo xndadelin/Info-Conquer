@@ -1,7 +1,6 @@
 import React from 'react';
 import {createRoot} from 'react-dom/client'
 import '../src/styles/index.css';
-import '../src/styles/build.css'
 import App from './App';
 import { NextUIProvider } from "@nextui-org/react";
 import client from './apolloclient';
@@ -10,6 +9,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { UserProvider } from './context/UserContext';
 import { I18nextProvider } from 'react-i18next'
 import i18n from './languages/i18n';
+import '../src/styles/build.css';
 
 const app = createRoot(document.getElementById('root'));
 app.render(
