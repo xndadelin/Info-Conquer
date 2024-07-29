@@ -302,8 +302,13 @@ export const PublishProblem = () => {
                 </div>
             </div>
 
-            <Modal isOpen={isOpen} onOpenChange={onOpen} onClose={onClose}>
-                <ModalContent>
+            <Modal 
+                isOpen={isOpen} 
+                onOpenChange={onOpen} 
+                onClose={onClose}
+                className="bg-gray-800" 
+            >
+                <ModalContent  >
                     <ModalHeader>
                         Are you sure you want to publish this problem?
                     </ModalHeader>
