@@ -111,3 +111,78 @@ description: MongoDB time!
 | profilePicture        | String  | No       | No     | URL of the profile picture           |
 | bio                   | String  | No       | No     | Short biography of the user          |
 | timestamps            | Object  | No       | No     | Created at and updated at timestamps |
+
+Pentru a automatiza adăugarea de probleme noi în calendar la fiecare 24 de ore și pentru a marca concursurile ca fiind `ended` sau `started` folosim funcționalitatea de triggers oferită de MongoDB Atlas, împreună cu cron jobs pentru a declanșa evenimente la intervale regulate.
+
+```javascript
+exports = async function() {
+  const serviceName = "xndadelin";
+  const databaseName = "test";
+  const collectionName = "problems";
+  const collection = context.services.get(serviceName).db(databaseName).collection(collectionName);
+
+  try {
+    const problems = await collection.find({}).toArray();
+    const randomIndex = Math.floor(Math.random() * problems.length);
+    const problem = problems[randomIndex];
+    const dailyCollection = context.services.get(serviceName).db(databaseName).collection('dailies');
+
+    const lastDaily = await dailyCollection.find({}).sort({ date: -1 }).limit(1).toArray();
+    
+
+    let today = new Date();
+    if (lastDaily.length > 0) {
+      const lastDate = new Date(lastDaily[0].date);
+      lastDate.setDate(lastDate.getDate() + 1);
+      today = lastDate;
+    }
+  
+    today.setHours(0, 0, 0, 0);
+
+    if (lastDaily.length > 0) {
+      await dailyCollection.updateOne(
+        { _id: lastDaily[0]._id },
+        { $set: { ended: true } }
+      );
+    }
+
+    await dailyCollection.insertOne({
+      problem: problem.title,
+      date: today
+    });
+    
+  } catch (err) {
+    console.log("Error performing MongoDB operations: ", err.message);
+  }
+};
+
+```
+
+```javascript
+exports = async function() {
+  const serviceName = "xndadelin";
+  const databaseName = "test";
+  const collectionName = "contests";
+  const collection = context.services.get(serviceName).db(databaseName).collection(collectionName);
+
+  try {
+    const contests = await collection.find({}).toArray();
+    const now = new Date();
+    
+    for (const contest of contests) {
+      const { startDate, endDate } = contest;
+      const started = startDate <= now;
+      const ended = endDate <= now;
+      
+      await collection.updateOne(
+        { _id: contest._id },
+        { $set: { started, ended } }
+      );
+      
+    }
+  } catch (err) {
+    console.error("Error performing MongoDB update:", err.message);
+  }
+};
+
+```
