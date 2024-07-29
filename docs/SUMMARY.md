@@ -16,7 +16,6 @@
 * [☁️ Deployment si testing](proiectare-si-dezvoltare/deployment-si-testing.md)
 * [✨ Functionalitati](proiectare-si-dezvoltare/functionalitati.md)
 * [🛡️ Securitate](proiectare-si-dezvoltare/securitate.md)
-* [⚡ Evaluarea perfomantei - raportul Lighthouse](proiectare-si-dezvoltare/evaluarea-perfomantei-raportul-lighthouse.md)
 
 ## API
 
