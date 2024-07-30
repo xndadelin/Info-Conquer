@@ -20,7 +20,7 @@ description: Pentru deploymentul aplicației InfoConquer, se utilizează Linode 
 Pentru a asigura calitatea și funcționalitatea aplicației InfoConquer, sunt utilizate diferite tipuri de teste:
 
 * Testare End-to-End cu Cypress:
-  * Cypress este utilizat pentru a verifica funcționalitatea completă a aplicației, asigurându-ne că toate componentele lucrează împreună conform așteptărilor.
+  * Cypress este utilizat pentru a verifica funcționalitatea completă a aplicației, asigurându-ne că toate componentele lucrează împreună conform așteptărilor. (daca vreti sa rulati testele, stergeti flagurile secure, http only de la cookie)
 * Testare Unități cu Jest:
   * Jest este utilizat pentru a testa funcțiile individuale și modulele aplicației pentru a asigura că logica aplicației funcționează corect.
 
