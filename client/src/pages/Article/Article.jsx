@@ -115,7 +115,7 @@ export const Article = () => {
                     </div>
                 </header>
             </section>
-            <article id='announcement' className="mt-5 p-3" dangerouslySetInnerHTML={{ __html: content }}></article>
+            <article className="mt-5 p-3 prose text-white prose-invert" dangerouslySetInnerHTML={{ __html: content }}></article>
         </main>
     )
 }

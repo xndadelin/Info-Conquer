@@ -133,10 +133,11 @@ export const DropFile = ({ tests, setTests }) => {
                 placeholder="Score"
                 onChange={(e) => handleScoreChange(number, e.target.value)}
                 className="w-20"
+                value={tests[index].score}
               />
               <Button
                 color="danger"
-                variant="flat"
+                variant="solid"
                 onClick={() => handleDelete(number)}
               >
                 Delete Test Case

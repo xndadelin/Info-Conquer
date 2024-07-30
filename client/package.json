@@ -14,6 +14,7 @@
     "@nextui-org/system": "^2.0.15",
     "@nextui-org/theme": "^2.1.17",
     "@react-aria/i18n": "^3.11.0",
+    "@tailwindcss/typography": "^0.5.13",
     "@tinymce/tinymce-react": "^5.1.1",
     "@uiw/codemirror-extensions-langs": "^4.23.0",
     "@uiw/react-codemirror": "^4.21.9",

@@ -95,12 +95,12 @@ export const Solution = () => {
                                                     <td className="px-6 py-4">{(test.memoryUsed / 1024).toFixed(2) + ' MB'}</td>
                                                     <td className="px-6 py-4">{test.score}</td>
                                                     <td className="px-6 py-4">
-                                                       <Chip variant="flat" color={getStatusColor(test.status)}>
+                                                       <Chip variant="solid" color={getStatusColor(test.status)}>
                                                               {test.status}
                                                        </Chip>
                                                     </td>
                                                     <td className="px-6 py-4">
-                                                        <Button onClick={() => setSelectedTestCase(test)} size="sm" color="primary" variant="solid">
+                                                        <Button onClick={() => setSelectedTestCase(test)} size="sm" className="bg-gray-700" variant="solid">
                                                             {t("solution.summary.table.viewTestCase")}
                                                         </Button>
                                                     </td>

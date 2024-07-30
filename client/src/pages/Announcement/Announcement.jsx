@@ -32,7 +32,7 @@ export const Announcement = () => {
                     {data.getAnnouncement.createdBy}
                 </Link>
             </section>
-            <article className='mt-5 whitespace-break-spaces' dangerouslySetInnerHTML={{ __html: data.getAnnouncement.content }}></article>
+            <article className='mt-5 whitespace-break-spaces prose text-white prose-invert' dangerouslySetInnerHTML={{ __html: data.getAnnouncement.content }}></article>
         </main>
     );
 };
