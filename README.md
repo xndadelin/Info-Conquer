@@ -1,147 +1,147 @@
 ![Logo](./pictures/pic2.png)
 
-> InfoConquer este un website destinat programatorilor, fie că sunt începători sau avansați. Utilizatorii pot rezolva probleme de algoritmică, primind feedback bazat pe testele încărcate de pe platformă. Problemele variază de la structuri de date fundamentale la teorii avansate ale grafurilor. Totodată, ei pot participa la concursuri de algoritmică împreună cu alți participanți și pot să-și mențînă o serie de rezolvare a problemelor în fiecare zi prin accesarea calendarului de pe platformă, care oferă o problema zilnică.
+> InfoConquer is a website designed for programmers, whether beginners or advanced. Users can solve algorithmic problems, receiving feedback based on tests uploaded from the platform. Problems range from fundamental data structures to advanced graph theories. At the same time, they can participate in algorithmic competitions with other participants and maintain a series of daily problem solving by accessing the calendar on the platform, which offers a daily problem.
 
-[DOCUMENTATIE](https://infoconquer.gitbook.io/infoconquer)
-## ⚙️ Funcționalități
+[DOCUMENTATION](https://infoconquer.gitbook.io/infoconquer)
+## ⚙️ Features
 
-Prin cadrul acestui proiect, am reușit să creez un website care să faciliteze învățarea și perfecționarea abilităților de programare pentru utilizatori de toate nivelurile.
+Through this project, I managed to create a website that facilitates learning and improving programming skills for users of all levels.
 
-Așadar, printre funcționalitățile proiectului regăsim:
+Therefore, among the features of the project are:
 
-### 📘 Vizualizarea și rezolvarea de probleme
-- 🧠 Utilizatorii pot rezolva probleme de algoritmică într-un limbaj de programare la alegere
-- 📝 Funcționalitate supusă unui formular completat de un admin, care reprezintă toate detaliile problemei (descriere, exemple, ieșire, intrare, limita de timp, limita de memorie, teste etc.)
-- 💻 Editor de cod integrat [CodeMirror](https://uiwjs.github.io/react-codemirror/)
-- 📊 Statisticile problemei (grafic cu numărul de rezolvări în ultimele 7 zile, primele submisii acceptate, cele mai bune soluții în ceea ce privește timpul și memoria)
+### 📘 Viewing and solving problems
+- 🧠 Users can solve algorithmic problems in a programming language of their choice
+- 📝 Functionality subject to a form completed by an admin, which represents all problem details (description, examples, output, input, time limit, memory limit, tests, etc.)
+- 💻 Integrated code editor [CodeMirror](https://uiwjs.github.io/react-codemirror/)
+- 📊 Problem statistics (graph with number of solutions in the last 7 days, first accepted submissions, best solutions in terms of time and memory)
 
 ![problem](./pictures/gif1.gif)
 
-### ℹ️ Judecător de cod integrat
-- 🤖 Evaluează automat soluțiile trimise de utilizatori, oferind feedback instantaneu și detaliat pe baza testelor predefinite
-- 🛡️ Folosește un sandbox securizat, similar cu cel utilizat la IOI (Internațional Olympiad în Informatics)
-- 🔗 Mai multe detalii: [GitHub - ioi/isolate](https://github.com/ioi/isolate)
+### ℹ️ Integrated code judge
+- 🤖 Automatically evaluates solutions submitted by users, providing instant and detailed feedback based on predefined tests
+- 🛡️ Uses a secure sandbox, similar to the one used at IOI (International Olympiad in Informatics)
+- 🔗 More details: [GitHub - ioi/isolate](https://github.com/ioi/isolate)
 
-### 🗓️ Calendar cu probleme zilnice
-- 🎲 Propune o problemă aleatorie în fiecare zi
-- 🏆 Încurajează utilizatorii să-și mențină seria de rezolvare, conservând o activitate mai considerabilă
+### 🗓️ Calendar with daily problems
+- 🎲 Proposes a random problem each day
+- 🏆 Encourages users to maintain their solving streak, preserving more significant activity
 
 ![daily](./pictures/gif2.gif)
 
-### 🤖 Asistent OpenAI integrat
-- 🧠 Încorporat în editorul de cod
-- 💡 Ajută utilizatorii să primească feedback asupra codului lor, menționând ce poate să optimizeze, ce să schimbe și să-i ajute să rezolve problema
-- 🔧 Folosește modelul GPT-4 de la [OpenAI](https://openai.com/)
+### 🤖 Integrated OpenAI Assistant
+- 🧠 Embedded in the code editor
+- 💡 Helps users receive feedback on their code, mentioning what can be optimized, what to change, and helps them solve the problem
+- 🔧 Uses the GPT-4 model from [OpenAI](https://openai.com/)
 
 ![ai](./pictures/gif3.gif)
 
-### 🏆 Concursuri de algoritmică
-- 🌐 Platforma poate găzdui concursuri pentru toți utilizatorii, indiferent de nivel
-- 📊 Pagina concursului include clasament în timp real, detaliile concursului și un grafic privind solvabilitatea problemelor
+### 🏆 Algorithmic competitions
+- 🌐 The platform can host competitions for all users, regardless of level
+- 📊 The competition page includes real-time rankings, competition details, and a graph regarding problem solvability
 
 ![contest](./pictures/gif4.gif)
 
-### 👤 Profil de utilizator
-- 📌 Informații generale despre utilizator (avatar, nume, status, dată creării)
-- 📊 Statistici (probleme rezolvate, submisii totale, soluții acceptate)
-- 📅 Vizualizare activitate
-- ⚙️ Setări de profil (editare poză de profil, email, username, parolă, biografie)
+### 👤 User profile
+- 📌 General information about the user (avatar, name, status, creation date)
+- 📊 Statistics (solved problems, total submissions, accepted solutions)
+- 📅 Activity visualization
+- ⚙️ Profile settings (edit profile picture, email, username, password, biography)
 
 ![profile](./pictures/gif5.gif)
 
-### 📖 Postarea de articole și anunțuri
-- 📑 Utilizatorii admini au posibilitatea de a posta articole și anunțuri, cu ajutorul editorului de text TinyMCE, la care am adăugat un add-on unde utilizatorii pot cere asistență de la Inteligența Artificială
-- 📣 Funcționalitate de creare și publicare de anunțuri
-- 👍 Cititorul are opțiunea de a aprecia / dezaprecia articolul
+### 📖 Posting articles and announcements
+- 📑 Admin users have the ability to post articles and announcements using the TinyMCE text editor, to which I added an add-on where users can request assistance from Artificial Intelligence
+- 📣 Functionality for creating and publishing announcements
+- 👍 The reader has the option to like/dislike the article
 
 ![article](./pictures/gif6.gif)
 
 # 🖧 Backend
-În cadrul proiectului, am decis să construiesc un server bazat pe un [Node.js](https://nodejs.org/en) framework, [express](http://expressjs.com/).
+For the project, I decided to build a server based on a [Node.js](https://nodejs.org/en) framework, [express](http://expressjs.com/).
 
-- 🔗 Pentru comunicarea dintre client și server, am folosit [GraphQL](https://graphql.org/), un limbaj de interogare pentru API-uri, ce are la bază graful de date și expune un singur endpoint: /graphql, prin care sunt trimise toate mutațiile și interogările.
-- 🚀 Apollo Server funcționează că un add-on pentru framework-ul express care mă ajută să asamblez un API GraphQL.
-- 🗄️ Ca bază de date am ales [MongoDB](https://www.mongodb.com/), datorită structurii sale orientată pe documente, care îmi oferă flexibilitate. Serviciul destinat pentru a lucra cu datele din baza de date și a o hosta este [MongoDB Atlas](https://www.mongodb.com/atlas), un serviciu cloud integral.
-- 🛡️ Pentru a crea un mediu izolat față de sistemul gazdă, cu scopul de a preveni codul malițios trimis de un utilizator să nu afecteze sistemul gazdă, am decis să folosesc [GitHub - ioi/isolate](https://github.com/ioi/isolate), un sandbox construit pentru a rula programe care nu sunt sigure. Isolate se caracterizează printr-un mediul cu access limitat, prevenind afectarea sistemului gazdă. [Documentație - isolate](www.ucw.cz/moe/isolate.1.html)
+- 🔗 For communication between client and server, I used [GraphQL](https://graphql.org/), a query language for APIs, based on the data graph and exposing a single endpoint: /graphql, through which all mutations and queries are sent.
+- 🚀 Apollo Server acts as an add-on for the express framework that helps me assemble a GraphQL API.
+- 🗄️ For the database, I chose [MongoDB](https://www.mongodb.com/), due to its document-oriented structure, which gives me flexibility. The service intended for working with data from the database and hosting it is [MongoDB Atlas](https://www.mongodb.com/atlas), a complete cloud service.
+- 🛡️ To create an isolated environment from the host system, in order to prevent malicious code submitted by a user from affecting the host system, I decided to use [GitHub - ioi/isolate](https://github.com/ioi/isolate), a sandbox built to run programs that are not safe. Isolate is characterized by an environment with limited access, preventing impact on the host system. [Documentation - isolate](www.ucw.cz/moe/isolate.1.html)
 
 # 🎨 Frontend
-Pentru construirea interfețelor de utilizator, am folosit librăria React, facilitând crearea de componente reutilizabile.
+For building user interfaces, I used the React library, facilitating the creation of reusable components.
 
-- 🖌️ Stilizarea interfeței de utilizator a fost făcută cu [Tailwind CSS](https://tailwindcss.com/), împreună cu [Next UI](https://nextui.org/), o librărie de componente moderne.
-- 💻 Cu ajutorul componentei CodeMirror, care este integrată pentru a oferi un editor de cod robust și interactiv, permite utilizatorilor să scrie și să editeze soluții pentru problemele propuse într-un mediu familiar și eficient.
-- 🌐 Folosind framework-ul [i18next](https://www.i18next.com/), am reușit să fac posibilă internaționalizarea conținutului, oferind suport mulți-lingv.
-- 🚀 Folosind [Apollo Client](https://www.apollographql.com/docs/react/), o librărie pentru gestionarea stării aplicației și pentru comunicarea eficientă cu serverul backend cu GraphQL, am reușit să fac platforma mai scalabila, reducând traficul de rețea și timpul de răspuns al aplicației, aducând DOAR datele necesare.
+- 🖌️ The styling of the user interface was done with [Tailwind CSS](https://tailwindcss.com/), along with [Next UI](https://nextui.org/), a library of modern components.
+- 💻 With the help of the CodeMirror component, which is integrated to provide a robust and interactive code editor, it allows users to write and edit solutions for proposed problems in a familiar and efficient environment.
+- 🌐 Using the [i18next](https://www.i18next.com/) framework, I managed to make internationalization of content possible, offering multi-language support.
+- 🚀 Using [Apollo Client](https://www.apollographql.com/docs/react/), a library for managing application state and for efficient communication with the GraphQL backend server, I managed to make the platform more scalable, reducing network traffic and application response time, bringing ONLY the necessary data.
 
-# 🖧 Rulare locală
-Clonează repository-ul în sistemul gazdă:
+# 🖧 Local Setup
+Clone the repository to the host system:
 ```bash
 git clone https://github.com/xndadelin/Info-Conquer
 ```
-Navighează către directorul server și inițializează submodulul:
+Navigate to the server directory and initialize the submodule:
 ```bash
 cd Info-Conquer/server
 git submodule update --init    
 ```
-Instalează toate utilitățile necesare pentru configurarea sandbox-ului:
+Install all utilities needed for sandbox configuration:
 ```bash
 sudo apt | dnf | pacman install make pkg-config systemd libsystemd-dev asciidoc-base libcap-dev
 ```
-Compilează și instalează isolate:
+Compile and install isolate:
 ```bash
 make
 make install
 ```
-Instalează cea mai nouă versiune de Node.js:
+Install the latest version of Node.js:
 ```bash
 sudo apt install npm
 npm install -g n
 n latest
 ```
-Instalează depedentele necesare pentru server:
+Install the necessary dependencies for the server:
 ```bash
 npm install
 ```
-Configurează variabilele de mediu, adăugându-le în fișierul .env:
-- `MONGO_DB_CONN`: Conexiunea pentru bază de date MongoDB.
-- `SECRET`: Cheia secretă pentru semnarea token-urilor.
-- `SECRET_REFRESH`: Cheia secretă pentru reîmprospătarea token-urilor.
-- `EMAIL_HOST`: Serverul SMTP pentru trimiterea de emailuri (recomand smtp.gmail.email)
-- `EMAIL_PORT`: Portul serverului SMTP pentru conexiune (587 este portul standard pentru TLS).
-- `EMAIL_USER`: Adresa de email a contului utilizat pentru trimiterea de email-uri prin SMTP.
-- `EMAIL_PASS`: Parolă asociată contului pentru autentificare SMTP.
-- `CLIENT_URL`: URL-ul clientului (default este http://localhost:3000, dacă nu rulați pe alt port).
-- `TURNSTILE_SECRET_KEY`: Cheia secretă pentru serviciul Turnstile (+configurație pe dashboard pe cloudflare).
-- `OPENAI_API_KEY`: Cheia API pentru OpenAI, utilizată pentru autentificare la serviciul API OpenAI.
-- `DISCORD_CLIENT_ID`: ID-ul clientului Discord pentru integrarea unei aplicații cu Discord.
-- `DISCORD_REDIRECT_URI`: URI-ul de redirecționare pentru OAuth cu Discord.
-- `DISCORD_CLIENT_SECRET`: Cheia secretă a clientului Discord pentru autentificare OAuth.
+Configure environment variables by adding them to the .env file:
+- `MONGO_DB_CONN`: Connection for MongoDB database.
+- `SECRET`: Secret key for signing tokens.
+- `SECRET_REFRESH`: Secret key for refreshing tokens.
+- `EMAIL_HOST`: SMTP server for sending emails (I recommend smtp.gmail.email)
+- `EMAIL_PORT`: SMTP server port for connection (587 is the standard port for TLS).
+- `EMAIL_USER`: Email address of the account used for sending emails through SMTP.
+- `EMAIL_PASS`: Password associated with the account for SMTP authentication.
+- `CLIENT_URL`: Client URL (default is http://localhost:3000, if not running on another port).
+- `TURNSTILE_SECRET_KEY`: Secret key for Turnstile service (+configuration on cloudflare dashboard).
+- `OPENAI_API_KEY`: API key for OpenAI, used for authentication to the OpenAI API service.
+- `DISCORD_CLIENT_ID`: Discord client ID for integrating an application with Discord.
+- `DISCORD_REDIRECT_URI`: Redirect URI for OAuth with Discord.
+- `DISCORD_CLIENT_SECRET`: Discord client secret key for OAuth authentication.
 
-Navighează către directorul client:
+Navigate to the client directory:
 ```bash
 cd ../client
 ```
-Configurează variabilele de mediu, adăugându-le în fișierul .env:
-- `REACT_APP_SERVER`: URL-ul serverului GraphQL local pentru aplicația React (default este http://localhost:8080/graphql`).
-- `REACT_APP_SITE_KEY`: Cheia de site reCAPTCHA pentru integrarea cu Cloudflare Turnstile reCAPTCHA.
-- `REACT_APP_DISCORD_REDIRECT`: URL-ul de redirecționare pentru autentificarea cu Discord în aplicația React.
-- `REACT_APP_TINY_MCE_API_KEY`: Cheia API pentru TinyMCE, utilizată pentru integrarea cu editorul de text TinyMCE.
+Configure environment variables by adding them to the .env file:
+- `REACT_APP_SERVER`: Local GraphQL server URL for the React application (default is http://localhost:8080/graphql`).
+- `REACT_APP_SITE_KEY`: reCAPTCHA site key for integration with Cloudflare Turnstile reCAPTCHA.
+- `REACT_APP_DISCORD_REDIRECT`: Redirect URL for Discord authentication in the React application.
+- `REACT_APP_TINY_MCE_API_KEY`: API key for TinyMCE, used for integration with the TinyMCE text editor.
 
-Instalează depedentele necesare pentru frontend:
+Install the necessary dependencies for the frontend:
 ```bash
 npm install
 ```
-# 🏃 Utilizare
-Pornire server:
+# 🏃 Usage
+Start the server:
 ```bash
 cd server
 npm run start
 ```
-Pornire client:
+Start the client:
 ```bash
 cd client
 npm run start
 ```
-# Compilare si rularea programelor oferite de utilizatori
+# Compilation and running programs provided by users
 <details>
 <summary><strong>C++</strong></summary>
 
